@@ -8,13 +8,13 @@ subtitle: ''
 description: ''
 keywords:
 author: ewqazxc
-language: en
+language: zh-Hans
 timezone: 'Asia/Shanghai'
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
-root: /
+url: https://ewqazxc.github.io/hexo-blog
+root: /hexo-blog/
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
