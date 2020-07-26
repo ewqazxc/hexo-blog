@@ -1,7 +1,8 @@
 ---
 title: Hexo博客搭建记录
 date: 2020-07-26 11:28:26
-
+categories: 
+  - hexo
 ---
 
 # --Hexo博客搭建，并使用GitHub Pages发布
