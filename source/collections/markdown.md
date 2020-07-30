@@ -85,7 +85,7 @@ __看这里看这里！！！`<stong>`加粗+下划线__
 ![GitHub set up](http://zh.mweb.im/asset/img/set-up-git.gif)
 ---
 ---
-![狗头](./imgs/img.png)
+![狗头](/hexo-blog/imgs/img.png)
 ---
 ### 大小/title
 ```
@@ -161,7 +161,7 @@ cond(no)->op
 `x3
 ```
 ---
-![markdown效果](./imgs/flowchart.png)
+![markdown效果](/hexo-blog/imgs/flowchart.png)
 ---
 
 ## 表格
