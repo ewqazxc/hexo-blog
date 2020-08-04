@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>hasOwnProperty 和 getOwnPropertyDescriptor | #一如既往、</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="一、 Object.prototype.hasOwnProperty()hasOwnProperty()方法会返回一个布尔值，指示对象自身属性中是否具有指定的属性（也就是，是否有指定的键） Demo123456const object1 &#x3D; &amp;#123;&amp;#125;;object1.property1 &#x3D; 42;console.log(object1.hasOwnPropert">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hasOwnProperty 和 getOwnPropertyDescriptor">
+<meta property="og:url" content="https://ewqazxc.github.io/hexo-blog/2020/08/03/collections/JavaScript/hasOwnProperty/index.html">
+<meta property="og:site_name" content="#一如既往、">
+<meta property="og:description" content="一、 Object.prototype.hasOwnProperty()hasOwnProperty()方法会返回一个布尔值，指示对象自身属性中是否具有指定的属性（也就是，是否有指定的键） Demo123456const object1 &#x3D; &amp;#123;&amp;#125;;object1.property1 &#x3D; 42;console.log(object1.hasOwnPropert">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-08-02T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-08-03T18:03:40.855Z">
+<meta property="article:author" content="ewqazxc">
+<meta name="twitter:card" content="summary">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <!-- 
+<link rel="stylesheet" href="/hexo-blog/%7B%22title%22:%22#%E4%B8%80%E5%A6%82%E6%97%A2%E5%BE%80%E3%80%81%22,%22subtitle%22:%22%E4%B8%8D%E7%9F%A5%E9%81%93%E5%86%99%E7%9A%84%E4%BB%80%E4%B9%88%E7%9A%84%E5%8D%9A%E5%AE%A2~%22,%22description%22:%22description%22,%22author%22:%22ewqazxc%22,%22language%22:%22zh-CN%22,%22timezone%22:%22Asia/Shanghai%22,%22url%22:%22https:/ewqazxc.github.io/hexo-blog%22,%22root%22:%22/hexo-blog/%22,%22permalink%22:%22:year/:month/:day/:title/%22,%22permalink_defaults%22:null,%22pretty_urls%22:%7B%22trailing_index%22:true,%22trailing_html%22:true%7D,%22source_dir%22:%22source%22,%22public_dir%22:%22public%22,%22tag_dir%22:%22tags%22,%22archive_dir%22:%22archives%22,%22category_dir%22:%22categories%22,%22code_dir%22:%22downloads/code%22,%22i18n_dir%22:%22:lang%22,%22skip_render%22:null,%22new_post_name%22:%22:title.md%22,%22default_layout%22:%22post%22,%22titlecase%22:false,%22external_link%22:%7B%22enable%22:true,%22field%22:%22site%22,%22exclude%22:%22%22%7D,%22filename_case%22:0,%22render_drafts%22:false,%22post_asset_folder%22:false,%22relative_link%22:false,%22future%22:true,%22highlight%22:%7B%22enable%22:true,%22auto_detect%22:false,%22line_number%22:true,%22tab_replace%22:%22%22,%22wrap%22:true,%22hljs%22:false%7D,%22default_category%22:%22uncategorized%22,%22category_map%22:null,%22tag_map%22:null,%22date_format%22:%22YYYY-MM-DD%22,%22time_format%22:%22HH:mm:ss%22,%22use_date_for_updated%22:false,%22per_page%22:10,%22pagination_dir%22:%22page%22,%22theme%22:%22landscape%22,%22server%22:%7B%22port%22:4000,%22log%22:false,%22compress%22:false,%22header%22:true,%22cache%22:false%7D,%22deploy%22:%7B%22type%22:%22%22%7D,%22ignore%22:null,%22meta_generator%22:true,%22keywords%22:null,%22index_generator%22:%7B%22per_page%22:10,%22order_by%22:%22-date%22,%22path%22:%22%22%7D,%22include%22:null,%22exclude%22:null,%22archive_generator%22:%7B%22per_page%22:10,%22yearly%22:true,%22monthly%22:true,%22daily%22:false%7D,%22category_generator%22:%7B%22per_page%22:10%7D,%22tag_generator%22:%7B%22per_page%22:10%7D,%22marked%22:%7B%22gfm%22:true,%22pedantic%22:false,%22breaks%22:true,%22smartLists%22:true,%22smartypants%22:true,%22modifyAnchors%22:%22%22,%22autolink%22:true,%22sanitizeUrl%22:false,%22headerIds%22:true%7D%7D.css">
+ -->
+  
+<link rel="stylesheet" href="/hexo-blog/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/hexo-blog/" id="logo">#一如既往、</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/hexo-blog/" id="subtitle">不知道写的什么的博客~</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/hexo-blog/">主页</a>
+        
+          <a class="main-nav-link" href="/hexo-blog/archives">归档</a>
+        
+          <a class="main-nav-link" href="/hexo-blog/about/me.html">关于</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://ewqazxc.github.io/hexo-blog"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-collections/JavaScript/hasOwnProperty" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo-blog/2020/08/03/collections/JavaScript/hasOwnProperty/" class="article-date">
+  <time datetime="2020-08-02T16:00:00.000Z" itemprop="datePublished">2020-08-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      hasOwnProperty 和 getOwnPropertyDescriptor
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="一、-Object-prototype-hasOwnProperty"><a href="#一、-Object-prototype-hasOwnProperty" class="headerlink" title="一、 Object.prototype.hasOwnProperty()"></a>一、 Object.prototype.hasOwnProperty()</h2><p><code>hasOwnProperty()</code>方法会返回一个布尔值，指示对象自身属性中是否具有指定的属性（也就是，是否有指定的键）</p>
+<h3 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a>Demo</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">const object1 &#x3D; &#123;&#125;;</span><br><span class="line">object1.property1 &#x3D; 42;</span><br><span class="line"></span><br><span class="line">console.log(object1.hasOwnProperty(&#39;property1&#39;)); &#x2F;&#x2F; true</span><br><span class="line">console.log(object1.hasOwnProperty(&#39;toString&#39;)); &#x2F;&#x2F; false</span><br><span class="line">console.log(object1.hasOwnProperty(&#39;hasOwnProperty&#39;)); &#x2F;&#x2F; false</span><br></pre></td></tr></table></figure>
+
+<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><p>  <code>obj.hasOwnProperty(prop)</code></p>
+<h3 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h3><p>  prop 要检测的属性的字符串形式标识的名称，或者Symbol</p>
+<h3 id="返回值"><a href="#返回值" class="headerlink" title="返回值"></a>返回值</h3><p>  用来判断某个对象是否含有指定的属性的布尔值</p>
+<h3 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h3><p>  所有继承了<code>Object</code>的对象都会继承到<code>hasOwnproperty</code>方法。<br>  这个方法可以用来检测一个对象是否含有特定的自身属性；<br>  和<code>in</code>运算符不同，该方法会忽略掉那些从原型链上继承到的属性 <code>&#39;toString&#39; in obj // true</code></p>
+<h3 id="备注"><a href="#备注" class="headerlink" title="备注"></a>备注</h3><p>  及时属性的值是<code>null</code>或<code>undefined</code>，只要属性存在，<code>hasOwnProperty</code>依旧会返回true<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">o &#x3D; new Object();</span><br><span class="line">o.propOne &#x3D; null;</span><br><span class="line">o.hasOwnProperty(&#39;propOne&#39;); &#x2F;&#x2F; true</span><br><span class="line">o.propTwo &#x3D; undefined;</span><br><span class="line">o.hasOwnproperty(&#39;propTwo&#39;); &#x2F;&#x2F; true</span><br></pre></td></tr></table></figure></p>
+<h3 id="自身属性与继承属性"><a href="#自身属性与继承属性" class="headerlink" title="自身属性与继承属性"></a>自身属性与继承属性</h3>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">const o &#x3D; new Object();</span><br><span class="line">o.prop &#x3D; &#39;exosts&#39;;</span><br><span class="line">o.hasOwnProperty(&#39;prop&#39;); &#x2F;&#x2F; true</span><br><span class="line">o.hasOwnProperty(&#39;hasOwnProperty&#39;); &#x2F;&#x2F; false</span><br><span class="line">o.hasOwnProperty(&#39;toString&#39;); &#x2F;&#x2F; false</span><br><span class="line">&#39;hasOwnproperty&#39; in o; &#x2F;&#x2F; false</span><br><span class="line">&#39;hasOwnProperty&#39; in o; &#x2F;&#x2F; true</span><br><span class="line">&#39;toString&#39; in o; &#x2F;&#x2F; true</span><br></pre></td></tr></table></figure>
+<h3 id="遍历一个对象的所有自身属性"><a href="#遍历一个对象的所有自身属性" class="headerlink" title="遍历一个对象的所有自身属性"></a>遍历一个对象的所有自身属性</h3><p>  <code>for...in</code>循环只会遍历可枚举的属性，所以不应该基于这个循环中没有不可枚举的属性而得出<code>hasOwnProperty</code>是严格限制于可枚举项目的（如同 Object.getOwnPropertyNames()）<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var buz &#x3D; &#123; fog: &#39;stack&#39;&#125;;</span><br><span class="line">for(var name in buz)&#123;</span><br><span class="line">  if(buz.hasOwnProperty(name))&#123;</span><br><span class="line">    console.log(&#39;this is fog (&#39;+name+&#39;)for sure Value:&#39;+ buz[name]);</span><br><span class="line">  &#125;else&#123;</span><br><span class="line">    console.log(name); &#x2F;&#x2F; protptype 继承的一些属性</span><br><span class="line">    &#x2F;&#x2F; MDN中表示 toString 也会被输出，实际测试中，只在通过 Object.prototype 赋值的属性会显示 Object.prototype.showMe&#x3D;&quot;ok&quot;; </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="使用hasOwnProperty作为属性"><a href="#使用hasOwnProperty作为属性" class="headerlink" title="使用hasOwnProperty作为属性"></a>使用hasOwnProperty作为属性</h3><p>  JavaScript并没有保护<code>hasOwnProperty</code>这个属性名，因此，当某个对象可能自有一个占用该属性名的属性时，可以通过外部的<code>hasOwnProperty</code>获得正确的结果<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var foo &#x3D; &#123;</span><br><span class="line">  hasOwnProperty: function() &#123;</span><br><span class="line">    return false;</span><br><span class="line">  &#125;,</span><br><span class="line">  bar: &#39;hehe&#39;</span><br><span class="line">&#125;;</span><br><span class="line">foo.hasOwnProperty(&#39;bar&#39;); &#x2F;&#x2F; 始终返回 false</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 1 直接使用原型链上真正的 hasOWnProperty 方法</span><br><span class="line">(&#123;&#125;).hasOwnProperty.call(foo,&#39;bar&#39;); &#x2F;&#x2F; true</span><br><span class="line">&#x2F;&#x2F; 2 也可以使用 Object 原型上的 hasOwnProperty 属性</span><br><span class="line">Object.prototype.hasOwnProperty.call(foo,&#39;bar&#39;); &#x2F;&#x2F; true</span><br></pre></td></tr></table></figure></p>
+<h2 id="二、-Object-getOwnPropertyDescriptor"><a href="#二、-Object-getOwnPropertyDescriptor" class="headerlink" title="二、 Object.getOwnPropertyDescriptor()"></a>二、 Object.getOwnPropertyDescriptor()</h2><p>  <code>Object.getOwnPropertyDescriptor()</code>方法返回指定对象上一个自由属性对应的属性描述符。（自由属性指的是直接赋予该对象的属性，不需要从原型链上进行查找的属性）</p>
+<h3 id="Demo-1"><a href="#Demo-1" class="headerlink" title="Demo"></a>Demo</h3>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">const obj &#x3D; &#123;</span><br><span class="line">  property:66</span><br><span class="line">&#125;;</span><br><span class="line">const descriptor &#x3D; Object.getOwnPropertyDescriptor(obj,&#39;property&#39;);</span><br><span class="line">console.log(descriptor.configurable); &#x2F;&#x2F; true</span><br><span class="line">console.log(descriptor.value); &#x2F;&#x2F; 66</span><br></pre></td></tr></table></figure>
+
+<h3 id="语法-1"><a href="#语法-1" class="headerlink" title="语法"></a>语法</h3><p>  Object.getOwnPropertyDescriptor(obj,prop)</p>
+<h3 id="参数-1"><a href="#参数-1" class="headerlink" title="参数"></a>参数</h3><ul>
+<li>obj<br>需要查找的目标对象</li>
+<li>prop<br>目标对象内属性名称</li>
+</ul>
+<h3 id="返回值-1"><a href="#返回值-1" class="headerlink" title="返回值"></a>返回值</h3><p>  如果指定的属性存在于对象上，则返回其属性描述符对象（property descriptor）,否则返回 <code>undefined</code></p>
+<h3 id="描述-1"><a href="#描述-1" class="headerlink" title="描述"></a>描述</h3><p>  该方法允许对一个属性的描述进行检索<br>  在JavaScript中，属性又一个字符串类型的“名字”（name）和一个“属性描述符”（property descriptor）对象构成（Object.defineProperty）</p>
+<pre><code>一个属性描述符是一个记录，由下面属性当中的某些组成的：
+* value
+  该属性的值（仅针对数据属性描述符有效）
+* writable
+  当且仅当属性的值可以被改变时为true（仅针对数据属性描述符有效）
+* get 
+  获取该属性的访问器函数（getter），无则为 undefined
+* set 
+  获取该属性的设置器函数（setter），无则为 undefined
+* configurable
+  当且仅当指定对象的属性描述可以被改变或者属性可被删除时，为true
+* enumerable
+  当且仅当指定对象的属性可以被枚举时，为true</code></pre><h2 id="React-中用来判断ref-和-key是否存在"><a href="#React-中用来判断ref-和-key是否存在" class="headerlink" title="React 中用来判断ref 和 key是否存在"></a>React 中用来判断ref 和 key是否存在</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">function hasValidRef(config) &#123;</span><br><span class="line">  if (__DEV__) &#123;</span><br><span class="line">    if (hasOwnProperty.call(config, &#39;ref&#39;)) &#123;</span><br><span class="line">      const getter &#x3D; Object.getOwnPropertyDescriptor(config, &#39;ref&#39;).get;</span><br><span class="line">      if (getter &amp;&amp; getter.isReactWarning) &#123;</span><br><span class="line">        return false;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  return config.ref !&#x3D;&#x3D; undefined;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function hasValidKey(config) &#123;</span><br><span class="line">  if (__DEV__) &#123;</span><br><span class="line">    if (hasOwnProperty.call(config, &#39;key&#39;)) &#123;</span><br><span class="line">      const getter &#x3D; Object.getOwnPropertyDescriptor(config, &#39;key&#39;).get;</span><br><span class="line">      if (getter &amp;&amp; getter.isReactWarning) &#123;</span><br><span class="line">        return false;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  return config.key !&#x3D;&#x3D; undefined;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>isReactWarning?<br>Object.defineProperty?<br>Object.getOwnPropertyNames?</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/03/collections/JavaScript/hasOwnProperty/" data-id="ckdetl81e0000y4qa6hgnhet4" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/hexo-blog/2020/08/04/collections/JavaScript/defineProperty/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          defineProperty
+        
+      </div>
+    </a>
+  
+  
+    <a href="/hexo-blog/2020/07/28/collections/markdown/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">MarkDown语法</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/hexo-blog/categories/hexo/">hexo</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/07/">七月 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/hexo-blog/2020/08/04/collections/JavaScript/defineProperty/">defineProperty</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2020/08/03/collections/JavaScript/hasOwnProperty/">hasOwnProperty 和 getOwnPropertyDescriptor</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2020/07/28/collections/markdown/">MarkDown语法</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2020/07/26/hexo/init/">Hexo博客搭建记录</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 ewqazxc<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/hexo-blog/" class="mobile-nav-link">主页</a>
+  
+    <a href="/hexo-blog/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/hexo-blog/about/me.html" class="mobile-nav-link">关于</a>
+  
+</nav>
+    
+
+
+<script src="/hexo-blog/js/jquery-2.0.3.min.js"></script>
+
+
+
+  
+<link rel="stylesheet" href="/hexo-blog/fancybox/jquery.fancybox.css">
+
+  
+<script src="/hexo-blog/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/hexo-blog/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
