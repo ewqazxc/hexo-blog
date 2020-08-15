@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>基于Node.js 大文件分片上传 | #一如既往、</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="文件上传的时候，文件过大，可能导致请求超时的情况。这时可以对文件进行分片上传  创建项目 创建文件夹并生成package.json123mkdir fileUploadcd dileUploadnpm init -y 安装相关依赖1npm install express multiparty body-parser fs-extra   express web模块 multiparty 上传模块">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于Node.js 大文件分片上传">
+<meta property="og:url" content="https://ewqazxc.github.io/hexo-blog/2020/08/11/collections/File/%E5%9F%BA%E4%BA%8ENodeJs%E5%A4%A7%E6%96%87%E4%BB%B6%E5%88%86%E7%89%87%E4%B8%8A%E4%BC%A0/index.html">
+<meta property="og:site_name" content="#一如既往、">
+<meta property="og:description" content="文件上传的时候，文件过大，可能导致请求超时的情况。这时可以对文件进行分片上传  创建项目 创建文件夹并生成package.json123mkdir fileUploadcd dileUploadnpm init -y 安装相关依赖1npm install express multiparty body-parser fs-extra   express web模块 multiparty 上传模块">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-08-10T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-08-15T13:48:40.798Z">
+<meta property="article:author" content="ewqazxc">
+<meta name="twitter:card" content="summary">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <!-- 
+<link rel="stylesheet" href="/hexo-blog/%7B%22title%22:%22#%E4%B8%80%E5%A6%82%E6%97%A2%E5%BE%80%E3%80%81%22,%22subtitle%22:%22%E4%B8%8D%E7%9F%A5%E9%81%93%E5%86%99%E7%9A%84%E4%BB%80%E4%B9%88%E7%9A%84%E5%8D%9A%E5%AE%A2~%22,%22description%22:%22description%22,%22author%22:%22ewqazxc%22,%22language%22:%22zh-CN%22,%22timezone%22:%22Asia/Shanghai%22,%22url%22:%22https:/ewqazxc.github.io/hexo-blog%22,%22root%22:%22/hexo-blog/%22,%22permalink%22:%22:year/:month/:day/:title/%22,%22permalink_defaults%22:null,%22pretty_urls%22:%7B%22trailing_index%22:true,%22trailing_html%22:true%7D,%22source_dir%22:%22source%22,%22public_dir%22:%22public%22,%22tag_dir%22:%22tags%22,%22archive_dir%22:%22archives%22,%22category_dir%22:%22categories%22,%22code_dir%22:%22downloads/code%22,%22i18n_dir%22:%22:lang%22,%22skip_render%22:null,%22new_post_name%22:%22:title.md%22,%22default_layout%22:%22post%22,%22titlecase%22:false,%22external_link%22:%7B%22enable%22:true,%22field%22:%22site%22,%22exclude%22:%22%22%7D,%22filename_case%22:0,%22render_drafts%22:false,%22post_asset_folder%22:false,%22relative_link%22:false,%22future%22:true,%22highlight%22:%7B%22enable%22:true,%22auto_detect%22:false,%22line_number%22:true,%22tab_replace%22:%22%22,%22wrap%22:true,%22hljs%22:false,%22first_line_number%22:%22always1%22%7D,%22default_category%22:%22uncategorized%22,%22category_map%22:null,%22tag_map%22:null,%22date_format%22:%22YYYY-MM-DD%22,%22time_format%22:%22HH:mm:ss%22,%22use_date_for_updated%22:false,%22per_page%22:10,%22pagination_dir%22:%22page%22,%22theme%22:%22landscape%22,%22server%22:%7B%22port%22:4000,%22log%22:false,%22compress%22:false,%22header%22:true,%22cache%22:false%7D,%22deploy%22:%7B%22type%22:%22%22%7D,%22ignore%22:null,%22meta_generator%22:true,%22keywords%22:null,%22index_generator%22:%7B%22per_page%22:10,%22order_by%22:%22-date%22,%22path%22:%22%22%7D,%22include%22:null,%22exclude%22:null,%22archive_generator%22:%7B%22per_page%22:10,%22yearly%22:true,%22monthly%22:true,%22daily%22:false%7D,%22category_generator%22:%7B%22per_page%22:10%7D,%22tag_generator%22:%7B%22per_page%22:10%7D,%22marked%22:%7B%22gfm%22:true,%22pedantic%22:false,%22breaks%22:true,%22smartLists%22:true,%22smartypants%22:true,%22modifyAnchors%22:%22%22,%22autolink%22:true,%22sanitizeUrl%22:false,%22headerIds%22:true%7D%7D.css">
+ -->
+  
+<link rel="stylesheet" href="/hexo-blog/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/hexo-blog/" id="logo">#一如既往、</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/hexo-blog/" id="subtitle">不知道写的什么的博客~</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/hexo-blog/">主页</a>
+        
+          <a class="main-nav-link" href="/hexo-blog/archives">归档</a>
+        
+          <a class="main-nav-link" href="/hexo-blog/about/me.html">关于</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://ewqazxc.github.io/hexo-blog"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-collections/File/基于NodeJs大文件分片上传" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo-blog/2020/08/11/collections/File/%E5%9F%BA%E4%BA%8ENodeJs%E5%A4%A7%E6%96%87%E4%BB%B6%E5%88%86%E7%89%87%E4%B8%8A%E4%BC%A0/" class="article-date">
+  <time datetime="2020-08-10T16:00:00.000Z" itemprop="datePublished">2020-08-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      基于Node.js 大文件分片上传
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>文件上传的时候，文件过大，可能导致请求超时的情况。这时可以对文件进行分片上传</p>
+</blockquote>
+<h2 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h2><ol>
+<li>创建文件夹并生成<code>package.json</code><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> fileUpload</span><br><span class="line"><span class="built_in">cd</span> dileUpload</span><br><span class="line">npm init -y</span><br></pre></td></tr></table></figure></li>
+<li>安装相关依赖<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install express multiparty body-parser <span class="built_in">fs</span>-extra</span><br></pre></td></tr></table></figure></li>
+</ol>
+<ul>
+<li>express web模块</li>
+<li>multiparty 上传模块</li>
+<li>body-parser 处理post 请求模块</li>
+<li>fs-extra 文件操作模块</li>
+</ul>
+<ol start="3">
+<li>新建静态资源目录public 上传临时目录temp<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> public</span><br><span class="line"><span class="built_in">mkdir</span> temp</span><br></pre></td></tr></table></figure></li>
+<li>新建服务端文件 server.js 上传网页public/index.html</li>
+</ol>
+<h2 id="编写服务端代码-server-js"><a href="#编写服务端代码-server-js" class="headerlink" title="编写服务端代码 server.js"></a>编写服务端代码 server.js</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</span><br><span class="line"><span class="keyword">const</span> bodyParser = <span class="built_in">require</span>(<span class="string">'body-parser'</span>);</span><br><span class="line"><span class="keyword">const</span> multiparty = <span class="built_in">require</span>(<span class="string">'multiparty'</span>);</span><br><span class="line"><span class="keyword">const</span> fse = <span class="built_in">require</span>(<span class="string">'fs-extra'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = express();</span><br><span class="line"></span><br><span class="line">app.use(express.static(__dirname + <span class="string">'/public'</span>));</span><br><span class="line"></span><br><span class="line">app.use(bodyParser.urlencoded(&#123; <span class="attr">extended</span>: <span class="literal">true</span> &#125;));</span><br><span class="line">app.use(bodyParser.json());</span><br><span class="line"></span><br><span class="line">app.post(<span class="string">'/upload'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> form = <span class="keyword">new</span> multiparty.Form(&#123; <span class="attr">uploadDir</span>: <span class="string">'temp'</span> &#125;);</span><br><span class="line">  form.parse(req);</span><br><span class="line">  form.on(<span class="string">'file'</span>, () =&gt; &#123;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'file?::'</span>);</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  res.send(<span class="string">'文件上传成功'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">3000</span>);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'listenning...3000...'</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="编写上传页面-public-index-html"><a href="#编写上传页面-public-index-html" class="headerlink" title="编写上传页面 public/index.html"></a>编写上传页面 public/index.html</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1.0"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>文件上传<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span> <span class="attr">id</span>=<span class="string">"btnFile"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">value</span>=<span class="string">"上传"</span> <span class="attr">onclick</span>=<span class="string">"upload()"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">      <span class="keyword">let</span> btnFile = <span class="built_in">document</span>.querySelector(<span class="string">'#btnFile'</span>);</span></span><br><span class="line"><span class="javascript">      <span class="built_in">console</span>.log(<span class="string">'btnFile::'</span>, btnFile);</span></span><br><span class="line"><span class="actionscript">      <span class="function"><span class="keyword">function</span> <span class="title">upload</span><span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> file = btnFile.files[<span class="number">0</span>];</span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> formData = <span class="keyword">new</span> FormData();</span></span><br><span class="line"><span class="actionscript">        formData.append(<span class="string">'file'</span>, file);</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">'fetch::'</span>, fetch);</span></span><br><span class="line"><span class="actionscript">        fetch(<span class="string">'/upload'</span>,&#123;</span></span><br><span class="line"><span class="actionscript">          method: <span class="string">'POST'</span>,</span></span><br><span class="line">          body: formData</span><br><span class="line"><span class="javascript">        &#125;).then(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">          <span class="built_in">console</span>.log(<span class="string">'res::'</span>, res);</span></span><br><span class="line">        &#125;);</span><br><span class="line">      &#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>此时，可以从页面上传文件至项目的temp 目录下</p>
+<h2 id="添加分片上传功能"><a href="#添加分片上传功能" class="headerlink" title="添加分片上传功能"></a>添加分片上传功能</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> chunkSize = <span class="number">1024</span> * <span class="number">1024</span>; <span class="comment">// 每个分片大小</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">upload</span>(<span class="params">index</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> file = btnFile.files[<span class="number">0</span>];</span><br><span class="line">  <span class="keyword">let</span> [fileName, fileExt] = file.name.split(<span class="string">'.'</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> start = index * chunkSize;</span><br><span class="line">  <span class="keyword">if</span> (start &gt; file.size) &#123; </span><br><span class="line">    <span class="keyword">return</span>; <span class="comment">// 结束文件上传</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> blob = file.slice(start, start + chunkSize); <span class="comment">// 截取分片数据</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> blobName = <span class="string">`<span class="subst">$&#123;fileName&#125;</span>.<span class="subst">$&#123;index&#125;</span>.<span class="subst">$&#123;fileExt&#125;</span>`</span>;</span><br><span class="line">  <span class="keyword">let</span> blobFile = <span class="keyword">new</span> File([blob], blobName); <span class="comment">// 转换分片文件</span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'blobName::'</span>, blobName);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> formData = <span class="keyword">new</span> FormData();</span><br><span class="line">  formData.append(<span class="string">'file'</span>, blobFile);</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'fetch::'</span>, fetch);</span><br><span class="line">  fetch(<span class="string">'/upload'</span>, &#123;</span><br><span class="line">    method: <span class="string">'POST'</span>,</span><br><span class="line">    body: formData</span><br><span class="line">  &#125;).then(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'res::'</span>, res);</span><br><span class="line">    <span class="keyword">if</span> (res.ok) &#123;</span><br><span class="line">      upload(++index);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="添加分片合并功能"><a href="#添加分片合并功能" class="headerlink" title="添加分片合并功能"></a>添加分片合并功能</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">app.post(<span class="string">'/merge'</span>, <span class="keyword">async</span> <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> name = req.body.name;</span><br><span class="line">  <span class="keyword">let</span> fname = name.split(<span class="string">'.'</span>)[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> chunkDir = path.join(UPLOAD_DIR, fname);</span><br><span class="line">  <span class="keyword">let</span> chunks = <span class="keyword">await</span> fse.readdir(chunkDir);</span><br><span class="line"></span><br><span class="line">  chunks.sort(<span class="function">(<span class="params">a, b</span>) =&gt;</span> &#123; a - b &#125;).map(<span class="function"><span class="params">chunkPath</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 合并文件</span></span><br><span class="line">    fs.appendFileSync(</span><br><span class="line">      path.join(UPLOAD_DIR, name),</span><br><span class="line">      fs.readFileSync(<span class="string">`<span class="subst">$&#123;chunkDir&#125;</span>/<span class="subst">$&#123;chunkPath&#125;</span>`</span>)</span><br><span class="line">    )</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  fse.removeSync(chunkDir);</span><br><span class="line">  res.send(&#123; <span class="attr">msg</span>: <span class="string">'合并成功'</span>, <span class="attr">url</span>: <span class="string">`//localhost:3000/upload/<span class="subst">$&#123;name&#125;</span>`</span> &#125;); <span class="comment">// 返回文件所在目录地址 </span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>index.html 中</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (start &gt; file.size) &#123;</span><br><span class="line">  merge(file.name);<span class="comment">// 上传结束，并调用合并方法</span></span><br><span class="line">  <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">merge</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  fetch(<span class="string">'/merge'</span>, &#123;</span><br><span class="line">    method: <span class="string">'POST'</span>,</span><br><span class="line">    body: <span class="built_in">JSON</span>.stringify(&#123; <span class="attr">name</span>: name &#125;), <span class="comment">// data can be `string` or &#123;object&#125;!</span></span><br><span class="line">    headers: <span class="keyword">new</span> Headers(&#123;</span><br><span class="line">      <span class="string">'Content-Type'</span>: <span class="string">'application/json'</span></span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="备注"><a href="#备注" class="headerlink" title="备注"></a>备注</h2><ul>
+<li>当chunkSize 过小时，合并后的视频文件进度调整会有异常 （4M 正常）</li>
+<li>代码：<a href="https://github.com/ewqazxc/nodeJs-file-slice-upload" target="_blank" rel="noopener">github_nodeJs-file-slice-upload</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/11/collections/File/%E5%9F%BA%E4%BA%8ENodeJs%E5%A4%A7%E6%96%87%E4%BB%B6%E5%88%86%E7%89%87%E4%B8%8A%E4%BC%A0/" data-id="ckdq4102s0002l4qadlpyc05k" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/hexo-blog/2020/08/11/collections/JavaScript/%E5%8F%AF%E8%BF%AD%E4%BB%A3%E5%AF%B9%E8%B1%A1/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">未来</strong>
+      <div class="article-nav-title">
+        
+          可迭代对象(iterable object) Iterator
+        
+      </div>
+    </a>
+  
+  
+    <a href="/hexo-blog/2020/08/10/collections/JavaScript/for%20of%20%E5%92%8Cfor%20await%20of/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">过去</strong>
+      <div class="article-nav-title">for...of 和 for await ... of</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/hexo-blog/categories/hexo/">hexo</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/07/">七月 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/hexo-blog/2020/08/15/collections/Cli/nodeCli%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7/">简单开发一个完整的命令行工具</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2020/08/11/collections/JavaScript/%E5%8F%AF%E8%BF%AD%E4%BB%A3%E5%AF%B9%E8%B1%A1/">可迭代对象(iterable object) Iterator</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2020/08/11/collections/File/%E5%9F%BA%E4%BA%8ENodeJs%E5%A4%A7%E6%96%87%E4%BB%B6%E5%88%86%E7%89%87%E4%B8%8A%E4%BC%A0/">基于Node.js 大文件分片上传</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2020/08/10/collections/JavaScript/for%20of%20%E5%92%8Cfor%20await%20of/">for...of 和 for await ... of</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2020/08/09/collections/JavaScript/JavaScript%E7%9A%84%E4%B8%B4%E6%97%B6%E5%8C%85%E8%A3%85%E5%AF%B9%E8%B1%A1/">JavaScript的临时包装对象</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 ewqazxc<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/hexo-blog/" class="mobile-nav-link">主页</a>
+  
+    <a href="/hexo-blog/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/hexo-blog/about/me.html" class="mobile-nav-link">关于</a>
+  
+</nav>
+    
+
+
+<script src="/hexo-blog/js/jquery-2.0.3.min.js"></script>
+
+
+
+  
+<link rel="stylesheet" href="/hexo-blog/fancybox/jquery.fancybox.css">
+
+  
+<script src="/hexo-blog/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/hexo-blog/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

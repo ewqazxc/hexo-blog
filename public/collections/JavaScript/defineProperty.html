@@ -7,15 +7,15 @@
   
   <title>defineProperty | #一如既往、</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Object.defineProperty()  Object。defineProperty（）方法会直接在一个对象上定义一个新属性，或者修改一个对象的现有属性，并返回此对象  备注：应当直接在object构造器对象上调用此方法，而不是在任意一个Object类型的实例上调用  Demo1234567const obj &#x3D; &amp;#123;&amp;#125;;Object.definePropert">
+  <meta name="description" content="Object.defineProperty()  Object.defineProperty（）方法会直接在一个对象上定义一个新属性，或者修改一个对象的现有属性，并返回此对象  备注：应当直接在object构造器对象上调用此方法，而不是在任意一个Object类型的实例上调用  Demo1234567const obj &#x3D; &amp;#123;&amp;#125;;Object.definePropert">
 <meta property="og:type" content="website">
 <meta property="og:title" content="defineProperty">
 <meta property="og:url" content="https://ewqazxc.github.io/hexo-blog/collections/JavaScript/defineProperty.html">
 <meta property="og:site_name" content="#一如既往、">
-<meta property="og:description" content="Object.defineProperty()  Object。defineProperty（）方法会直接在一个对象上定义一个新属性，或者修改一个对象的现有属性，并返回此对象  备注：应当直接在object构造器对象上调用此方法，而不是在任意一个Object类型的实例上调用  Demo1234567const obj &#x3D; &amp;#123;&amp;#125;;Object.definePropert">
+<meta property="og:description" content="Object.defineProperty()  Object.defineProperty（）方法会直接在一个对象上定义一个新属性，或者修改一个对象的现有属性，并返回此对象  备注：应当直接在object构造器对象上调用此方法，而不是在任意一个Object类型的实例上调用  Demo1234567const obj &#x3D; &amp;#123;&amp;#125;;Object.definePropert">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-08-03T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-08-04T17:41:13.059Z">
+<meta property="article:modified_time" content="2020-08-09T13:22:12.638Z">
 <meta property="article:author" content="ewqazxc">
 <meta name="twitter:card" content="summary">
   
@@ -26,7 +26,7 @@
     <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
   
   <!-- 
-<link rel="stylesheet" href="/hexo-blog/%7B%22title%22:%22#%E4%B8%80%E5%A6%82%E6%97%A2%E5%BE%80%E3%80%81%22,%22subtitle%22:%22%E4%B8%8D%E7%9F%A5%E9%81%93%E5%86%99%E7%9A%84%E4%BB%80%E4%B9%88%E7%9A%84%E5%8D%9A%E5%AE%A2~%22,%22description%22:%22description%22,%22author%22:%22ewqazxc%22,%22language%22:%22zh-CN%22,%22timezone%22:%22Asia/Shanghai%22,%22url%22:%22https:/ewqazxc.github.io/hexo-blog%22,%22root%22:%22/hexo-blog/%22,%22permalink%22:%22:year/:month/:day/:title/%22,%22permalink_defaults%22:null,%22pretty_urls%22:%7B%22trailing_index%22:true,%22trailing_html%22:true%7D,%22source_dir%22:%22source%22,%22public_dir%22:%22public%22,%22tag_dir%22:%22tags%22,%22archive_dir%22:%22archives%22,%22category_dir%22:%22categories%22,%22code_dir%22:%22downloads/code%22,%22i18n_dir%22:%22:lang%22,%22skip_render%22:null,%22new_post_name%22:%22:title.md%22,%22default_layout%22:%22post%22,%22titlecase%22:false,%22external_link%22:%7B%22enable%22:true,%22field%22:%22site%22,%22exclude%22:%22%22%7D,%22filename_case%22:0,%22render_drafts%22:false,%22post_asset_folder%22:false,%22relative_link%22:false,%22future%22:true,%22highlight%22:%7B%22enable%22:true,%22auto_detect%22:false,%22line_number%22:true,%22tab_replace%22:%22%22,%22wrap%22:true,%22hljs%22:false%7D,%22default_category%22:%22uncategorized%22,%22category_map%22:null,%22tag_map%22:null,%22date_format%22:%22YYYY-MM-DD%22,%22time_format%22:%22HH:mm:ss%22,%22use_date_for_updated%22:false,%22per_page%22:10,%22pagination_dir%22:%22page%22,%22theme%22:%22landscape%22,%22server%22:%7B%22port%22:4000,%22log%22:false,%22compress%22:false,%22header%22:true,%22cache%22:false%7D,%22deploy%22:%7B%22type%22:%22%22%7D,%22ignore%22:null,%22meta_generator%22:true,%22keywords%22:null,%22index_generator%22:%7B%22per_page%22:10,%22order_by%22:%22-date%22,%22path%22:%22%22%7D,%22include%22:null,%22exclude%22:null,%22archive_generator%22:%7B%22per_page%22:10,%22yearly%22:true,%22monthly%22:true,%22daily%22:false%7D,%22tag_generator%22:%7B%22per_page%22:10%7D,%22marked%22:%7B%22gfm%22:true,%22pedantic%22:false,%22breaks%22:true,%22smartLists%22:true,%22smartypants%22:true,%22modifyAnchors%22:%22%22,%22autolink%22:true,%22sanitizeUrl%22:false,%22headerIds%22:true%7D,%22category_generator%22:%7B%22per_page%22:10%7D%7D.css">
+<link rel="stylesheet" href="/hexo-blog/%7B%22title%22:%22#%E4%B8%80%E5%A6%82%E6%97%A2%E5%BE%80%E3%80%81%22,%22subtitle%22:%22%E4%B8%8D%E7%9F%A5%E9%81%93%E5%86%99%E7%9A%84%E4%BB%80%E4%B9%88%E7%9A%84%E5%8D%9A%E5%AE%A2~%22,%22description%22:%22description%22,%22author%22:%22ewqazxc%22,%22language%22:%22zh-CN%22,%22timezone%22:%22Asia/Shanghai%22,%22url%22:%22https:/ewqazxc.github.io/hexo-blog%22,%22root%22:%22/hexo-blog/%22,%22permalink%22:%22:year/:month/:day/:title/%22,%22permalink_defaults%22:null,%22pretty_urls%22:%7B%22trailing_index%22:true,%22trailing_html%22:true%7D,%22source_dir%22:%22source%22,%22public_dir%22:%22public%22,%22tag_dir%22:%22tags%22,%22archive_dir%22:%22archives%22,%22category_dir%22:%22categories%22,%22code_dir%22:%22downloads/code%22,%22i18n_dir%22:%22:lang%22,%22skip_render%22:null,%22new_post_name%22:%22:title.md%22,%22default_layout%22:%22post%22,%22titlecase%22:false,%22external_link%22:%7B%22enable%22:true,%22field%22:%22site%22,%22exclude%22:%22%22%7D,%22filename_case%22:0,%22render_drafts%22:false,%22post_asset_folder%22:false,%22relative_link%22:false,%22future%22:true,%22highlight%22:%7B%22enable%22:true,%22auto_detect%22:false,%22line_number%22:true,%22tab_replace%22:%22%22,%22wrap%22:true,%22hljs%22:false,%22first_line_number%22:%22always1%22%7D,%22default_category%22:%22uncategorized%22,%22category_map%22:null,%22tag_map%22:null,%22date_format%22:%22YYYY-MM-DD%22,%22time_format%22:%22HH:mm:ss%22,%22use_date_for_updated%22:false,%22per_page%22:10,%22pagination_dir%22:%22page%22,%22theme%22:%22landscape%22,%22server%22:%7B%22port%22:4000,%22log%22:false,%22compress%22:false,%22header%22:true,%22cache%22:false%7D,%22deploy%22:%7B%22type%22:%22%22%7D,%22ignore%22:null,%22meta_generator%22:true,%22keywords%22:null,%22index_generator%22:%7B%22per_page%22:10,%22order_by%22:%22-date%22,%22path%22:%22%22%7D,%22include%22:null,%22exclude%22:null,%22archive_generator%22:%7B%22per_page%22:10,%22yearly%22:true,%22monthly%22:true,%22daily%22:false%7D,%22category_generator%22:%7B%22per_page%22:10%7D,%22tag_generator%22:%7B%22per_page%22:10%7D,%22marked%22:%7B%22gfm%22:true,%22pedantic%22:false,%22breaks%22:true,%22smartLists%22:true,%22smartypants%22:true,%22modifyAnchors%22:%22%22,%22autolink%22:true,%22sanitizeUrl%22:false,%22headerIds%22:true%7D%7D.css">
  -->
   
 <link rel="stylesheet" href="/hexo-blog/css/style.css">
@@ -93,7 +93,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="Object-defineProperty"><a href="#Object-defineProperty" class="headerlink" title="Object.defineProperty()"></a>Object.defineProperty()</h2><p>  <code>Object。defineProperty（）</code>方法会直接在一个对象上定义一个新属性，或者修改一个对象的现有属性，并返回此对象</p>
+        <h2 id="Object-defineProperty"><a href="#Object-defineProperty" class="headerlink" title="Object.defineProperty()"></a>Object.defineProperty()</h2><p>  <code>Object.defineProperty（）</code>方法会直接在一个对象上定义一个新属性，或者修改一个对象的现有属性，并返回此对象</p>
 <blockquote>
 <p>备注：应当直接在<code>object</code>构造器对象上调用此方法，而不是在任意一个<code>Object</code>类型的实例上调用</p>
 </blockquote>
@@ -110,11 +110,7 @@
 <p>  对象里目前存在的属性描述符有两种主要形式：数据描述符和存取描述符。数据描述符是一个具有值的属性，该值是可写的，也可以是不可写的。存取描述符是由<code>getter函数</code>和<code>setter函数</code>所描述的属性。一个描述符只能是其中之一，不能同时是两者</p>
 <p>  这两种<code>描述符</code>都是对象，它们共享以下可选键值<br>    * configurable 默认为 false<br>      当且仅当该属性的<code>configurable</code>键值为<code>true</code>时，该属性的描述符才能够被改变，同时该属性也能从对应的对象上被删除<br>    * enumerable 默认为 false<br>      当且仅当改属性的<code>enumerable</code>键值为<code>true</code>时，该属性才会出现在对象的枚举属性中</p>
 <p>  数据描述符可选键<br>    * value 默认为 undefined<br>      该属性对应的值。可以是任何有效的JavaScript值<br>    * writable ，默认为 false<br>      当且仅当该属性的<code>writable</code>键值为<code>true</code>时，属性的值，也就是上面的<code>value</code>，才能被赋值运算符改变</p>
-<p>  存取描述符可选键<br>    * get 默认为 undefined<br>      属性的·getter函数<code>，如果没有getter，则为undefined。
-      当访问该属性时，会调用此函数，执行时不传入任何参数，但是会传入</code>this<code>对象（由于继承关系，这里的this并不一定是定义该属性的对象）
-      该函数的返回值会被用作属性的值
-    * set 默认为 undefined
-      属性的</code>setter函数`，如果没有setter，则为undefined<br>      当属性被修改时，会调用此函数<br>      该方法会接受一个参数（也就是被赋予的新值），会传入赋值时的this对象</p>
+<p>  存取描述符可选键<br>    * get 默认为 undefined<br>      属性的<code>·getter函数</code>，如果没有getter，则为undefined。<br>      当访问该属性时，会调用此函数，执行时不传入任何参数，但是会传入<code>this</code>对象（由于继承关系，这里的this并不一定是定义该属性的对象）<br>      该函数的返回值会被用作属性的值<br>    * set 默认为 undefined<br>      属性的<code>setter函数</code>，如果没有setter，则为undefined<br>      当属性被修改时，会调用此函数<br>      该方法会接受一个参数（也就是被赋予的新值），会传入赋值时的this对象</p>
 <p>  如果一个描述符不具有 value、writable、get 和 set 中的任意一个键，那么它将被认为是一个数据描述符。如果一个描述符同时拥有 value 或 writable 和 get 或 set 键，则会产生一个异常。</p>
 <p>  这些选项不一定是自身的属性，也要考虑继承来的属性。为了确认保留这些默认值，在设置之前，可能要冻结<code>Object.prototype</code>，明确指定所有的选项，或者通过<code>Object.create(null)</code>将<code>_proto_</code>属性指向<code>null</code></p>
   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 使用 _proto_</span><br><span class="line">var obj &#x3D; &#123;&#125;;</span><br><span class="line">var desc &#x3D; Object.create(null); &#x2F;&#x2F; 没有继承属性</span><br><span class="line">desc.value &#x3D; &#39;static&#39;;</span><br><span class="line">Object.defineProperty(obj,&#39;key&#39;,desc);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 显式</span><br><span class="line">Object.defineProperty(obj,&#39;key&#39;,&#123;</span><br><span class="line">  enumerable: false,</span><br><span class="line">  configurable: false,</span><br><span class="line">  weritable: false,</span><br><span class="line">  value: &#39;static&#39;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 循环使用同一对象</span><br><span class="line">function withValue(value)&#123;</span><br><span class="line">  var d &#x3D; withValue.d || (</span><br><span class="line">    withValue.d &#x3D; &#123;</span><br><span class="line">      enumerable: false,</span><br><span class="line">      writable: false,</span><br><span class="line">      configurable: false,</span><br><span class="line">      value: null</span><br><span class="line">    &#125;</span><br><span class="line">  );</span><br><span class="line">  d.value &#x3D; value;</span><br><span class="line">  return d;</span><br><span class="line">&#125;</span><br><span class="line">Object.defineProperty(obj,&#39;key&#39;,withValue(&#39;static&#39;));</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 如果 freeze 可用, 防止后续代码添加或删除对象原型的属性</span><br><span class="line">&#x2F;&#x2F; （value, get, set, enumerable, writable, configurable）</span><br><span class="line">(Object.freeze||Object)(Object.prototype); &#x2F;&#x2F; 不能添加 修改 删除</span><br></pre></td></tr></table></figure>
@@ -172,19 +168,23 @@
       <ul>
         
           <li>
-            <a href="/hexo-blog/2020/08/04/collections/JavaScript/defineProperty/">defineProperty</a>
+            <a href="/hexo-blog/2020/08/15/collections/Cli/nodeCli%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7/">简单开发一个完整的命令行工具</a>
           </li>
         
           <li>
-            <a href="/hexo-blog/2020/08/03/collections/JavaScript/hasOwnProperty/">hasOwnProperty 和 getOwnPropertyDescriptor</a>
+            <a href="/hexo-blog/2020/08/11/collections/JavaScript/%E5%8F%AF%E8%BF%AD%E4%BB%A3%E5%AF%B9%E8%B1%A1/">可迭代对象(iterable object) Iterator</a>
           </li>
         
           <li>
-            <a href="/hexo-blog/2020/07/28/collections/markdown/">MarkDown语法</a>
+            <a href="/hexo-blog/2020/08/11/collections/File/%E5%9F%BA%E4%BA%8ENodeJs%E5%A4%A7%E6%96%87%E4%BB%B6%E5%88%86%E7%89%87%E4%B8%8A%E4%BC%A0/">基于Node.js 大文件分片上传</a>
           </li>
         
           <li>
-            <a href="/hexo-blog/2020/07/26/hexo/init/">Hexo博客搭建记录</a>
+            <a href="/hexo-blog/2020/08/10/collections/JavaScript/for%20of%20%E5%92%8Cfor%20await%20of/">for...of 和 for await ... of</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2020/08/09/collections/JavaScript/JavaScript%E7%9A%84%E4%B8%B4%E6%97%B6%E5%8C%85%E8%A3%85%E5%AF%B9%E8%B1%A1/">JavaScript的临时包装对象</a>
           </li>
         
       </ul>

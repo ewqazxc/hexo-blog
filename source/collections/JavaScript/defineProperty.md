@@ -4,7 +4,7 @@ date: 2020-08-04
 ---
 
 ## Object.defineProperty()
-  `Object。defineProperty（）`方法会直接在一个对象上定义一个新属性，或者修改一个对象的现有属性，并返回此对象
+  `Object.defineProperty（）`方法会直接在一个对象上定义一个新属性，或者修改一个对象的现有属性，并返回此对象
   > 备注：应当直接在`object`构造器对象上调用此方法，而不是在任意一个`Object`类型的实例上调用
 
 ### Demo
@@ -52,7 +52,7 @@ console。log(obj.prop); // 66
   
   存取描述符可选键
     * get 默认为 undefined
-      属性的·getter函数`，如果没有getter，则为undefined。
+      属性的`·getter函数`，如果没有getter，则为undefined。
       当访问该属性时，会调用此函数，执行时不传入任何参数，但是会传入`this`对象（由于继承关系，这里的this并不一定是定义该属性的对象）
       该函数的返回值会被用作属性的值
     * set 默认为 undefined
