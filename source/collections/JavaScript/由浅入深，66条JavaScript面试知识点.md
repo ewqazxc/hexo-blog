@@ -523,5 +523,67 @@ substring() | 提取两个指定的索引号之间的字符
 
   ### 25 常用的正则表达式
 
-  ### 26
+  ```js
+    // 匹配16进制颜色值
+    const color = /#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})/g
+
+    // 匹配日期，如 yyyy-mm-dd 格式
+    const date = /^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
+
+    // 匹配QQ号
+    const qq = /^[1-9][0-9]{4,10}$/g
+
+    // 手机号码 34578
+    const phone = /^1[34578]\d{9}$/g
+
+    // 用户名
+    const userName = /^[a-zA-Z\$][a-zA-Z0-9_\$]{4,16}$/
+
+    // email
+    const email = /^([a-zA-Z0-9_\-\.])+\@([a-zA-Z0-9_\-\.])+\.([a-zA-Z]{2,4})$/
+    
+    // 身份证18位
+    const idCard = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/
+
+    // URL
+    const url = /^((https?|ftp|file):\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/
+
+    // ipv4
+    const ipv4 = /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/
+
+    // 车牌号
+    const carNo = /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[A-Z0-9]{4}[A-Z0-9挂学警港澳]{1}$/
+
+    // 必须包含大小写字母和数字的组合，不能使用特殊字符，长度在8-10之间
+    const psw = /^(?=.\d)(?=.[a-z])(?=.[A-Z]).{8,10}$/
+  ```
+
+  ### 26 Ajax 是什么？如何创建Ajax？
+
+  Ajax 是一种异步通信的方法，通过js 脚本向服务器发起http 通信，然后根据服务器返回的数据，更新网页的相应部分，而不用刷新整个页面的一种方法
+
+  **创建步骤**
+
+  创建xhr 对象 -> 配置Ajax 请求地址 -> 发送请求 -> 监听请求，接受响应
+
+  ***原生写法***
+  ```js
+    // 创建xhr 对象
+    const xhr = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXOBjext('Microsoft.XMLHTTP'); // 兼容IE 6以下版本
+
+    // 配置Ajax 请求地址
+    xhr.open('get','index.html',true);
+
+    // 发送请求
+    xhr.send(null);
+
+    // 监听请求，接受响应
+    xhr.onreadystatechange = function(){
+      if(xhr.readyState == 4 && xhr.status == 200 || xhr.status == 304){
+        console.log(xhr.responsetXML);
+      }
+    }
+  ```
+
+  ### 27
 
