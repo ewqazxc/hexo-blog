@@ -567,6 +567,7 @@ substring() | 提取两个指定的索引号之间的字符
   创建xhr 对象 -> 配置Ajax 请求地址 -> 发送请求 -> 监听请求，接受响应
 
   ***原生写法***
+
   ```js
     // 创建xhr 对象
     const xhr = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXOBjext('Microsoft.XMLHTTP'); // 兼容IE 6以下版本
@@ -585,5 +586,774 @@ substring() | 提取两个指定的索引号之间的字符
     }
   ```
 
-  ### 27
+  **JQuery写法**
 
+  ```js
+    $.ajax({
+      type:'post',
+      url:'/',
+      async:true,
+      data:data,
+      dataType:'jsonp',
+      success:function(res){
+
+      },
+      error:function(err)[
+
+      ]
+    })
+  ```
+
+  **Promise 封装实现**
+
+  ```js
+    function get(url){
+      let promise = new Promise(function(resolve,reject){
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET',url,true);
+
+        xhr.onreadystatechange = function(){
+          if(this.readState !== 4) return ;
+
+          if(this.status === 200){
+            resolve(this.respone);
+          }else{
+            reject(new Error(this.statusText));
+          }
+        };
+
+        xhr.onerror = function(){
+          reject(new Error(this.statusText));
+        };
+
+        xhr.responeType = 'json';
+
+        xhr.setRequestHeader('Accept','application/json');
+
+        xhr.send(null);
+      });
+
+      return promise;
+    }
+  ```
+
+  ### 27 js 延迟加载的方式有哪些？
+
+  js 的加载、解析和执行会阻塞页面的渲染过程，因此我们希望js脚本能够尽可能地延迟加载，提高页面的渲染速度
+
+  1. 将js 脚本放在文档的地步，使js 脚本尽可能地在左后来加载执行
+  2. 给js 脚本添加defer 属性，这个属性会让脚本的加载与文档的解析同步解析，然后在文档解析完成之后再执行这个脚本文件，这样就能使页面的渲染不被阻塞。多个设置了defer 属性的脚本按规范来说最后是顺序执行的，但是在一些浏览器中可能不是这样
+  3. 给js 脚本添加async 属性，这个属性回事脚本异步加载，不会阻塞页面的解析过程，但是当脚本加载完成后立即执行js 脚本，这个时候如果文档没有解析完成的话同样会被阻塞。多个async 属性的脚本的执行顺序是不可预测的，一般不会按照代码的顺序依次执行
+  4. 动态创建DOM 标签的方式，我们可以对文档的加载事件进行监听，当文档加载完成后再动态的创建script 标签来引入js 脚本
+
+  参考资料：[《JS 延迟加载的几种方式》](https://blog.csdn.net/meijory/article/details/76389762)、[《HTML 5 script async 属性》](https://www.w3school.com.cn/html5/att_script_async.asp)
+
+  ### 28 谈谈对模块化开发的理解
+
+  一个模块是实现一个特定功能的一组方法。在最开始的时候，js 只实现一些简单的功能，所以并没有模块的概念，但随着程序越来越复杂，代码的模块化开发编的越来越重要
+
+  由于函数具有独立作用域的特点，最原始的写法是使用函数来作为模块，这样解决了直接使用函数作为模块的一些缺点，但是这种办法会暴露所有的模块成员，外部代码可以修改内部属性的值
+
+  现在最常用的是立即执行函数的写法，通过利用闭包来实现模块私有作用域的建立，同时不会对全局作用域造成污染
+
+  相关资料：[《浅谈模块化开发》](https://juejin.im/post/6844903581661790216)、[《Javascript 模块化编程（一）：模块的写法》](http://www.ruanyifeng.com/blog/2012/10/javascript_module.html)、[《前端模块化：CommonJS，AMD，CMD，ES6》](https://juejin.im/post/6844903576309858318)、[《前端模块化：CommonJS，AMD，CMD，ES6》](https://juejin.im/post/6844903576309858318)、[《Module 的语法》](https://es6.ruanyifeng.com/#docs/module)
+
+  ### 29 js 的几种模块规范
+
+  1. CommonJS 方案，通过require 来引入模块，通过module.exports 定义模块的输出接口。这种模块加载方案是服务器端的解决方案，它是以同步的方式来引入模块的，因为在服务器端文件都存储在本地磁盘，所以读取非常快，所以以同步的方式加载没有问题，但是在浏览器端，由于模块的加载是使用网络请求，因此使用异步加载更加合适
+
+  2. AMD 方案，这种方案采用异步加载的方式来加载模块，模块的加载不影响后面语句的执行，所有依赖这个模块的语句都定义在一个回调函数中，等到加载完成后再执行回调函数，require.js 实现了AMD 规范
+
+  3. CMD 方案，这种方案和AMD 方案都是为了解决异步模块加载的问题，sea.js 实现了CMD 规范，它和require.js 的区别在于模块定义时对依赖的处理不同，对依赖模块的执行时机不同
+
+  4. ES6提出的 使用import 和 export 的形式来导入导出模块
+
+  ### 30 AMD 和 CMD 规范的区别
+
+  1. 在模块定义时对依赖的处理不同：AMD 推崇依赖前置，在定义模块的时候就要声明其依赖的模块。而CMD 则推崇就近依赖，只有在用到某个模块的时候再去require
+
+  2. 对依赖模块的执行时机处理不同：首先AMD 和CMD 对于模块的加载方式都是异步加载，不过它们的区别在于，模块的执行时机，AMD 在依赖模块加载完成后就直接执行依赖模块，依赖模块的执行顺序和我们的书写顺序不一定一致。而CMD 在依赖模块加载完成后并不执行，只是下载而已，等到所有依赖模块都加载好后，进入回调函数逻辑，遇到require 语句的时候才执行对应的模块，这样模块的执行顺序就和我们书写的顺序一致了
+
+  ```js
+     // CMD
+     define(function(require, exports, module){
+       let a = require('./a');
+       a.doSomething();
+       // ...
+       let b = require('./b'); // 依赖可就近书写
+       b.doSomething();
+
+     });
+
+     // AMD
+     define(['./a','./b'],function(a,b){
+       a.doSomething();
+       // ...
+       b.doSomething();
+     });
+  ```
+
+  参考资料：[《前端模块化，AMD 与 CMD 的区别》](https://juejin.im/post/6844903541853650951)
+
+  ### 31 ES6 模块与 CommonJS模块、AMD、CMD 的差异
+
+  1. CommonJS 模块输出的是一个值的拷贝，ES6 模块输出的是值的引用。CommonJS 模块输出的是值的拷贝，也就是说，一旦输出一个值，模块内部的变化就影响不到这个值。ES6 模块的运行机制与CommonJS 不一样。JS 引擎对脚本静态分析的时候，遇到模块加载命令 import，就会生成一个只读引用，等脚本真正执行时，再根据这个只读引用，到被加载的那个模块里面去取值
+
+  2. CommonJS 模块是运行时加载，ES6 模块是编译时输出接口。CommonJS 模块就是对象，即在输入时是先加载整个模块，生成一个对象，然后再从这个对象上面读取方法，这种加载称为“运行时加载”。而ES6 模块不是对象，它的对外接口只是一种静态定义，在代码静态解析阶段就会生成
+
+  ### 32 requireJS 的核心原理是什么？
+
+  require.js 的核心原理是通过动态创建script 脚本来引入模块，然后对每个脚本的load 事件进行监听，如果每个脚本都加载完成了，再调用回调函数
+
+  参考资料：[ 《requireJS 的用法和原理分析》](https://github.com/HRFE/blog/issues/10)、[《requireJS 的核心原理是什么？》](https://zhuanlan.zhihu.com/p/55039478)、[《requireJS 原理分析》](https://www.jianshu.com/p/5a39535909e4)
+
+  ### 33 谈谈JS的运行机制
+
+  1. js 单线程
+
+  JavaScript 语言的一大特点就是单线程，即同一时间只能做一件事情
+  ```md
+    JavaScript 的单线程，与它的用途有关。作为浏览器脚本语言，JavaScript 的主要用途是与用户互动，以及操作DOM。
+    
+    这决定了它只能是单线程，否则会带来很复杂的同步问题。比如，假定JavaScript 同时有两个线程，一个线程在某个DOM 节点上添加内容，另一个线程删除了这个节点，这时候浏览器应该以哪个线程为准？
+
+    所以，为了避免复杂性，从一诞生，JavaScript 就是单线程，这已经成了这门语言的核心特征，将来也不会改变
+  ```
+
+  2. js 事件循环
+
+  js 代码执行过程中会有很多的任务，这些任务总的分为两类
+  - 同步任务
+  - 异步任务
+
+  当我们打开网站时，网页的渲染过程就是一大推同步任务，比如页面骨架和页面元素的渲染。而像加载图片音乐之类占用资源大、耗时久的任务就是异步任务
+
+  ```md
+    任务进入执行栈
+    |
+    | 同步任务还是异步任务
+    | 
+    | -> 同步 -> 主线程 -> 任务全部执行完毕 -> 读取任务队列中的结果，进入主线程执行 <-↓
+    |
+    | -> 异步 -> Event Table -> 注册回调函数 -> Event Queue <---------------------↑
+  ```
+
+  - 同步和异步任务分别进入不同的执行“场所”，同步的进入主线程，异步的进入Event Table 并注册函数
+  - 当指定的事情完成时，Eevent Table 会将这个函数移入Event Queue
+  - 主线程内的任务执行完毕为空，会去Event Queue 读取对应的函数，进入主线程执行
+  - 上述过程会不断重复，也就是常说的Event Loop 事件循环
+
+  **那么主线程执行栈何时为空呢？**
+
+  js 引擎存在moitoring process 进程，会持续不断的检查主线程执行栈是否为空，一旦为空，就会去Event Queue 那里检查是否有等待被调用的函数
+
+  以上就是js 运行的整体流程，需要注意的是，除了同步任务和异步任务，任务还可以分为macrotask（宏任务）和microtask（微任务），js 会优先执行微任务
+  ```md
+    微任务包括了promise 的回调、node 中的process.nextTick、对Dom 变化监听的 MutationObserver
+
+    宏任务包括了script 脚本的执行、setTimeout、setInterval、setImmediate 一类的定时事件，还有I/O操作、UI渲染等
+  ```
+
+  ```md
+    1. 首先js 是单线程运行的，在代码执行的时候，通过将不同函数的执行上下文压入执行栈中来保证代码的有序执行
+
+    2. 在执行同步代码的时候，如果遇到了异步事件，js 引擎并不会一直等待其返回结果，而是会将这个事件挂起，继续执行栈中的其它任务
+
+    3. 当同步事件执行完毕后，再将异步事件对应地回调加入到与当前执行栈中不同的另一个任务队列中等待执行
+
+    4. 任务队列可以分为宏任务队列和微任务队列，当当前执行栈中的事件执行完毕后，js 引擎首先会判断微任务队列中是否有任务可以执行，如果有就将微任务队首的事件压入栈中执行
+
+    5. 当微任务队列中的任务都执行完成后再去判断宏任务队列中的任务
+
+  ```
+  实例讲解：
+  ```js
+    setTimeout(function(){
+      console.log(1);
+    },0);
+
+    new Promise(function(resolve,reject){
+      console.log(2);
+    }).then(function(){
+      console.log(3);
+    })
+
+    process.nextTick(function(){
+      console.log(4);
+    })
+
+    console.log(5);
+
+  ```
+
+  我猜 5 4 1 2 3
+
+  解析：
+
+  - 第一轮
+
+    * 主线程开始执行，遇到setTimeout, 将setTimeout 的回调函数丢到宏任务队列中
+    * 往下执行new Promise 立即执行，输出2，then 的回调函数丢到微任务队列中
+    * 继续执行，遇到process.nexTick，同样将回调函数扔到微任务队列 
+    * 在继续执行，输出5
+  - 当所有同步任务执行完成之后，看有没有可以执行的微任务
+    
+    * 发现有then 函数和nextTick 两个微任务，process.nextTick 指定的异步任务总是发生在所有异步任务之前，因此先执行process.nextTick 输出4，然后执行then 函数输出3
+  
+  - 第一轮结束，进入第二轮
+
+    * 从宏任务开始，发现setTimeout 回调，输出1 执行完毕
+    * 最后结果 2 5 4 3 1
+
+  猜错原因：
+
+  1. 没想到new Promise 立即执行
+  2. process.nextTick 指定的异步任务总是发生在所有异步任务之前
+  3. promise 是微任务，比setTimeout 宏任务优先执行
+
+  参考资料：[《浏览器事件循环机制（event loop）》](https://juejin.im/post/6844903606466904078),[《详解 JavaScript 中的 Event Loop（事件循环）机制》](https://zhuanlan.zhihu.com/p/33058983)，[《什么是 Event Loop？》](http://www.ruanyifeng.com/blog/2013/10/event_loop.html)，[《这一次，彻底弄懂 JavaScript 执行机制》](https://juejin.im/post/6844903512845860872)
+
+  ### 34 arguments 的对象是什么
+
+  arguments 对象是函数中传递的参数的集合。它是一个类似数组的对象，因为它有一个length 属性，我们可以使用数组所以表示法arguments[1] 来访问单个值，但它没有数组中的内置方法，如：forEach、reduce、filter和map
+
+  可以使用Array.prototype.slice 将arguments 对象转换成一个数组
+
+  ```js
+    function one(){
+      return Array.prototype.slice.call(arguments);
+    }
+  ```
+
+  注意：箭头函数中没有arguments 对象
+  ```js
+    function one(){
+      return arguments;
+    }
+    const two = function() => {
+      return arguments;
+    }
+    const three = function three() {
+      return arguments;
+    }
+    const four = () => arguments;
+
+    four(); // arguments is not defined
+  ```
+  当我们调用函数four 时，会抛出一个`ReferenceError: arguments is not defined error`，使用rest 语法，可以解决这个问题
+  ```js
+    const four = (...args) => args;
+  ```
+  这会自动将所有参数值放入数组中
+
+  ### 35 为什么在调用`function fun(){let a = b = 0;}fun()`这个函数时，代码中的 b 会变成全局变量？
+
+  原因是赋值运算符是从右到左的求值的，这意味着当多个赋值运算符出现在一个表达式中时，它们是从右向左求值的。所以上面的代码变成了这样：
+  ```js
+    function fun(){
+      let a = (b = 0);
+    }
+    fun();
+  ```
+  首先，表达式 b = 0 运算，在本例中没有声明b。因此，JS 引擎在这个函数外创建了一个全局变量b，之后表达式b=0 的返回值为0，并赋给新的局部变量a
+
+  我们可以通过在赋值之前先声明变量来解决这个问题。
+  ```js
+    function fun(){
+      let a,b;
+      a = b = 0;
+    }
+    fun();
+  ```
+
+  ### 36 简单介绍一下V8引擎的垃圾回收机制
+
+  V8 的垃圾回收机制基于分代回收机制，这个机制又基于世代假说，这个假说有两个特点，一是新生的对象容易早死，另一个是不死的对象会活得更久。
+
+  基于这个假说，V8 引擎将内存分为了新生代和老生代。
+
+  * 新创建的对象或只经过一次的垃圾回收的对象就被称为新生代
+  * 经历过多次垃圾回收的对象就被称为老生代
+
+  新生代被分为From 和To 两个空间，To 一般是闲置的。当From 空间满了的时候会执行Scavenge 算法进行垃圾回收。
+
+  当我们执行垃圾回收算法的时候，应用逻辑将会停止，等垃圾回收结束后再继续执行。
+
+  这个算法分为三步：
+
+  1. 首先检查From 空间的存活对象，如果对象存活则判断对象是否满足晋升到老生代的条件，如果满足则晋升到老生代。如果不满足条件则移动到To空间
+  2. 如果对象不存活，则释放对象的空间
+  3. 最后将From 空间和To 空间角色进行交换
+
+  新生代晋升到老生代有两个条件
+
+  1. 判断对象是否已经经过了一次Scavenge 回收。若经历过，则将对象从From 空间复制到老生代中，没有则复制到To 空间
+  2. To 空间的内存使用是否超过限制。当对象从From 空间复制到To 空间时，若To 空间使用超过25%，则对象直接晋升到老生代中，设置25%的原因主要是因为算法结束后，两个空间结束后会交换位置，如果To 空间的内存太小，会影响后续的内存分配
+
+  老生代采用了标记清除法和标记压缩法。标记清除法首先会对内存中存活的对象进行标记，标记结束后清除掉那些没有标记的对象，由于标记清除后会造成很多的内存碎片，不便于后面的内存分配。所以为了解决内存碎片的问题引入了标记压缩法
+
+  由于在进行垃圾回收的时候会先暂停应用的逻辑，对于新生代方法由于内存小，每次停顿的时间不会太长，但对于老生代来说每次垃圾回收的时间长，停顿会造成很大的影响。为了解决这个问题V8 引入了增量标记的方法，讲一次停顿进行的过程分为了多步，每次执行完一小步，就让运行逻辑执行一会，就这样交替运行
+
+  参考资料：
+
+  * [《深入理解 V8 的垃圾回收原理》](https://www.jianshu.com/p/b8ed21e8a4fb)
+  * [《JavaScript 中的垃圾回收》](https://zhuanlan.zhihu.com/p/23992332)
+
+  ### 37 哪些操作会造成内存泄露
+
+  1. 意外的全局变量 使用未声明变量，创建了一个全局变量，在内存中无法被回收
+  2. 被遗忘的计时器或回调函数 对外部变量有引用的话，会被一直留在内存中，而无法被回收
+  3. 脱离DOM 的引用 获取一个DOM 元素的引用，元素删除后，由于保留了引用，也无法被回收
+  4. 闭包 不合理的使用，会导致某些变量一直被留在内存当中
+
+  参考资料：
+
+  * [《JavaScript 内存泄漏教程》](http://www.ruanyifeng.com/blog/2017/04/memory-leak.html)
+  * [《4 类 JavaScript 内存泄漏及如何避免》](https://jinlong.github.io/2016/05/01/4-Types-of-Memory-Leaks-in-JavaScript-and-How-to-Get-Rid-Of-Them/)
+  * [《杜绝 js 中四种内存泄漏类型的发生》](https://juejin.im/entry/6844903553207631879)
+  * [《javascript 典型内存泄漏及 chrome 的排查方法》](https://segmentfault.com/a/1190000008901861)
+
+> 以下38~46 是ES6 中常考的基础知识点
+
+  ### 38 ECMAScript 是什么？
+
+  ECMAScript 是编写脚本语言的标准，这意味着JavaScript 遵循ECMAScript 标准中的规范变化，因为它是JavaScript的蓝图。
+
+  ECMAScript 和 JavaScript，本质上都跟一门语言有关，一个是语言本身的名字，一个是语言的约束条件。只不过发明JavaScript的那个人（Netscape 公司），把东西交给了ECMA(European Computer Manufacturers Association)，这个人规定了标准，因为当时有java 语言了，又想强调这个是ECMA制定的规则，所以就诞生了这神奇的东西——ECMAScript
+
+  JavaScript = ECMAScript + DOM + BOM 算是广义的JavaScript
+
+  ECMAScript 说什么 JavaScript 就得做什么
+
+  JavaScript 做什么都要问问 ECMAScript 能不能这么干，如果不能就错了，能就对了
+
+  ### 39 ECMAScript 2015（ES6） 有哪些新特性
+
+  * 块作用域
+  * 类
+  * 箭头函数
+  * 模板字符串
+  * 加强的对象字面量 `let a=1;let obj = {a};// obj = { a:1 }`
+  * 对象解构
+  * Promise
+  * 模块
+  * Symbol
+  * 代理（proxy） Set
+  * 函数默认参数
+  * rest 和展开
+
+  ### 40 var let 和 const 的区别
+
+  var 声明的变量会挂载在window 上，而let 和const 的声明不会：
+  ```js
+    var a = 100;
+    window.a; // 100
+
+    let b = 200;
+    window.b; // undefined
+
+    const c = 300;
+    window.c; // undefined
+  ```
+  var 变量存在变量提升，let 和const 不存在变量提升：
+  ```js
+    console.log(a); // undefined a 已声明 但未赋值
+    var a = 100;
+
+    console.log(b); // b is not defined
+    let b = 10;
+
+    console.log(c); // Uncaught ReferenceError: Cannot access 'c' before initialization
+    const c = 30;
+  ```
+  let 和const 声明形成块作用域
+  ```js
+    if(1){
+      var a = 100;
+      let b = 10;
+    }
+    console.log(a); // 100
+    console.log(b); // 报错：b is not defined
+    ---
+    if(1){
+      var a = 100;
+      const c = 1;
+    }
+    console.log(a); // 100
+    console.log(c); // 报错 c is not defined  
+
+  ```
+  同一作用域下let 和const 不能声明同名变量，而var 可以
+  ```js
+    var a = 100;
+    console.log(a); // 100
+
+    var a = 10;
+    console.log(a);
+    ---
+
+    let a = 100;
+    let a = 10;
+    //  控制台报错：Identifier 'a' has already been declared
+
+  ```
+  暂存死区
+  ```js
+    var a = 100;
+    if(1){
+      a = 10;
+      // Uncaught ReferenceError: Cannot access 'a' before initialization
+      let a = 1;
+    }
+  ```
+  const 
+  ```js
+    /*
+    * 一旦声明必须赋值，不能使用null 占位
+    * 声明后不能修改
+    * 如果声明的是复合类型数据，可以修改其属性
+    */
+    const a = 100;
+
+    const list = [];
+    list[0] = 10;
+    console.log(list); // [10]
+
+    const obj = {a:100};
+    obj.name = 'apple';
+    obj.a = 1000;
+    console.log(obj); // {a:1000,name:'apple'}
+
+  ```
+
+  ### 41 什么是箭头函数
+
+  箭头函数表达式的语法比函数表达式更简洁，并且没有自己的`this arguments super new.target`。箭头函数表达式更适用于那些本来需要匿名函数的地方，并且它不能用作构造函数。
+
+  ```js
+    // ES5
+    var getCurrentDate = function(){
+      return new Date();
+    }
+    // ES6
+    const getCurrentDate = () => new Date();
+  ```
+
+  在本例中，ES5 版本中有function(){}声明和return 关键字，这两个关键字分别是创建函数和返回值所需要的。在箭头函数版本中，我们只需要括号，不需要return 语句，因为如果只有一个表达式或值需要返回，箭头函数就会有一个隐式的返回
+
+  ```js
+
+  // ES5 
+  function greet(name){
+    return 'Hello ' + name + ' !';
+  }
+
+  // ES6
+  const greet = (name) => `Hello ${name} !`;
+  const greet = name => `Hello ${name} !`;
+  ```
+
+  我们还可以在箭头函数中使用与函数表达式和函数声明相同的参数，如果在一个箭头函数中只有一个参数，则可以省略扩号
+
+  ```js
+
+    const getArgs = () => arguments;
+    getArgs(); // Uncaught ReferenceError: arguments is not defined
+    const getArgs2 = (...args) => rest;
+
+  ```
+
+  箭头函数不能访问arguments 对象。所以调用第一个getArgs 函数会抛出错误，相反，我们可以用rest 参数来获得在箭头函数中传递的所有参数
+
+  ```js
+
+    const data = {
+      result: 0,
+      nums: [1,2,3,4,5],
+      computeResult() {
+        // 这里的this 是data 对象
+        const addAll = () => {
+          return this.nums.reduce((total,cur)=>total + cur,0);
+        };
+        this.result = addAll();
+      },
+    };
+
+  ```
+
+  箭头函数没有自己的this 值，它捕获词法作用域函数的this 值，在此实例中，addAll函数将复制computeResult 方法中的this 值，如果在全局作用域声明箭头函数，则this 值为 window 对象。
+
+  ### 42 什么是类
+
+  类（class）是在JS 中编写构造函数的新方法，它是使用构造函数的语法糖，在底层中任然使用原型和基于原型的继承
+
+  ```js
+
+    // ES5
+  function Person(firstName, lastName, age, address){
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.age = age;
+    this.address = address;
+  }
+
+  Person.self = function(){
+    return this;
+  }
+
+  Person.prototype.toString = function(){
+    return '[object Person]';
+  }
+
+  Person.prototype.getFullName = function(){
+    return this.firstName + ' ' + this.lastName;
+  }
+
+  // ES6
+  class Person{
+    constructor(firstName, lastName, age, address){
+      this.firstName = firstName;
+      this.lastName = lastName;
+      this.age = age;
+      this.address = address;
+    }
+    static self(){
+      return this;
+    }
+    toString(){
+      return '[object Person]';
+    }
+    getFullName(){
+      return `${this.firstName} ${this.lastName}`;
+    }
+  }
+
+  ```
+  重写方法并从另一个类继承
+  ```js
+
+    // ES5
+    Employee.prototype = Object.create(Person.prototype);
+
+    function Employee(firstName, lastName, age, address, jobTitle, yearStarted){
+      Person.call(this,firstName,lastName,age,address);
+      this.jobTitle = jobTitle;
+      this.yearStarted = yearStarted;
+    }
+
+    Employee.prototype.describe = function(){
+      return `I am ${this.getFullName()} and I have a position of ${this.jobTitle} and I started at ${this.yearStarted}`;
+    }
+    Employee.prototype.toString = function(){
+      return '[object Employee]';
+    }
+
+    // ES6
+    class Employee extends Person{
+      constructor(firstName, lastName, age, address, jobTitle, yearStarted){
+        super(firstName, lastName, age, address);
+        this.jobTitle = jobTitle;
+        this.yearStarted = yearStarted;
+      }
+
+      describe() {
+        return `I am ${this.getFullName()} and I have a position of ${this.jobTitle} and I started at ${this.yearStarted}`;
+      }
+
+      toString() {
+        return "[object Employee]";
+      }
+    }
+
+  ```
+  所以，如何知道它在内部使用原型？
+  ```js
+    class Something{
+
+    }
+    function AnotherSomething(){
+
+    }
+    const as = new AnotherSomething();
+    const s = new Something();
+
+    typeof Something; // function
+    typeof AnotherSomething; // fucntion
+    as.toString(); // [oject Object]
+    s.toString(); // [object Object]
+    as.toString === Object.prototype.toString; // true
+    s.toString === Object.prototype.toString; // true
+  ```
+  参考资料：
+  - [《ECMAScript 6 实现了 class，对 JavaScript 前端开发有什么意义？》](https://www.zhihu.com/question/29789315)
+  - [《Class 的基本语法》](https://es6.ruanyifeng.com/#docs/class)
+
+  ### 43 什么是模板字符串
+
+  模板字符串是在JS 中创建字符串的一种新方法，我们可以通过使用反引号使模板字符串化
+  ```js
+    var es5Greet = 'Hi I\'m Mark';
+    let es6Great = `Hi I'm Mark`;
+  ```
+
+  在es5 中，需要用一些转义字符来达到多行的效果，在模板字符串不需要这么麻烦
+  ```js
+    var es5Words = '\n'
+    + ' I \n'
+    + ' am \n'
+    + ' Iron Man';
+
+    let es6Words = `
+      I
+      am
+      Iron Man
+    `;
+  ```
+  
+  ### 44 什么是对象解构？
+
+  对象解构是从对象或数组中获取或提取值的一种新的、更简洁的方法。
+  假设有如下对象：
+  ```js
+    const employee = {
+      firstName: "Marko",
+      lastName: "Polo",
+      position: "Software Developer",
+      yearHired: 2017
+    }
+  ```
+
+  从对象获取属性，早期方法是创建一个与对象属性同名的变量。这种方法和麻烦，因为我们要为每个属性创建一个新变量。假设我们有一个大对象，它也有很多属性和方法，用这种方法提取属性会很麻烦
+  ```js
+
+    var firstName = employee.firstName;
+    var lastName = employee.lastName;
+    var position = employee.position;
+    var yearHired = employee.yearHired;
+
+  ```
+
+  使用解构方式是语法就变得简洁多了
+  ```js
+    let { firstName, lastName, position, yearHired } = employee;
+  ```
+
+  如果属性值为undefined 时，我们还可以指定默认值
+  ```js
+    let { firstName = "Mark", lastName: lName, position, yearHired } = employee;
+  ```
+
+  ### 45 什么是 Set 对象，它是如何工作的？
+
+  Set 对象允许存储任何类型的唯一值，无论是原始值或者是对象引用
+
+  我们可以用Set 构造函数创建Set 实例
+  ```js
+    const set1 = new Set();
+    const set2 = new Set(['a','b','c']);
+  ```
+
+  我们可以使用add 方法向Set 实例中添加一个新值，因为add 方法返回Set 对象，所以我们可以以链式的方式再次使用add。如果一个值已经存在于Set 对象中，那么它将不会再被添加
+  ```js
+
+  set2.add('d');
+  set2.add('e').add('f').add('g').add('g');
+  // 最后一个g 不会被添加到Set 对象中，因为它已经存在了
+
+  ```
+
+  我们可以使用has 方法检查Set 实例中是否存在特定的值
+  ```js
+    set2.has('a'); // true
+    set2.has('z'); // false
+  ```
+
+  size 属性获得Set 实例的长度
+  ```js
+    set2.size // 4
+  ```
+
+  clear 清空Set 中的数据
+  ```js
+    set2.clear();
+  ```
+
+  使用Set 对象来删除数组中重复的元素
+  ```js
+    const numbers = [1,2,3,4,5,6,7,8,8,5];
+    const uniqueNums = [...new Set(nmbers)]; // [1,2,3,4,5,6,7,8]
+  ```
+
+  WeakSet，与Set 类型，也是不重复的值的集合。但是WeakSet 的成员只能是对象，而不能是其它类型的值。WeakSet 中的对象都是弱引用，即垃圾回收机制不考虑WeakSet 对该对象的引用
+
+  * Map 数据结构，类似对象，也是键值对的集合，但是键的范围不限于字符串，各种类型的值（包括对象）都可以当做键
+  * WeakMap 结构与Map 结构相似，但是WeakMap 只接受对象作为键名（null 除外），不接受其他类型的值作为键名，不计入垃圾回收机制
+
+  ### 46 什么是Proxy?
+
+  Proxy 用于修改某些操作的默认行为，等同于语言层面做出修改，所以属于一种“元编程”，即对编程语言进行编程
+
+  Proxy 可以理解成，在目标对象之前架设一层“拦截”，外界对该对象的访问，都必须先通过这层拦截，因此提供了一种机制，可以对外界的访问进行过滤和改写。Proxy 这个词的原意是代理，用在这里表示由它来“代理”某些操作，可以译为“代理器”
+
+> 以下47~64条是JavaScript 中比较难的高级知识及相关手写实现，各位看官需慢慢细品
+
+  ### 47 写一个通用的事件侦听器函数
+  
+  ```js
+    const EventUtils = {
+      // 视能力分别使用dom0|dom2|IE 方式，来绑定事件
+      // 添加事件
+      addEvent: function(element, type, handler){
+        if(element.addEventListener){
+          element.addEventListener(type, handler, false);
+        }else if(element.attachEvent){
+          element.attachEvent("on" + type, handler);
+        }else{
+          element["on"+type] = handler;
+        }
+      },
+
+      // 移除事件
+      removeEvent: function(){
+        if(element.removeEventListener){
+          element.removeEventListener(type, handler, false);
+        }else if(element.detachEvent){
+          element.detachEvent("on" + type, handler);
+        }else{
+          element["on" + type] = null;
+        }
+      },
+
+      // 获取事件目标
+      getTarget: function(event){
+        return event.target || event.srcElement;
+      },
+
+      // 获取event 对象的引用，渠道时间按的所有信息，确保随时能使用 event
+      getEvent: function(event){
+        return event || window.event;
+      },
+
+      // 阻止事件（主要是冒泡，因为IE 不支持事件捕获）
+      stopPropagation: function(event){
+        if(event.stopPropagation){
+          event.stopPropagation();
+        }else{
+          event.cancelBubble = true;
+        }
+      },
+
+      // 取消事件的默认行为
+      preventDefault: function(event){
+        if(event.preventDefault){
+          event.preventDefault();
+        }else{
+          event.returnValue = false;
+        }
+      },
+    };
+  ```
+
+  ### 48
+
+  
