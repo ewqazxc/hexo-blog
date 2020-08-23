@@ -1353,7 +1353,154 @@ substring() | 提取两个指定的索引号之间的字符
       },
     };
   ```
+  [写一个通用的事件侦听器函数](/hexo-blog/2020/08/23/collections/JavaScript/写一个通用的事件侦听器函数/)
 
-  ### 48
+  ### 48 什么是函数式编程？JavaScript的哪些特性使其成为函数式语言的候选语言？
+
+  函数式编程（通常缩写为FP）是通过编写纯函数，避免共享状态、可变数据、副作用来构建软件的过程。
+
+  函数式编程是声明式的，而不是命令式的，应用程序的状态是用过纯函数流动的。与面向对象编程形成对比，面向对象中应用程序的状态通常与对象中的方法共享和共处。
+
+  函数式编程是一种编程范式，这意味着它是一种基于一些基本的定义原则（如上所列）思考软件构建的方式。当然，编程范式的其它实例也包扩面向对象编程和过程编程。
+
+  函数式的代码往往比命令式或面向对象的代码更简洁、更可预测、更容易测试，但若果不熟悉它以及与之相关的常见模式，函数式的代码也可能卡起来更密集杂乱，并且相关文献对新人来说是不好理解的。
+
+  ### 49 什么是高阶函数
+
+  高阶函数只是将函数作为参数或返回值的函数
+  ```js
+    function higherOrderFunction(param, callback){
+      return callback(param);
+    }
+  ```
+
+  ### 50 为什么函数被称为一等公民
+
+  在JavaScript 中，函数不仅拥有一切传统函数的使用方式（声明和调用），而且可以做到像简单值一样：
+  
+  * 赋值 var fun = function(){}
+  * 传参 function fun(x,callback){callback()}
+  * 返回 function fun(something){ return something} 
+
+  这样的函数也称之为第一级函数（First-class Function）。不仅如此，JavaScript 中的函数还充当了类的构造函数的作用，同时又是一个Function 类的实例（instance）。这样的多重身份让JavaScript 的函数变得非常重要
+
+  ### 51 手动实现 Array.prototype.map 方法
+
+  map() 方法创建一个新数组，其结果是该数组中的每个元素都调用一个提供函数后返回的结果。
+  
+  ```js
+    function map(arr, mapCallback){
+      // 首先。检查传递的参数是否正确
+      if(!Array.isArray(arr) || !arr.length || typeof mapCallback !== 'funciton'){
+        return [];
+      } else {
+        let result = [];
+        // 每次调用此函数时，都会先创建一个 result 数组
+        // 因为我们不想改变原始数组
+        for(let i=0, len=arr.length;i < len; i++) {
+          result.push(mapCallback(arr[i], i, arr));
+        }
+        return result;
+      }
+    };
+  ```
+
+  ### 52 手动实现 Array.prototype.filter 方法
 
   
+  filter() 方法创建一个新数组，其包含通过所提供函数实现的测试的所有元素
+
+  ```js
+    function filter(arr, filterCallback){
+      // 首先 检查传递的参数是否正确
+      if(!Array.isArray(arr) || !arr.length || typeof filterCallback !== 'function'){
+        return [];
+      } else {
+        let result = [];
+        // 每次调用此函数时，都会先创建一个 result 数组
+        // 因为我们不想改变原始数组
+        for(let i=0, len=arr.length; i<len; i++){
+          // 检查 filterCallback 的返回值是否是真值
+          if(filterCallback(arr[i], i, arr)){
+            // 如果条件为真，则将数组元素push 到 result 中
+            result.push(arr[i]);
+          }
+        }
+        return result;
+      }
+    };
+  ```
+
+  ### 53 手动实现Array.prototype.reduce方法
+  
+  reduce() 方法对数组中的每个元素执行一个由您提供的reducer 函数（升序执行），将其结果汇总为单个返回值
+
+  ```js
+    function reduce(arr, reduceCallback, initialValue){
+      // 首先 检查传递的参数是否正确
+      if(!Array.isArray(arr) || !arr.length || typeof reduceCallback !== 'funciton'){
+        return [];
+      } else {
+        // 如果没有将initialValue 传递给函数，我们将使用第一个数组项作为initialValue
+        let hasInitialValue = initialValue !== void 0;
+        let value = hasInitialValue ? initialValue : arr[0];
+
+        // 如果有传递initialValue 则索引将从 1 开始，否则从 0 开始
+        for( let i = hasInitialValue ? 1:0, len=arr.length; i<len ;i++){
+          value = reduceCallback(value, arr[i], i, arr);
+        }
+        return value;
+      }
+    };
+  ```
+
+  ### 54 js的深浅拷贝
+
+  * 浅拷贝：创建一个新对象，这个对象有着原始对象属性值的一份精准拷贝。如果属性时基本类型，拷贝的就是基本类型的值，如果属性是引用类型，拷贝的就是内存地址，所以如果其中一个对象改变了这个地址，就会影响到另一个对象
+  * 深拷贝：讲一个对象从内存中完整的拷贝一份出来，从堆内存中开辟一个新的区域存放新对象，且修改新对象不会影响原对象
+
+  简单的说，浅拷贝创建的新对象，其中的引用对象依旧与原对象有关；深拷贝创建的新对象，则是一个全新的对象，只是内容与原对象相同，再无瓜葛
+
+  #### 浅拷贝的实现方式
+
+  * Object.assign() 方法：用于将所有可枚举属性的值从一个或多个源对象赋值到目标对象。它将返回目标对象。
+  * Array.prototype.silce()：slice()方法返回一个新的数组对象，这一对象是一个由begin 和end（不包括end）决定的原数组的浅拷贝。原始数组不会被改变
+  * 拓展运算符`...`：
+  ```js
+    let a = {
+      name:'jack',
+      flag:{
+        title:'better day by day',
+        time:'2011-11-11'
+      }
+    }
+    let b = {...a};
+  ```
+
+  #### 深拷贝的实现方式
+
+  * 乞丐版：JSON.parse(JSON.stringify(object))，缺点诸多（会忽略undefined、symbol、函数；不能解决循环引用；不能处理正则、new Date()）
+  * 基础版：浅拷贝+递归 （只考虑了普通的object 和array 两种数据类型）
+  ```js
+  function cloneDeep(target, map = new WeakMap()){
+    if(typeof target === 'object'){
+      let cloneTarget = Array.isArray(target) ? [] : {};
+
+      if(map.get(target)){
+        return target;
+      }
+      map.set(target, cloneTarget);
+      for( const key in target){
+        cloneTarget[key] = cloneDeep(target[key], map);
+      }
+      return cloneTarget;
+
+    }else{
+      return target;
+    }
+  }
+  ```
+  * 终极版：全面考虑各种数据类型 [详细内容>>](/hexo-blog/2020/08/24/collections/JavaScript/Js的深浅拷贝/)
+
+  ### 55
+

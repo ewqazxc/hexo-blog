@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Js的深浅拷贝 | #一如既往、</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="浅拷贝：创建一个新对象，这个对象有着原始对象属性值的一份精准拷贝。如果属性时基本类型，拷贝的就是基本类型的值，如果属性是引用类型，拷贝的就是内存地址，所以如果其中一个对象改变了这个地址，就会影响到另一个对象 深拷贝：讲一个对象从内存中完整的拷贝一份出来，从堆内存中开辟一个新的区域存放新对象，且修改新对象不会影响原对象  简单的说，浅拷贝创建的新对象，其中的引用对象依旧与原对象有关；深拷贝创建的新">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Js的深浅拷贝">
+<meta property="og:url" content="https://ewqazxc.github.io/hexo-blog/2020/08/24/collections/JavaScript/Js%E7%9A%84%E6%B7%B1%E6%B5%85%E6%8B%B7%E8%B4%9D/index.html">
+<meta property="og:site_name" content="#一如既往、">
+<meta property="og:description" content="浅拷贝：创建一个新对象，这个对象有着原始对象属性值的一份精准拷贝。如果属性时基本类型，拷贝的就是基本类型的值，如果属性是引用类型，拷贝的就是内存地址，所以如果其中一个对象改变了这个地址，就会影响到另一个对象 深拷贝：讲一个对象从内存中完整的拷贝一份出来，从堆内存中开辟一个新的区域存放新对象，且修改新对象不会影响原对象  简单的说，浅拷贝创建的新对象，其中的引用对象依旧与原对象有关；深拷贝创建的新">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-08-23T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-08-23T16:53:37.288Z">
+<meta property="article:author" content="ewqazxc">
+<meta name="twitter:card" content="summary">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <!-- 
+<link rel="stylesheet" href="/hexo-blog/%7B%22title%22:%22#%E4%B8%80%E5%A6%82%E6%97%A2%E5%BE%80%E3%80%81%22,%22subtitle%22:%22%E4%B8%8D%E7%9F%A5%E9%81%93%E5%86%99%E7%9A%84%E4%BB%80%E4%B9%88%E7%9A%84%E5%8D%9A%E5%AE%A2~%22,%22description%22:%22description%22,%22author%22:%22ewqazxc%22,%22language%22:%22zh-CN%22,%22timezone%22:%22Asia/Shanghai%22,%22url%22:%22https:/ewqazxc.github.io/hexo-blog%22,%22root%22:%22/hexo-blog/%22,%22permalink%22:%22:year/:month/:day/:title/%22,%22permalink_defaults%22:null,%22pretty_urls%22:%7B%22trailing_index%22:true,%22trailing_html%22:true%7D,%22source_dir%22:%22source%22,%22public_dir%22:%22public%22,%22tag_dir%22:%22tags%22,%22archive_dir%22:%22archives%22,%22category_dir%22:%22categories%22,%22code_dir%22:%22downloads/code%22,%22i18n_dir%22:%22:lang%22,%22skip_render%22:null,%22new_post_name%22:%22:title.md%22,%22default_layout%22:%22post%22,%22titlecase%22:false,%22external_link%22:%7B%22enable%22:true,%22field%22:%22site%22,%22exclude%22:%22%22%7D,%22filename_case%22:0,%22render_drafts%22:false,%22post_asset_folder%22:false,%22relative_link%22:false,%22future%22:true,%22highlight%22:%7B%22enable%22:true,%22auto_detect%22:false,%22line_number%22:true,%22tab_replace%22:%22%22,%22wrap%22:true,%22hljs%22:false,%22first_line_number%22:%22always1%22%7D,%22default_category%22:%22uncategorized%22,%22category_map%22:null,%22tag_map%22:null,%22date_format%22:%22YYYY-MM-DD%22,%22time_format%22:%22HH:mm:ss%22,%22use_date_for_updated%22:false,%22per_page%22:10,%22pagination_dir%22:%22page%22,%22theme%22:%22landscape%22,%22server%22:%7B%22port%22:4000,%22log%22:false,%22compress%22:false,%22header%22:true,%22cache%22:false%7D,%22deploy%22:%7B%22type%22:%22%22%7D,%22ignore%22:null,%22meta_generator%22:true,%22keywords%22:null,%22index_generator%22:%7B%22per_page%22:10,%22order_by%22:%22-date%22,%22path%22:%22%22%7D,%22include%22:null,%22exclude%22:null,%22archive_generator%22:%7B%22per_page%22:10,%22yearly%22:true,%22monthly%22:true,%22daily%22:false%7D,%22category_generator%22:%7B%22per_page%22:10%7D,%22tag_generator%22:%7B%22per_page%22:10%7D,%22marked%22:%7B%22gfm%22:true,%22pedantic%22:false,%22breaks%22:true,%22smartLists%22:true,%22smartypants%22:true,%22modifyAnchors%22:%22%22,%22autolink%22:true,%22sanitizeUrl%22:false,%22headerIds%22:true%7D%7D.css">
+ -->
+  
+<link rel="stylesheet" href="/hexo-blog/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/hexo-blog/" id="logo">#一如既往、</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/hexo-blog/" id="subtitle">不知道写的什么的博客~</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/hexo-blog/">主页</a>
+        
+          <a class="main-nav-link" href="/hexo-blog/archives">归档</a>
+        
+          <a class="main-nav-link" href="/hexo-blog/about/me.html">关于</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://ewqazxc.github.io/hexo-blog"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-collections/JavaScript/Js的深浅拷贝" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo-blog/2020/08/24/collections/JavaScript/Js%E7%9A%84%E6%B7%B1%E6%B5%85%E6%8B%B7%E8%B4%9D/" class="article-date">
+  <time datetime="2020-08-23T16:00:00.000Z" itemprop="datePublished">2020-08-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Js的深浅拷贝
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>浅拷贝：创建一个新对象，这个对象有着原始对象属性值的一份精准拷贝。如果属性时基本类型，拷贝的就是基本类型的值，如果属性是引用类型，拷贝的就是内存地址，所以如果其中一个对象改变了这个地址，就会影响到另一个对象</li>
+<li>深拷贝：讲一个对象从内存中完整的拷贝一份出来，从堆内存中开辟一个新的区域存放新对象，且修改新对象不会影响原对象</li>
+</ul>
+<p>简单的说，浅拷贝创建的新对象，其中的引用对象依旧与原对象有关；深拷贝创建的新对象，则是一个全新的对象，只是内容与原对象相同，再无瓜葛</p>
+<h2 id="浅拷贝的实现方式"><a href="#浅拷贝的实现方式" class="headerlink" title="浅拷贝的实现方式"></a>浅拷贝的实现方式</h2><ul>
+<li>Object.assign() 方法：用于将所有可枚举属性的值从一个或多个源对象赋值到目标对象。它将返回目标对象。</li>
+<li>Array.prototype.silce()：slice()方法返回一个新的数组对象，这一对象是一个由begin 和end（不包括end）决定的原数组的浅拷贝。原始数组不会被改变</li>
+<li>拓展运算符<code>...</code>：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = &#123;</span><br><span class="line">  name:<span class="string">'jack'</span>,</span><br><span class="line">  flag:&#123;</span><br><span class="line">    title:<span class="string">'better day by day'</span>,</span><br><span class="line">    time:<span class="string">'2011-11-11'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> b = &#123;...a&#125;;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="深拷贝的实现方式"><a href="#深拷贝的实现方式" class="headerlink" title="深拷贝的实现方式"></a>深拷贝的实现方式</h2><ul>
+<li>乞丐版：JSON.parse(JSON.stringify(object))，缺点诸多（会忽略undefined、symbol、函数；不能解决循环引用；不能处理正则、new Date()）</li>
+<li>基础版：浅拷贝+递归 （只考虑了普通的object 和array 两种数据类型）<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">cloneDeep</span>(<span class="params">target, map = new WeakMap(</span>))</span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(<span class="keyword">typeof</span> target === <span class="string">'object'</span>)&#123;</span><br><span class="line">    <span class="keyword">let</span> cloneTarget = <span class="built_in">Array</span>.isArray(target) ? [] : &#123;&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(map.get(target))&#123;</span><br><span class="line">      <span class="keyword">return</span> target;</span><br><span class="line">    &#125;</span><br><span class="line">    map.set(target, cloneTarget);</span><br><span class="line">    <span class="keyword">for</span>( <span class="keyword">const</span> key <span class="keyword">in</span> target)&#123;</span><br><span class="line">      cloneTarget[key] = cloneDeep(target[key], map);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> cloneTarget;</span><br><span class="line"></span><br><span class="line">  &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> target;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>终极版：全面考虑各种数据类型<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义各种数据类型的Tag</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 可连续遍历的数组</span></span><br><span class="line"><span class="keyword">const</span> mapTag = <span class="string">'[object Map]'</span>;</span><br><span class="line"><span class="keyword">const</span> setTag = <span class="string">'[object Set]'</span>;</span><br><span class="line"><span class="keyword">const</span> arrayTag = <span class="string">'[object Array]'</span>;</span><br><span class="line"><span class="keyword">const</span> objectTag = <span class="string">'[object Object]'</span>;</span><br><span class="line"><span class="keyword">const</span> argsTag = <span class="string">'[object Arguments]'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 不可连续遍历的数据类型</span></span><br><span class="line"><span class="keyword">const</span> boolTag = <span class="string">'[object Boolean]'</span>;</span><br><span class="line"><span class="keyword">const</span> dateTag = <span class="string">'[object Date]'</span>;</span><br><span class="line"><span class="keyword">const</span> numberTag = <span class="string">'[object Number]'</span>;</span><br><span class="line"><span class="keyword">const</span> stringTag = <span class="string">'[object String]'</span>;</span><br><span class="line"><span class="keyword">const</span> symbolTag = <span class="string">'[object Symbol]'</span>;</span><br><span class="line"><span class="keyword">const</span> errorTag = <span class="string">'[object Error]'</span>;</span><br><span class="line"><span class="keyword">const</span> regexpTag = <span class="string">'[object RegExp]'</span>;</span><br><span class="line"><span class="keyword">const</span> funcTag = <span class="string">'[object Function]'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 不可连续遍历的数据类型的Tag</span></span><br><span class="line"><span class="keyword">const</span> deepTag = [mapTag, setTag, arrayTag, objectTag, argsTag];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 判断是不是引用数据类型</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isObject</span>(<span class="params">target</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> type = <span class="keyword">typeof</span> target;</span><br><span class="line">    <span class="keyword">return</span> target !== <span class="literal">null</span> &amp;&amp; (type === <span class="string">'object'</span> || type === <span class="string">'function'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取数据类型</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getType</span>(<span class="params">target</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Object</span>.prototype.toString.call(target);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化被克隆的对象 可连续遍历的</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getInit</span>(<span class="params">target</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> Ctor = target.constructor;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Ctor();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 克隆Symbol</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">cloneSymbol</span>(<span class="params">targe</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Object</span>(<span class="built_in">Symbol</span>.prototype.valueOf.call(targe));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 克隆正则</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">cloneReg</span>(<span class="params">targe</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> reFlags = <span class="regexp">/\w*$/</span>;</span><br><span class="line">    <span class="keyword">const</span> result = <span class="keyword">new</span> targe.constructor(targe.source, reFlags.exec(targe));</span><br><span class="line">    result.lastIndex = targe.lastIndex;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 克隆函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">cloneFunction</span>(<span class="params">func</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> bodyReg = <span class="regexp">/(?&lt;=&#123;)(.|\n)+(?=&#125;)/m</span>;</span><br><span class="line">    <span class="keyword">const</span> paramReg = <span class="regexp">/(?&lt;=\().+(?=\)\s+&#123;)/</span>;</span><br><span class="line">    <span class="keyword">const</span> funcString = func.toString();</span><br><span class="line">    <span class="keyword">if</span> (func.prototype) &#123;</span><br><span class="line">        <span class="keyword">const</span> param = paramReg.exec(funcString);</span><br><span class="line">        <span class="keyword">const</span> body = bodyReg.exec(funcString);</span><br><span class="line">        <span class="keyword">if</span> (body) &#123;</span><br><span class="line">            <span class="keyword">if</span> (param) &#123;</span><br><span class="line">                <span class="keyword">const</span> paramArr = param[<span class="number">0</span>].split(<span class="string">','</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Function</span>(...paramArr, body[<span class="number">0</span>]);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Function</span>(body[<span class="number">0</span>]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">eval</span>(funcString);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 克隆不可遍历的类型</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">cloneOtherType</span>(<span class="params">targe, type</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> Ctor = targe.constructor;</span><br><span class="line">    <span class="keyword">switch</span> (type) &#123;</span><br><span class="line">        <span class="keyword">case</span> boolTag:</span><br><span class="line">        <span class="keyword">case</span> numberTag:</span><br><span class="line">        <span class="keyword">case</span> stringTag:</span><br><span class="line">        <span class="keyword">case</span> errorTag:</span><br><span class="line">        <span class="keyword">case</span> dateTag:</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> Ctor(targe);</span><br><span class="line">        <span class="keyword">case</span> regexpTag:</span><br><span class="line">            <span class="keyword">return</span> cloneReg(targe);</span><br><span class="line">        <span class="keyword">case</span> symbolTag:</span><br><span class="line">            <span class="keyword">return</span> cloneSymbol(targe);</span><br><span class="line">        <span class="keyword">case</span> funcTag:</span><br><span class="line">            <span class="keyword">return</span> cloneFunction(targe);</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通用while 循环 处理对象和数组时使用</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">forEach</span>(<span class="params">array, iteratee</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> index = <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">const</span> length = array.length;</span><br><span class="line">    <span class="keyword">while</span> (++index &lt; length) &#123;</span><br><span class="line">        iteratee(array[index], index);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> array;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">clone</span>(<span class="params">target, map = new WeakMap(</span>))</span>&#123;</span><br><span class="line">  <span class="comment">// 克隆原始类型</span></span><br><span class="line">  <span class="keyword">if</span>(!isObject(target))&#123;</span><br><span class="line">    <span class="keyword">return</span> target;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 初始化</span></span><br><span class="line">  <span class="keyword">const</span> type = getType(target); <span class="comment">// 获取数据类型</span></span><br><span class="line">  <span class="keyword">let</span> cloneTarget;</span><br><span class="line">  <span class="keyword">if</span>(deepTag.includes(type))&#123;</span><br><span class="line">    <span class="comment">// 可连续遍历的数据类型 先进行初始化</span></span><br><span class="line">    cloneTarget = getInit(target, type);</span><br><span class="line">  &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="comment">// 不可连续遍历的数据类型 分类处理</span></span><br><span class="line">    <span class="keyword">return</span> cloneOtherType(target, type);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 处理循环引用 </span></span><br><span class="line">  <span class="keyword">if</span>(map.get(target))&#123;</span><br><span class="line">    <span class="keyword">return</span> target();</span><br><span class="line">  &#125;</span><br><span class="line">  map.set(target, cloneTarget);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 处理 set</span></span><br><span class="line">  <span class="keyword">if</span>(type === setTag) &#123;</span><br><span class="line">    target.forEach(<span class="function"><span class="params">value</span> =&gt;</span> &#123;</span><br><span class="line">      cloneTarget.add(clone(value));</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">return</span> cloneTarget;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 处理 map</span></span><br><span class="line">  <span class="keyword">if</span>(type=== mapTag) &#123;</span><br><span class="line">    target.forEach(<span class="function">(<span class="params">value, key</span>)=&gt;</span>&#123;</span><br><span class="line">      cloneTarget.set(key, clone(value));</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">return</span> cloneTarget;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 处理对象和数组</span></span><br><span class="line">  <span class="keyword">const</span> keys = type === arratTag ? <span class="keyword">void</span> <span class="number">0</span> : <span class="built_in">Object</span>.keys(target);</span><br><span class="line">  forEach(keys || target, (value, key)=&gt;&#123;</span><br><span class="line">    <span class="keyword">if</span>(keys)&#123;</span><br><span class="line">      key = value;</span><br><span class="line">    &#125;</span><br><span class="line">    cloneTarget[key] = clone(target[key], map);</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="keyword">return</span> cloneTarget;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>参考资料：</p>
+<ul>
+<li><a href="https://mp.weixin.qq.com/s/vXbFsG59L1Ba0DMcZeU2Bg" target="_blank" rel="noopener">如何写出一个惊艳面试官的深拷贝</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/24/collections/JavaScript/Js%E7%9A%84%E6%B7%B1%E6%B5%85%E6%8B%B7%E8%B4%9D/" data-id="cke7bz7f500033sqaa9ba998q" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/hexo-blog/2020/08/23/collections/JavaScript/%E6%89%8B%E5%8A%A8%E5%AE%9E%E7%8E%B0%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%80%E4%BA%9B%E6%96%B9%E6%B3%95/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">过去</strong>
+      <div class="article-nav-title">手动实现数组的一些方法</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/hexo-blog/categories/hexo/">hexo</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/07/">七月 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/hexo-blog/2020/08/24/collections/JavaScript/Js%E7%9A%84%E6%B7%B1%E6%B5%85%E6%8B%B7%E8%B4%9D/">Js的深浅拷贝</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2020/08/23/collections/JavaScript/%E6%89%8B%E5%8A%A8%E5%AE%9E%E7%8E%B0%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%80%E4%BA%9B%E6%96%B9%E6%B3%95/">手动实现数组的一些方法</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2020/08/23/collections/JavaScript/%E5%86%99%E4%B8%80%E4%B8%AA%E9%80%9A%E7%94%A8%E7%9A%84%E4%BA%8B%E4%BB%B6%E4%BE%A6%E5%90%AC%E5%99%A8%E5%87%BD%E6%95%B0/">写一个通用的事件侦听器函数</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2020/08/20/collections/Internet/github.io%E6%97%A0%E6%B3%95%E8%AE%BF%E9%97%AE/">github.io 无法访问</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2020/08/18/collections/JavaScript/JavaScript%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E4%B9%8B%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA/">JavaScript深入理解之对象创建</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 ewqazxc<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/hexo-blog/" class="mobile-nav-link">主页</a>
+  
+    <a href="/hexo-blog/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/hexo-blog/about/me.html" class="mobile-nav-link">关于</a>
+  
+</nav>
+    
+
+
+<script src="/hexo-blog/js/jquery-2.0.3.min.js"></script>
+
+
+
+  
+<link rel="stylesheet" href="/hexo-blog/fancybox/jquery.fancybox.css">
+
+  
+<script src="/hexo-blog/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/hexo-blog/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
