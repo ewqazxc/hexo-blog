@@ -5,17 +5,17 @@
   
 
   
-  <title>分类 | #一如既往、</title>
+  <title>函数柯里化的实现 | #一如既往、</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="分类">
-<meta property="og:url" content="https://ewqazxc.github.io/hexo-blog/categories/index.html">
+  <meta name="description" content="函数柯里化指的是一种将使用多个参数的一个函数转换成一些列使用一个参数的函数的技术 1234567891011121314151617181920212223242526272829function curry(fn, args)&amp;#123;  &#x2F;&#x2F; 获取函数需要的参数长度  let length &#x3D; fn.length;  args &#x3D; args || [];  return function()">
+<meta property="og:type" content="article">
+<meta property="og:title" content="函数柯里化的实现">
+<meta property="og:url" content="https://ewqazxc.github.io/hexo-blog/2020/08/26/collections/JavaScript/%E5%87%BD%E6%95%B0%E6%9F%AF%E9%87%8C%E5%8C%96%E7%9A%84%E5%AE%9E%E7%8E%B0/index.html">
 <meta property="og:site_name" content="#一如既往、">
-<meta property="og:description" content="description">
+<meta property="og:description" content="函数柯里化指的是一种将使用多个参数的一个函数转换成一些列使用一个参数的函数的技术 1234567891011121314151617181920212223242526272829function curry(fn, args)&amp;#123;  &#x2F;&#x2F; 获取函数需要的参数长度  let length &#x3D; fn.length;  args &#x3D; args || [];  return function()">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-07-26T02:57:44.000Z">
-<meta property="article:modified_time" content="2020-07-26T09:39:03.119Z">
+<meta property="article:published_time" content="2020-08-25T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-08-26T15:35:22.691Z">
 <meta property="article:author" content="ewqazxc">
 <meta name="twitter:card" content="summary">
   
@@ -71,10 +71,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="page-" class="article article-type-page" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-collections/JavaScript/函数柯里化的实现" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/hexo-blog/categories/index.html" class="article-date">
-  <time datetime="2020-07-26T02:57:44.000Z" itemprop="datePublished">2020-07-26</time>
+    <a href="/hexo-blog/2020/08/26/collections/JavaScript/%E5%87%BD%E6%95%B0%E6%9F%AF%E9%87%8C%E5%8C%96%E7%9A%84%E5%AE%9E%E7%8E%B0/" class="article-date">
+  <time datetime="2020-08-25T16:00:00.000Z" itemprop="datePublished">2020-08-26</time>
 </a>
     
   </div>
@@ -85,7 +85,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      分类
+      函数柯里化的实现
     </h1>
   
 
@@ -93,17 +93,41 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p>函数柯里化指的是一种将使用多个参数的一个函数转换成一些列使用一个参数的函数的技术</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">curry</span>(<span class="params">fn, args</span>)</span>&#123;</span><br><span class="line">  <span class="comment">// 获取函数需要的参数长度</span></span><br><span class="line">  <span class="keyword">let</span> length = fn.length;</span><br><span class="line"></span><br><span class="line">  args = args || [];</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> subArgs = args.slice(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 拼接得到现有的所有参数</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i=<span class="number">0</span>;i&lt; <span class="built_in">arguments</span>.length; i++)&#123;</span><br><span class="line">      subArgs.push(<span class="built_in">arguments</span>[i]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 判断参数的长度是否已经满足函数所需参数的长度</span></span><br><span class="line">    <span class="keyword">if</span>(subArgs.length &gt;= length)&#123;</span><br><span class="line">      <span class="comment">// 如果满足，执行函数</span></span><br><span class="line">      <span class="keyword">return</span> fn.apply(<span class="keyword">this</span>, subArgus);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// 如果不满足，递归返回柯里化的函数等待参数的传入</span></span><br><span class="line">      <span class="keyword">return</span> curry.call(<span class="keyword">this</span>, fn, subArgs);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ES6 实现</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">curry</span>(<span class="params">fn,...args</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> fn.length &lt;= args.length ? fn(...args) : curry.bind(<span class="literal">null</span>, fn, ...args);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>参考资料：</p>
+<ul>
+<li><a href="https://github.com/mqyqingfeng/Blog/issues/42" target="_blank" rel="noopener">《JavaScript 专题之函数柯里化》</a></li>
+</ul>
+<h2 id="curry-的性能问题"><a href="#curry-的性能问题" class="headerlink" title="curry 的性能问题"></a>curry 的性能问题</h2><ul>
+<li>存取arguments 对象通常要比存取命名参数要慢一些</li>
+<li>一些老版本的浏览器在arguments.length 的实现上是相当慢的</li>
+<li>使用fn.apply(…) 和fn.call(…) 通常比直接调用fn(…) 稍微慢点</li>
+<li>创建大量嵌套作用域和闭包函数会带来花销，无论在内存还是速度上</li>
+</ul>
+<p>其实大部分应用中，主要的性能瓶颈是在操作DOM 节点上，这js 的性能损耗基本可以忽略不计</p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/categories/index.html" data-id="ckd2w4ioe0003zcqa9ohw9q77" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/26/collections/JavaScript/%E5%87%BD%E6%95%B0%E6%9F%AF%E9%87%8C%E5%8C%96%E7%9A%84%E5%AE%9E%E7%8E%B0/" data-id="ckebji4ay00014oqaa2yqdt3y" class="article-share-link">分享</a>
       
       
     </footer>
   </div>
   
     
+<nav id="article-nav">
+  
+  
+    <a href="/hexo-blog/2020/08/25/collections/JavaScript/%E6%89%8B%E5%86%99call%E3%80%81apply%E5%8F%8Abind%E5%87%BD%E6%95%B0/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">过去</strong>
+      <div class="article-nav-title">手写call、apply及bind函数</div>
+    </a>
+  
+</nav>
+
   
 </article>
 

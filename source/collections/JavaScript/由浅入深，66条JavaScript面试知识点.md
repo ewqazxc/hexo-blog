@@ -1610,7 +1610,44 @@ substring() | 提取两个指定的索引号之间的字符
     参考资料：
     * [《JavaScript 深入之 call 和 apply 的模拟实现》](https://github.com/mqyqingfeng/Blog/issues/11)
 
-  ### 56
+  ### 56 函数柯里化的实现
+  
+  函数柯里化指的是一种将使用多个参数的一个函数转换成一些列使用一个参数的函数的技术
+
+  ```js
+    function curry(fn, args){
+      // 获取函数需要的参数长度
+      let length = fn.length;
+
+      args = args || [];
+
+      return function(){
+        let subArgs = args.slice(0);
+
+        // 拼接得到现有的所有参数
+        for(let i=0;i< arguments.length; i++){
+          subArgs.push(arguments[i]);
+        }
+
+        // 判断参数的长度是否已经满足函数所需参数的长度
+        if(subArgs.length >= length){
+          // 如果满足，执行函数
+          return fn.apply(this, subArgus);
+        } else {
+          // 如果不满足，递归返回柯里化的函数等待参数的传入
+          return curry.call(this, fn, subArgs);
+        }
+      };
+    }
+
+    // ES6 实现
+    function curry(fn,...args){
+      return fn.length <= args.length ? fn(...args) : curry.bind(null, fn, ...args);
+    }
+  ```
+
+  参考资料：
+  * [《JavaScript 专题之函数柯里化》](https://github.com/mqyqingfeng/Blog/issues/42)
 
   ### 57
 
