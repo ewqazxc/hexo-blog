@@ -15,7 +15,7 @@
 <meta property="og:description" content="作者：Jake Zhang 来源：https:&#x2F;&#x2F;juejin.im&#x2F;post&#x2F;5ef8377f6fb9a07e693a6061  分类 HTML&amp;CSS  浏览器内核 盒模型、flex布局、两&#x2F;三栏布局、水平&#x2F;垂直居中 BFC、清楚浮动 css3动画、H5新特性   JavaScript  继承、原型链、this 指向、设计模式、call,apply,bind new 实现、防抖节流、">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-08-15T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-08-26T15:34:35.876Z">
+<meta property="article:modified_time" content="2020-08-26T17:25:51.022Z">
 <meta property="article:author" content="ewqazxc">
 <meta name="twitter:card" content="summary">
   
@@ -26,7 +26,7 @@
     <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
   
   <!-- 
-<link rel="stylesheet" href="/hexo-blog/%7B%22title%22:%22#%E4%B8%80%E5%A6%82%E6%97%A2%E5%BE%80%E3%80%81%22,%22subtitle%22:%22%E4%B8%8D%E7%9F%A5%E9%81%93%E5%86%99%E7%9A%84%E4%BB%80%E4%B9%88%E7%9A%84%E5%8D%9A%E5%AE%A2~%22,%22description%22:%22description%22,%22author%22:%22ewqazxc%22,%22language%22:%22zh-CN%22,%22timezone%22:%22Asia/Shanghai%22,%22url%22:%22https:/ewqazxc.github.io/hexo-blog%22,%22root%22:%22/hexo-blog/%22,%22permalink%22:%22:year/:month/:day/:title/%22,%22permalink_defaults%22:null,%22pretty_urls%22:%7B%22trailing_index%22:true,%22trailing_html%22:true%7D,%22source_dir%22:%22source%22,%22public_dir%22:%22public%22,%22tag_dir%22:%22tags%22,%22archive_dir%22:%22archives%22,%22category_dir%22:%22categories%22,%22code_dir%22:%22downloads/code%22,%22i18n_dir%22:%22:lang%22,%22skip_render%22:null,%22new_post_name%22:%22:title.md%22,%22default_layout%22:%22post%22,%22titlecase%22:false,%22external_link%22:%7B%22enable%22:true,%22field%22:%22site%22,%22exclude%22:%22%22%7D,%22filename_case%22:0,%22render_drafts%22:false,%22post_asset_folder%22:false,%22relative_link%22:false,%22future%22:true,%22highlight%22:%7B%22enable%22:true,%22auto_detect%22:false,%22line_number%22:true,%22tab_replace%22:%22%22,%22wrap%22:true,%22hljs%22:false,%22first_line_number%22:%22always1%22%7D,%22default_category%22:%22uncategorized%22,%22category_map%22:null,%22tag_map%22:null,%22date_format%22:%22YYYY-MM-DD%22,%22time_format%22:%22HH:mm:ss%22,%22use_date_for_updated%22:false,%22per_page%22:10,%22pagination_dir%22:%22page%22,%22theme%22:%22landscape%22,%22server%22:%7B%22port%22:4000,%22log%22:false,%22compress%22:false,%22header%22:true,%22cache%22:false%7D,%22deploy%22:%7B%22type%22:%22%22%7D,%22ignore%22:null,%22meta_generator%22:true,%22keywords%22:null,%22index_generator%22:%7B%22per_page%22:10,%22order_by%22:%22-date%22,%22path%22:%22%22%7D,%22include%22:null,%22exclude%22:null,%22archive_generator%22:%7B%22per_page%22:10,%22yearly%22:true,%22monthly%22:true,%22daily%22:false%7D,%22category_generator%22:%7B%22per_page%22:10%7D,%22marked%22:%7B%22gfm%22:true,%22pedantic%22:false,%22breaks%22:true,%22smartLists%22:true,%22smartypants%22:true,%22modifyAnchors%22:%22%22,%22autolink%22:true,%22sanitizeUrl%22:false,%22headerIds%22:true%7D,%22tag_generator%22:%7B%22per_page%22:10%7D%7D.css">
+<link rel="stylesheet" href="/hexo-blog/%7B%22title%22:%22#%E4%B8%80%E5%A6%82%E6%97%A2%E5%BE%80%E3%80%81%22,%22subtitle%22:%22%E4%B8%8D%E7%9F%A5%E9%81%93%E5%86%99%E7%9A%84%E4%BB%80%E4%B9%88%E7%9A%84%E5%8D%9A%E5%AE%A2~%22,%22description%22:%22description%22,%22author%22:%22ewqazxc%22,%22language%22:%22zh-CN%22,%22timezone%22:%22Asia/Shanghai%22,%22url%22:%22https:/ewqazxc.github.io/hexo-blog%22,%22root%22:%22/hexo-blog/%22,%22permalink%22:%22:year/:month/:day/:title/%22,%22permalink_defaults%22:null,%22pretty_urls%22:%7B%22trailing_index%22:true,%22trailing_html%22:true%7D,%22source_dir%22:%22source%22,%22public_dir%22:%22public%22,%22tag_dir%22:%22tags%22,%22archive_dir%22:%22archives%22,%22category_dir%22:%22categories%22,%22code_dir%22:%22downloads/code%22,%22i18n_dir%22:%22:lang%22,%22skip_render%22:null,%22new_post_name%22:%22:title.md%22,%22default_layout%22:%22post%22,%22titlecase%22:false,%22external_link%22:%7B%22enable%22:true,%22field%22:%22site%22,%22exclude%22:%22%22%7D,%22filename_case%22:0,%22render_drafts%22:false,%22post_asset_folder%22:false,%22relative_link%22:false,%22future%22:true,%22highlight%22:%7B%22enable%22:true,%22auto_detect%22:false,%22line_number%22:true,%22tab_replace%22:%22%22,%22wrap%22:true,%22hljs%22:false,%22first_line_number%22:%22always1%22%7D,%22default_category%22:%22uncategorized%22,%22category_map%22:null,%22tag_map%22:null,%22date_format%22:%22YYYY-MM-DD%22,%22time_format%22:%22HH:mm:ss%22,%22use_date_for_updated%22:false,%22per_page%22:10,%22pagination_dir%22:%22page%22,%22theme%22:%22landscape%22,%22server%22:%7B%22port%22:4000,%22log%22:false,%22compress%22:false,%22header%22:true,%22cache%22:false%7D,%22deploy%22:%7B%22type%22:%22%22%7D,%22ignore%22:null,%22meta_generator%22:true,%22keywords%22:null,%22index_generator%22:%7B%22per_page%22:10,%22order_by%22:%22-date%22,%22path%22:%22%22%7D,%22include%22:null,%22exclude%22:null,%22archive_generator%22:%7B%22per_page%22:10,%22yearly%22:true,%22monthly%22:true,%22daily%22:false%7D,%22category_generator%22:%7B%22per_page%22:10%7D,%22tag_generator%22:%7B%22per_page%22:10%7D,%22marked%22:%7B%22gfm%22:true,%22pedantic%22:false,%22breaks%22:true,%22smartLists%22:true,%22smartypants%22:true,%22modifyAnchors%22:%22%22,%22autolink%22:true,%22sanitizeUrl%22:false,%22headerIds%22:true%7D%7D.css">
  -->
   
 <link rel="stylesheet" href="/hexo-blog/css/style.css">
@@ -1108,7 +1108,50 @@
 <p>参考资料：</p>
 </li>
 <li><p><a href="https://github.com/mqyqingfeng/Blog/issues/42" target="_blank" rel="noopener">《JavaScript 专题之函数柯里化》</a></p>
-<h3 id="57"><a href="#57" class="headerlink" title="57"></a>57</h3><h3 id="58"><a href="#58" class="headerlink" title="58"></a>58</h3></li>
+<h3 id="57-js模拟new操作符的实现"><a href="#57-js模拟new操作符的实现" class="headerlink" title="57 js模拟new操作符的实现"></a>57 js模拟new操作符的实现</h3><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/new" target="_blank" rel="noopener">MDN</a> 对new 的解释：</p>
+<p>new 运算符创建一个用户定义的对象类型的实例或具有构造函数的内置对象的实例。new 关键字会进行如下的操作：</p>
+</li>
+</ul>
+<ol>
+<li><p>创建一个空的简单JavaScript 对象（{}）;</p>
+</li>
+<li><p>链接该对象（即设置该对象的构造函数）到另一个对象</p>
+</li>
+<li><p>将步骤1新创建的对象作为this 的上下文</p>
+</li>
+<li><p>如果该函数没有返回对象，则返回this</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">objFactory</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">let</span> obj = &#123;&#125;;</span><br><span class="line">  <span class="comment">// 取得该方法的第一个参数（并删除第一个参数），该参数是构造函数</span></span><br><span class="line">  <span class="keyword">let</span> Constructor = [].shift.apply(<span class="built_in">arguments</span>);</span><br><span class="line">  <span class="comment">// 将新对象的内部属性_proto_ 指向构造函数的原型，这样新对象就可以访问原型中的属性和方法</span></span><br><span class="line">  obj._proto_ = Constructor.prototype;</span><br><span class="line">  <span class="comment">// 取得构造函数的返回值</span></span><br><span class="line">  <span class="keyword">let</span> ret = Constructor.apply(obj, <span class="built_in">arguments</span>);</span><br><span class="line">  <span class="comment">// 如果返回值是一个对象就返回该对象，否则返回构造函数的一个实例对象</span></span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">typeof</span> ret === <span class="string">'object'</span> ? ret : obj;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="58-什么是回调函数？回调函数有什么缺点？"><a href="#58-什么是回调函数？回调函数有什么缺点？" class="headerlink" title="58 什么是回调函数？回调函数有什么缺点？"></a>58 什么是回调函数？回调函数有什么缺点？</h3></li>
+</ol>
+<p>  <strong>回调函数</strong>是一段可执行的代码段，它作为一个参数传递给其它的代码，其作用是在需要的时候方便调用这段（回调函数）代码。</p>
+<p>  在JavaScript 中函数也是对象的一种，同样对象可以作为参数传递给函数，因此函数也可以作为参数传递给另一个函数，这个作为参数的函数就是回调函数</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> btnAdd = <span class="built_in">document</span>.getElementById(<span class="string">'btnAdd'</span>);</span><br><span class="line">btnAdd.addEventListener(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span> <span class="title">clickCallback</span>(<span class="params">e</span>)</span>&#123;</span><br><span class="line">  <span class="comment">// do something</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>  在本例中，我们等待id 为btnAdd 的元素中的click 事件，如果它被单击，则执行clickCallback 函数，回调函数向某些数据或事件添加一些功能</p>
+<p>  回调函数有一个致命的弱点，就是容易写出回调地狱<br>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">setTimeout(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="number">1</span>);</span><br><span class="line">  setTimeout(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">2</span>);</span><br><span class="line">    setTimeout(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="number">3</span>);</span><br><span class="line">    &#125;,<span class="number">1000</span>);</span><br><span class="line">  &#125;,<span class="number">1000</span>);</span><br><span class="line">&#125;,<span class="number">1000</span>);</span><br></pre></td></tr></table></figure></p>
+<p>  这就是典型的毁掉地狱，以上代码看起来不利于阅读和维护，事件一旦多起来就更是乱糟糟，所以在ES6提出了Promise 和async/await 来解决毁掉地狱的问题。当然，回调函数还存在着别的几个缺点:</p>
+<ul>
+<li><p>不能使用try catch 捕获错误</p>
+</li>
+<li><p>不能直接return</p>
+<h3 id="59-Promise-是什么？手写实现下？"><a href="#59-Promise-是什么？手写实现下？" class="headerlink" title="59 Promise 是什么？手写实现下？"></a>59 Promise 是什么？手写实现下？</h3><p>Promise，翻译过来就是承诺，承诺它过一段时间会给你一个结果。从编程讲Promise 是异步编程的一种解决方案。下面是Promise 在<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise" target="_blank" rel="noopener">MDN</a> 的相关说明：</p>
+<p>Promise 对象是一个代理对象（代理一个值），被代理的值在Promise 对象创建时可能是未知的。它允许你为异步操作的成功和失败分别绑定相应的处理方法（handlers）。这让异步方法可以像同步方法哪样返回值，但并不是立即返回最终执行结果，而是一个能够代表未来出现的结果的promise对象</p>
+<p>一个Promise 有以下几种状态：</p>
+</li>
+<li><p>pending：初始状态，既不是成功，也不是失败状态</p>
+</li>
+<li><p>fulfilled：意味着操作成功完成</p>
+</li>
+<li><p>rejected：意味着操作失败</p>
+<p>这个承诺一旦从等待状态变为其它状态，就永远不能更改状态了，也就是说一旦状态变为fulfilled/rejected 后，就不能再次改变。</p>
+<p>举个栗子：假如我有个女朋友，下周五是她的生日，我答应她生日给她一个蛋糕，那么从现在开始这个承诺就进入等待状态，等待下周四的到来，然后状态改变。如果，我如约给了她一个蛋糕，那么这个承诺的状态就会由pending 切换为fulfilled，表示承诺成功兑现，一旦是这个结果了，就不回再有其他结果，即状态不会再发生改变；反之，如果没有兑现承诺，状态就会有pending 切换为rejected，时间不可倒流，所以状态也不能再发生变化</p>
+</li>
+<li><p><em>简易版*</em></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">myPromise</span>(<span class="params">constructor</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">let</span> self = <span class="keyword">this</span>;</span><br><span class="line">  self.status = <span class="string">'pending'</span>; <span class="comment">// 定义状态改变前的初始状态</span></span><br><span class="line">  self.value = <span class="keyword">void</span> <span class="number">0</span>; <span class="comment">// 定义状态为resolved 时的状态</span></span><br><span class="line">  self.reason = <span class="keyword">void</span> <span class="number">0</span>; <span class="comment">// 定义状态为rejected 时的状态 </span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">resolve</span>(<span class="params">value</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 两个=== 'pending' 保证了状态的改变是不可逆的</span></span><br><span class="line">    <span class="keyword">if</span>(self.status === <span class="string">'pending'</span>)&#123;</span><br><span class="line">      self.value = value;</span><br><span class="line">      self.status = <span class="string">'resolved'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">reject</span>(<span class="params">reason</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(self.status === <span class="string">'pending'</span>)&#123;</span><br><span class="line">      self.reason = reason;</span><br><span class="line">      self.status = <span class="string">'rejected'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 捕获构造异常</span></span><br><span class="line">  <span class="keyword">try</span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(resolve, reject);</span><br><span class="line">  &#125;catch(err)&#123;</span><br><span class="line">    reject(e);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义链式调用的then 方法</span></span><br><span class="line">myPromise.prototype.then = fucntion(onFulfilled, onRejected)&#123;</span><br><span class="line">  <span class="keyword">let</span> self = <span class="keyword">this</span>;</span><br><span class="line">  <span class="keyword">switch</span>(self.status)&#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'resolved'</span>:</span><br><span class="line">      onFulfilled(self.value);</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'rejected'</span>:</span><br><span class="line">      onRejected(self.reason);</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">default</span>:<span class="keyword">break</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><a href="/hexo-blog/2020/08/27/collections/JavaScript/手写实现Promise/">更多信息&gt;&gt;</a></p>
+<h3 id="60-Iterator-是什么，有什么作用？"><a href="#60-Iterator-是什么，有什么作用？" class="headerlink" title="60 Iterator 是什么，有什么作用？"></a>60 Iterator 是什么，有什么作用？</h3><h3 id="61-Generator-函数是什么，有什么作用？"><a href="#61-Generator-函数是什么，有什么作用？" class="headerlink" title="61 Generator 函数是什么，有什么作用？"></a>61 Generator 函数是什么，有什么作用？</h3></li>
 </ul>
 
       
@@ -1160,6 +1203,14 @@
       <ul>
         
           <li>
+            <a href="/hexo-blog/2020/08/27/collections/JavaScript/%E6%89%8B%E5%86%99%E5%AE%9E%E7%8E%B0Promise/">Promise是什么？手写实现下？</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2020/08/26/collections/JavaScript/js%E6%A8%A1%E6%8B%9Fnew%E6%93%8D%E4%BD%9C%E7%AC%A6%E7%9A%84%E5%AE%9E%E7%8E%B0/">js模拟new操作符的实现</a>
+          </li>
+        
+          <li>
             <a href="/hexo-blog/2020/08/26/collections/JavaScript/%E5%87%BD%E6%95%B0%E6%9F%AF%E9%87%8C%E5%8C%96%E7%9A%84%E5%AE%9E%E7%8E%B0/">函数柯里化的实现</a>
           </li>
         
@@ -1169,14 +1220,6 @@
         
           <li>
             <a href="/hexo-blog/2020/08/24/collections/JavaScript/Js%E7%9A%84%E6%B7%B1%E6%B5%85%E6%8B%B7%E8%B4%9D/">Js的深浅拷贝</a>
-          </li>
-        
-          <li>
-            <a href="/hexo-blog/2020/08/23/collections/JavaScript/%E6%89%8B%E5%8A%A8%E5%AE%9E%E7%8E%B0%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%80%E4%BA%9B%E6%96%B9%E6%B3%95/">手动实现数组的一些方法</a>
-          </li>
-        
-          <li>
-            <a href="/hexo-blog/2020/08/23/collections/JavaScript/%E5%86%99%E4%B8%80%E4%B8%AA%E9%80%9A%E7%94%A8%E7%9A%84%E4%BA%8B%E4%BB%B6%E4%BE%A6%E5%90%AC%E5%99%A8%E5%87%BD%E6%95%B0/">写一个通用的事件侦听器函数</a>
           </li>
         
       </ul>
