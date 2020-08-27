@@ -15,7 +15,7 @@
 <meta property="og:description" content="作者：Jake Zhang 来源：https:&#x2F;&#x2F;juejin.im&#x2F;post&#x2F;5ef8377f6fb9a07e693a6061  分类 HTML&amp;CSS  浏览器内核 盒模型、flex布局、两&#x2F;三栏布局、水平&#x2F;垂直居中 BFC、清楚浮动 css3动画、H5新特性   JavaScript  继承、原型链、this 指向、设计模式、call,apply,bind new 实现、防抖节流、">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-08-15T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-08-26T17:25:51.022Z">
+<meta property="article:modified_time" content="2020-08-27T15:07:05.284Z">
 <meta property="article:author" content="ewqazxc">
 <meta name="twitter:card" content="summary">
   
@@ -1151,8 +1151,41 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">myPromise</span>(<span class="params">constructor</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">let</span> self = <span class="keyword">this</span>;</span><br><span class="line">  self.status = <span class="string">'pending'</span>; <span class="comment">// 定义状态改变前的初始状态</span></span><br><span class="line">  self.value = <span class="keyword">void</span> <span class="number">0</span>; <span class="comment">// 定义状态为resolved 时的状态</span></span><br><span class="line">  self.reason = <span class="keyword">void</span> <span class="number">0</span>; <span class="comment">// 定义状态为rejected 时的状态 </span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">resolve</span>(<span class="params">value</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 两个=== 'pending' 保证了状态的改变是不可逆的</span></span><br><span class="line">    <span class="keyword">if</span>(self.status === <span class="string">'pending'</span>)&#123;</span><br><span class="line">      self.value = value;</span><br><span class="line">      self.status = <span class="string">'resolved'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">reject</span>(<span class="params">reason</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(self.status === <span class="string">'pending'</span>)&#123;</span><br><span class="line">      self.reason = reason;</span><br><span class="line">      self.status = <span class="string">'rejected'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 捕获构造异常</span></span><br><span class="line">  <span class="keyword">try</span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(resolve, reject);</span><br><span class="line">  &#125;catch(err)&#123;</span><br><span class="line">    reject(e);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义链式调用的then 方法</span></span><br><span class="line">myPromise.prototype.then = fucntion(onFulfilled, onRejected)&#123;</span><br><span class="line">  <span class="keyword">let</span> self = <span class="keyword">this</span>;</span><br><span class="line">  <span class="keyword">switch</span>(self.status)&#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'resolved'</span>:</span><br><span class="line">      onFulfilled(self.value);</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'rejected'</span>:</span><br><span class="line">      onRejected(self.reason);</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">default</span>:<span class="keyword">break</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p><a href="/hexo-blog/2020/08/27/collections/JavaScript/手写实现Promise/">更多信息&gt;&gt;</a></p>
-<h3 id="60-Iterator-是什么，有什么作用？"><a href="#60-Iterator-是什么，有什么作用？" class="headerlink" title="60 Iterator 是什么，有什么作用？"></a>60 Iterator 是什么，有什么作用？</h3><h3 id="61-Generator-函数是什么，有什么作用？"><a href="#61-Generator-函数是什么，有什么作用？" class="headerlink" title="61 Generator 函数是什么，有什么作用？"></a>61 Generator 函数是什么，有什么作用？</h3></li>
+<h3 id="60-Iterator-是什么，有什么作用？"><a href="#60-Iterator-是什么，有什么作用？" class="headerlink" title="60 Iterator 是什么，有什么作用？"></a>60 Iterator 是什么，有什么作用？</h3><p><a href="/hexo-blog/2020/08/11/collections/JavaScript/%E5%8F%AF%E8%BF%AD%E4%BB%A3%E5%AF%B9%E8%B1%A1/">可迭代对象(iterable object) Iterator</a></p>
+<p>Iterator（迭代器）是一种接口，也可以说是一种规范。为各种不同的数据结构提供统一的访问机制，任何数据只要部署Iterator 接口，就可以完成遍历操作（即依次处理该数据结构的所有成员）。</p>
+</li>
+<li><p><em>Iterator 语法：*</em></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = &#123;</span><br><span class="line">  [<span class="built_in">Symbol</span>.Iterator]: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>[Symbol.iterator]</code>属性名是固定的写法，只要拥有了该属性的对象，就能够用迭代器的方式进行遍历</p>
+<p>迭代器的遍历方法是首先获得一个迭代器的指针，初始时该指针指向第一条数据之前，接着通过调用next 方法，改变指针的指向，让其指向下一条数据，每一次的next 都会返回一个对象，该对象有两个属性</p>
+</li>
+<li><p>value 代表想要获取的数据</p>
+</li>
+<li><p>done fasle 表示当前指针指向的数据有值，true 表示遍历已经结束</p>
+<p>Iterator 的作用有三个：</p>
+</li>
 </ul>
+<ol>
+<li><p>为各种数据结构，提供一个统一的、简便的访问接口</p>
+</li>
+<li><p>使得数据结构的成员能够按某种次序排列</p>
+</li>
+<li><p>ES6创造了一种新的遍历命令for…of 循环，Iterator 接口主要供for…of 消费</p>
+<p>遍历过程：</p>
+</li>
+<li><p>创建一个指针对象，指向当前数据结构的起始位置，也就是说，遍历器对象本质上，就是一个指针对象</p>
+</li>
+<li><p>第一次调用指针对象的next 方法，可以将指针指向数据结构的第一个成员</p>
+</li>
+<li><p>第二次调用指针对象的next 方法，指针就指向数据结构的第二个成员</p>
+</li>
+<li><p>不断调用指针对象的next 方法，直到它指向数据结构的结束为止</p>
+<p>每一次调用next 方法，都会返回数据结构的当前成员的信息。具体来说木九十返回一个包含value 和done 两个属性的对象。其中，value属性时当前成员的值，done 属性是一个布尔值，表示遍历是否结束</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [&#123;<span class="attr">num</span>:<span class="number">1</span> &#125;,<span class="number">2</span>,<span class="number">3</span>];</span><br><span class="line"><span class="keyword">let</span> it = arr[<span class="built_in">Symbol</span>.iterator](); <span class="comment">// 获取数组中的迭代器</span></span><br><span class="line"></span><br><span class="line">it.next(); <span class="comment">// &#123; value: Object &#123; num: 1&#125;, done: false&#125;</span></span><br><span class="line">it.next(); <span class="comment">// &#123; vlaue: 2, done: false&#125;</span></span><br><span class="line">it.next(); <span class="comment">// &#123; value: 3, done: false&#125;</span></span><br><span class="line">it.next(); <span class="comment">// &#123; value: undefined, done: true&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="61-Generator-函数是什么，有什么作用？"><a href="#61-Generator-函数是什么，有什么作用？" class="headerlink" title="61 Generator 函数是什么，有什么作用？"></a>61 Generator 函数是什么，有什么作用？</h3></li>
+</ol>
 
       
     </div>
