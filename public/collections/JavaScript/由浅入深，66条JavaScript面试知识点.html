@@ -15,7 +15,7 @@
 <meta property="og:description" content="作者：Jake Zhang 来源：https:&#x2F;&#x2F;juejin.im&#x2F;post&#x2F;5ef8377f6fb9a07e693a6061  分类 HTML&amp;CSS  浏览器内核 盒模型、flex布局、两&#x2F;三栏布局、水平&#x2F;垂直居中 BFC、清楚浮动 css3动画、H5新特性   JavaScript  继承、原型链、this 指向、设计模式、call,apply,bind new 实现、防抖节流、">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-08-15T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-08-27T15:07:05.284Z">
+<meta property="article:modified_time" content="2020-08-30T15:08:45.463Z">
 <meta property="article:author" content="ewqazxc">
 <meta name="twitter:card" content="summary">
   
@@ -1184,8 +1184,388 @@
 <p>每一次调用next 方法，都会返回数据结构的当前成员的信息。具体来说木九十返回一个包含value 和done 两个属性的对象。其中，value属性时当前成员的值，done 属性是一个布尔值，表示遍历是否结束</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [&#123;<span class="attr">num</span>:<span class="number">1</span> &#125;,<span class="number">2</span>,<span class="number">3</span>];</span><br><span class="line"><span class="keyword">let</span> it = arr[<span class="built_in">Symbol</span>.iterator](); <span class="comment">// 获取数组中的迭代器</span></span><br><span class="line"></span><br><span class="line">it.next(); <span class="comment">// &#123; value: Object &#123; num: 1&#125;, done: false&#125;</span></span><br><span class="line">it.next(); <span class="comment">// &#123; vlaue: 2, done: false&#125;</span></span><br><span class="line">it.next(); <span class="comment">// &#123; value: 3, done: false&#125;</span></span><br><span class="line">it.next(); <span class="comment">// &#123; value: undefined, done: true&#125;</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="61-Generator-函数是什么，有什么作用？"><a href="#61-Generator-函数是什么，有什么作用？" class="headerlink" title="61 Generator 函数是什么，有什么作用？"></a>61 Generator 函数是什么，有什么作用？</h3></li>
+<h3 id="61-Generator-函数是什么，有什么作用？"><a href="#61-Generator-函数是什么，有什么作用？" class="headerlink" title="61 Generator 函数是什么，有什么作用？"></a>61 Generator 函数是什么，有什么作用？</h3><p>Generator 函数可以说是Iterator 接口的具体实现方式，其最大的特点就是可以控制函数的执行</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> *<span class="title">foo</span>(<span class="params">x</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> y = <span class="number">2</span> * (<span class="keyword">yield</span> (x + <span class="number">1</span>));</span><br><span class="line">  <span class="keyword">let</span> z = <span class="keyword">yield</span> (y/<span class="number">3</span>);</span><br><span class="line">  <span class="keyword">return</span> (x + y + z);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> it = foo(<span class="number">5</span>);</span><br><span class="line">it.next(); <span class="comment">// &#123; value: 6, done: false&#125;</span></span><br><span class="line">it.next(<span class="number">12</span>); <span class="comment">// &#123; value: 8, done: false&#125;</span></span><br><span class="line">it.next(<span class="number">13</span>); <span class="comment">// &#123; value: 42, done: true&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>执行过程：</p>
+</li>
 </ol>
+<ul>
+<li><p>首先Generator 函数调用时它会返回一个迭代器</p>
+</li>
+<li><p>当执行第一次next 时，传参会被忽略，并且函数暂停在yield(x + 1)处，所以返回 5 + 1 = 6</p>
+</li>
+<li><p>当执行第二次next 时，传入的参数等于上一个yield 的返回值，如果不传参，yield 永远返回 undefined。此时，let y = 2 * 12，所以第二个yield 等于 2*12/13 = 8</p>
+</li>
+<li><p>当执行第三次next 时，传入的参数会传递给z，所以 z = 13,x = 5,y = 24，相加等于 42</p>
+<h3 id="62-什么是async-await-及其如何工作，有什么优缺点？"><a href="#62-什么是async-await-及其如何工作，有什么优缺点？" class="headerlink" title="62 什么是async/await 及其如何工作，有什么优缺点？"></a>62 什么是async/await 及其如何工作，有什么优缺点？</h3><p>async/await 是一种建立在Promise之上的编写异步或飞阻塞代码的新方法，被普遍认为是js 异步操作的最终且最优雅地解决方案，相对于Promise 和回调，它的可读性和简洁度都更高</p>
+<p>async 是异步的意思，而await 是async wait 的简写，即异步等待</p>
+<p>所以从语义上就很好理解async 用于声明一个function 是异步的，而await 用于等待一个异步方法执行完成</p>
+<p>一个函数如果加上async，那么该函数就会返回一个Promise</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">'1'</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(test()); <span class="comment">// Promise &#123;&lt;fulfilled&gt;: "1"&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>可以看出输出的是一个Promise 对象。所以，async 函数返回的是一个Promise 对象，如果在async 函数中直接 return 一个直接量，async 会吧这个直接量通过 Promise.resolve() 封装成Promise 对象返回</p>
+<p>相比于Promise，async/await 能更好地处理 then 链</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">takeLongTime</span>(<span class="params">n</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="params">resolve</span> =&gt;</span> &#123;</span><br><span class="line">    setTimeout(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">      resolve(n+<span class="number">200</span>);</span><br><span class="line">    &#125;,n)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">step1</span>(<span class="params">n</span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">`step1 with <span class="subst">$&#123;n&#125;</span>`</span>);</span><br><span class="line">  <span class="keyword">return</span> takeLongTime(n);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">step2</span>(<span class="params">n</span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">`step2 with <span class="subst">$&#123;n&#125;</span>`</span>);</span><br><span class="line">  <span class="keyword">return</span> takeLongTime(n);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">step3</span>(<span class="params">n</span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">`step3 with <span class="subst">$&#123;n&#125;</span>`</span>);</span><br><span class="line">  <span class="keyword">return</span> takeLongTime(n);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p><em>使用Promise*</em></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">doIt</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.time(<span class="string">'doIt'</span>);</span><br><span class="line">  <span class="keyword">const</span> time1 = <span class="number">300</span>;</span><br><span class="line">  step1(time1)</span><br><span class="line">    .then(<span class="function"><span class="params">time2</span> =&gt;</span> step2(time2))</span><br><span class="line">    .then(<span class="function"><span class="params">time3</span> =&gt;</span> step3(time3))</span><br><span class="line">    .then(<span class="function"><span class="params">result</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">`result is <span class="subst">$&#123;result&#125;</span>`</span>);</span><br><span class="line">      <span class="built_in">console</span>.timeEnd(<span class="string">'doIt'</span>);</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line">doIt();</span><br><span class="line"><span class="comment">// step1 with 300 </span></span><br><span class="line"><span class="comment">// undefined</span></span><br><span class="line"><span class="comment">// step2 with 500</span></span><br><span class="line"><span class="comment">// step3 with 700</span></span><br><span class="line"><span class="comment">// result is 900</span></span><br><span class="line"><span class="comment">// doIt: 1503.828857421875ms</span></span><br></pre></td></tr></table></figure></li>
+<li><p><em>使用async/await*</em></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">doIt</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.time(<span class="string">'doIt'</span>);</span><br><span class="line">  <span class="keyword">const</span> time1 = <span class="number">300</span>;</span><br><span class="line">  <span class="keyword">const</span> time2 = <span class="keyword">await</span> step1(time1);</span><br><span class="line">  <span class="keyword">const</span> time3 = <span class="keyword">await</span> step2(time2);</span><br><span class="line">  <span class="keyword">const</span> result = <span class="keyword">await</span> step3(time3);</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">`result is <span class="subst">$&#123;result&#125;</span>`</span>)</span><br><span class="line">  <span class="built_in">console</span>.timeEnd(<span class="string">'doIt'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">doIt();</span><br><span class="line"><span class="comment">// step1 with 300</span></span><br><span class="line"><span class="comment">// Promise &#123;&lt;pending&gt;&#125;</span></span><br><span class="line"><span class="comment">// step2 with 500</span></span><br><span class="line"><span class="comment">// step3 with 700</span></span><br><span class="line"><span class="comment">// result is 900</span></span><br><span class="line"><span class="comment">// doIt: 1502.822021484375ms</span></span><br></pre></td></tr></table></figure>
+
+<p>注意：await 关键字只能在async function 中使用，在任何非async function 的函数中使用await 关键字都会抛出错误，await 关键字在执行下一行代码之前等待右侧表达式（可能是一个Promise）返回</p>
+</li>
+<li><p><em>优缺点*</em><br>async/await 的优势在于处理then 的调用链，能够更清晰准确的写出代码，并且也能优雅地解决或吊地狱问题，当然也存在一些缺点，因为await 将异步代码改造成了同步代码，如果多个异步代码没有依赖性却使用了await 会导致性能上的降低</p>
+<p>参考资料：</p>
+</li>
+<li><p><a href="https://juejin.im/post/6844904064614924302#heading-69" target="_blank" rel="noopener">「硬核JS」深入了解异步解决方案</a></p>
+<h3 id="63-instanceof-的原理是什么，如何实现"><a href="#63-instanceof-的原理是什么，如何实现" class="headerlink" title="63 instanceof 的原理是什么，如何实现"></a>63 instanceof 的原理是什么，如何实现</h3><p>instanceof 可以正确的判断对象的类型，因为内部机制是通过判断对象的原型链中是不是能找到类型的prototype</p>
+<p>实现instanceof：</p>
+</li>
+</ul>
+<ol>
+<li><p>首先获取类型的原型</p>
+</li>
+<li><p>然后获得对象的原型</p>
+</li>
+<li><p>然后一直循环判断对象的原型是否等于类型的原型，直到对象原型为null，因为原型链最终为null</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">myInstanceof</span>(<span class="params">left, right</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">let</span> protoype = right.prototype;</span><br><span class="line">  left = left._proto_;</span><br><span class="line">  <span class="keyword">while</span>(<span class="literal">true</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span> (left === <span class="literal">null</span> || left === <span class="literal">undefined</span>)&#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(prototype === left)&#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    left = left._proto_;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="64-js-的节流与防抖"><a href="#64-js-的节流与防抖" class="headerlink" title="64 js 的节流与防抖"></a>64 js 的节流与防抖</h3></li>
+</ol>
+<p>  <strong>函数防抖</strong> 是指在事件被触发n 秒后再执行回调，如果在这n 秒内事件又被触发，则重新计时。这可以使用在一些点击请求的时间上，避免因为用户的多次点击向后端发送多次请求</p>
+<p>  <strong>函数节流</strong> 是指规定一个单位时间，在这个单位事件内，只能由一次触发事件的回调函数执行，如果在同一个单位事件内某时间被触发多次，只有一次能生效。节流可以使用在scroll 函数的事件监听上，通过时间节流来降低事件调用的频率</p>
+<ol>
+<li><p>防抖函数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">debounce</span>(<span class="params">fn, wait</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">let</span> timer = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> context = <span class="keyword">this</span>,</span><br><span class="line">    args = <span class="built_in">arguments</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果此时存在定时器的话，则取消之前的定时器重新计时</span></span><br><span class="line">    <span class="keyword">if</span>(timer)&#123;</span><br><span class="line">      clearTimeout(timer);</span><br><span class="line">      timer = <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 设置定时器，使事件间隔指定事件后执行</span></span><br><span class="line">    timer = setTimeout(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">      fn.apply(context, args);</span><br><span class="line">    &#125;,wait);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>节流函数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">throttle</span>(<span class="params">fn, delay</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">let</span> time = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> ocntext = <span class="keyword">this</span>,</span><br><span class="line">    args = <span class="built_in">arguments</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 一段时间内只执行一次</span></span><br><span class="line">    <span class="keyword">if</span>(!timer)&#123;</span><br><span class="line">      timer = setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        fn.apply(context, args);</span><br><span class="line">        timer = <span class="literal">null</span>;</span><br><span class="line">      &#125;,delay);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>参考资料</p>
+</li>
+</ol>
+<ul>
+<li><p><a href="https://juejin.im/entry/6844903618827517965" target="_blank" rel="noopener">《JS 的防抖与节流》</a></p>
+<h3 id="65-什么是设计模式"><a href="#65-什么是设计模式" class="headerlink" title="65 什么是设计模式?"></a>65 什么是设计模式?</h3></li>
+</ul>
+<ol>
+<li><p>概念</p>
+<p>设计模式是一套被反复使用的、多数人知晓的、经过分类编目的、代码设计经验的总结。使用设计模式是为了重用代码、让代码更容易被他人理解、保证代码可靠性。毫无疑问，设计模式于己于他人于系统都是多赢的，设计模式使代码编制真正工程化，设计模式是软件工程的基石，如同大厦的一块块砖石一样。</p>
+</li>
+<li><p>设计原则</p>
+</li>
+</ol>
+<ul>
+<li><p>S 单一职责原则 </p>
+<ul>
+<li>一个程序只做好一件事</li>
+<li>如果功能过于复杂就拆分开，每个部分保持独立</li>
+</ul>
+</li>
+<li><p>O 开放/封闭原则</p>
+<ul>
+<li>对扩展开放，对修改封闭</li>
+<li>增加需求时，扩展新代码，而非修改已有代码</li>
+</ul>
+</li>
+<li><p>L 里氏替换原则</p>
+<ul>
+<li>子类能覆盖父类</li>
+<li>父类能出现的地方子类就能出现</li>
+</ul>
+</li>
+<li><p>I 接口隔离原则</p>
+<ul>
+<li>保持接口的单一独立</li>
+<li>类似单一职责原则，这里更关注接口</li>
+</ul>
+</li>
+<li><p>D 依赖倒转原则</p>
+<ul>
+<li>面向接口编程，依赖于抽象而不依赖于具体</li>
+<li>使用方只关注接口，而不关注具体类的实现</li>
+</ul>
+</li>
+</ul>
+<ol start="3">
+<li>设计模式的类型</li>
+</ol>
+<ul>
+<li><p>结构型模式：通过识别系统中组件间的简单关系来简化系统的设计</p>
+</li>
+<li><p>创作型模式：处理对象的创建，根据实际情况使用合适的方式创建对象，常规的对象创建方式可能会导致设计上的问题，或增加设计的复杂度。创建型模式通过以某种方式控制对象的创建来解决问题</p>
+</li>
+<li><p>行为型模式：用于识别对象之间常见的交互模式并加以实现，增加交互的灵活性</p>
+<h3 id="66-9种前端常见的设计模式"><a href="#66-9种前端常见的设计模式" class="headerlink" title="66 9种前端常见的设计模式"></a>66 9种前端常见的设计模式</h3></li>
+</ul>
+<ol>
+<li><p>外观模式</p>
+<p>外观模式是最常见的设计模式之一，它为子系统中的一组接口提供一个统一的高层接口，使子系统更容易使用。简而言之外观设计模式就是把多个子系统中复杂逻辑进行抽象，从而提供一个更统一、更简洁、更易用的API。很多我们常用的框架和库基本都遵循了外观设计模式，比如jQuery 就把复杂的原生DOM 操作进行了抽象和封装，并消除了浏览器之间的兼容问题，从而提供了一个更高级更易用的版本。其实在平时工作中我们也会用到外观模式进行开发，只是我们不自知而已</p>
+</li>
+</ol>
+<ul>
+<li><p>场景</p>
+<ul>
+<li>设计初期，应该要有意识地将不同的两个层分离，比如经典的三层结构，在数据访问层和业务逻辑层、业务逻辑层和表示层之间建立外观</li>
+<li>在开发阶段，子系统往往因为不断地重构演化而变得原来越复杂，增加外观可以提供一个简单的接口，减少他们之间的依赖</li>
+<li>在维护一个遗留的大型系统时，可能这个系统已经很难维护了，这时候使用外观也是非常合适的，为旧系统开发一个外观类，为设计粗糙和高度复杂的遗留代码提供比较清晰的接口，让新系统和外观对象交互，外观与遗留代码交互所有的复杂工作</li>
+</ul>
+</li>
+<li><p>优点</p>
+<ul>
+<li>减少系统相互依赖</li>
+<li>提高灵活性</li>
+<li>提高了安全性</li>
+</ul>
+</li>
+<li><p>缺点</p>
+<ul>
+<li>不符合开闭原则，如果要改东西很麻烦，继承重写都不合适</li>
+</ul>
+</li>
+</ul>
+<ol start="2">
+<li><p>代理模式</p>
+<p>代理模式是为一个对象提供一个代用品或占位符，以便控制对它的访问</p>
+</li>
+</ol>
+<ul>
+<li><p>场景</p>
+<ul>
+<li>HTML 元素事件代理</li>
+<li>ES6 的proxy</li>
+<li>jQuery.proxy() 方法</li>
+</ul>
+</li>
+<li><p>优点</p>
+<ul>
+<li>代理模式能将代理对象与被调用对象分离，降低了西戎的耦合度。代理模式在客户端和目标对象之间起到一个中介作用，这样可以起到保护目标对象的作用</li>
+<li>代理对象可以扩展目标对象的功能；通过修改代理对象就可以了，符合开闭原则</li>
+</ul>
+</li>
+<li><p>缺点</p>
+<ul>
+<li>处理请求速度可能有差异，非直接访问存在开销</li>
+</ul>
+</li>
+</ul>
+<ol start="3">
+<li><p>工厂模式</p>
+<p>工厂模式定义一个用于创建对象的接口，这个接口由子类决定实例化哪一个类。该模式使一个类的实例化延迟到了子类。而子类可以重写接口方法一遍创建的时候指定自己的对象类型</p>
+</li>
+</ol>
+<ul>
+<li><p>场景</p>
+<ul>
+<li>如果你不想让某个子系统与较大的那个对象之间形成强耦合，而是想运行时从许多子系统中进行挑选的话，那么工厂模式是一个理想的选择</li>
+<li>将new 操作简单封装，遇到new 的时候就应该考虑是否用工厂模式</li>
+<li>需要依赖具体环境创建不同实例，这些实例都有相同的行为，这是候我们可以使用工厂模式，简化实现的过程，同时也就可以减少每种对象所需的代码量，有利于消除对象间的耦合，提供更大的灵活性</li>
+</ul>
+</li>
+<li><p>优点</p>
+<ul>
+<li>创建对象的过程可能和复杂，但我们只需关心创建结果</li>
+<li>构造函数和创建者分离，符合“开闭原则”</li>
+<li>一个调用者想创建一个对象，只要知道其名称就可以了</li>
+<li>扩展性高，如果想增加一个产品，只要扩展一个工厂类就可以</li>
+</ul>
+</li>
+<li><p>缺点</p>
+<ul>
+<li>添加新产品时，需要编写新的具体产品类，一定程度上增加了系统的复杂度</li>
+<li>考虑到系统的可扩展性，需要引入抽象层，在客户端代码中均使用抽象层进行定义，增加了系统的抽象性和理解难度</li>
+</ul>
+</li>
+<li><p>什么时候不用</p>
+<ul>
+<li>当被应用到错误的问题类型上时，这一模式会给引用程序引入大量不必要的复杂性，除非为创建对象提供一个接口是我们编写的库或者框架的一个设计上目标，否则建议使用明确的构造器，以避免不必要的开销</li>
+<li>由于对象的创建过程被高效的抽象在一个接口后面的实事，这也会给依赖于这个过程可能会有多复杂的单元测试带来问题</li>
+</ul>
+</li>
+</ul>
+<ol start="4">
+<li><p>单例模式</p>
+<p>顾名思义，单例模式中Class 的实例个数最多为1。当需要一个对象去贯穿真个系统执行默写任务时，单例模式就派上了用场。而除此之外的场景尽量避免单例模式的使用，因为单例模式会引入全局状态，而一个健康的系统应该避免引入过多的全局状态</p>
+<p>实现单例模式需要解决以下几个问题：</p>
+</li>
+</ol>
+<ul>
+<li><p>如何确定Class 只有一个实例？</p>
+</li>
+<li><p>如何简便地访问Class 的唯一实例？</p>
+</li>
+<li><p>Class 如何控制实例化的过程？</p>
+</li>
+<li><p>如何将Class 的实例个数限制为1</p>
+<p>我们一般通过实现以下两点来解决上述问题：</p>
+</li>
+<li><p>隐藏Class 的构造函数，避免多次实例化</p>
+</li>
+<li><p>通过暴露一个getInstance() 方法来创建/获取唯一实例</p>
+</li>
+<li><p><em>场景例子*</em></p>
+</li>
+<li><p>定义命名空间和实现分支型方法</p>
+</li>
+<li><p>登录框</p>
+</li>
+<li><p>vuex 和redux 中的store</p>
+</li>
+<li><p><em>优点*</em></p>
+</li>
+<li><p>划分命名空间，减少全区变量</p>
+</li>
+<li><p>增强模块性，把自己的代码组织在一个全局变量名下，放在单一位置，便于维护</p>
+</li>
+<li><p>且只会实例化一次，简化了代码的调试和维护</p>
+</li>
+<li><p><em>缺点*</em></p>
+</li>
+<li><p>由于单例模式提供的是一种单点访问，所以有可能导致模块间的强耦合，从而不利于单元测试。无法单独测试一个调用了来自单例的方法和类，而只能把它与那个单例作为一个单元一起测试</p>
+</li>
+</ul>
+<ol start="5">
+<li><p>策略模式</p>
+<p>策略模式简单描述就是：对象有某个行为，但是在不同的场景中，该行为有不同的实现算法，把它们一个个封装起来，并且使它们可以互相替换</p>
+</li>
+</ol>
+<ul>
+<li><p>场景例子</p>
+<ul>
+<li>如果在一个系统里面有许多类，它们之间的区别仅在于它们的行为，那么使用策略模式可以动态地让一个对象再许多行为中选择一种行为</li>
+<li>一个系统需要动态地在几种算法中选择一种</li>
+<li>表单验证</li>
+</ul>
+</li>
+<li><p>优点</p>
+<ul>
+<li>利用组合、委托、多态等技术和思想，可以有效的避免多重条件选择语句</li>
+<li>提供了对开放-封闭原则的完美支持，将算法封装在独立的stategy 中，使得它们抑郁切换，理解，易于扩展</li>
+<li>利用组合和委托来让Context 拥有执行算法的能力，这也是继承的一种更轻便的代替方案</li>
+</ul>
+</li>
+<li><p>缺点</p>
+<ul>
+<li>会在程序中增加许多策略类或者策略对象</li>
+<li>要使用策略模式，必须了解所有的strategy，必须了解各个strategy 之间的不同点，这样才能选择一个合适strategy</li>
+</ul>
+</li>
+</ul>
+<ol start="6">
+<li><p>迭代器模式</p>
+<p>迭代器模式简单的说就是提供一种方法顺序一个聚合对象中各个元素，而又不暴露该对象的内部表示</p>
+<p>迭代器模式解决了以下问题：</p>
+</li>
+</ol>
+<ul>
+<li><p>提供一致的遍历各种数据结构的方式，而不用了解数据的内部结构</p>
+</li>
+<li><p>提供遍历容器（集合）的能力而无需改变容器的接口</p>
+<p>一个迭代器通常需要实现以下接口：</p>
+</li>
+<li><p>hasNext()：判断迭代是否结束，返回Boolean</p>
+</li>
+<li><p>next()：查找并返回下一个元素</p>
+</li>
+</ul>
+<ol start="7">
+<li><p>观察者模式</p>
+<p>观察者模式又称发布-订阅模式，用一句话描述就是，被观察对象（subject）维护一组维护者（observer），当被观察对象状态改变时，通过调用观察者的某个方法将这些变化通知到观察者</p>
+<p>观察者模式中Subject 对象一般需要实现以下API：</p>
+</li>
+</ol>
+<ul>
+<li><p>subscribe()：接收一个观察者observer 对象，使其订阅自己</p>
+</li>
+<li><p>unsubscribe()：接收一个观察者observer 对象，使其取消订阅自己</p>
+</li>
+<li><p>fire()：触发事件，通知所有观察者</p>
+</li>
+<li><p><em>场景*</em></p>
+</li>
+<li><p>DOM 事件addeventListener</p>
+</li>
+<li><p>VUE 响应式</p>
+</li>
+<li><p><em>优点*</em></p>
+</li>
+<li><p>支持简单的广播通信，自动通知所有已经订阅过的对象</p>
+</li>
+<li><p>目标对象与观察者之间的抽象耦合关系能单独扩展以及重用</p>
+</li>
+<li><p>增加了灵活性</p>
+</li>
+<li><p>观察者模式所做的工作就是在解耦，让耦合的双飞都依赖于抽象，而不是依赖于具体。从而使得各自的变化都不会影响到另一边的变化</p>
+</li>
+<li><p><em>缺点*</em></p>
+</li>
+<li><p>过度使用会导致对象与对象之间的联系弱化，会导致程序难以跟踪维护和理解</p>
+</li>
+</ul>
+<ol start="8">
+<li><p>中介者模式</p>
+<p>在中介者模式中，中介者包装了一系列对象相互作用的方式，使得这些对象不必直接相互作用，而是由中介者协调它们之间的交互，从而使它们可以松散耦合。当某些对象之间的作用发生改变时，不会立即影响其它的一些对象之间的作用，保证这些作用可以彼此独立的变化</p>
+<p>中介者模式和观察者模式有一定的相似性，都是一对多的关系，也都是集中式通信，不同的是中介者模式是处理同级对象之间的交互，而观察者模式是处理Observer 和Subject 之间的交互。中介者模式有些像婚恋中介，相亲对象刚开始并不能直接交流，而是要通过中介去筛选匹配再决定谁和谁见面</p>
+</li>
+</ol>
+<ul>
+<li><p>场景</p>
+<ul>
+<li>例如购物车需求，存在商品选择表单、颜色选择表单、购买数量表单等等，都会触发change 事件，那么可以通过中介者来转发处理这些事件，实现各个事件间的解耦，仅仅维护中介者对象即可</li>
+<li>聊天室</li>
+</ul>
+</li>
+<li><p>优点</p>
+<ul>
+<li>使各对象之间耦合松散，而且可以独立地改变它们之间的交互</li>
+<li>中介者和对象一对多的关系取代了对象之间的网状多对多的关系</li>
+<li>如果对象之间的复杂耦合度导致维护很困难，而且欧核对随项目变化增速很快，就需要中介者重构代码</li>
+</ul>
+</li>
+<li><p>缺点</p>
+<ul>
+<li>系统中会新增一个中介者对象，因为对象之间交互的复杂性，转移成了中介者对象的复杂性，使得中介者对象经常是巨大的。中介者对象自身往往就是一个难以维护的对象</li>
+</ul>
+</li>
+</ul>
+<ol start="9">
+<li><p>访问者模式</p>
+<p>访问者模式 是一种将算法与对象结构分离的设计模式，通俗地说就是：访问者模式让我们能够在不改变一个对象结构的前提下能够给该对象增加新的逻辑，新增的逻辑保存在一个队里的访问者对象中，访问者模式常用语扩展一些第三方的库和工具</p>
+<p>访问者模式的实现有以下几个要素：</p>
+</li>
+</ol>
+<ul>
+<li><p>访问者对象，拥有一个visit() 方法</p>
+</li>
+<li><p>接收对象，拥有一个accept() 方法</p>
+</li>
+<li><p>用于Visitor 接收一个Receiving Object</p>
+</li>
+<li><p>accept：用于Receving Object 接收一个Visitor，并通过调用Visitor 的visit() 为其提供获取Receiving Object 数据的能力</p>
+</li>
+<li><p><em>场景*</em></p>
+</li>
+<li><p>对象结构中对象对应的类很少改变，但经常需要再此对象结构上定义新的操作</p>
+</li>
+<li><p>需要对一个对象结构中的对象进行很多不同的并且不相关的操作，而需要避免让这些操作“污染”这些对象的类，也不希望增加新操作时修改这些类</p>
+</li>
+<li><p><em>优点*</em></p>
+</li>
+<li><p>具体符合单一职责原则</p>
+</li>
+<li><p>优秀的扩展性</p>
+</li>
+<li><p>灵活性</p>
+</li>
+<li><p><em>缺点*</em></p>
+</li>
+<li><p>具体元素对访问者公布细节，违反了迪米特原则（实体间相互作用）</p>
+</li>
+<li><p>违反了依赖倒置原则，依赖了具体类，没有依赖抽象</p>
+</li>
+<li><p>具体元素变更比较困难</p>
+</li>
+</ul>
 
       
     </div>
@@ -1267,9 +1647,15 @@
   
   <div class="outer">
     <div id="footer-info" class="inner">
+      
+
       &copy; 2020 ewqazxc<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
+  </div>
+  <div hidden>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
   </div>
 </footer>
     </div>
@@ -1299,7 +1685,6 @@
 
 
 <script src="/hexo-blog/js/script.js"></script>
-
 
 
 
