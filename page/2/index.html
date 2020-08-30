@@ -71,6 +71,494 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-collections/JavaScript/可迭代对象" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo-blog/2020/08/10/collections/JavaScript/%E5%8F%AF%E8%BF%AD%E4%BB%A3%E5%AF%B9%E8%B1%A1/" class="article-date">
+  <time datetime="2020-08-10T16:00:00.000Z" itemprop="datePublished">2020-08-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/hexo-blog/2020/08/10/collections/JavaScript/%E5%8F%AF%E8%BF%AD%E4%BB%A3%E5%AF%B9%E8%B1%A1/">可迭代对象(iterable object) Iterator</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="什么是可迭代对象？"><a href="#什么是可迭代对象？" class="headerlink" title="什么是可迭代对象？"></a>什么是可迭代对象？</h2><p>  一种数据结构只要部署了Iterator 接口，我们就称这种数据结构是“可遍历的”（iterable）。</p>
+<p>  ES6 规定，默认的Iterator 接口部署在数据结构的Symbol.iterator 属性，或者说，一个数据结构只要具有Symbol.iterator 属性，就可以认为是“可遍历的”。</p>
+<p>  ES6 的某些数据结构原生具备Iterator 接口，即不用任何处理，就可以被for …of 循环遍历。原因在于，这些数据结构原生部署了Symbol.iterator 属性。<br>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- <span class="built_in">Array</span></span><br><span class="line">- <span class="built_in">Map</span></span><br><span class="line">- <span class="built_in">Set</span></span><br><span class="line">- <span class="built_in">String</span></span><br><span class="line">- TypedArray</span><br><span class="line">- 函数的 <span class="built_in">arguments</span> 对象</span><br><span class="line">- NodeList 对象</span><br></pre></td></tr></table></figure></p>
+<h2 id="Iterator-遍历器的概念"><a href="#Iterator-遍历器的概念" class="headerlink" title="Iterator 遍历器的概念"></a>Iterator 遍历器的概念</h2><p>  JavaScript 原有的表示“集合”的数据结构，主要是数组（Array）和对象（Object），ES6 新增了Map 和Set。</p>
+<p>  这样就有了四种数据集合，用户可以组合使用它们，定义自己的数据结构，比如数组的成员是Map，Map 的成员是对象，这样子就需要一种统一的接口机制，来处理所有不同的数据结构。</p>
+<p>  遍历器（Iterator）就是这样一种机制。它是一种接口，为各种不同数据结构提供统一的访问机制。任何数据结构只要不是Iterator 接口，就可以完成遍历操作（即依次处理该数据结构的所有成员）。</p>
+<h3 id="Iterator-的作用"><a href="#Iterator-的作用" class="headerlink" title="Iterator 的作用"></a>Iterator 的作用</h3><ol>
+<li><p>为各种数据结构，提供一个统一的、简便的访问接口</p>
+</li>
+<li><p>使数据结构的成员能够按照某种次序排列</p>
+</li>
+<li><p>ES6 创造了一种新的遍历命令for …of 循环，Iterator 接口主要供for …of 消费</p>
+<h3 id="Iterator-的遍历过程"><a href="#Iterator-的遍历过程" class="headerlink" title="Iterator 的遍历过程"></a>Iterator 的遍历过程</h3></li>
+<li><p>创建一个指针对象，指向当前数据结构的起始位置。也就是说，遍历器对象本质上，就是一个指针对象。</p>
+</li>
+<li><p>第一次调用指针对象的next 方法，可以将指针指向数据结构的第一个成员</p>
+</li>
+<li><p>第二次调用只针对新的next 方法，指针就指向数据结构的第二个成员</p>
+</li>
+<li><p>不断调用指针对象的next 方法，直到它指向数据结构的结束为止</p>
+<p>每一次调用next 方法，都会返回数据结构的当前成员信息，具体来说，就是返回一个包含value 和done 两个属性的对象。</p>
+<p>其中，value 属性就是当前成员的值，done 属性是一个布尔值，表示遍历是否结束</p>
+</li>
+</ol>
+<ul>
+<li>模拟next 方法返回值的例子：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> it = makeIterator([<span class="string">'a'</span>,<span class="string">'b'</span>]);</span><br><span class="line"></span><br><span class="line">it.next(); <span class="comment">// &#123; value:"a",done: false &#125;</span></span><br><span class="line">it.next(); <span class="comment">// &#123; value:"b",done: false &#125;</span></span><br><span class="line">it.next(); <span class="comment">// &#123; value: undefined,done: true &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">makeIterator</span>(<span class="params">array</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> nextIndex = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    next: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> nextIndex &lt; array.length ?</span><br><span class="line">      &#123;<span class="attr">value</span>: array[nextIndex++], <span class="attr">done</span>:<span class="literal">false</span>&#125; :</span><br><span class="line">      &#123;<span class="attr">value</span>: <span class="literal">undefined</span>,<span class="attr">done</span>: <span class="literal">true</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+对于遍历器对象来说，done: false和value: undefined属性都是可以省略的，因此上面的makeIterator函数可以简写成下面的形式。<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">makeIterator</span>(<span class="params">array</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> nextIndex = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    next: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> nextIndex &lt; array.length ?</span><br><span class="line">        &#123;<span class="attr">value</span>: array[nextIndex++]&#125; :</span><br><span class="line">        &#123;<span class="attr">done</span>: <span class="literal">true</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="调用Iterator-接口的场合"><a href="#调用Iterator-接口的场合" class="headerlink" title="调用Iterator 接口的场合"></a>调用Iterator 接口的场合</h2><p>有一些场合会默认调用Iterator 接口（即Symbol.iterator 方法）</p>
+<ol>
+<li>结构赋值 对数组和Set结构进行解构赋值时，会默认调用Symbol.iterator 方法<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="keyword">set</span> = new Set().add('a').add('b').add('c');</span><br><span class="line">let [x,y] = <span class="keyword">set</span>;</span><br><span class="line">let [first,...rest] = <span class="keyword">set</span>;</span><br><span class="line">// first = 'a' rest = ['b','c']</span><br></pre></td></tr></table></figure></li>
+<li>扩展运算符<br>扩展运算符（…）也会调用默认的Iterator 接口<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> str = <span class="string">'hello'</span>;</span><br><span class="line">[...str] <span class="comment">// ['h','e','l','l','o']</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> arr = [<span class="string">'b'</span>,<span class="string">'c'</span>];</span><br><span class="line">[<span class="string">'a'</span>,...arr,<span class="string">'d'</span>] <span class="comment">// ['a','b','c','d']</span></span><br></pre></td></tr></table></figure></li>
+<li>yield*<br><code>yield*</code> 后面跟的是一个可遍历的结构，会自动调用该结构的遍历器接口<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> generator = <span class="function"><span class="keyword">function</span>* (<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">yield</span> <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">yield</span>* [<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>];</span><br><span class="line">  <span class="keyword">yield</span> <span class="number">5</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> iterator = generator();</span><br><span class="line"></span><br><span class="line">iterator.next(); <span class="comment">// &#123; value: 1,done: false &#125;</span></span><br><span class="line">iterator.next(); <span class="comment">// &#123; value: 2,done: false &#125;</span></span><br><span class="line">iterator.next(); <span class="comment">// &#123; value: 3,done: false &#125;</span></span><br><span class="line">iterator.next(); <span class="comment">// &#123; value: 4,done: false &#125;</span></span><br><span class="line">iterator.next(); <span class="comment">// &#123; value: 5,done: false &#125;</span></span><br><span class="line">iterator.next(); <span class="comment">// &#123; value: undefined,done: true &#125;</span></span><br></pre></td></tr></table></figure></li>
+<li>其它场合<br>由于数组的遍历会调用遍历器接口，所以任何接受数组作为参数的场合，其实都调用了遍历器接口<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- <span class="keyword">for</span> ...of</span><br><span class="line">- <span class="built_in">Array</span>.from()</span><br><span class="line">- <span class="built_in">Map</span>() <span class="built_in">Set</span>() <span class="built_in">WeakMap</span>() <span class="built_in">WeakSet</span>() </span><br><span class="line">- <span class="built_in">Promise</span>.all()</span><br><span class="line">- <span class="built_in">Promise</span>.race()</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ol>
+<hr>
+<p>yield*<br>Map() Set() WeakMap() WeakSet() </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/10/collections/JavaScript/%E5%8F%AF%E8%BF%AD%E4%BB%A3%E5%AF%B9%E8%B1%A1/" data-id="ckeh8eck500143zs65khh4udd" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-collections/File/基于NodeJs大文件分片上传" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo-blog/2020/08/10/collections/File/%E5%9F%BA%E4%BA%8ENodeJs%E5%A4%A7%E6%96%87%E4%BB%B6%E5%88%86%E7%89%87%E4%B8%8A%E4%BC%A0/" class="article-date">
+  <time datetime="2020-08-10T16:00:00.000Z" itemprop="datePublished">2020-08-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/hexo-blog/2020/08/10/collections/File/%E5%9F%BA%E4%BA%8ENodeJs%E5%A4%A7%E6%96%87%E4%BB%B6%E5%88%86%E7%89%87%E4%B8%8A%E4%BC%A0/">基于Node.js 大文件分片上传</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>文件上传的时候，文件过大，可能导致请求超时的情况。这时可以对文件进行分片上传</p>
+</blockquote>
+<h2 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h2><ol>
+<li>创建文件夹并生成<code>package.json</code><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> fileUpload</span><br><span class="line"><span class="built_in">cd</span> dileUpload</span><br><span class="line">npm init -y</span><br></pre></td></tr></table></figure></li>
+<li>安装相关依赖<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install express multiparty body-parser <span class="built_in">fs</span>-extra</span><br></pre></td></tr></table></figure></li>
+</ol>
+<ul>
+<li>express web模块</li>
+<li>multiparty 上传模块</li>
+<li>body-parser 处理post 请求模块</li>
+<li>fs-extra 文件操作模块</li>
+</ul>
+<ol start="3">
+<li>新建静态资源目录public 上传临时目录temp<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> public</span><br><span class="line"><span class="built_in">mkdir</span> temp</span><br></pre></td></tr></table></figure></li>
+<li>新建服务端文件 server.js 上传网页public/index.html</li>
+</ol>
+<h2 id="编写服务端代码-server-js"><a href="#编写服务端代码-server-js" class="headerlink" title="编写服务端代码 server.js"></a>编写服务端代码 server.js</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</span><br><span class="line"><span class="keyword">const</span> bodyParser = <span class="built_in">require</span>(<span class="string">'body-parser'</span>);</span><br><span class="line"><span class="keyword">const</span> multiparty = <span class="built_in">require</span>(<span class="string">'multiparty'</span>);</span><br><span class="line"><span class="keyword">const</span> fse = <span class="built_in">require</span>(<span class="string">'fs-extra'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = express();</span><br><span class="line"></span><br><span class="line">app.use(express.static(__dirname + <span class="string">'/public'</span>));</span><br><span class="line"></span><br><span class="line">app.use(bodyParser.urlencoded(&#123; <span class="attr">extended</span>: <span class="literal">true</span> &#125;));</span><br><span class="line">app.use(bodyParser.json());</span><br><span class="line"></span><br><span class="line">app.post(<span class="string">'/upload'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> form = <span class="keyword">new</span> multiparty.Form(&#123; <span class="attr">uploadDir</span>: <span class="string">'temp'</span> &#125;);</span><br><span class="line">  form.parse(req);</span><br><span class="line">  form.on(<span class="string">'file'</span>, () =&gt; &#123;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'file?::'</span>);</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  res.send(<span class="string">'文件上传成功'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">3000</span>);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'listenning...3000...'</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="编写上传页面-public-index-html"><a href="#编写上传页面-public-index-html" class="headerlink" title="编写上传页面 public/index.html"></a>编写上传页面 public/index.html</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1.0"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>文件上传<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span> <span class="attr">id</span>=<span class="string">"btnFile"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">value</span>=<span class="string">"上传"</span> <span class="attr">onclick</span>=<span class="string">"upload()"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">      <span class="keyword">let</span> btnFile = <span class="built_in">document</span>.querySelector(<span class="string">'#btnFile'</span>);</span></span><br><span class="line"><span class="javascript">      <span class="built_in">console</span>.log(<span class="string">'btnFile::'</span>, btnFile);</span></span><br><span class="line"><span class="actionscript">      <span class="function"><span class="keyword">function</span> <span class="title">upload</span><span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> file = btnFile.files[<span class="number">0</span>];</span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> formData = <span class="keyword">new</span> FormData();</span></span><br><span class="line"><span class="actionscript">        formData.append(<span class="string">'file'</span>, file);</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">'fetch::'</span>, fetch);</span></span><br><span class="line"><span class="actionscript">        fetch(<span class="string">'/upload'</span>,&#123;</span></span><br><span class="line"><span class="actionscript">          method: <span class="string">'POST'</span>,</span></span><br><span class="line">          body: formData</span><br><span class="line"><span class="javascript">        &#125;).then(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">          <span class="built_in">console</span>.log(<span class="string">'res::'</span>, res);</span></span><br><span class="line">        &#125;);</span><br><span class="line">      &#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>此时，可以从页面上传文件至项目的temp 目录下</p>
+<h2 id="添加分片上传功能"><a href="#添加分片上传功能" class="headerlink" title="添加分片上传功能"></a>添加分片上传功能</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> chunkSize = <span class="number">1024</span> * <span class="number">1024</span>; <span class="comment">// 每个分片大小</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">upload</span>(<span class="params">index</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> file = btnFile.files[<span class="number">0</span>];</span><br><span class="line">  <span class="keyword">let</span> [fileName, fileExt] = file.name.split(<span class="string">'.'</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> start = index * chunkSize;</span><br><span class="line">  <span class="keyword">if</span> (start &gt; file.size) &#123; </span><br><span class="line">    <span class="keyword">return</span>; <span class="comment">// 结束文件上传</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> blob = file.slice(start, start + chunkSize); <span class="comment">// 截取分片数据</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> blobName = <span class="string">`<span class="subst">$&#123;fileName&#125;</span>.<span class="subst">$&#123;index&#125;</span>.<span class="subst">$&#123;fileExt&#125;</span>`</span>;</span><br><span class="line">  <span class="keyword">let</span> blobFile = <span class="keyword">new</span> File([blob], blobName); <span class="comment">// 转换分片文件</span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'blobName::'</span>, blobName);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> formData = <span class="keyword">new</span> FormData();</span><br><span class="line">  formData.append(<span class="string">'file'</span>, blobFile);</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'fetch::'</span>, fetch);</span><br><span class="line">  fetch(<span class="string">'/upload'</span>, &#123;</span><br><span class="line">    method: <span class="string">'POST'</span>,</span><br><span class="line">    body: formData</span><br><span class="line">  &#125;).then(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'res::'</span>, res);</span><br><span class="line">    <span class="keyword">if</span> (res.ok) &#123;</span><br><span class="line">      upload(++index);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="添加分片合并功能"><a href="#添加分片合并功能" class="headerlink" title="添加分片合并功能"></a>添加分片合并功能</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">app.post(<span class="string">'/merge'</span>, <span class="keyword">async</span> <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> name = req.body.name;</span><br><span class="line">  <span class="keyword">let</span> fname = name.split(<span class="string">'.'</span>)[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> chunkDir = path.join(UPLOAD_DIR, fname);</span><br><span class="line">  <span class="keyword">let</span> chunks = <span class="keyword">await</span> fse.readdir(chunkDir);</span><br><span class="line"></span><br><span class="line">  chunks.sort(<span class="function">(<span class="params">a, b</span>) =&gt;</span> &#123; a - b &#125;).map(<span class="function"><span class="params">chunkPath</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 合并文件</span></span><br><span class="line">    fs.appendFileSync(</span><br><span class="line">      path.join(UPLOAD_DIR, name),</span><br><span class="line">      fs.readFileSync(<span class="string">`<span class="subst">$&#123;chunkDir&#125;</span>/<span class="subst">$&#123;chunkPath&#125;</span>`</span>)</span><br><span class="line">    )</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  fse.removeSync(chunkDir);</span><br><span class="line">  res.send(&#123; <span class="attr">msg</span>: <span class="string">'合并成功'</span>, <span class="attr">url</span>: <span class="string">`//localhost:3000/upload/<span class="subst">$&#123;name&#125;</span>`</span> &#125;); <span class="comment">// 返回文件所在目录地址 </span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>index.html 中</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (start &gt; file.size) &#123;</span><br><span class="line">  merge(file.name);<span class="comment">// 上传结束，并调用合并方法</span></span><br><span class="line">  <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">merge</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  fetch(<span class="string">'/merge'</span>, &#123;</span><br><span class="line">    method: <span class="string">'POST'</span>,</span><br><span class="line">    body: <span class="built_in">JSON</span>.stringify(&#123; <span class="attr">name</span>: name &#125;), <span class="comment">// data can be `string` or &#123;object&#125;!</span></span><br><span class="line">    headers: <span class="keyword">new</span> Headers(&#123;</span><br><span class="line">      <span class="string">'Content-Type'</span>: <span class="string">'application/json'</span></span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="备注"><a href="#备注" class="headerlink" title="备注"></a>备注</h2><ul>
+<li>当chunkSize 过小时，合并后的视频文件进度调整会有异常 （4M 正常）</li>
+<li>代码：<a href="https://github.com/ewqazxc/nodeJs-file-slice-upload" target="_blank" rel="noopener">github_nodeJs-file-slice-upload</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/10/collections/File/%E5%9F%BA%E4%BA%8ENodeJs%E5%A4%A7%E6%96%87%E4%BB%B6%E5%88%86%E7%89%87%E4%B8%8A%E4%BC%A0/" data-id="ckeh8ecjr000s3zs64bn4fwo2" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-collections/JavaScript/for of 和for await of" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo-blog/2020/08/09/collections/JavaScript/for%20of%20%E5%92%8Cfor%20await%20of/" class="article-date">
+  <time datetime="2020-08-09T16:00:00.000Z" itemprop="datePublished">2020-08-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/hexo-blog/2020/08/09/collections/JavaScript/for%20of%20%E5%92%8Cfor%20await%20of/">for...of 和 for await ... of</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="for…of"><a href="#for…of" class="headerlink" title="for…of"></a>for…of</h2><p><code>for ... of</code>语句在可迭代对象（包括<code>Array, Map, Set, String, TypedArray, arguments</code>等），上创建一个迭代循环，调用自定义迭代钩子，并为每个不同属性的值执行语句</p>
+<h3 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a>Demo</h3>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> arr1 = [<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>,<span class="string">'d'</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">const</span> ele <span class="keyword">of</span> arr1)&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(ele);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// "a" "b" "c" "d"</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(variable <span class="keyword">of</span> iterable)&#123;</span><br><span class="line">  <span class="comment">// statements</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>variable</p>
+<p>在每次迭代中，将不同属性的值分配给变量</p>
+</li>
+<li><p>iterable</p>
+<p>被迭代枚举其属性的对象</p>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3></li>
+<li><p>迭代Array</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> arr1 = [<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>,<span class="string">'d'</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">const</span> ele <span class="keyword">of</span> arr1)&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(ele);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// "a" "b" "c" "d"</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>迭代String</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> str = <span class="string">"foo"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> value <span class="keyword">of</span> str)&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(value);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// "f" "o" "o"</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>迭代TypedArray</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> iterable = <span class="keyword">new</span> <span class="built_in">Uint8Array</span>([<span class="number">0x00</span>,<span class="number">0xff</span>]);</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> value <span class="keyword">of</span> iterable)&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(value);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 0 255</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>迭代Map</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> iterable = <span class="keyword">new</span> <span class="built_in">Map</span>([[<span class="string">"a"</span>,<span class="number">1</span>],[<span class="string">"b"</span>,<span class="number">2</span>],[<span class="string">"c"</span>,<span class="number">3</span>]]);</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> entry <span class="keyword">of</span> iterable)&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(entry);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// ["a",1] ["b",2] ["c",3]</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> [key,value] <span class="keyword">of</span> iterable)&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(value);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 1 2 3</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>迭代 Set</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> iterable = <span class="keyword">new</span> <span class="built_in">Set</span>([<span class="number">1</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">3</span>]);</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> value <span class="keyword">of</span> iterable)&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(value);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 1 2 3</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>迭代arguments对象</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">let</span> argument <span class="keyword">of</span> <span class="built_in">arguments</span>)&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(argument);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 1 2 3</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>迭代DOM 集合</p>
+</li>
+</ul>
+<p>迭代DOM元素集合，比如一个NodeList 对象：下面的例子演示给每一个article 标签内的p 标签添加一个”read”类</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 注意：这只能在实现了NodeList.prototpye[Symbol.iterator]的平台上运行</span></span><br><span class="line"><span class="keyword">let</span> articles = <span class="built_in">document</span>.querySelectorAll(<span class="string">"artice &gt; p"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> paragraph <span class="keyword">of</span> articles)&#123;</span><br><span class="line">  paragraph.classList.add(<span class="string">"read"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>关闭迭代器</li>
+</ul>
+<p>对于<code>for ...of</code>的循环，可以由<code>break throw continue return</code>终止。在这些情况下，迭代器关闭</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">foo</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">yield</span> <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">yield</span> <span class="number">2</span>;</span><br><span class="line">  <span class="keyword">yield</span> <span class="number">3</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> o <span class="keyword">of</span> foo())&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(o);</span><br><span class="line">  <span class="keyword">break</span>; <span class="comment">// closes iterator</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>迭代生成器</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">fibonacci</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">let</span> [prev,curr]=[<span class="number">0</span>,<span class="number">1</span>];</span><br><span class="line">  <span class="keyword">for</span>(;;)&#123;</span><br><span class="line">    [prev,curr]= [curr,prev + curr];</span><br><span class="line">    <span class="keyword">yield</span> curr;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> n <span class="keyword">of</span> fibonacci())&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(n);</span><br><span class="line">  <span class="comment">// 当n 大于1000时跳出循环</span></span><br><span class="line">  <span class="keyword">if</span>(n &gt;<span class="number">1000</span>)&#123;</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>不要重用生成器，生成器关闭后，尝试再次迭代，不会产生效果</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">  <span class="keyword">let</span> gen = (<span class="function"><span class="keyword">function</span>*(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">yield</span> <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">yield</span> <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">yield</span> <span class="number">3</span>;</span><br><span class="line">  &#125;)();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">let</span> o <span class="keyword">of</span> gen)&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(o);</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 1</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">let</span> o <span class="keyword">of</span> gen)&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(o)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 不执行console</span></span><br><span class="line"><span class="string">``</span><span class="string">`  </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">* 迭代其它可迭代对象</span></span><br><span class="line"><span class="string">`</span><span class="string">``</span>js</span><br><span class="line">  <span class="keyword">let</span> iterable = &#123;</span><br><span class="line">    [<span class="built_in">Symbol</span>.iterator]() &#123;</span><br><span class="line">      <span class="keyword">return</span> &#123;</span><br><span class="line">        i: <span class="number">0</span>,</span><br><span class="line">        next() &#123;</span><br><span class="line">          <span class="keyword">if</span>(<span class="keyword">this</span>.i &lt;<span class="number">3</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> &#123;<span class="attr">value</span>:<span class="keyword">this</span>.i++,<span class="attr">done</span>:<span class="literal">false</span>&#125;;</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">return</span> &#123;<span class="attr">value</span>:<span class="literal">undefined</span>,<span class="attr">done</span>:<span class="literal">true</span>&#125;;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">let</span> value <span class="keyword">of</span> iterable)&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(value);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 0 1 2</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>for ...of</code> 和<code>for ...in</code> 的区别</p>
+<p>二者都是迭代一些东西，它们的区别在于迭代方式</p>
+<ul>
+<li><code>for ...in</code> 语句以任意顺序迭代对象的可枚举属性</li>
+<li><code>for ...of</code> 语句遍历可迭代对象定义要迭代的数据</li>
+</ul>
+<p>以下示例展示了与Array 使用时，二者循环之间的区别</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.prototype.objCustom = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;;</span><br><span class="line"><span class="built_in">Array</span>.prototype.arrCustom = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> interable = [<span class="number">3</span>,<span class="number">5</span>,<span class="number">7</span>];</span><br><span class="line">interable.foo = <span class="string">'hello'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> i <span class="keyword">in</span> interable)&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(i);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 0,1,2,"foo","arrCustom","objCustom"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> i <span class="keyword">in</span> interable)&#123;</span><br><span class="line">  <span class="keyword">if</span>(interable.hasOwnProperty(i))&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(i);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 0,1,2,"foo"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Objecti.prototype.objCustom = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;;</span><br><span class="line"><span class="built_in">Array</span>.prototype.arrCustom = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> iterable = [<span class="number">3</span>,<span class="number">5</span>,<span class="number">7</span>];</span><br><span class="line">iterable.foo = <span class="string">'hello'</span>;</span><br></pre></td></tr></table></figure>
+<p>每个对象将继承<code>objCustom</code> 属性，并且作为Array 的每个对象将继承arrCustom 属性，因为将这些属性添加到<code>Object.prototype Array.prototype</code>，由于继承和原型链，对象iterable 继承属性objCustom 和arrCustom</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> i <span class="keyword">in</span> iterable)&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(i);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 0 1 2 "foo" "arrCustom" "objCustom"</span></span><br></pre></td></tr></table></figure>
+<p>此循环仅以原始插入顺序记录iterable 对象的可枚举属性。它不记录数组元素3,5,7或hello ，因为这些不是枚举属性，但是它记录了数组索引以及arrCustom 和objCustom</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> i <span class="keyword">in</span> interable)&#123;</span><br><span class="line">  <span class="keyword">if</span>(interable.hasOwnProperty(i))&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(i);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 0,1,2,"foo"</span></span><br></pre></td></tr></table></figure>
+<p>这个循环类似上一个，但是使用hasOwnProperty()进行检查，仅打印自身属性（非继承）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i <span class="keyword">of</span> iterable) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(i); <span class="comment">// logs 3, 5, 7 </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>该循环迭代并记录iterable 作为可迭代对象定义的迭代值，3 5 7；而不是任何对象的属性</p>
+</li>
+</ul>
+<h2 id="for-await-…of"><a href="#for-await-…of" class="headerlink" title="for await …of"></a>for await …of</h2><p>  for await …of 语句会在异步或者同步可迭代对象上创建一个迭代循环，包括String，Array，Array-like 对象（arguments、NodeList…），TypeArray，Map，Set和自定义的异步或者同步可迭代对象。</p>
+<p>  其会调用自定义迭代钩子，并未每个不同属性的值执行语句</p>
+<h3 id="语法-1"><a href="#语法-1" class="headerlink" title="语法"></a>语法</h3>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> <span class="keyword">await</span>(variable o iterable)&#123;</span><br><span class="line">  <span class="comment">//statement</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>variable 在每次迭代中，将不同属性的值分配给变量。变量有可能以const let 或者var 来声明</p>
+</li>
+<li><p>iterable 被迭代枚举其属性的对象。与for …of 相比，这里的对象可以返回Promise，如果是这样，那么variable 将是Promise 所包含的值，否则是值本身</p>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3></li>
+<li><p>迭代异步可迭代对象</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> asyncIterable = &#123;</span><br><span class="line">  [<span class="built_in">Symbol</span>.asyncIterator]()&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      i: <span class="number">0</span>,</span><br><span class="line">      next() &#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">this</span>.i &lt; <span class="number">3</span>)&#123;</span><br><span class="line">          <span class="keyword">return</span> <span class="built_in">Promise</span>.resolve(&#123;<span class="attr">value</span>: <span class="keyword">this</span>.i++,<span class="attr">done</span>: <span class="literal">false</span>&#125;);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">Promise</span>.resolve(&#123;<span class="attr">done</span>: <span class="literal">true</span>&#125;);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">(<span class="keyword">async</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> <span class="keyword">await</span>(num <span class="keyword">of</span> asyncIterable)&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(num);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)();</span><br><span class="line"><span class="comment">// 0 1 2</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span>* <span class="title">streamAsyncIterator</span>(<span class="params">stream</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> reader = stream.getReader();</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">      <span class="keyword">const</span> &#123; done, value &#125; = <span class="keyword">await</span> reader.read();</span><br><span class="line">      <span class="keyword">if</span> (done) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">yield</span> value;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">    reader.releaseLock();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 从url获取数据并使用异步 generator 来计算响应值的大小</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">getResponseSize</span>(<span class="params">url</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> response = <span class="keyword">await</span> fetch(url);</span><br><span class="line">  <span class="comment">// Will hold the size of the response, in bytes.</span></span><br><span class="line">  <span class="keyword">let</span> responseSize = <span class="number">0</span>;</span><br><span class="line">  <span class="comment">// 使用for-await-of循环. 异步 generator 会遍历响应值的每一部分</span></span><br><span class="line">  <span class="keyword">for</span> <span class="keyword">await</span> (<span class="keyword">const</span> chunk <span class="keyword">of</span> streamAsyncIterator(response.body)) &#123;</span><br><span class="line">    <span class="comment">// Incrementing the total response length.</span></span><br><span class="line">    responseSize += chunk.length;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">`Response Size: <span class="subst">$&#123;responseSize&#125;</span> bytes`</span>);</span><br><span class="line">  <span class="comment">// expected output: "Response Size: 1071472"</span></span><br><span class="line">  <span class="keyword">return</span> responseSize;</span><br><span class="line">&#125;</span><br><span class="line">getResponseSize(<span class="string">'https://jsonplaceholder.typicode.com/photos'</span>);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<hr>
+<p>可迭代对象<br>TypedArray<br>array iteration and for…in<br>继承和原型链<br>fetch</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/09/collections/JavaScript/for%20of%20%E5%92%8Cfor%20await%20of/" data-id="ckeh8ecjx000y3zs63qb5ds1w" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-collections/JavaScript/Symbol的for()和keyFor()" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo-blog/2020/08/08/collections/JavaScript/Symbol%E7%9A%84for()%E5%92%8CkeyFor()/" class="article-date">
+  <time datetime="2020-08-08T16:00:00.000Z" itemprop="datePublished">2020-08-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/hexo-blog/2020/08/08/collections/JavaScript/Symbol%E7%9A%84for()%E5%92%8CkeyFor()/">Symbol.for() 和 Symbol.keyFor()</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Symbol-for"><a href="#Symbol-for" class="headerlink" title="Symbol.for()"></a>Symbol.for()</h2><p>  Symbol.for(key) 方法会根据给定的键key，来从运行时的symbol 注册表中找到对应的symbol </p>
+<p>  如果找到了就返回它，否则，新建一个与该键关联的symbol，并放入全局symbol 注册表中。</p>
+<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><p>  Symbol.for(key)</p>
+<ul>
+<li><p>参数</p>
+<p>key 一个字符串，作为symbol 注册表中与某symbol 关联的键（同时也会作为该symbol 的描述）</p>
+</li>
+<li><p>返回值</p>
+<p>返回由给定的key 找到的symbol ，否则就是返回新创建的symbol</p>
+<h3 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h3><p>和Symbol() 不同的是，用Symbol.for() 方法创建的symbol 会被放入一个全局symbol 注册表中。Symbol.for() 并不是每次都会创建一个新的symbol，它会先检查给定的key 是否已经在注册表中了。假如是，则会返回上次存储的那个，否则才新建一个。</p>
+</li>
+<li><p>全局symbol 注册表</p>
+<p>symbol 注册表中的记录结构：</p>
+<h4 id="全局symbol-注册表中的一个记录"><a href="#全局symbol-注册表中的一个记录" class="headerlink" title="全局symbol 注册表中的一个记录"></a>全局symbol 注册表中的一个记录</h4></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>字段名</th>
+<th>字段值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>[[key]]</td>
+<td>一个字符串，用来标识每个symbol</td>
+</tr>
+<tr>
+<td>[[symbol]]</td>
+<td>存储的symbol 值</td>
+</tr>
+</tbody></table>
+<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Symbol</span>.for(<span class="string">"foo"</span>); <span class="comment">// 创建一个symbol 并放入symbol 注册表中，键为"foo"</span></span><br><span class="line"><span class="built_in">Symbol</span>.for(<span class="string">"foo"</span>); <span class="comment">// 从symbol 注册表中读取键为"foo" 的symbol</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">Symbol</span>.for(<span class="string">'bar'</span>) === <span class="built_in">Symbol</span>.for(<span class="string">'bar'</span>); <span class="comment">// true 证明第二次并未新建</span></span><br><span class="line"><span class="built_in">Symbol</span>(<span class="string">'bar'</span>) === <span class="built_in">Symbol</span>(<span class="string">'bar'</span>); <span class="comment">// false 每次都是一个新的symbol</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> sym = <span class="built_in">Symbol</span>.for(<span class="string">'mario'</span>);</span><br><span class="line">sym.toString(); <span class="comment">// "Symbol(mario)"</span></span><br><span class="line"><span class="comment">// mario 既是该symbol 在symbol 注册表中的键名，又是该symbol 自身的描述字符串</span></span><br></pre></td></tr></table></figure>
+<p>  为了防止冲突，最好给放入symbol 注册表中的symbol 带上前缀<code>Symbol.for(&quot;who.ami&quot;)</code></p>
+<h2 id="Symbol-keyFor"><a href="#Symbol-keyFor" class="headerlink" title="Symbol.keyFor()"></a>Symbol.keyFor()</h2><p>  Symbol.keyFor(sym) 方法用来获取symbol 注册表中与某个symbol 关联的键</p>
+<h3 id="语法-1"><a href="#语法-1" class="headerlink" title="语法"></a>语法</h3><p>  Symbol.keyFor(sym)</p>
+<ul>
+<li><p>参数 必选参数，存储在symbol 注册表中的某个symbol</p>
+</li>
+<li><p>返回值 如果在全局注册表中查找到该symbol ,则返回该symbol 的key 值，形式为string ，如果symbol 未在注册表中，则返回undefined</p>
+<h3 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a>示例</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建一个 symbol 并放入Symbol 注册表，key 为'foo'</span></span><br><span class="line"><span class="keyword">let</span> globalSym = <span class="built_in">Symbol</span>.for(<span class="string">'foo'</span>);</span><br><span class="line"><span class="built_in">Symbol</span>.keyFor(globalSym); <span class="comment">// "foo"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建一个symbol 但不放入symbol 注册表中</span></span><br><span class="line"><span class="keyword">let</span> localSym = <span class="built_in">Symbol</span>();</span><br><span class="line"><span class="built_in">Symbol</span>.keyFor(localSym); <span class="comment">// undefined</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// weel-konwn symbols 并不在 symbol 注册表中</span></span><br><span class="line"><span class="built_in">Symbol</span>.keyFor(<span class="built_in">Symbol</span>.iterator); <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/08/collections/JavaScript/Symbol%E7%9A%84for()%E5%92%8CkeyFor()/" data-id="ckeh8ecju000w3zs6a5k39utq" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-collections/JavaScript/JavaScript的临时包装对象" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo-blog/2020/08/08/collections/JavaScript/JavaScript%E7%9A%84%E4%B8%B4%E6%97%B6%E5%8C%85%E8%A3%85%E5%AF%B9%E8%B1%A1/" class="article-date">
+  <time datetime="2020-08-08T16:00:00.000Z" itemprop="datePublished">2020-08-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/hexo-blog/2020/08/08/collections/JavaScript/JavaScript%E7%9A%84%E4%B8%B4%E6%97%B6%E5%8C%85%E8%A3%85%E5%AF%B9%E8%B1%A1/">JavaScript的临时包装对象</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="包装对象"><a href="#包装对象" class="headerlink" title="包装对象"></a>包装对象</h2><p>  JavaScript语言中对象和基础类型string、number、boolean都可以使用<code>“.”</code>符号访问属性和方法，但是本质上只有对象才可以使用<code>“.”</code>，那么基础类型在使用<code>“.”</code>时的内部机制是什么呢？</p>
+<p>  这里就要引入一个概念：<code>包装对象</code></p>
+<p>  JavaScript对象时一个符合值，它是一组属性和方法的集合，使用<code>“.”</code>符号可以直接访问其属性和方法，但是基础类型数据在使用<code>“.”</code>符号时，<br>  JavaScript解析器首先调用基础类型对应的构造函数构建一个临时包装对象，然后再访问包装对象的属性<br>  比如以下代码：<br>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> str = <span class="string">'string'</span>;</span><br><span class="line">str.len = <span class="number">4</span>;</span><br><span class="line"><span class="built_in">console</span>.log(str.len); <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure><br>  上述代码中第二行使用<code>“.”</code>为str变量赋值属性len，这时JavaScript解析器首先调用构造函数：<br>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> strObj = <span class="keyword">new</span> <span class="built_in">String</span>(str);</span><br><span class="line">strObj.len = <span class="number">4</span>;</span><br></pre></td></tr></table></figure><br>  属性len的赋值对象实际是字符串对象strObj，而不是字符串值str。随后访问str.len返回值是undefined。strObj边称为包装对象，这个包装对象是临时的，一旦属性的引用和操作执行完毕后便会被回收，也就是说在<code>strObj.len=4</code>执行完毕后，strObj便被回收，不可再次访问。</p>
+<p>  number 和boolean 也有对应的构造函数Number() 和bBoolean() </p>
+<p>  null 和undefined 没有包装对象，尝试使用<code>“.”</code>访问它们的属性会报错</p>
+<p>  当然也可以手动创建基础类型对应的包装对象，但要注意：包装对象和基础类型使用<code>==</code>返回true，<code>===</code>返回false</p>
+<hr>
+<p>手动创建基础类型对应的包装对象?</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/08/collections/JavaScript/JavaScript%E7%9A%84%E4%B8%B4%E6%97%B6%E5%8C%85%E8%A3%85%E5%AF%B9%E8%B1%A1/" data-id="ckeh8ecjs000u3zs69dq84x57" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-collections/JavaScript/symbol" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo-blog/2020/08/04/collections/JavaScript/symbol/" class="article-date">
+  <time datetime="2020-08-04T16:00:00.000Z" itemprop="datePublished">2020-08-05</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/hexo-blog/2020/08/04/collections/JavaScript/symbol/">Symbol 类型</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Symbol"><a href="#Symbol" class="headerlink" title="Symbol"></a>Symbol</h2><p>  <code>Symbol</code>是一种基本数据类型。</p>
+<p>  <code>Symbol()</code>函数会返回<code>symbol</code>类型的值，该类型具有静态属性和静态方法。</p>
+<p>  它的静态属性会暴露几个内建的成员对象；<br>  它的静态方法会暴露全局的symbol注册，且类似于内建对象类，但作为构造函数来说它并不完整，因为它不支持语法<code>new Symbol()</code></p>
+<p>  每个<code>Symbol</code>返回的<code>symbol</code>值都是唯一的。一个symbol值能作为对象属性的标识符；这是改数据类型仅有的目的。</p>
+<h3 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a>Demo</h3>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> symbol1 = <span class="built_in">Symbol</span>();</span><br><span class="line"><span class="keyword">const</span> symbol2 = <span class="built_in">Symbol</span>(<span class="number">2</span>);</span><br><span class="line"><span class="keyword">const</span> symbol3 = <span class="built_in">Symbol</span>(<span class="string">'foo'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> symbol1); <span class="comment">// symbol 字符串</span></span><br><span class="line"><span class="built_in">console</span>.log(symbol2 === <span class="number">2</span>); <span class="comment">// false</span></span><br><span class="line"><span class="built_in">console</span>.log(symbol3.toString()); <span class="comment">// Symbol(foo) 字符串</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Symbol</span>(<span class="string">'foo'</span>)===<span class="built_in">Symbol</span>(<span class="string">'foo'</span>)); <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><p>  Symbol([description])</p>
+<ul>
+<li><p>参数<br>description 可选 字符串类型。<br>对symbol的描述，可用于调试但不是访问symbol本身</p>
+<h3 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h3><p>直接使用<code>Symbol()</code>创建新的symbol类型，并用一个可选的字符串作为其描述</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> sym1 = <span class="built_in">Symbol</span>();</span><br><span class="line"><span class="keyword">const</span> sym2 = <span class="built_in">Symbol</span>(<span class="string">'foo'</span>);</span><br><span class="line"><span class="keyword">const</span> sym3 = <span class="built_in">Symbol</span>(<span class="string">'foo'</span>);</span><br></pre></td></tr></table></figure>
+
+<p>上面代码创建了三个新的symbol类型。注意，<code>Symbol(&#39;foo&#39;)</code>不会强制将字符串<code>&#39;foo&#39;</code>转换成symbol类型。他每次都会创建一个新的symbol类型：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Symbol</span>(<span class="string">'foo'</span>) === <span class="built_in">Symbol</span>(<span class="string">'foo'</span>); <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+
+<p>下面带有<code>new</code>运算符的语法将抛出<code>TypeError</code>错误：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> sym = <span class="keyword">new</span> <span class="built_in">Symbol</span>(); <span class="comment">// TypeError</span></span><br></pre></td></tr></table></figure>
+
+<p>这会阻止创建一个显式的Symbol包装器对象而不是一个Symbol值。围绕原始数据类型创建一个显式包装器对象从ECMAScript 6开始不再被支持。<br>然而，现有的原始包装器对象，如<code>new Boolean</code>、<code>new String</code>以及<code>new Number</code>,因为遗留原因仍可被创建</p>
+<p>如果想要创建一个Symbol包装器对象，可以使用Object函数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> sym = <span class="built_in">Symbol</span>(<span class="string">'foo'</span>);</span><br><span class="line"><span class="keyword">typeof</span> sym; <span class="comment">// symbol</span></span><br><span class="line"><span class="keyword">const</span> symObj = <span class="built_in">Object</span>(sym);</span><br><span class="line"><span class="keyword">typeof</span> symObj; <span class="comment">// object</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>全局共享的Symbol</p>
+<p>上面使用Symbol()函数的语法，不会在整个代码中创建一个可用的全局Symbol类型<br>要创建跨文件可用的symbol，甚至跨域（每个都有其自己的全局作用域），使用<code>Symbol.for()</code>方法和<code>Symbol.keyFor()</code>方法从全局的symbol注册表设置和取得symbol。</p>
+</li>
+<li><p>在对象中查找Symbol 属性</p>
+<p><code>Object.getOwnPRopertySymbols()</code>方法让你在查找一个给定对象的符号属性时返回一个symbol类型的数组。注意，每个初始化的对象都是没有自己的symbol属性的，因此这个数组可能为空，除非已经在对象上设置了symbol属性</p>
+<h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><p>Symbol.length 长度属性，值为 0</p>
+<p>Symbol.prototype symbol构造函数的原型</p>
+</li>
+<li><p>众所周知的symbols</p>
+<p>除了自己创建的symbol，JavaScript还内建了一些在ECMAScript 5 之前没有暴露给开发者的symbol，它们代表了内部语言行为。可以使用以下属性访问</p>
+<ul>
+<li><p>迭代symbols</p>
+<ul>
+<li>Symbol.iterator<br>一个返回一个对象默认迭代器的方法。被for…of 使用</li>
+<li>Symbol.asyncIterator<br>一个返回对象默认的异步迭代器的方法。被 for await of 使用</li>
+</ul>
+</li>
+<li><p>正则表达式symbols</p>
+<ul>
+<li>Symbol.match<br>一个用于对字符串进行匹配的方法，也用于确定一个对象是否可以作为正则表达式使用。被<code>String.prototype.match()</code>使用</li>
+<li>Symbol.replace<br>一个替换匹配字符串的子串的方法 被<code>String.prototype.replace()</code>使用</li>
+<li>Symbol.search<br>一个返回一个字符串中与正则表达式相匹配的索引的方法 被<code>Stirng.prototype.search()</code>使用</li>
+<li>Symbol.split<br>一个在匹配正则表达式的索引处拆分一个字符串的方法 被<code>String.prototype.split()</code>使用</li>
+</ul>
+</li>
+<li><p>其他 symbols</p>
+<ul>
+<li>Symbol.hasInstance<br>一个确定一个构造器对象识别的对象是否为它的实例的方法 被<code>instanceof</code>使用</li>
+<li>Symbol.isConcatSpreadable<br>一个布尔值，表明一个对象是否应该<code>flattened</code>(平铺)为它的数组元素 被<code>Array.prototype.concat()</code>使用</li>
+<li>Symbol.unscopables<br>拥有和继承属性名的一个对象的值被排除在与环境绑定的相关对象外</li>
+<li>Symbol.species<br>用于创建派生对象的构造器函数</li>
+<li>Symbol.toPrimitive<br>将对象转化为基本数据类型的方法</li>
+<li>Symbol.toStringTag<br>用于对象的默认描述的字符串值 被<code>Object.prototype.toString()</code> 使用</li>
+</ul>
+</li>
+</ul>
+<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3></li>
+<li><p>Symbol.for(key)<br>使用给定的key搜索现有的symbol，如果找到则返回该symbol。否则将使用给定的key在全局symbol注册表中创建一个新的symbol</p>
+</li>
+<li><p>Symbol.keyFor(sym)<br>从全局symbol注册表中，为给定的symbol检索一个共享的symbol key</p>
+</li>
+</ul>
+<hr>
+<p>  包装器对象？</p>
+<p>  Object.getOwnPRopertySymbols()？</p>
+<p>  <code>Symbol.for()</code>方法和<code>Symbol.keyFor()</code>？</p>
+<p>  <code>for...of</code> <code>for await of</code></p>
+<p>  <code>String.prototype.match()</code><br>  <code>String.prototype.replace()</code><br>  <code>String.prototype.search()</code><br>  <code>String.prototype.split()</code></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/04/collections/JavaScript/symbol/" data-id="ckeh8eck300113zs6cray3n47" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-collections/JavaScript/defineProperty" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/hexo-blog/2020/08/03/collections/JavaScript/defineProperty/" class="article-date">
@@ -122,7 +610,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/03/collections/JavaScript/defineProperty/" data-id="cke788a7r000qzor246s31715" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/03/collections/JavaScript/defineProperty/" data-id="ckeh8ecjv000x3zs601vb91ed" class="article-share-link">分享</a>
       
       
     </footer>
@@ -193,7 +681,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/02/collections/JavaScript/hasOwnProperty/" data-id="cke788a7t000szor26idg7bpt" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/02/collections/JavaScript/hasOwnProperty/" data-id="ckeh8ecjy000z3zs6anhf00ys" class="article-share-link">分享</a>
       
       
     </footer>
@@ -272,7 +760,7 @@
 <hr>
 <h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">email &lt;example@example.com&gt;</span><br><span class="line">[GitHub](http:&#x2F;&#x2F;github.com)</span><br><span class="line">自动生成链接&lt;http:&#x2F;&#x2F;www.github.com&#x2F;&gt;</span><br></pre></td></tr></table></figure>
 <hr>
-<p>email <a href="mailto:&#101;&#x78;&#x61;&#x6d;&#x70;&#x6c;&#x65;&#64;&#101;&#120;&#97;&#x6d;&#x70;&#x6c;&#x65;&#46;&#99;&#111;&#109;">&#101;&#x78;&#x61;&#x6d;&#x70;&#x6c;&#x65;&#64;&#101;&#120;&#97;&#x6d;&#x70;&#x6c;&#x65;&#46;&#99;&#111;&#109;</a><br><a href="http://github.com" target="_blank" rel="noopener">GitHub</a><br>自动生成链接<a href="http://www.github.com/" target="_blank" rel="noopener">http://www.github.com/</a></p>
+<p>email <a href="mailto:&#x65;&#x78;&#x61;&#109;&#x70;&#108;&#101;&#64;&#101;&#x78;&#x61;&#109;&#x70;&#108;&#101;&#46;&#x63;&#x6f;&#109;">&#x65;&#x78;&#x61;&#109;&#x70;&#108;&#101;&#64;&#101;&#x78;&#x61;&#109;&#x70;&#108;&#101;&#46;&#x63;&#x6f;&#109;</a><br><a href="http://github.com" target="_blank" rel="noopener">GitHub</a><br>自动生成链接<a href="http://www.github.com/" target="_blank" rel="noopener">http://www.github.com/</a></p>
 <hr>
 <h2 id="区块引用"><a href="#区块引用" class="headerlink" title="区块引用"></a>区块引用</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">某某某说：</span><br><span class="line">&gt; 第一行引用</span><br><span class="line">&gt; 第二行引用文字</span><br></pre></td></tr></table></figure>
 <h2 id="这里的引用是居中放大的字体"><a href="#这里的引用是居中放大的字体" class="headerlink" title="这里的引用是居中放大的字体"></a>这里的引用是居中放大的字体</h2><p>某某某说：</p>
@@ -316,7 +804,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/07/28/collections/markdown/" data-id="cke788a730004zor27ig4d28x" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/07/28/collections/markdown/" data-id="ckeh8ecj300043zs6g8mu1o50" class="article-share-link">分享</a>
       
       
     </footer>
@@ -397,7 +885,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/07/26/hexo/init/" data-id="cke788a780006zor209sqgc97" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/07/26/hexo/init/" data-id="ckeh8ecj800063zs63m7x0jvu" class="article-share-link">分享</a>
       
       
     </footer>
@@ -450,23 +938,23 @@
       <ul>
         
           <li>
-            <a href="/hexo-blog/2020/08/22/collections/JavaScript/%E5%86%99%E4%B8%80%E4%B8%AA%E9%80%9A%E7%94%A8%E7%9A%84%E4%BA%8B%E4%BB%B6%E4%BE%A6%E5%90%AC%E5%99%A8%E5%87%BD%E6%95%B0/">写一个通用的事件侦听器函数</a>
+            <a href="/hexo-blog/2020/08/26/collections/JavaScript/%E6%89%8B%E5%86%99%E5%AE%9E%E7%8E%B0Promise/">Promise是什么？手写实现下？</a>
           </li>
         
           <li>
-            <a href="/hexo-blog/2020/08/19/collections/Internet/github.io%E6%97%A0%E6%B3%95%E8%AE%BF%E9%97%AE/">github.io 无法访问</a>
+            <a href="/hexo-blog/2020/08/25/collections/JavaScript/%E5%87%BD%E6%95%B0%E6%9F%AF%E9%87%8C%E5%8C%96%E7%9A%84%E5%AE%9E%E7%8E%B0/">函数柯里化的实现</a>
           </li>
         
           <li>
-            <a href="/hexo-blog/2020/08/17/collections/JavaScript/JavaScript%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E4%B9%8B%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA/">JavaScript深入理解之对象创建</a>
+            <a href="/hexo-blog/2020/08/25/collections/JavaScript/js%E6%A8%A1%E6%8B%9Fnew%E6%93%8D%E4%BD%9C%E7%AC%A6%E7%9A%84%E5%AE%9E%E7%8E%B0/">js模拟new操作符的实现</a>
           </li>
         
           <li>
-            <a href="/hexo-blog/2020/08/14/collections/Cli/nodeCli%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7/">简单开发一个完整的命令行工具</a>
+            <a href="/hexo-blog/2020/08/24/collections/JavaScript/%E6%89%8B%E5%86%99call%E3%80%81apply%E5%8F%8Abind%E5%87%BD%E6%95%B0/">手写call、apply及bind函数</a>
           </li>
         
           <li>
-            <a href="/hexo-blog/2020/08/10/collections/File/%E5%9F%BA%E4%BA%8ENodeJs%E5%A4%A7%E6%96%87%E4%BB%B6%E5%88%86%E7%89%87%E4%B8%8A%E4%BC%A0/">基于Node.js 大文件分片上传</a>
+            <a href="/hexo-blog/2020/08/23/collections/JavaScript/Js%E7%9A%84%E6%B7%B1%E6%B5%85%E6%8B%B7%E8%B4%9D/">Js的深浅拷贝</a>
           </li>
         
       </ul>
@@ -481,9 +969,15 @@
   
   <div class="outer">
     <div id="footer-info" class="inner">
+      
+
       &copy; 2020 ewqazxc<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
+  </div>
+  <div hidden>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
   </div>
 </footer>
     </div>
@@ -513,7 +1007,6 @@
 
 
 <script src="/hexo-blog/js/script.js"></script>
-
 
 
 
