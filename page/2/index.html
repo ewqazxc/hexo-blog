@@ -71,6 +71,250 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-collections/JavaScript/手动实现数组的一些方法" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo-blog/2020/08/23/collections/JavaScript/%E6%89%8B%E5%8A%A8%E5%AE%9E%E7%8E%B0%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%80%E4%BA%9B%E6%96%B9%E6%B3%95/" class="article-date">
+  <time datetime="2020-08-23T15:27:00.000Z" itemprop="datePublished">2020-08-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/hexo-blog/2020/08/23/collections/JavaScript/%E6%89%8B%E5%8A%A8%E5%AE%9E%E7%8E%B0%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%80%E4%BA%9B%E6%96%B9%E6%B3%95/">手动实现数组的一些方法</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="手动实现-Array-prototype-map-方法"><a href="#手动实现-Array-prototype-map-方法" class="headerlink" title="手动实现 Array.prototype.map 方法"></a>手动实现 Array.prototype.map 方法</h2><p>map() 方法创建一个新数组，其结果是该数组中的每个元素都调用一个提供函数后返回的结果。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">map</span>(<span class="params">arr, mapCallback</span>)</span>&#123;</span><br><span class="line">  <span class="comment">// 首先。检查传递的参数是否正确</span></span><br><span class="line">  <span class="keyword">if</span>(!<span class="built_in">Array</span>.isArray(arr) || !arr.length || <span class="keyword">typeof</span> mapCallback !== <span class="string">'funciton'</span>)&#123;</span><br><span class="line">    <span class="keyword">return</span> [];</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> result = [];</span><br><span class="line">    <span class="comment">// 每次调用此函数时，都会先创建一个 result 数组</span></span><br><span class="line">    <span class="comment">// 因为我们不想改变原始数组</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i=<span class="number">0</span>, len=arr.length;i &lt; len; i++) &#123;</span><br><span class="line">      result.push(mapCallback(arr[i], i, arr));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="手动实现-Array-prototype-filter-方法"><a href="#手动实现-Array-prototype-filter-方法" class="headerlink" title="手动实现 Array.prototype.filter 方法"></a>手动实现 Array.prototype.filter 方法</h2><p>filter() 方法创建一个新数组，其包含通过所提供函数实现的测试的所有元素</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">filter</span>(<span class="params">arr, filterCallback</span>)</span>&#123;</span><br><span class="line">  <span class="comment">// 首先 检查传递的参数是否正确</span></span><br><span class="line">  <span class="keyword">if</span>(!<span class="built_in">Array</span>.isArray(arr) || !arr.length || <span class="keyword">typeof</span> filterCallback !== <span class="string">'function'</span>)&#123;</span><br><span class="line">    <span class="keyword">return</span> [];</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> result = [];</span><br><span class="line">    <span class="comment">// 每次调用此函数时，都会先创建一个 result 数组</span></span><br><span class="line">    <span class="comment">// 因为我们不想改变原始数组</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i=<span class="number">0</span>, len=arr.length; i&lt;len; i++)&#123;</span><br><span class="line">      <span class="comment">// 检查 filterCallback 的返回值是否是真值</span></span><br><span class="line">      <span class="keyword">if</span>(filterCallback(arr[i], i, arr))&#123;</span><br><span class="line">        <span class="comment">// 如果条件为真，则将数组元素push 到 result 中</span></span><br><span class="line">        result.push(arr[i]);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="手动实现Array-prototype-reduce方法"><a href="#手动实现Array-prototype-reduce方法" class="headerlink" title="手动实现Array.prototype.reduce方法"></a>手动实现Array.prototype.reduce方法</h2><p>reduce() 方法对数组中的每个元素执行一个由您提供的reducer 函数（升序执行），将其结果汇总为单个返回值</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">reduce</span>(<span class="params">arr, reduceCallback, initialValue</span>)</span>&#123;</span><br><span class="line">  <span class="comment">// 首先 检查传递的参数是否正确</span></span><br><span class="line">  <span class="keyword">if</span>(!<span class="built_in">Array</span>.isArray(arr) || !arr.length || <span class="keyword">typeof</span> reduceCallback !== <span class="string">'funciton'</span>)&#123;</span><br><span class="line">    <span class="keyword">return</span> [];</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 如果没有将initialValue 传递给函数，我们将使用第一个数组项作为initialValue</span></span><br><span class="line">    <span class="keyword">let</span> hasInitialValue = initialValue !== <span class="keyword">void</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">let</span> value = hasInitialValue ? initialValue : arr[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果有传递initialValue 则索引将从 1 开始，否则从 0 开始</span></span><br><span class="line">    <span class="keyword">for</span>( <span class="keyword">let</span> i = hasInitialValue ? <span class="number">1</span>:<span class="number">0</span>, len=arr.length; i&lt;len ;i++)&#123;</span><br><span class="line">      value = reduceCallback(value, arr[i], i, arr);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> value;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>reducer 函数接收4个参数:</li>
+</ul>
+<ol>
+<li>Accumulator (acc) (累计器)</li>
+<li>Current Value (cur) (当前值)</li>
+<li>Current Index (idx) (当前索引)</li>
+<li>Source Array (src) (源数组)</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/23/collections/JavaScript/%E6%89%8B%E5%8A%A8%E5%AE%9E%E7%8E%B0%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%80%E4%BA%9B%E6%96%B9%E6%B3%95/" data-id="ckf174e6i001g6np246defrz0" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-collections/JavaScript/写一个通用的事件侦听器函数" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo-blog/2020/08/22/collections/JavaScript/%E5%86%99%E4%B8%80%E4%B8%AA%E9%80%9A%E7%94%A8%E7%9A%84%E4%BA%8B%E4%BB%B6%E4%BE%A6%E5%90%AC%E5%99%A8%E5%87%BD%E6%95%B0/" class="article-date">
+  <time datetime="2020-08-22T16:00:00.000Z" itemprop="datePublished">2020-08-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/hexo-blog/2020/08/22/collections/JavaScript/%E5%86%99%E4%B8%80%E4%B8%AA%E9%80%9A%E7%94%A8%E7%9A%84%E4%BA%8B%E4%BB%B6%E4%BE%A6%E5%90%AC%E5%99%A8%E5%87%BD%E6%95%B0/">写一个通用的事件侦听器函数</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="通用的事件侦听器函数"><a href="#通用的事件侦听器函数" class="headerlink" title="通用的事件侦听器函数"></a>通用的事件侦听器函数</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> EventUtils = &#123;</span><br><span class="line">  <span class="comment">// 视能力分别使用dom0|dom2|IE 方式，来绑定事件</span></span><br><span class="line">  <span class="comment">// 添加事件</span></span><br><span class="line">  addEvent: <span class="function"><span class="keyword">function</span>(<span class="params">element, type, handler</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(element.addEventListener)&#123;</span><br><span class="line">      element.addEventListener(type, handler, <span class="literal">false</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(element.attachEvent)&#123;</span><br><span class="line">      element.attachEvent(<span class="string">"on"</span> + type, handler);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      element[<span class="string">"on"</span>+type] = handler;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 移除事件</span></span><br><span class="line">  removeEvent: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(element.removeEventListener)&#123;</span><br><span class="line">      element.removeEventListener(type, handler, <span class="literal">false</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(element.detachEvent)&#123;</span><br><span class="line">      element.detachEvent(<span class="string">"on"</span> + type, handler);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      element[<span class="string">"on"</span> + type] = <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 获取事件目标</span></span><br><span class="line">  getTarget: <span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> event.target || event.srcElement;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 获取event 对象的引用，渠道时间按的所有信息，确保随时能使用 event</span></span><br><span class="line">  getEvent: <span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> event || <span class="built_in">window</span>.event;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 阻止事件（主要是冒泡，因为IE 不支持事件捕获）</span></span><br><span class="line">  stopPropagation: <span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(event.stopPropagation)&#123;</span><br><span class="line">      event.stopPropagation();</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      event.cancelBubble = <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 取消事件的默认行为</span></span><br><span class="line">  preventDefault: <span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(event.preventDefault)&#123;</span><br><span class="line">      event.preventDefault();</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      event.returnValue = <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/22/collections/JavaScript/%E5%86%99%E4%B8%80%E4%B8%AA%E9%80%9A%E7%94%A8%E7%9A%84%E4%BA%8B%E4%BB%B6%E4%BE%A6%E5%90%AC%E5%99%A8%E5%87%BD%E6%95%B0/" data-id="ckf174e6e001b6np25xo16bdo" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-collections/Internet/github.io无法访问" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo-blog/2020/08/19/collections/Internet/github.io%E6%97%A0%E6%B3%95%E8%AE%BF%E9%97%AE/" class="article-date">
+  <time datetime="2020-08-19T16:00:00.000Z" itemprop="datePublished">2020-08-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/hexo-blog/2020/08/19/collections/Internet/github.io%E6%97%A0%E6%B3%95%E8%AE%BF%E9%97%AE/">github.io 无法访问</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="DNS解析错误的解决方法"><a href="#DNS解析错误的解决方法" class="headerlink" title="DNS解析错误的解决方法"></a>DNS解析错误的解决方法</h2><p>最近,电脑无法打开githu.io 页面，手机却可以正常访问。ping 了下github.io，发现DNS 解析到了127.0.0.1 这明显不正常。。。</p>
+<ol>
+<li><p>检查是否DNS 解析问题，<code>ping github.io</code></p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ping</span> github.io</span><br><span class="line"></span><br><span class="line">正在 <span class="built_in">Ping</span> github.io [<span class="number">127</span>.<span class="number">0</span>.<span class="number">0</span>.<span class="number">1</span>] 具有 <span class="number">32</span> 字节的数据:</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用114 解析获取正确的ip 地址</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">nslookup github.io <span class="number">114</span>.<span class="number">114</span>.<span class="number">114</span>.<span class="number">114</span></span><br><span class="line"></span><br><span class="line">服务器:  public1.<span class="number">114</span>dns.com</span><br><span class="line"><span class="function">Address:  114.114.114.114</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">非权威应答:</span></span><br><span class="line"><span class="function">名称:    <span class="title">github.io</span></span></span><br><span class="line"><span class="function"><span class="title">Addresses</span>:  185.199.110.153</span></span><br><span class="line"><span class="function">          185.199.111.153</span></span><br><span class="line"><span class="function">          185.199.108.153</span></span><br><span class="line"><span class="function">          185.199.109.153</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改host 文件，将github.io 指向上一步获取到的 Addresses</p>
+</li>
+</ol>
+<p>host 文件所在目录：C:\Windows\System32\drivers\etc\hosts</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">185.199.110.153 ewqazxc.github.io</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>ipconfig /flushdns 更新下DNS 配置，再打开网页即可</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/19/collections/Internet/github.io%E6%97%A0%E6%B3%95%E8%AE%BF%E9%97%AE/" data-id="ckf174e6800116np23asq2wdt" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-collections/JavaScript/JavaScript深入理解之对象创建" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo-blog/2020/08/17/collections/JavaScript/JavaScript%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E4%B9%8B%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA/" class="article-date">
+  <time datetime="2020-08-17T16:00:00.000Z" itemprop="datePublished">2020-08-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/hexo-blog/2020/08/17/collections/JavaScript/JavaScript%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E4%B9%8B%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA/">JavaScript深入理解之对象创建</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在JavaScript中虽然Object构造函数或对象字面量都可以用来创建单个对象，但是这些方法都有一个明显的缺点:使用同一个接口创建很多对象，活产数大量的重复代码。为了解决这些问题，人们提出了很多对象创建的解决办法，下面是对JavaScript 对象创建的一些理解和总结。</p>
+<h2 id="1-工厂模式"><a href="#1-工厂模式" class="headerlink" title="1 工厂模式"></a>1 工厂模式</h2><p>  工厂模式是软件工厂领域一种广为人知的设计模式，这种模式抽离了创建对象的具体过程。考虑到在ECMAScript 中无法创建类，开发人员发明以一种函数，用函数来封装特定接口创建对象的细节。如下面的例子所示：<br>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createPerson</span>(<span class="params">name,age,job</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> o = <span class="keyword">new</span> <span class="built_in">Object</span>();</span><br><span class="line">  o.name = name;</span><br><span class="line">  o.age = age;</span><br><span class="line">  o.job = job;</span><br><span class="line">  o.sayName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    alert(<span class="keyword">this</span>.name);</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="keyword">return</span> o;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> person1 = createPerson(<span class="string">'Tom'</span>,<span class="number">9</span>,<span class="string">'cat'</span>);</span><br><span class="line"><span class="keyword">var</span> person2 = createPerson(<span class="string">'Jerry'</span>,<span class="number">8</span>,<span class="string">'mouse'</span>);</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>优点 解决了创建多个相似对象时，代码复用问题</li>
+<li>缺点 使用工程模式创建的对象，没有解决对象识别的问题（对象的类型不明确）<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1. 工厂模式：主要工作原理是用函数来封装创建对象的细节，从而通过调用函数来达到复用的目的。但是它有一个很大的问题就是创建出来的对象无法和某个类型联系起来，只是简单的封装了复用代码，没有建立起对象和类型间的关系</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="2-构造函数模式"><a href="#2-构造函数模式" class="headerlink" title="2 构造函数模式"></a>2 构造函数模式</h2><p>  ECMAScript 中的构造函数可用来创建特定类型的对象。像Object 和Array 这样的原生构造函数，在运行时自动出现在执行环境中。此外我们也可以创建自定义的构造函数，从而定义对象类型的属性和方法。如下例子：<br>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createPerson</span>(<span class="params">name,age,job</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = name;</span><br><span class="line">  <span class="keyword">this</span>.age = age;</span><br><span class="line">  <span class="keyword">this</span>.job = job;</span><br><span class="line">  <span class="keyword">this</span>.sayName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    alert(<span class="keyword">this</span>.name);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>; <span class="comment">// 使用new 时不写返回 也会默认返回this 对象</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> person1 = <span class="keyword">new</span> createPerson(<span class="string">'Tom'</span>,<span class="number">9</span>,<span class="string">'cat'</span>);</span><br><span class="line"><span class="keyword">var</span> person2 = <span class="keyword">new</span> createPerson(<span class="string">'Jerry'</span>,<span class="number">8</span>,<span class="string">'mouse'</span>);</span><br></pre></td></tr></table></figure><br>  当我们使用构造函数实例化一个对象的时候，对象中会包含一个<em>proto</em> 属性指向构造函数原型对象，而原型对象中则包含一个constructor 属性指向构造函数。因此在实例对象中，我们可以通过原型链来访问到constructor 属性，从而判断对象的类型。</p>
+<ul>
+<li><p>优点 解决了工厂模式中对象类型无法识别的问题，并且创建自定义的构造函数意味着将来可以将它的实例标识为一种特定的类型</p>
+</li>
+<li><p>缺点 在Js 中函数是对象，在使用构造函数创建对象是，每个方法都会在实例对象中重写创建一遍。拿上面的例子来说，就意味着每创建一个对象，都会创建一个sayName 函数的实例，但它们其实做的都是相同的事，因此造成了内存的浪费</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2. 构造函数模式：Js 中每一个函数都可以作为构造函数，只要一个函数是通过new 来调用的，那么我们就可以把它称为构造函数。执行构造函数首先会创建一个对象，然后将对象的原型指向构造函数的prototype 属性，然后将执行上下文中的this 指向这个对象，最后再执行整个函数，如果返回值不是对象，则返回新建的对象。因为this 的值指向了新建的对象，所以我们可以使用this 给对象赋值，</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="3-原型模式"><a href="#3-原型模式" class="headerlink" title="3 原型模式"></a>3 原型模式</h2><p>  我们创建的每一个函数都有一个prototype 属性，这个属性指向函数的原型对象，这个对象的用途是包含可以由特定类型的所有实例共享的属性和方法。我们通过使用原型对象可以让所有的对象实例共享它所包含的属性和方法，因此也解决了代码的复用问题。如下例子：<br>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">Person.prototype.name = <span class="string">'Tom'</span>;</span><br><span class="line">Person.prototype.age = <span class="number">9</span>;</span><br><span class="line">Person.prototype.sayName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  alert(<span class="keyword">this</span>.name);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p1 = <span class="keyword">new</span> Person();</span><br><span class="line">p1.sayName(); <span class="comment">// Tom</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p2 = <span class="keyword">new</span> Person();</span><br><span class="line">p2.sayName(); <span class="comment">// Tom</span></span><br><span class="line"></span><br><span class="line">p1.sayName === p2.sayName; <span class="comment">// true</span></span><br></pre></td></tr></table></figure><br>  与构造函数不同的是，原型对象上的属性和方法是所有实例所共享的。也就是说，p1 和p2 访问的都是同一组属性和同一个sayName() 函数</p>
+<ul>
+<li><p>优点 解决了构造函数模式中多次创建相同函数对象的问题，所有实例可以共享同一组属性和函数</p>
+</li>
+<li><p>缺点 </p>
+<ol>
+<li>省略了构造函数模式传递初始化参数的过程，所有实例在默认情况下都会取得默认的属性值，造成不便</li>
+<li>因为所有实例都是共享一组属性，对于包含基本知识的属性来说没有问题，但是对于包含引用类型的值来说，所有的实例都是对同一个引用类型进行操作，那么属性的操作就不是独立的，最后导致读写的混乱。我们创建的实例一般都是要有属于自己的全部属性的，因此单独使用原型模式的情况是很少存在的</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">3. 原型模式：因为每一个函数都有一个prototype 属性，这个属性是一个对象，它包含了通过构造函数创建的所有实例都能共享的属性和方法。因此我们可以使用原型对象来添加公用属性和方法，从而实现代码的复用。</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="4-组合使用构造函数和原型模式"><a href="#4-组合使用构造函数和原型模式" class="headerlink" title="4 组合使用构造函数和原型模式"></a>4 组合使用构造函数和原型模式</h2><p>  创建自定义类型的最常见方式，就是组合使用构造函数模式和原型模式。构造函数模式用于定义实例属性，而原型模式用于定义方法和共享的属性。这种模式的好处就是，每个实例都会有自己的一份实例属性副本，但同时又共享着对方法的引用，最大限度地节省了内存，而且这种混合模式还支持向构造函数传递参数，可以说是集两种模式之长<br>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name,age,job</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = name;</span><br><span class="line">  <span class="keyword">this</span>.age = age;</span><br><span class="line">  <span class="keyword">this</span>.obj = obj;</span><br><span class="line">&#125;</span><br><span class="line">Person.prototype = &#123;</span><br><span class="line">  <span class="keyword">constructor</span>: Person,</span><br><span class="line">  sayName: function()&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.name);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> tom = <span class="keyword">new</span> Person(<span class="string">'Tom'</span>,<span class="number">9</span>,<span class="string">'cat'</span>);</span><br><span class="line"><span class="keyword">var</span> jerry = <span class="keyword">new</span> Person(<span class="string">'Jerry'</span>,<span class="number">8</span>,<span class="string">'mouse'</span>);</span><br><span class="line"></span><br><span class="line">tom.name; <span class="comment">// Tom</span></span><br><span class="line">jerry.name; <span class="comment">// Jerry</span></span><br><span class="line">tom.sayName === jerry.sayName; <span class="comment">// true</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><p>优点 采用了构造函数模式和原型模式的优点，这种混合模式是目前使用最广泛，认同度最高的一种创建自定义类型的方法</p>
+</li>
+<li><p>缺点 由于使用了两种模式，对于代码的封装性来说不是很好</p>
+</li>
+</ul>
+<h2 id="5-动态原型模式"><a href="#5-动态原型模式" class="headerlink" title="5 动态原型模式"></a>5 动态原型模式</h2><p>  由于上面的混合模式存在封装性的问题，动态原型模式就是解决这个问题的一个方案。这个方法把所有信息都封装到了构造函数当中，而在构造函数中通过判断只初始化一次原型</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name,age,job</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = name;</span><br><span class="line">  <span class="keyword">this</span>.age = age;</span><br><span class="line">  <span class="keyword">this</span>.job = job;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span>(<span class="keyword">typeof</span> <span class="keyword">this</span>.sayName !== <span class="string">'function'</span>)&#123;</span><br><span class="line">    Person.prototype.sayName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">'My name is '</span> + <span class="keyword">this</span>.name);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> tom = <span class="keyword">new</span> Person(<span class="string">'Tom'</span>,<span class="number">9</span>,<span class="string">'cat'</span>);</span><br><span class="line">tom.sayName(); <span class="comment">// My name is Tom</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="6-寄生构造函数模式"><a href="#6-寄生构造函数模式" class="headerlink" title="6 寄生构造函数模式"></a>6 寄生构造函数模式</h2><p>  如果在前面几种模式不适用的情况下，可以使用寄生构造函数模式。这种模式的基本思想就是创建一个函数，该函数的作用仅仅是封装创建对象的代码，然后返回新创建的对象</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name,age,job</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> o = <span class="keyword">new</span> <span class="built_in">Object</span>();</span><br><span class="line">  o.name = name;</span><br><span class="line">  o.age = age;</span><br><span class="line">  o.job = job;</span><br><span class="line">  o.sayName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.name);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> p1 = <span class="keyword">new</span> Person(<span class="string">'Tom'</span>,<span class="number">9</span>,<span class="string">'cat'</span>);</span><br></pre></td></tr></table></figure>
+<p>  可以看出这个模式和工厂模式基本上一样，只不过我们是采用new 操作符最后来创建对象</p>
+<p>  在构造函数不返回值的情况下，会默认返回新创建的对象，而通过在末尾添加的return 语句，可以重写调用构造函数时返回的值</p>
+<ul>
+<li><p>优点 基于一个已有的类型，在实例化时对实例化的对象进行扩展，既不用修改原来的构造函数，也达到了扩展对象的目的</p>
+</li>
+<li><p>缺点 和工厂模式一样，不能依赖instanceof 操作符来确定对象的类型</p>
+</li>
+</ul>
+<h2 id="7-稳妥构造函数模式"><a href="#7-稳妥构造函数模式" class="headerlink" title="7 稳妥构造函数模式"></a>7 稳妥构造函数模式</h2><p>  Douglas Crockford 发明了JavaScript 中的稳妥对象这个概念。</p>
+<p>  所谓稳妥对象，指的就是，没有公共属性，而且其方法也不实用this 的对象</p>
+<p>  稳妥对象最适合在一些安全的环境中（这些环境会禁用this 和 new），或者在防止数据被其他应用程序改动时使用</p>
+<p>  稳妥构造函数遵循与寄生构造函数类似的模式，但有两点不同</p>
+<ol>
+<li><p>新创建的对象的实例方法不引用this</p>
+</li>
+<li><p>不使用 new 操作符调用构造函数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name,age,job</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> o = <span class="keyword">new</span> <span class="built_in">Object</span>();</span><br><span class="line"></span><br><span class="line">  o.sayName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log( name );</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> o;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p1 = Person(<span class="string">'Tom'</span>,<span class="number">9</span>,<span class="string">'cat'</span>);</span><br><span class="line">p1.sayName(); <span class="comment">// Tom</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<ul>
+<li>优点 除了暴露的方法（sayName）外，没有别的办法可以访问数据成员，这就是稳妥构造函数提供的安全性</li>
+<li>缺点 和寄生构造函数一样，没有办法使用instanceof 判断对象的类型</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/17/collections/JavaScript/JavaScript%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E4%B9%8B%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA/" data-id="ckf174e6k001i6np2ayod1gbe" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-collections/Cli/nodeCli命令行工具" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/hexo-blog/2020/08/14/collections/Cli/nodeCli%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7/" class="article-date">
@@ -131,7 +375,71 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/14/collections/Cli/nodeCli%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7/" data-id="cker754y0000s4bsgb9d6e9k9" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/14/collections/Cli/nodeCli%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7/" data-id="ckf174e63000x6np2dj9uh5oy" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-collections/File/基于NodeJs大文件分片上传" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo-blog/2020/08/10/collections/File/%E5%9F%BA%E4%BA%8ENodeJs%E5%A4%A7%E6%96%87%E4%BB%B6%E5%88%86%E7%89%87%E4%B8%8A%E4%BC%A0/" class="article-date">
+  <time datetime="2020-08-10T16:00:00.000Z" itemprop="datePublished">2020-08-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/hexo-blog/2020/08/10/collections/File/%E5%9F%BA%E4%BA%8ENodeJs%E5%A4%A7%E6%96%87%E4%BB%B6%E5%88%86%E7%89%87%E4%B8%8A%E4%BC%A0/">基于Node.js 大文件分片上传</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>文件上传的时候，文件过大，可能导致请求超时的情况。这时可以对文件进行分片上传</p>
+</blockquote>
+<h2 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h2><ol>
+<li>创建文件夹并生成<code>package.json</code><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> fileUpload</span><br><span class="line"><span class="built_in">cd</span> dileUpload</span><br><span class="line">npm init -y</span><br></pre></td></tr></table></figure></li>
+<li>安装相关依赖<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install express multiparty body-parser <span class="built_in">fs</span>-extra</span><br></pre></td></tr></table></figure></li>
+</ol>
+<ul>
+<li>express web模块</li>
+<li>multiparty 上传模块</li>
+<li>body-parser 处理post 请求模块</li>
+<li>fs-extra 文件操作模块</li>
+</ul>
+<ol start="3">
+<li>新建静态资源目录public 上传临时目录temp<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> public</span><br><span class="line"><span class="built_in">mkdir</span> temp</span><br></pre></td></tr></table></figure></li>
+<li>新建服务端文件 server.js 上传网页public/index.html</li>
+</ol>
+<h2 id="编写服务端代码-server-js"><a href="#编写服务端代码-server-js" class="headerlink" title="编写服务端代码 server.js"></a>编写服务端代码 server.js</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</span><br><span class="line"><span class="keyword">const</span> bodyParser = <span class="built_in">require</span>(<span class="string">'body-parser'</span>);</span><br><span class="line"><span class="keyword">const</span> multiparty = <span class="built_in">require</span>(<span class="string">'multiparty'</span>);</span><br><span class="line"><span class="keyword">const</span> fse = <span class="built_in">require</span>(<span class="string">'fs-extra'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = express();</span><br><span class="line"></span><br><span class="line">app.use(express.static(__dirname + <span class="string">'/public'</span>));</span><br><span class="line"></span><br><span class="line">app.use(bodyParser.urlencoded(&#123; <span class="attr">extended</span>: <span class="literal">true</span> &#125;));</span><br><span class="line">app.use(bodyParser.json());</span><br><span class="line"></span><br><span class="line">app.post(<span class="string">'/upload'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> form = <span class="keyword">new</span> multiparty.Form(&#123; <span class="attr">uploadDir</span>: <span class="string">'temp'</span> &#125;);</span><br><span class="line">  form.parse(req);</span><br><span class="line">  form.on(<span class="string">'file'</span>, () =&gt; &#123;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'file?::'</span>);</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  res.send(<span class="string">'文件上传成功'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">3000</span>);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'listenning...3000...'</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="编写上传页面-public-index-html"><a href="#编写上传页面-public-index-html" class="headerlink" title="编写上传页面 public/index.html"></a>编写上传页面 public/index.html</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1.0"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>文件上传<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span> <span class="attr">id</span>=<span class="string">"btnFile"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">value</span>=<span class="string">"上传"</span> <span class="attr">onclick</span>=<span class="string">"upload()"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">      <span class="keyword">let</span> btnFile = <span class="built_in">document</span>.querySelector(<span class="string">'#btnFile'</span>);</span></span><br><span class="line"><span class="javascript">      <span class="built_in">console</span>.log(<span class="string">'btnFile::'</span>, btnFile);</span></span><br><span class="line"><span class="actionscript">      <span class="function"><span class="keyword">function</span> <span class="title">upload</span><span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> file = btnFile.files[<span class="number">0</span>];</span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> formData = <span class="keyword">new</span> FormData();</span></span><br><span class="line"><span class="actionscript">        formData.append(<span class="string">'file'</span>, file);</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">'fetch::'</span>, fetch);</span></span><br><span class="line"><span class="actionscript">        fetch(<span class="string">'/upload'</span>,&#123;</span></span><br><span class="line"><span class="actionscript">          method: <span class="string">'POST'</span>,</span></span><br><span class="line">          body: formData</span><br><span class="line"><span class="javascript">        &#125;).then(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">          <span class="built_in">console</span>.log(<span class="string">'res::'</span>, res);</span></span><br><span class="line">        &#125;);</span><br><span class="line">      &#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>此时，可以从页面上传文件至项目的temp 目录下</p>
+<h2 id="添加分片上传功能"><a href="#添加分片上传功能" class="headerlink" title="添加分片上传功能"></a>添加分片上传功能</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> chunkSize = <span class="number">1024</span> * <span class="number">1024</span>; <span class="comment">// 每个分片大小</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">upload</span>(<span class="params">index</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> file = btnFile.files[<span class="number">0</span>];</span><br><span class="line">  <span class="keyword">let</span> [fileName, fileExt] = file.name.split(<span class="string">'.'</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> start = index * chunkSize;</span><br><span class="line">  <span class="keyword">if</span> (start &gt; file.size) &#123; </span><br><span class="line">    <span class="keyword">return</span>; <span class="comment">// 结束文件上传</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> blob = file.slice(start, start + chunkSize); <span class="comment">// 截取分片数据</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> blobName = <span class="string">`<span class="subst">$&#123;fileName&#125;</span>.<span class="subst">$&#123;index&#125;</span>.<span class="subst">$&#123;fileExt&#125;</span>`</span>;</span><br><span class="line">  <span class="keyword">let</span> blobFile = <span class="keyword">new</span> File([blob], blobName); <span class="comment">// 转换分片文件</span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'blobName::'</span>, blobName);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> formData = <span class="keyword">new</span> FormData();</span><br><span class="line">  formData.append(<span class="string">'file'</span>, blobFile);</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'fetch::'</span>, fetch);</span><br><span class="line">  fetch(<span class="string">'/upload'</span>, &#123;</span><br><span class="line">    method: <span class="string">'POST'</span>,</span><br><span class="line">    body: formData</span><br><span class="line">  &#125;).then(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'res::'</span>, res);</span><br><span class="line">    <span class="keyword">if</span> (res.ok) &#123;</span><br><span class="line">      upload(++index);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="添加分片合并功能"><a href="#添加分片合并功能" class="headerlink" title="添加分片合并功能"></a>添加分片合并功能</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">app.post(<span class="string">'/merge'</span>, <span class="keyword">async</span> <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> name = req.body.name;</span><br><span class="line">  <span class="keyword">let</span> fname = name.split(<span class="string">'.'</span>)[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> chunkDir = path.join(UPLOAD_DIR, fname);</span><br><span class="line">  <span class="keyword">let</span> chunks = <span class="keyword">await</span> fse.readdir(chunkDir);</span><br><span class="line"></span><br><span class="line">  chunks.sort(<span class="function">(<span class="params">a, b</span>) =&gt;</span> &#123; a - b &#125;).map(<span class="function"><span class="params">chunkPath</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 合并文件</span></span><br><span class="line">    fs.appendFileSync(</span><br><span class="line">      path.join(UPLOAD_DIR, name),</span><br><span class="line">      fs.readFileSync(<span class="string">`<span class="subst">$&#123;chunkDir&#125;</span>/<span class="subst">$&#123;chunkPath&#125;</span>`</span>)</span><br><span class="line">    )</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  fse.removeSync(chunkDir);</span><br><span class="line">  res.send(&#123; <span class="attr">msg</span>: <span class="string">'合并成功'</span>, <span class="attr">url</span>: <span class="string">`//localhost:3000/upload/<span class="subst">$&#123;name&#125;</span>`</span> &#125;); <span class="comment">// 返回文件所在目录地址 </span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>index.html 中</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (start &gt; file.size) &#123;</span><br><span class="line">  merge(file.name);<span class="comment">// 上传结束，并调用合并方法</span></span><br><span class="line">  <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">merge</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  fetch(<span class="string">'/merge'</span>, &#123;</span><br><span class="line">    method: <span class="string">'POST'</span>,</span><br><span class="line">    body: <span class="built_in">JSON</span>.stringify(&#123; <span class="attr">name</span>: name &#125;), <span class="comment">// data can be `string` or &#123;object&#125;!</span></span><br><span class="line">    headers: <span class="keyword">new</span> Headers(&#123;</span><br><span class="line">      <span class="string">'Content-Type'</span>: <span class="string">'application/json'</span></span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="备注"><a href="#备注" class="headerlink" title="备注"></a>备注</h2><ul>
+<li>当chunkSize 过小时，合并后的视频文件进度调整会有异常 （4M 正常）</li>
+<li>代码：<a href="https://github.com/ewqazxc/nodeJs-file-slice-upload" target="_blank" rel="noopener">github_nodeJs-file-slice-upload</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/10/collections/File/%E5%9F%BA%E4%BA%8ENodeJs%E5%A4%A7%E6%96%87%E4%BB%B6%E5%88%86%E7%89%87%E4%B8%8A%E4%BC%A0/" data-id="ckf174e64000y6np291679797" class="article-share-link">分享</a>
       
       
     </footer>
@@ -209,71 +517,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/10/collections/JavaScript/%E5%8F%AF%E8%BF%AD%E4%BB%A3%E5%AF%B9%E8%B1%A1/" data-id="cker754yh00164bsgftb3ddf7" class="article-share-link">分享</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-collections/File/基于NodeJs大文件分片上传" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/hexo-blog/2020/08/10/collections/File/%E5%9F%BA%E4%BA%8ENodeJs%E5%A4%A7%E6%96%87%E4%BB%B6%E5%88%86%E7%89%87%E4%B8%8A%E4%BC%A0/" class="article-date">
-  <time datetime="2020-08-10T16:00:00.000Z" itemprop="datePublished">2020-08-11</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/hexo-blog/2020/08/10/collections/File/%E5%9F%BA%E4%BA%8ENodeJs%E5%A4%A7%E6%96%87%E4%BB%B6%E5%88%86%E7%89%87%E4%B8%8A%E4%BC%A0/">基于Node.js 大文件分片上传</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>文件上传的时候，文件过大，可能导致请求超时的情况。这时可以对文件进行分片上传</p>
-</blockquote>
-<h2 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h2><ol>
-<li>创建文件夹并生成<code>package.json</code><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> fileUpload</span><br><span class="line"><span class="built_in">cd</span> dileUpload</span><br><span class="line">npm init -y</span><br></pre></td></tr></table></figure></li>
-<li>安装相关依赖<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install express multiparty body-parser <span class="built_in">fs</span>-extra</span><br></pre></td></tr></table></figure></li>
-</ol>
-<ul>
-<li>express web模块</li>
-<li>multiparty 上传模块</li>
-<li>body-parser 处理post 请求模块</li>
-<li>fs-extra 文件操作模块</li>
-</ul>
-<ol start="3">
-<li>新建静态资源目录public 上传临时目录temp<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> public</span><br><span class="line"><span class="built_in">mkdir</span> temp</span><br></pre></td></tr></table></figure></li>
-<li>新建服务端文件 server.js 上传网页public/index.html</li>
-</ol>
-<h2 id="编写服务端代码-server-js"><a href="#编写服务端代码-server-js" class="headerlink" title="编写服务端代码 server.js"></a>编写服务端代码 server.js</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</span><br><span class="line"><span class="keyword">const</span> bodyParser = <span class="built_in">require</span>(<span class="string">'body-parser'</span>);</span><br><span class="line"><span class="keyword">const</span> multiparty = <span class="built_in">require</span>(<span class="string">'multiparty'</span>);</span><br><span class="line"><span class="keyword">const</span> fse = <span class="built_in">require</span>(<span class="string">'fs-extra'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = express();</span><br><span class="line"></span><br><span class="line">app.use(express.static(__dirname + <span class="string">'/public'</span>));</span><br><span class="line"></span><br><span class="line">app.use(bodyParser.urlencoded(&#123; <span class="attr">extended</span>: <span class="literal">true</span> &#125;));</span><br><span class="line">app.use(bodyParser.json());</span><br><span class="line"></span><br><span class="line">app.post(<span class="string">'/upload'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> form = <span class="keyword">new</span> multiparty.Form(&#123; <span class="attr">uploadDir</span>: <span class="string">'temp'</span> &#125;);</span><br><span class="line">  form.parse(req);</span><br><span class="line">  form.on(<span class="string">'file'</span>, () =&gt; &#123;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'file?::'</span>);</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  res.send(<span class="string">'文件上传成功'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">3000</span>);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'listenning...3000...'</span>);</span><br></pre></td></tr></table></figure>
-<h2 id="编写上传页面-public-index-html"><a href="#编写上传页面-public-index-html" class="headerlink" title="编写上传页面 public/index.html"></a>编写上传页面 public/index.html</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1.0"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>文件上传<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span> <span class="attr">id</span>=<span class="string">"btnFile"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">value</span>=<span class="string">"上传"</span> <span class="attr">onclick</span>=<span class="string">"upload()"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">      <span class="keyword">let</span> btnFile = <span class="built_in">document</span>.querySelector(<span class="string">'#btnFile'</span>);</span></span><br><span class="line"><span class="javascript">      <span class="built_in">console</span>.log(<span class="string">'btnFile::'</span>, btnFile);</span></span><br><span class="line"><span class="actionscript">      <span class="function"><span class="keyword">function</span> <span class="title">upload</span><span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> file = btnFile.files[<span class="number">0</span>];</span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> formData = <span class="keyword">new</span> FormData();</span></span><br><span class="line"><span class="actionscript">        formData.append(<span class="string">'file'</span>, file);</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">'fetch::'</span>, fetch);</span></span><br><span class="line"><span class="actionscript">        fetch(<span class="string">'/upload'</span>,&#123;</span></span><br><span class="line"><span class="actionscript">          method: <span class="string">'POST'</span>,</span></span><br><span class="line">          body: formData</span><br><span class="line"><span class="javascript">        &#125;).then(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">          <span class="built_in">console</span>.log(<span class="string">'res::'</span>, res);</span></span><br><span class="line">        &#125;);</span><br><span class="line">      &#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>此时，可以从页面上传文件至项目的temp 目录下</p>
-<h2 id="添加分片上传功能"><a href="#添加分片上传功能" class="headerlink" title="添加分片上传功能"></a>添加分片上传功能</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> chunkSize = <span class="number">1024</span> * <span class="number">1024</span>; <span class="comment">// 每个分片大小</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">upload</span>(<span class="params">index</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> file = btnFile.files[<span class="number">0</span>];</span><br><span class="line">  <span class="keyword">let</span> [fileName, fileExt] = file.name.split(<span class="string">'.'</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> start = index * chunkSize;</span><br><span class="line">  <span class="keyword">if</span> (start &gt; file.size) &#123; </span><br><span class="line">    <span class="keyword">return</span>; <span class="comment">// 结束文件上传</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> blob = file.slice(start, start + chunkSize); <span class="comment">// 截取分片数据</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> blobName = <span class="string">`<span class="subst">$&#123;fileName&#125;</span>.<span class="subst">$&#123;index&#125;</span>.<span class="subst">$&#123;fileExt&#125;</span>`</span>;</span><br><span class="line">  <span class="keyword">let</span> blobFile = <span class="keyword">new</span> File([blob], blobName); <span class="comment">// 转换分片文件</span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'blobName::'</span>, blobName);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> formData = <span class="keyword">new</span> FormData();</span><br><span class="line">  formData.append(<span class="string">'file'</span>, blobFile);</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'fetch::'</span>, fetch);</span><br><span class="line">  fetch(<span class="string">'/upload'</span>, &#123;</span><br><span class="line">    method: <span class="string">'POST'</span>,</span><br><span class="line">    body: formData</span><br><span class="line">  &#125;).then(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'res::'</span>, res);</span><br><span class="line">    <span class="keyword">if</span> (res.ok) &#123;</span><br><span class="line">      upload(++index);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="添加分片合并功能"><a href="#添加分片合并功能" class="headerlink" title="添加分片合并功能"></a>添加分片合并功能</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">app.post(<span class="string">'/merge'</span>, <span class="keyword">async</span> <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> name = req.body.name;</span><br><span class="line">  <span class="keyword">let</span> fname = name.split(<span class="string">'.'</span>)[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> chunkDir = path.join(UPLOAD_DIR, fname);</span><br><span class="line">  <span class="keyword">let</span> chunks = <span class="keyword">await</span> fse.readdir(chunkDir);</span><br><span class="line"></span><br><span class="line">  chunks.sort(<span class="function">(<span class="params">a, b</span>) =&gt;</span> &#123; a - b &#125;).map(<span class="function"><span class="params">chunkPath</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 合并文件</span></span><br><span class="line">    fs.appendFileSync(</span><br><span class="line">      path.join(UPLOAD_DIR, name),</span><br><span class="line">      fs.readFileSync(<span class="string">`<span class="subst">$&#123;chunkDir&#125;</span>/<span class="subst">$&#123;chunkPath&#125;</span>`</span>)</span><br><span class="line">    )</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  fse.removeSync(chunkDir);</span><br><span class="line">  res.send(&#123; <span class="attr">msg</span>: <span class="string">'合并成功'</span>, <span class="attr">url</span>: <span class="string">`//localhost:3000/upload/<span class="subst">$&#123;name&#125;</span>`</span> &#125;); <span class="comment">// 返回文件所在目录地址 </span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>index.html 中</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (start &gt; file.size) &#123;</span><br><span class="line">  merge(file.name);<span class="comment">// 上传结束，并调用合并方法</span></span><br><span class="line">  <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">merge</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  fetch(<span class="string">'/merge'</span>, &#123;</span><br><span class="line">    method: <span class="string">'POST'</span>,</span><br><span class="line">    body: <span class="built_in">JSON</span>.stringify(&#123; <span class="attr">name</span>: name &#125;), <span class="comment">// data can be `string` or &#123;object&#125;!</span></span><br><span class="line">    headers: <span class="keyword">new</span> Headers(&#123;</span><br><span class="line">      <span class="string">'Content-Type'</span>: <span class="string">'application/json'</span></span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="备注"><a href="#备注" class="headerlink" title="备注"></a>备注</h2><ul>
-<li>当chunkSize 过小时，合并后的视频文件进度调整会有异常 （4M 正常）</li>
-<li>代码：<a href="https://github.com/ewqazxc/nodeJs-file-slice-upload" target="_blank" rel="noopener">github_nodeJs-file-slice-upload</a></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/10/collections/File/%E5%9F%BA%E4%BA%8ENodeJs%E5%A4%A7%E6%96%87%E4%BB%B6%E5%88%86%E7%89%87%E4%B8%8A%E4%BC%A0/" data-id="cker754y1000t4bsg5mpc5w9d" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/10/collections/JavaScript/%E5%8F%AF%E8%BF%AD%E4%BB%A3%E5%AF%B9%E8%B1%A1/" data-id="ckf174e6g001d6np21264d3v6" class="article-share-link">分享</a>
       
       
     </footer>
@@ -391,7 +635,51 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/09/collections/JavaScript/for%20of%20%E5%92%8Cfor%20await%20of/" data-id="cker754yc00104bsghjk52csm" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/09/collections/JavaScript/for%20of%20%E5%92%8Cfor%20await%20of/" data-id="ckf174e6c00176np26zx9eg2y" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-collections/JavaScript/JavaScript的临时包装对象" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo-blog/2020/08/08/collections/JavaScript/JavaScript%E7%9A%84%E4%B8%B4%E6%97%B6%E5%8C%85%E8%A3%85%E5%AF%B9%E8%B1%A1/" class="article-date">
+  <time datetime="2020-08-08T16:00:00.000Z" itemprop="datePublished">2020-08-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/hexo-blog/2020/08/08/collections/JavaScript/JavaScript%E7%9A%84%E4%B8%B4%E6%97%B6%E5%8C%85%E8%A3%85%E5%AF%B9%E8%B1%A1/">JavaScript的临时包装对象</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="包装对象"><a href="#包装对象" class="headerlink" title="包装对象"></a>包装对象</h2><p>  JavaScript语言中对象和基础类型string、number、boolean都可以使用<code>“.”</code>符号访问属性和方法，但是本质上只有对象才可以使用<code>“.”</code>，那么基础类型在使用<code>“.”</code>时的内部机制是什么呢？</p>
+<p>  这里就要引入一个概念：<code>包装对象</code></p>
+<p>  JavaScript对象时一个符合值，它是一组属性和方法的集合，使用<code>“.”</code>符号可以直接访问其属性和方法，但是基础类型数据在使用<code>“.”</code>符号时，<br>  JavaScript解析器首先调用基础类型对应的构造函数构建一个临时包装对象，然后再访问包装对象的属性<br>  比如以下代码：<br>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> str = <span class="string">'string'</span>;</span><br><span class="line">str.len = <span class="number">4</span>;</span><br><span class="line"><span class="built_in">console</span>.log(str.len); <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure><br>  上述代码中第二行使用<code>“.”</code>为str变量赋值属性len，这时JavaScript解析器首先调用构造函数：<br>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> strObj = <span class="keyword">new</span> <span class="built_in">String</span>(str);</span><br><span class="line">strObj.len = <span class="number">4</span>;</span><br></pre></td></tr></table></figure><br>  属性len的赋值对象实际是字符串对象strObj，而不是字符串值str。随后访问str.len返回值是undefined。strObj边称为包装对象，这个包装对象是临时的，一旦属性的引用和操作执行完毕后便会被回收，也就是说在<code>strObj.len=4</code>执行完毕后，strObj便被回收，不可再次访问。</p>
+<p>  number 和boolean 也有对应的构造函数Number() 和bBoolean() </p>
+<p>  null 和undefined 没有包装对象，尝试使用<code>“.”</code>访问它们的属性会报错</p>
+<p>  当然也可以手动创建基础类型对应的包装对象，但要注意：包装对象和基础类型使用<code>==</code>返回true，<code>===</code>返回false</p>
+<hr>
+<p>手动创建基础类型对应的包装对象?</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/08/collections/JavaScript/JavaScript%E7%9A%84%E4%B8%B4%E6%97%B6%E5%8C%85%E8%A3%85%E5%AF%B9%E8%B1%A1/" data-id="ckf174e6900136np2435rckqn" class="article-share-link">分享</a>
       
       
     </footer>
@@ -470,411 +758,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/08/collections/JavaScript/Symbol%E7%9A%84for()%E5%92%8CkeyFor()/" data-id="cker754y7000y4bsg8nfp520l" class="article-share-link">分享</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-collections/JavaScript/JavaScript的临时包装对象" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/hexo-blog/2020/08/08/collections/JavaScript/JavaScript%E7%9A%84%E4%B8%B4%E6%97%B6%E5%8C%85%E8%A3%85%E5%AF%B9%E8%B1%A1/" class="article-date">
-  <time datetime="2020-08-08T16:00:00.000Z" itemprop="datePublished">2020-08-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/hexo-blog/2020/08/08/collections/JavaScript/JavaScript%E7%9A%84%E4%B8%B4%E6%97%B6%E5%8C%85%E8%A3%85%E5%AF%B9%E8%B1%A1/">JavaScript的临时包装对象</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="包装对象"><a href="#包装对象" class="headerlink" title="包装对象"></a>包装对象</h2><p>  JavaScript语言中对象和基础类型string、number、boolean都可以使用<code>“.”</code>符号访问属性和方法，但是本质上只有对象才可以使用<code>“.”</code>，那么基础类型在使用<code>“.”</code>时的内部机制是什么呢？</p>
-<p>  这里就要引入一个概念：<code>包装对象</code></p>
-<p>  JavaScript对象时一个符合值，它是一组属性和方法的集合，使用<code>“.”</code>符号可以直接访问其属性和方法，但是基础类型数据在使用<code>“.”</code>符号时，<br>  JavaScript解析器首先调用基础类型对应的构造函数构建一个临时包装对象，然后再访问包装对象的属性<br>  比如以下代码：<br>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> str = <span class="string">'string'</span>;</span><br><span class="line">str.len = <span class="number">4</span>;</span><br><span class="line"><span class="built_in">console</span>.log(str.len); <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure><br>  上述代码中第二行使用<code>“.”</code>为str变量赋值属性len，这时JavaScript解析器首先调用构造函数：<br>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> strObj = <span class="keyword">new</span> <span class="built_in">String</span>(str);</span><br><span class="line">strObj.len = <span class="number">4</span>;</span><br></pre></td></tr></table></figure><br>  属性len的赋值对象实际是字符串对象strObj，而不是字符串值str。随后访问str.len返回值是undefined。strObj边称为包装对象，这个包装对象是临时的，一旦属性的引用和操作执行完毕后便会被回收，也就是说在<code>strObj.len=4</code>执行完毕后，strObj便被回收，不可再次访问。</p>
-<p>  number 和boolean 也有对应的构造函数Number() 和bBoolean() </p>
-<p>  null 和undefined 没有包装对象，尝试使用<code>“.”</code>访问它们的属性会报错</p>
-<p>  当然也可以手动创建基础类型对应的包装对象，但要注意：包装对象和基础类型使用<code>==</code>返回true，<code>===</code>返回false</p>
-<hr>
-<p>手动创建基础类型对应的包装对象?</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/08/collections/JavaScript/JavaScript%E7%9A%84%E4%B8%B4%E6%97%B6%E5%8C%85%E8%A3%85%E5%AF%B9%E8%B1%A1/" data-id="cker754y5000w4bsggw3nezcg" class="article-share-link">分享</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-collections/JavaScript/symbol" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/hexo-blog/2020/08/04/collections/JavaScript/symbol/" class="article-date">
-  <time datetime="2020-08-04T16:00:00.000Z" itemprop="datePublished">2020-08-05</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/hexo-blog/2020/08/04/collections/JavaScript/symbol/">Symbol 类型</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Symbol"><a href="#Symbol" class="headerlink" title="Symbol"></a>Symbol</h2><p>  <code>Symbol</code>是一种基本数据类型。</p>
-<p>  <code>Symbol()</code>函数会返回<code>symbol</code>类型的值，该类型具有静态属性和静态方法。</p>
-<p>  它的静态属性会暴露几个内建的成员对象；<br>  它的静态方法会暴露全局的symbol注册，且类似于内建对象类，但作为构造函数来说它并不完整，因为它不支持语法<code>new Symbol()</code></p>
-<p>  每个<code>Symbol</code>返回的<code>symbol</code>值都是唯一的。一个symbol值能作为对象属性的标识符；这是改数据类型仅有的目的。</p>
-<h3 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a>Demo</h3>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> symbol1 = <span class="built_in">Symbol</span>();</span><br><span class="line"><span class="keyword">const</span> symbol2 = <span class="built_in">Symbol</span>(<span class="number">2</span>);</span><br><span class="line"><span class="keyword">const</span> symbol3 = <span class="built_in">Symbol</span>(<span class="string">'foo'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> symbol1); <span class="comment">// symbol 字符串</span></span><br><span class="line"><span class="built_in">console</span>.log(symbol2 === <span class="number">2</span>); <span class="comment">// false</span></span><br><span class="line"><span class="built_in">console</span>.log(symbol3.toString()); <span class="comment">// Symbol(foo) 字符串</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Symbol</span>(<span class="string">'foo'</span>)===<span class="built_in">Symbol</span>(<span class="string">'foo'</span>)); <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
-<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><p>  Symbol([description])</p>
-<ul>
-<li><p>参数<br>description 可选 字符串类型。<br>对symbol的描述，可用于调试但不是访问symbol本身</p>
-<h3 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h3><p>直接使用<code>Symbol()</code>创建新的symbol类型，并用一个可选的字符串作为其描述</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> sym1 = <span class="built_in">Symbol</span>();</span><br><span class="line"><span class="keyword">const</span> sym2 = <span class="built_in">Symbol</span>(<span class="string">'foo'</span>);</span><br><span class="line"><span class="keyword">const</span> sym3 = <span class="built_in">Symbol</span>(<span class="string">'foo'</span>);</span><br></pre></td></tr></table></figure>
-
-<p>上面代码创建了三个新的symbol类型。注意，<code>Symbol(&#39;foo&#39;)</code>不会强制将字符串<code>&#39;foo&#39;</code>转换成symbol类型。他每次都会创建一个新的symbol类型：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Symbol</span>(<span class="string">'foo'</span>) === <span class="built_in">Symbol</span>(<span class="string">'foo'</span>); <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
-
-<p>下面带有<code>new</code>运算符的语法将抛出<code>TypeError</code>错误：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> sym = <span class="keyword">new</span> <span class="built_in">Symbol</span>(); <span class="comment">// TypeError</span></span><br></pre></td></tr></table></figure>
-
-<p>这会阻止创建一个显式的Symbol包装器对象而不是一个Symbol值。围绕原始数据类型创建一个显式包装器对象从ECMAScript 6开始不再被支持。<br>然而，现有的原始包装器对象，如<code>new Boolean</code>、<code>new String</code>以及<code>new Number</code>,因为遗留原因仍可被创建</p>
-<p>如果想要创建一个Symbol包装器对象，可以使用Object函数</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> sym = <span class="built_in">Symbol</span>(<span class="string">'foo'</span>);</span><br><span class="line"><span class="keyword">typeof</span> sym; <span class="comment">// symbol</span></span><br><span class="line"><span class="keyword">const</span> symObj = <span class="built_in">Object</span>(sym);</span><br><span class="line"><span class="keyword">typeof</span> symObj; <span class="comment">// object</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>全局共享的Symbol</p>
-<p>上面使用Symbol()函数的语法，不会在整个代码中创建一个可用的全局Symbol类型<br>要创建跨文件可用的symbol，甚至跨域（每个都有其自己的全局作用域），使用<code>Symbol.for()</code>方法和<code>Symbol.keyFor()</code>方法从全局的symbol注册表设置和取得symbol。</p>
-</li>
-<li><p>在对象中查找Symbol 属性</p>
-<p><code>Object.getOwnPRopertySymbols()</code>方法让你在查找一个给定对象的符号属性时返回一个symbol类型的数组。注意，每个初始化的对象都是没有自己的symbol属性的，因此这个数组可能为空，除非已经在对象上设置了symbol属性</p>
-<h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><p>Symbol.length 长度属性，值为 0</p>
-<p>Symbol.prototype symbol构造函数的原型</p>
-</li>
-<li><p>众所周知的symbols</p>
-<p>除了自己创建的symbol，JavaScript还内建了一些在ECMAScript 5 之前没有暴露给开发者的symbol，它们代表了内部语言行为。可以使用以下属性访问</p>
-<ul>
-<li><p>迭代symbols</p>
-<ul>
-<li>Symbol.iterator<br>一个返回一个对象默认迭代器的方法。被for…of 使用</li>
-<li>Symbol.asyncIterator<br>一个返回对象默认的异步迭代器的方法。被 for await of 使用</li>
-</ul>
-</li>
-<li><p>正则表达式symbols</p>
-<ul>
-<li>Symbol.match<br>一个用于对字符串进行匹配的方法，也用于确定一个对象是否可以作为正则表达式使用。被<code>String.prototype.match()</code>使用</li>
-<li>Symbol.replace<br>一个替换匹配字符串的子串的方法 被<code>String.prototype.replace()</code>使用</li>
-<li>Symbol.search<br>一个返回一个字符串中与正则表达式相匹配的索引的方法 被<code>Stirng.prototype.search()</code>使用</li>
-<li>Symbol.split<br>一个在匹配正则表达式的索引处拆分一个字符串的方法 被<code>String.prototype.split()</code>使用</li>
-</ul>
-</li>
-<li><p>其他 symbols</p>
-<ul>
-<li>Symbol.hasInstance<br>一个确定一个构造器对象识别的对象是否为它的实例的方法 被<code>instanceof</code>使用</li>
-<li>Symbol.isConcatSpreadable<br>一个布尔值，表明一个对象是否应该<code>flattened</code>(平铺)为它的数组元素 被<code>Array.prototype.concat()</code>使用</li>
-<li>Symbol.unscopables<br>拥有和继承属性名的一个对象的值被排除在与环境绑定的相关对象外</li>
-<li>Symbol.species<br>用于创建派生对象的构造器函数</li>
-<li>Symbol.toPrimitive<br>将对象转化为基本数据类型的方法</li>
-<li>Symbol.toStringTag<br>用于对象的默认描述的字符串值 被<code>Object.prototype.toString()</code> 使用</li>
-</ul>
-</li>
-</ul>
-<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3></li>
-<li><p>Symbol.for(key)<br>使用给定的key搜索现有的symbol，如果找到则返回该symbol。否则将使用给定的key在全局symbol注册表中创建一个新的symbol</p>
-</li>
-<li><p>Symbol.keyFor(sym)<br>从全局symbol注册表中，为给定的symbol检索一个共享的symbol key</p>
-</li>
-</ul>
-<hr>
-<p>  包装器对象？</p>
-<p>  Object.getOwnPRopertySymbols()？</p>
-<p>  <code>Symbol.for()</code>方法和<code>Symbol.keyFor()</code>？</p>
-<p>  <code>for...of</code> <code>for await of</code></p>
-<p>  <code>String.prototype.match()</code><br>  <code>String.prototype.replace()</code><br>  <code>String.prototype.search()</code><br>  <code>String.prototype.split()</code></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/04/collections/JavaScript/symbol/" data-id="cker754yf00134bsg6uw99y4i" class="article-share-link">分享</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-collections/JavaScript/defineProperty" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/hexo-blog/2020/08/03/collections/JavaScript/defineProperty/" class="article-date">
-  <time datetime="2020-08-03T16:00:00.000Z" itemprop="datePublished">2020-08-04</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/hexo-blog/2020/08/03/collections/JavaScript/defineProperty/">defineProperty</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Object-defineProperty"><a href="#Object-defineProperty" class="headerlink" title="Object.defineProperty()"></a>Object.defineProperty()</h2><p>  <code>Object.defineProperty（）</code>方法会直接在一个对象上定义一个新属性，或者修改一个对象的现有属性，并返回此对象</p>
-<blockquote>
-<p>备注：应当直接在<code>object</code>构造器对象上调用此方法，而不是在任意一个<code>Object</code>类型的实例上调用</p>
-</blockquote>
-<h3 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a>Demo</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">const obj &#x3D; &#123;&#125;;</span><br><span class="line">Object.defineProperty(obj,&#39;prop&#39;,&#123;</span><br><span class="line">  value: 66,</span><br><span class="line">  writable: false</span><br><span class="line">&#125;);</span><br><span class="line">obj.prop &#x3D; 77; &#x2F;&#x2F; 由于writable为false 严格模式下会报错</span><br><span class="line">console。log(obj.prop); &#x2F;&#x2F; 66</span><br></pre></td></tr></table></figure>
-
-<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><p>  <code>Object.defineProperty(obj, prop, descriptor)</code></p>
-<h3 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h3><ul>
-<li>obj<br>要定义属性的对象</li>
-<li>prop<br>要定义或修改属性的名称或<code>Symbol</code></li>
-<li>descriptor<br>要定义或修改的属性描述符</li>
-</ul>
-<h3 id="返回值"><a href="#返回值" class="headerlink" title="返回值"></a>返回值</h3><p>  被传递给函数的对象 obj</p>
-<h3 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h3><p>  该方法允许精准地添加或修改对象的属性。通过赋值操作添加的普通属性是可枚举的，在枚举对象属性时会被枚举到（<code>for...in</code> 或 <code>Object.keys</code> 方法 ），可以改变这些属性的值，也可以删除这些属性。允许修改默认的额外选项。默认情况下，添加的属性时不可修改的</p>
-<p>  对象里目前存在的属性描述符有两种主要形式：数据描述符和存取描述符。数据描述符是一个具有值的属性，该值是可写的，也可以是不可写的。存取描述符是由<code>getter函数</code>和<code>setter函数</code>所描述的属性。一个描述符只能是其中之一，不能同时是两者</p>
-<p>  这两种<code>描述符</code>都是对象，它们共享以下可选键值<br>    * configurable 默认为 false<br>      当且仅当该属性的<code>configurable</code>键值为<code>true</code>时，该属性的描述符才能够被改变，同时该属性也能从对应的对象上被删除<br>    * enumerable 默认为 false<br>      当且仅当改属性的<code>enumerable</code>键值为<code>true</code>时，该属性才会出现在对象的枚举属性中</p>
-<p>  数据描述符可选键<br>    * value 默认为 undefined<br>      该属性对应的值。可以是任何有效的JavaScript值<br>    * writable ，默认为 false<br>      当且仅当该属性的<code>writable</code>键值为<code>true</code>时，属性的值，也就是上面的<code>value</code>，才能被赋值运算符改变</p>
-<p>  存取描述符可选键<br>    * get 默认为 undefined<br>      属性的<code>·getter函数</code>，如果没有getter，则为undefined。<br>      当访问该属性时，会调用此函数，执行时不传入任何参数，但是会传入<code>this</code>对象（由于继承关系，这里的this并不一定是定义该属性的对象）<br>      该函数的返回值会被用作属性的值<br>    * set 默认为 undefined<br>      属性的<code>setter函数</code>，如果没有setter，则为undefined<br>      当属性被修改时，会调用此函数<br>      该方法会接受一个参数（也就是被赋予的新值），会传入赋值时的this对象</p>
-<p>  如果一个描述符不具有 value、writable、get 和 set 中的任意一个键，那么它将被认为是一个数据描述符。如果一个描述符同时拥有 value 或 writable 和 get 或 set 键，则会产生一个异常。</p>
-<p>  这些选项不一定是自身的属性，也要考虑继承来的属性。为了确认保留这些默认值，在设置之前，可能要冻结<code>Object.prototype</code>，明确指定所有的选项，或者通过<code>Object.create(null)</code>将<code>_proto_</code>属性指向<code>null</code></p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 使用 _proto_</span><br><span class="line">var obj &#x3D; &#123;&#125;;</span><br><span class="line">var desc &#x3D; Object.create(null); &#x2F;&#x2F; 没有继承属性</span><br><span class="line">desc.value &#x3D; &#39;static&#39;;</span><br><span class="line">Object.defineProperty(obj,&#39;key&#39;,desc);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 显式</span><br><span class="line">Object.defineProperty(obj,&#39;key&#39;,&#123;</span><br><span class="line">  enumerable: false,</span><br><span class="line">  configurable: false,</span><br><span class="line">  weritable: false,</span><br><span class="line">  value: &#39;static&#39;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 循环使用同一对象</span><br><span class="line">function withValue(value)&#123;</span><br><span class="line">  var d &#x3D; withValue.d || (</span><br><span class="line">    withValue.d &#x3D; &#123;</span><br><span class="line">      enumerable: false,</span><br><span class="line">      writable: false,</span><br><span class="line">      configurable: false,</span><br><span class="line">      value: null</span><br><span class="line">    &#125;</span><br><span class="line">  );</span><br><span class="line">  d.value &#x3D; value;</span><br><span class="line">  return d;</span><br><span class="line">&#125;</span><br><span class="line">Object.defineProperty(obj,&#39;key&#39;,withValue(&#39;static&#39;));</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 如果 freeze 可用, 防止后续代码添加或删除对象原型的属性</span><br><span class="line">&#x2F;&#x2F; （value, get, set, enumerable, writable, configurable）</span><br><span class="line">(Object.freeze||Object)(Object.prototype); &#x2F;&#x2F; 不能添加 修改 删除</span><br></pre></td></tr></table></figure>
-
-
-<hr>
-<p>属性描述符？<br>Symbol类型的特殊性？<br>定义key为Symbol ？</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/03/collections/JavaScript/defineProperty/" data-id="cker754y8000z4bsggdrg75kn" class="article-share-link">分享</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-collections/JavaScript/hasOwnProperty" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/hexo-blog/2020/08/02/collections/JavaScript/hasOwnProperty/" class="article-date">
-  <time datetime="2020-08-02T16:00:00.000Z" itemprop="datePublished">2020-08-03</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/hexo-blog/2020/08/02/collections/JavaScript/hasOwnProperty/">hasOwnProperty 和 getOwnPropertyDescriptor</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="一、-Object-prototype-hasOwnProperty"><a href="#一、-Object-prototype-hasOwnProperty" class="headerlink" title="一、 Object.prototype.hasOwnProperty()"></a>一、 Object.prototype.hasOwnProperty()</h2><p><code>hasOwnProperty()</code>方法会返回一个布尔值，指示对象自身属性中是否具有指定的属性（也就是，是否有指定的键）</p>
-<h3 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a>Demo</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">const object1 &#x3D; &#123;&#125;;</span><br><span class="line">object1.property1 &#x3D; 42;</span><br><span class="line"></span><br><span class="line">console.log(object1.hasOwnProperty(&#39;property1&#39;)); &#x2F;&#x2F; true</span><br><span class="line">console.log(object1.hasOwnProperty(&#39;toString&#39;)); &#x2F;&#x2F; false</span><br><span class="line">console.log(object1.hasOwnProperty(&#39;hasOwnProperty&#39;)); &#x2F;&#x2F; false</span><br></pre></td></tr></table></figure>
-
-<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><p>  <code>obj.hasOwnProperty(prop)</code></p>
-<h3 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h3><p>  prop 要检测的属性的字符串形式标识的名称，或者Symbol</p>
-<h3 id="返回值"><a href="#返回值" class="headerlink" title="返回值"></a>返回值</h3><p>  用来判断某个对象是否含有指定的属性的布尔值</p>
-<h3 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h3><p>  所有继承了<code>Object</code>的对象都会继承到<code>hasOwnproperty</code>方法。<br>  这个方法可以用来检测一个对象是否含有特定的自身属性；<br>  和<code>in</code>运算符不同，该方法会忽略掉那些从原型链上继承到的属性 <code>&#39;toString&#39; in obj // true</code></p>
-<h3 id="备注"><a href="#备注" class="headerlink" title="备注"></a>备注</h3><p>  及时属性的值是<code>null</code>或<code>undefined</code>，只要属性存在，<code>hasOwnProperty</code>依旧会返回true<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">o &#x3D; new Object();</span><br><span class="line">o.propOne &#x3D; null;</span><br><span class="line">o.hasOwnProperty(&#39;propOne&#39;); &#x2F;&#x2F; true</span><br><span class="line">o.propTwo &#x3D; undefined;</span><br><span class="line">o.hasOwnproperty(&#39;propTwo&#39;); &#x2F;&#x2F; true</span><br></pre></td></tr></table></figure></p>
-<h3 id="自身属性与继承属性"><a href="#自身属性与继承属性" class="headerlink" title="自身属性与继承属性"></a>自身属性与继承属性</h3>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">const o &#x3D; new Object();</span><br><span class="line">o.prop &#x3D; &#39;exosts&#39;;</span><br><span class="line">o.hasOwnProperty(&#39;prop&#39;); &#x2F;&#x2F; true</span><br><span class="line">o.hasOwnProperty(&#39;hasOwnProperty&#39;); &#x2F;&#x2F; false</span><br><span class="line">o.hasOwnProperty(&#39;toString&#39;); &#x2F;&#x2F; false</span><br><span class="line">&#39;hasOwnproperty&#39; in o; &#x2F;&#x2F; false</span><br><span class="line">&#39;hasOwnProperty&#39; in o; &#x2F;&#x2F; true</span><br><span class="line">&#39;toString&#39; in o; &#x2F;&#x2F; true</span><br></pre></td></tr></table></figure>
-<h3 id="遍历一个对象的所有自身属性"><a href="#遍历一个对象的所有自身属性" class="headerlink" title="遍历一个对象的所有自身属性"></a>遍历一个对象的所有自身属性</h3><p>  <code>for...in</code>循环只会遍历可枚举的属性，所以不应该基于这个循环中没有不可枚举的属性而得出<code>hasOwnProperty</code>是严格限制于可枚举项目的（如同 Object.getOwnPropertyNames()）<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var buz &#x3D; &#123; fog: &#39;stack&#39;&#125;;</span><br><span class="line">for(var name in buz)&#123;</span><br><span class="line">  if(buz.hasOwnProperty(name))&#123;</span><br><span class="line">    console.log(&#39;this is fog (&#39;+name+&#39;)for sure Value:&#39;+ buz[name]);</span><br><span class="line">  &#125;else&#123;</span><br><span class="line">    console.log(name); &#x2F;&#x2F; protptype 继承的一些属性</span><br><span class="line">    &#x2F;&#x2F; MDN中表示 toString 也会被输出，实际测试中，只在通过 Object.prototype 赋值的属性会显示 Object.prototype.showMe&#x3D;&quot;ok&quot;; </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h3 id="使用hasOwnProperty作为属性"><a href="#使用hasOwnProperty作为属性" class="headerlink" title="使用hasOwnProperty作为属性"></a>使用hasOwnProperty作为属性</h3><p>  JavaScript并没有保护<code>hasOwnProperty</code>这个属性名，因此，当某个对象可能自有一个占用该属性名的属性时，可以通过外部的<code>hasOwnProperty</code>获得正确的结果<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var foo &#x3D; &#123;</span><br><span class="line">  hasOwnProperty: function() &#123;</span><br><span class="line">    return false;</span><br><span class="line">  &#125;,</span><br><span class="line">  bar: &#39;hehe&#39;</span><br><span class="line">&#125;;</span><br><span class="line">foo.hasOwnProperty(&#39;bar&#39;); &#x2F;&#x2F; 始终返回 false</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 1 直接使用原型链上真正的 hasOWnProperty 方法</span><br><span class="line">(&#123;&#125;).hasOwnProperty.call(foo,&#39;bar&#39;); &#x2F;&#x2F; true</span><br><span class="line">&#x2F;&#x2F; 2 也可以使用 Object 原型上的 hasOwnProperty 属性</span><br><span class="line">Object.prototype.hasOwnProperty.call(foo,&#39;bar&#39;); &#x2F;&#x2F; true</span><br></pre></td></tr></table></figure></p>
-<h2 id="二、-Object-getOwnPropertyDescriptor"><a href="#二、-Object-getOwnPropertyDescriptor" class="headerlink" title="二、 Object.getOwnPropertyDescriptor()"></a>二、 Object.getOwnPropertyDescriptor()</h2><p>  <code>Object.getOwnPropertyDescriptor()</code>方法返回指定对象上一个自由属性对应的属性描述符。（自由属性指的是直接赋予该对象的属性，不需要从原型链上进行查找的属性）</p>
-<h3 id="Demo-1"><a href="#Demo-1" class="headerlink" title="Demo"></a>Demo</h3>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">const obj &#x3D; &#123;</span><br><span class="line">  property:66</span><br><span class="line">&#125;;</span><br><span class="line">const descriptor &#x3D; Object.getOwnPropertyDescriptor(obj,&#39;property&#39;);</span><br><span class="line">console.log(descriptor.configurable); &#x2F;&#x2F; true</span><br><span class="line">console.log(descriptor.value); &#x2F;&#x2F; 66</span><br></pre></td></tr></table></figure>
-
-<h3 id="语法-1"><a href="#语法-1" class="headerlink" title="语法"></a>语法</h3><p>  Object.getOwnPropertyDescriptor(obj,prop)</p>
-<h3 id="参数-1"><a href="#参数-1" class="headerlink" title="参数"></a>参数</h3><ul>
-<li>obj<br>需要查找的目标对象</li>
-<li>prop<br>目标对象内属性名称</li>
-</ul>
-<h3 id="返回值-1"><a href="#返回值-1" class="headerlink" title="返回值"></a>返回值</h3><p>  如果指定的属性存在于对象上，则返回其属性描述符对象（property descriptor）,否则返回 <code>undefined</code></p>
-<h3 id="描述-1"><a href="#描述-1" class="headerlink" title="描述"></a>描述</h3><p>  该方法允许对一个属性的描述进行检索<br>  在JavaScript中，属性又一个字符串类型的“名字”（name）和一个“属性描述符”（property descriptor）对象构成（Object.defineProperty）</p>
-<pre><code>一个属性描述符是一个记录，由下面属性当中的某些组成的：
-* value
-  该属性的值（仅针对数据属性描述符有效）
-* writable
-  当且仅当属性的值可以被改变时为true（仅针对数据属性描述符有效）
-* get 
-  获取该属性的访问器函数（getter），无则为 undefined
-* set 
-  获取该属性的设置器函数（setter），无则为 undefined
-* configurable
-  当且仅当指定对象的属性描述可以被改变或者属性可被删除时，为true
-* enumerable
-  当且仅当指定对象的属性可以被枚举时，为true</code></pre><h2 id="React-中用来判断ref-和-key是否存在"><a href="#React-中用来判断ref-和-key是否存在" class="headerlink" title="React 中用来判断ref 和 key是否存在"></a>React 中用来判断ref 和 key是否存在</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">function hasValidRef(config) &#123;</span><br><span class="line">  if (__DEV__) &#123;</span><br><span class="line">    if (hasOwnProperty.call(config, &#39;ref&#39;)) &#123;</span><br><span class="line">      const getter &#x3D; Object.getOwnPropertyDescriptor(config, &#39;ref&#39;).get;</span><br><span class="line">      if (getter &amp;&amp; getter.isReactWarning) &#123;</span><br><span class="line">        return false;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  return config.ref !&#x3D;&#x3D; undefined;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function hasValidKey(config) &#123;</span><br><span class="line">  if (__DEV__) &#123;</span><br><span class="line">    if (hasOwnProperty.call(config, &#39;key&#39;)) &#123;</span><br><span class="line">      const getter &#x3D; Object.getOwnPropertyDescriptor(config, &#39;key&#39;).get;</span><br><span class="line">      if (getter &amp;&amp; getter.isReactWarning) &#123;</span><br><span class="line">        return false;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  return config.key !&#x3D;&#x3D; undefined;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>isReactWarning?<br>Object.defineProperty?<br>Object.getOwnPropertyNames?</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/02/collections/JavaScript/hasOwnProperty/" data-id="cker754yd00114bsg6c948uio" class="article-share-link">分享</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-collections/markdown" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/hexo-blog/2020/07/28/collections/markdown/" class="article-date">
-  <time datetime="2020-07-28T15:20:20.000Z" itemprop="datePublished">2020-07-28</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/hexo-blog/2020/07/28/collections/markdown/">MarkDown语法</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="MarkDown-语法"><a href="#MarkDown-语法" class="headerlink" title="MarkDown 语法"></a>MarkDown 语法</h1><h2 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 一级标题 &#96;&lt;h1&#x2F;&gt;&#96;</span><br><span class="line">## 二级标题 &#96;&lt;h2&#x2F;&gt;</span><br><span class="line">...</span><br><span class="line">###### 六级标题 &#96;&lt;h6&#x2F;&gt;&#39;</span><br></pre></td></tr></table></figure>
-<hr>
-<h1 id="一级标题-lt-h1-gt"><a href="#一级标题-lt-h1-gt" class="headerlink" title="一级标题 &lt;h1/&gt;"></a>一级标题 <code>&lt;h1/&gt;</code></h1><h2 id="二级标题-lt-h2-gt"><a href="#二级标题-lt-h2-gt" class="headerlink" title="二级标题 &lt;h2/&gt;"></a>二级标题 <code>&lt;h2/&gt;</code></h2><h6 id="六级标题-lt-h6-gt"><a href="#六级标题-lt-h6-gt" class="headerlink" title="六级标题 &lt;h6/&gt;"></a>六级标题 <code>&lt;h6/&gt;</code></h6><hr>
-<h2 id="强调"><a href="#强调" class="headerlink" title="强调"></a>强调</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">*看这里看这里！！！&#96;&lt;em&gt;&#96;斜体*</span><br><span class="line">_看这里看这里！！！&#96;&lt;u&gt;&#96;斜体+下划线_</span><br><span class="line">**看这里看这里！！！&#96;&lt;strong&gt;&#96;加粗**</span><br><span class="line">__看这里看这里！！！&#96;&lt;stong&gt;&#96;加粗+下划线__</span><br></pre></td></tr></table></figure>
-<hr>
-<p><em>看这里看这里！！！<code>&lt;em&gt;</code>斜体</em><br><em>看这里看这里！！！<code>&lt;u&gt;</code>斜体+下划线</em><br><strong>看这里看这里！！！<code>&lt;strong&gt;</code>加粗</strong><br><strong>看这里看这里！！！<code>&lt;stong&gt;</code>加粗+下划线</strong></p>
-<hr>
-<h2 id="换行"><a href="#换行" class="headerlink" title="换行"></a>换行</h2><p>后面有四个空格<br>后面没有空格，直接回车<br>然后。。。好像没差</p>
-<h2 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h2><h3 id="1-无序列表"><a href="#1-无序列表" class="headerlink" title="1 无序列表"></a>1 无序列表</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">* 项目一 无序列表 &#96;* + 空格键&#96;</span><br><span class="line">* 项目二</span><br><span class="line">  * 项目二的子项目一 无序列表 &#96;TAB + * + 空格键&#96;</span><br><span class="line">  * 项目二的子项目二</span><br></pre></td></tr></table></figure>
-<hr>
-<ul>
-<li>项目一 无序列表 <code>* + 空格键</code></li>
-<li>项目二<ul>
-<li>项目二的子项目一 无序列表 <code>TAB + * + 空格键</code></li>
-<li>项目二的子项目二</li>
-</ul>
-</li>
-</ul>
-<hr>
-<h3 id="2-有序列表"><a href="#2-有序列表" class="headerlink" title="2 有序列表"></a>2 有序列表</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1. 项目一 有序列表 &#96;数字 + . + 空格键&#96;</span><br><span class="line">2. 项目二 </span><br><span class="line">3. 项目三</span><br><span class="line">    1. 项目三的子项目一 有序列表 &#96;TAB + 数字 + . + 空格键&#96;</span><br><span class="line">    2. 项目三的子项目二</span><br></pre></td></tr></table></figure>
-<hr>
-<ol>
-<li>项目一 有序列表 <code>数字 + . + 空格键</code></li>
-<li>项目二 </li>
-<li>项目三<ol>
-<li>项目三的子项目一 有序列表 <code>TAB + 数字 + . + 空格键</code></li>
-<li>项目三的子项目二</li>
-</ol>
-</li>
-</ol>
-<hr>
-<h3 id="3-任务列表"><a href="#3-任务列表" class="headerlink" title="3 任务列表"></a>3 任务列表</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- [ ] 任务一 未做任务 &#96;- + 空格 + [ ]&#96;</span><br><span class="line">- [x] 任务二 已做任务 &#96;- + 空格 + [x]&#96;</span><br></pre></td></tr></table></figure>
-<hr>
-<ul>
-<li><input disabled="" type="checkbox"> 任务一 未做 </li>
-<li><input checked="" disabled="" type="checkbox"> 任务二 已做</li>
-</ul>
-<hr>
-<h2 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">![GitHub set up](http:&#x2F;&#x2F;zh.mweb.im&#x2F;asset&#x2F;img&#x2F;set-up-git.gif)</span><br><span class="line">格式: ![Alt Text](url)</span><br></pre></td></tr></table></figure>
-<hr>
-<h2 id=""><a href="#" class="headerlink" title=""></a><img src="http://zh.mweb.im/asset/img/set-up-git.gif" alt="GitHub set up"></h2><hr>
-<h2 id="-1"><a href="#-1" class="headerlink" title=""></a><img src="/hexo-blog/imgs/img.png" alt="狗头"></h2><h3 id="大小-title"><a href="#大小-title" class="headerlink" title="大小/title"></a>大小/title</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">![GitHub set up](http:&#x2F;&#x2F;zh.mweb.im&#x2F;asset&#x2F;img&#x2F;set-up-git.gif &quot;title&quot;)</span><br><span class="line">&lt;img src&#x3D;&quot;http:&#x2F;&#x2F;zh.mweb.im&#x2F;asset&#x2F;img&#x2F;set-up-git.gif&quot; width&#x3D;&quot;140px&quot;&gt;</span><br></pre></td></tr></table></figure>
-<hr>
-<p><img src="http://zh.mweb.im/asset/img/set-up-git.gif" alt="GitHub set up" title="title"><br><img src="http://zh.mweb.im/asset/img/set-up-git.gif" width="140px"></p>
-<hr>
-<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">email &lt;example@example.com&gt;</span><br><span class="line">[GitHub](http:&#x2F;&#x2F;github.com)</span><br><span class="line">自动生成链接&lt;http:&#x2F;&#x2F;www.github.com&#x2F;&gt;</span><br></pre></td></tr></table></figure>
-<hr>
-<p>email <a href="mailto:&#x65;&#x78;&#97;&#x6d;&#x70;&#x6c;&#x65;&#x40;&#x65;&#120;&#x61;&#x6d;&#112;&#108;&#x65;&#x2e;&#99;&#x6f;&#109;">&#x65;&#x78;&#97;&#x6d;&#x70;&#x6c;&#x65;&#x40;&#x65;&#120;&#x61;&#x6d;&#112;&#108;&#x65;&#x2e;&#99;&#x6f;&#109;</a><br><a href="http://github.com" target="_blank" rel="noopener">GitHub</a><br>自动生成链接<a href="http://www.github.com/" target="_blank" rel="noopener">http://www.github.com/</a></p>
-<hr>
-<h2 id="区块引用"><a href="#区块引用" class="headerlink" title="区块引用"></a>区块引用</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">某某某说：</span><br><span class="line">&gt; 第一行引用</span><br><span class="line">&gt; 第二行引用文字</span><br></pre></td></tr></table></figure>
-<h2 id="这里的引用是居中放大的字体"><a href="#这里的引用是居中放大的字体" class="headerlink" title="这里的引用是居中放大的字体"></a>这里的引用是居中放大的字体</h2><p>某某某说：</p>
-<blockquote>
-<p>第一行引用<br>第二行引用文字</p>
-</blockquote>
-<hr>
-<h2 id="行内代码"><a href="#行内代码" class="headerlink" title="行内代码"></a>行内代码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">使用反引号包裹&#96;like me&#96; &#96;code&#96;</span><br><span class="line">反引号&#96;中的&#96;&#96;反引号&#96;也会展示出来</span><br></pre></td></tr></table></figure>
-<hr>
-<p>使用反引号包裹<code>like me</code> <code>code</code><br>反引号<code>中的``反引号</code>也会展示出来</p>
-<hr>
-<h2 id="多行或者一段代码"><a href="#多行或者一段代码" class="headerlink" title="多行或者一段代码"></a>多行或者一段代码</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// `x3 js</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">hello</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'hello'</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// `x3</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="顺序图或流程图"><a href="#顺序图或流程图" class="headerlink" title="顺序图或流程图"></a>顺序图或流程图</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#96;x3 sequence</span><br><span class="line">张三-&gt;李四: 嘿，小四儿, 写博客了没?</span><br><span class="line">Note right of 李四: 李四愣了一下，说：</span><br><span class="line">李四--&gt;张三: 忙得吐血，哪有时间写。</span><br><span class="line">&#96;x3</span><br><span class="line"></span><br><span class="line">&#96;x3 flow</span><br><span class="line">st&#x3D;&gt;start: 开始</span><br><span class="line">e&#x3D;&gt;end: 结束</span><br><span class="line">op&#x3D;&gt;operation: 我的操作</span><br><span class="line">cond&#x3D;&gt;condition: 确认？</span><br><span class="line"></span><br><span class="line">st-&gt;op-&gt;cond</span><br><span class="line">cond(yes)-&gt;e</span><br><span class="line">cond(no)-&gt;op</span><br><span class="line">&#96;x3</span><br></pre></td></tr></table></figure>
-<hr>
-<h2 id="-2"><a href="#-2" class="headerlink" title=""></a><img src="/hexo-blog/imgs/flowchart.png" alt="markdown效果"></h2><h2 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">第一格表头 | 第二格表头</span><br><span class="line">--------- | -------------</span><br><span class="line">内容单元格 第一列第一格 | 内容单元格第二列第一格</span><br><span class="line">内容单元格 第一列第二格 多加文字 | 内容单元格第二列第二格</span><br></pre></td></tr></table></figure>
-<table>
-<thead>
-<tr>
-<th>第一格表头</th>
-<th>第二格表头</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>内容单元格 第一列第一格</td>
-<td>内容单元格第二列第一格</td>
-</tr>
-<tr>
-<td>内容单元格 第一列第二格 多加文字</td>
-<td>内容单元格第二列第二格</td>
-</tr>
-</tbody></table>
-<h2 id="删除线"><a href="#删除线" class="headerlink" title="删除线"></a>删除线</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~~~这是一些被删除的文字~~~</span><br></pre></td></tr></table></figure>
-<p><del>这是一些被删除的文字</del></p>
-<h3 id="分隔线"><a href="#分隔线" class="headerlink" title="分隔线"></a>分隔线</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">***</span><br><span class="line">******</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
-
-<hr>
-<hr>
-<hr>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/07/28/collections/markdown/" data-id="cker754xb00044bsg607cegq6" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/08/collections/JavaScript/Symbol%E7%9A%84for()%E5%92%8CkeyFor()/" data-id="ckf174e6b00156np21o6eg624" class="article-share-link">分享</a>
       
       
     </footer>
@@ -927,23 +811,23 @@
       <ul>
         
           <li>
+            <a href="/hexo-blog/2020/09/11/collections/Git/Gitlab-ci%20%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E5%89%8D%E7%AB%AF%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/">Gitlab-ci 从零开始的前端自动化部署</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2020/09/10/collections/Articles/2020%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF%E6%9C%AA%E6%9D%A5%E4%B8%89%E5%B9%B4%E5%89%8D%E7%9E%BB%E6%80%A7%E6%80%9D%E8%80%83/">2020 前端技术未来三年前瞻性思考</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2020/09/09/collections/Git/Git%20Commit%20%E8%A7%84%E8%8C%83%E5%8F%82%E8%80%83/">Git Commit 规范参考</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2020/09/09/collections/Git/commitizen%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BD%BF%E7%94%A8/">commitizen 工具的使用</a>
+          </li>
+        
+          <li>
             <a href="/hexo-blog/2020/08/31/collections/JavaScript/JavaScript%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E4%B9%8B%E7%BB%A7%E6%89%BF/">JavaScript深入理解之继承</a>
-          </li>
-        
-          <li>
-            <a href="/hexo-blog/2020/08/26/collections/JavaScript/%E6%89%8B%E5%86%99%E5%AE%9E%E7%8E%B0Promise/">Promise是什么？手写实现下？</a>
-          </li>
-        
-          <li>
-            <a href="/hexo-blog/2020/08/25/collections/JavaScript/js%E6%A8%A1%E6%8B%9Fnew%E6%93%8D%E4%BD%9C%E7%AC%A6%E7%9A%84%E5%AE%9E%E7%8E%B0/">js模拟new操作符的实现</a>
-          </li>
-        
-          <li>
-            <a href="/hexo-blog/2020/08/25/collections/JavaScript/%E5%87%BD%E6%95%B0%E6%9F%AF%E9%87%8C%E5%8C%96%E7%9A%84%E5%AE%9E%E7%8E%B0/">函数柯里化的实现</a>
-          </li>
-        
-          <li>
-            <a href="/hexo-blog/2020/08/24/collections/JavaScript/%E6%89%8B%E5%86%99call%E3%80%81apply%E5%8F%8Abind%E5%87%BD%E6%95%B0/">手写call、apply及bind函数</a>
           </li>
         
       </ul>
