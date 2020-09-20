@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Ubuntu 安装gitlab | #一如既往、</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="官方文档 安装gitlab 安装和配置必要的依赖项12sudo apt-get updatesudo apt-get install -y curl openssh-server ca-certificates tzdata 接下来，安装Postfix 以发送通知电子邮件。如果要使用其他解决方案发送电子邮件，请跳过此步骤，并在安装GitLab之后配置外部SMTP服务器。  1sudo apt-ge">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ubuntu 安装gitlab">
+<meta property="og:url" content="https://ewqazxc.github.io/hexo-blog/collections/Linux/Ubuntu%20%E5%AE%89%E8%A3%85gitlab.html">
+<meta property="og:site_name" content="#一如既往、">
+<meta property="og:description" content="官方文档 安装gitlab 安装和配置必要的依赖项12sudo apt-get updatesudo apt-get install -y curl openssh-server ca-certificates tzdata 接下来，安装Postfix 以发送通知电子邮件。如果要使用其他解决方案发送电子邮件，请跳过此步骤，并在安装GitLab之后配置外部SMTP服务器。  1sudo apt-ge">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-09-19T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-09-20T15:55:29.751Z">
+<meta property="article:author" content="ewqazxc">
+<meta name="twitter:card" content="summary">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <!-- 
+<link rel="stylesheet" href="/hexo-blog/%7B%22title%22:%22#%E4%B8%80%E5%A6%82%E6%97%A2%E5%BE%80%E3%80%81%22,%22subtitle%22:%22%E4%B8%8D%E7%9F%A5%E9%81%93%E5%86%99%E7%9A%84%E4%BB%80%E4%B9%88%E7%9A%84%E5%8D%9A%E5%AE%A2~%22,%22description%22:%22description%22,%22author%22:%22ewqazxc%22,%22language%22:%22zh-CN%22,%22timezone%22:%22Asia/Shanghai%22,%22url%22:%22https:/ewqazxc.github.io/hexo-blog%22,%22root%22:%22/hexo-blog/%22,%22permalink%22:%22:year/:month/:day/:title/%22,%22permalink_defaults%22:null,%22pretty_urls%22:%7B%22trailing_index%22:true,%22trailing_html%22:true%7D,%22source_dir%22:%22source%22,%22public_dir%22:%22public%22,%22tag_dir%22:%22tags%22,%22archive_dir%22:%22archives%22,%22category_dir%22:%22categories%22,%22code_dir%22:%22downloads/code%22,%22i18n_dir%22:%22:lang%22,%22skip_render%22:null,%22new_post_name%22:%22:title.md%22,%22default_layout%22:%22post%22,%22titlecase%22:false,%22external_link%22:%7B%22enable%22:true,%22field%22:%22site%22,%22exclude%22:%22%22%7D,%22filename_case%22:0,%22render_drafts%22:false,%22post_asset_folder%22:false,%22relative_link%22:false,%22future%22:true,%22highlight%22:%7B%22enable%22:true,%22auto_detect%22:false,%22line_number%22:true,%22tab_replace%22:%22%22,%22wrap%22:true,%22hljs%22:false,%22first_line_number%22:%22always1%22%7D,%22default_category%22:%22uncategorized%22,%22category_map%22:null,%22tag_map%22:null,%22date_format%22:%22YYYY-MM-DD%22,%22time_format%22:%22HH:mm:ss%22,%22use_date_for_updated%22:false,%22per_page%22:10,%22pagination_dir%22:%22page%22,%22theme%22:%22landscape%22,%22server%22:%7B%22port%22:4000,%22log%22:false,%22compress%22:false,%22header%22:true,%22cache%22:false%7D,%22deploy%22:%7B%22type%22:%22%22%7D,%22ignore%22:null,%22meta_generator%22:true,%22keywords%22:null,%22index_generator%22:%7B%22per_page%22:10,%22order_by%22:%22-date%22,%22path%22:%22%22%7D,%22include%22:null,%22exclude%22:null,%22archive_generator%22:%7B%22per_page%22:10,%22yearly%22:true,%22monthly%22:true,%22daily%22:false%7D,%22category_generator%22:%7B%22per_page%22:10%7D,%22tag_generator%22:%7B%22per_page%22:10%7D,%22marked%22:%7B%22gfm%22:true,%22pedantic%22:false,%22breaks%22:true,%22smartLists%22:true,%22smartypants%22:true,%22modifyAnchors%22:%22%22,%22autolink%22:true,%22sanitizeUrl%22:false,%22headerIds%22:true%7D%7D.css">
+ -->
+  
+<link rel="stylesheet" href="/hexo-blog/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/hexo-blog/" id="logo">#一如既往、</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/hexo-blog/" id="subtitle">不知道写的什么的博客~</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/hexo-blog/">主页</a>
+        
+          <a class="main-nav-link" href="/hexo-blog/archives">归档</a>
+        
+          <a class="main-nav-link" href="/hexo-blog/about/me.html">关于</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://ewqazxc.github.io/hexo-blog"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="page-" class="article article-type-page" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo-blog/collections/Linux/Ubuntu%20%E5%AE%89%E8%A3%85gitlab.html" class="article-date">
+  <time datetime="2020-09-19T16:00:00.000Z" itemprop="datePublished">2020-09-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Ubuntu 安装gitlab
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="https://about.gitlab.com/install/#ubuntu" target="_blank" rel="noopener">官方文档</a></p>
+<h2 id="安装gitlab"><a href="#安装gitlab" class="headerlink" title="安装gitlab"></a>安装gitlab</h2><ol>
+<li>安装和配置必要的依赖项<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install -y curl openssh-server ca-certificates tzdata</span><br></pre></td></tr></table></figure>
+接下来，安装Postfix 以发送通知电子邮件。如果要使用其他解决方案发送电子邮件，请跳过此步骤，并在安装GitLab之后<a href="https://docs.gitlab.com/omnibus/settings/smtp.html" target="_blank" rel="noopener">配置外部SMTP服务器</a>。</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install -y postfix</span><br></pre></td></tr></table></figure>
+<p>在postfix 安装期间，可能会出现配置屏幕。选择“Internet站点”并按Enter键。使用服务器的外部DNS作为“邮件名称”，然后按Enter键。如果出现其他屏幕，请继续按Enter键接受默认值。</p>
+<ol start="2">
+<li>添加GitLab包存储库并安装该软件包</li>
+</ol>
+<ul>
+<li>添加GitLab包存储库。<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 企业版</span></span><br><span class="line">curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.deb.sh | sudo bash</span><br><span class="line"><span class="comment"># 社区</span></span><br><span class="line">curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash</span><br></pre></td></tr></table></figure>
+接下来，安装GitLab包。确保已正确<a href="https://docs.gitlab.com/omnibus/settings/dns.html" target="_blank" rel="noopener">设置DNS</a>，然后更改<code>https://gitlab.example.com</code>到要访问GitLab实例的URL。安装程序将自动配置并启动该URL上的GitLab。</li>
+</ul>
+<p>对于<a href="https://url，GitLab将自动请求一个带有Let&#39;s" target="_blank" rel="noopener">https://url，GitLab将自动请求一个带有Let&#39;s</a> Encrypt的证书，该证书要求入站HTTP访问和有效的主机名。您也可以使用您自己的证书或仅使用http://。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo EXTERNAL_URL=<span class="string">"https://gitlab.example.com"</span> apt-get install gitlab-ee</span><br><span class="line">sudo EXTERNAL_URL=<span class="string">"http://gitlab.example.com"</span> apt-get install gitlab-ee</span><br><span class="line">sudo EXTERNAL_URL=<span class="string">"http://gitlab.example.com"</span> dpkg -i gitlab-ee_11.4.6-ee.0_amd64.deb</span><br></pre></td></tr></table></figure>
+
+<p>（如果下载过程中访问超时出错，请用curl -sS <a href="https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh" target="_blank" rel="noopener">https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh</a> | sudo bash，并直接跳入gitlab-ce安装）</p>
+<p><strong>最后直接下载deb 文件 安装成功</strong><br>感谢您安装GitLab！<br>GitLab无法检测到实例的有效主机名。<br>请通过设置“external”URL为GitLab实例配置一个URL`<br>/etc/gitlab中的配置/gitlab.rb文件。<br>然后，您可以通过运行以下命令来启动GitLab实例：<br>sudo gitlab-ctl reconfigure</p>
+<p>有关配置选项的全面列表，请参阅Omnibus GitLab自述文件<br><a href="https://gitlab.com/gitlab-org/omnibus-gitlab/blob/master/README.md" target="_blank" rel="noopener">https://gitlab.com/gitlab-org/omnibus-gitlab/blob/master/README.md</a></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">It looks like GitLab has not been configured yet; skipping the upgrade script.</span><br><span class="line"></span><br><span class="line">       *.                  *.</span><br><span class="line">      ***                 ***</span><br><span class="line">     *****               *****</span><br><span class="line">    .******             *******</span><br><span class="line">    ********            ********</span><br><span class="line">   ,,,,,,,,,***********,,,,,,,,,</span><br><span class="line">  ,,,,,,,,,,,*********,,,,,,,,,,,</span><br><span class="line">  .,,,,,,,,,,,*******,,,,,,,,,,,,</span><br><span class="line">      ,,,,,,,,,*****,,,,,,,,,.</span><br><span class="line">         ,,,,,,,****,,,,,,</span><br><span class="line">            .,,,***,,,,</span><br><span class="line">                ,*,.</span><br><span class="line">  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">     _______ __  __          __</span><br><span class="line">    / ____(_) /_/ /   ____ _/ /_</span><br><span class="line">   / / __/ / __/ /   / __ `/ __ \</span><br><span class="line">  / /_/ / / /_/ /___/ /_/ / /_/ /</span><br><span class="line">  \____/_/\__/_____/\__,_/_.___/</span><br><span class="line">  </span><br><span class="line"></span><br><span class="line">Thank you <span class="keyword">for</span> installing GitLab!</span><br><span class="line">GitLab was unable to detect a valid hostname <span class="keyword">for</span> your instance.</span><br><span class="line">Please configure a URL <span class="keyword">for</span> your GitLab instance by setting `external_url`</span><br><span class="line">configuration <span class="keyword">in</span> /etc/gitlab/gitlab.rb file.</span><br><span class="line">Then, you can start your GitLab instance by running the following <span class="built_in">command</span>:</span><br><span class="line">  sudo gitlab-ctl reconfigure</span><br><span class="line"></span><br><span class="line">For a comprehensive list of configuration options please see the Omnibus GitLab readme</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><p>浏览主机名并登录</p>
+</li>
+<li><p>设置您的通信首选项</p>
+</li>
+<li><p>配置注册限制和登录首选项。</p>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ewqazxc.github.io/hexo-blog/collections/Linux/Ubuntu%20%E5%AE%89%E8%A3%85gitlab.html" data-id="ckfba912y000x1cn6ag590fg7" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/hexo-blog/categories/hexo/">hexo</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/09/">九月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/07/">七月 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/hexo-blog/2020/09/20/collections/Linux/Ubuntu%20%E5%88%87%E6%8D%A2%E9%98%BF%E9%87%8C%E6%BA%90/">Ubuntu 安装gitlab</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2020/09/20/collections/Linux/Ubuntu%20%E5%90%AF%E5%8A%A8ssh%20%E6%9C%8D%E5%8A%A1/">Ubuntu 启动ssh 服务</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2020/09/14/collections/Linux/Linux%E4%B8%AD%E7%9A%84apt%E5%91%BD%E4%BB%A4/">Linux 中的apt 命令</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2020/09/14/collections/Project/Antd4%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/">Antd4项目搭建</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2020/09/13/collections/Linux/Win10%20%E8%BF%90%E8%A1%8CLinux/">Win10 运行Linux</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+
+      &copy; 2020 ewqazxc<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+  <div hidden>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/hexo-blog/" class="mobile-nav-link">主页</a>
+  
+    <a href="/hexo-blog/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/hexo-blog/about/me.html" class="mobile-nav-link">关于</a>
+  
+</nav>
+    
+
+
+<script src="/hexo-blog/js/jquery-2.0.3.min.js"></script>
+
+
+
+  
+<link rel="stylesheet" href="/hexo-blog/fancybox/jquery.fancybox.css">
+
+  
+<script src="/hexo-blog/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/hexo-blog/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Win10 运行Linux | #一如既往、</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="如何在Win10 中运行Linux 子系统 启用组件 打开控制面板 -&gt; 程序 -&gt; 程序和功能，点击启用或者关闭Windows 功能，找到并勾选适用于Linux的windows 子系统，点击确定即可，然后根据提示重启。 需要注意，这种方法目前只支持X64的系统  开启开发者模式 打开设置，输入开发人员模式，在进入的菜单选中开发人员模式即可  下载Ubuntu 打开Win10 自带的M">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Win10 运行Linux">
+<meta property="og:url" content="https://ewqazxc.github.io/hexo-blog/2020/09/14/collections/Linux/Win10%20%E8%BF%90%E8%A1%8CLinux/index.html">
+<meta property="og:site_name" content="#一如既往、">
+<meta property="og:description" content="如何在Win10 中运行Linux 子系统 启用组件 打开控制面板 -&gt; 程序 -&gt; 程序和功能，点击启用或者关闭Windows 功能，找到并勾选适用于Linux的windows 子系统，点击确定即可，然后根据提示重启。 需要注意，这种方法目前只支持X64的系统  开启开发者模式 打开设置，输入开发人员模式，在进入的菜单选中开发人员模式即可  下载Ubuntu 打开Win10 自带的M">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-09-13T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-09-14T15:55:42.836Z">
+<meta property="article:author" content="ewqazxc">
+<meta name="twitter:card" content="summary">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <!-- 
+<link rel="stylesheet" href="/hexo-blog/%7B%22title%22:%22#%E4%B8%80%E5%A6%82%E6%97%A2%E5%BE%80%E3%80%81%22,%22subtitle%22:%22%E4%B8%8D%E7%9F%A5%E9%81%93%E5%86%99%E7%9A%84%E4%BB%80%E4%B9%88%E7%9A%84%E5%8D%9A%E5%AE%A2~%22,%22description%22:%22description%22,%22author%22:%22ewqazxc%22,%22language%22:%22zh-CN%22,%22timezone%22:%22Asia/Shanghai%22,%22url%22:%22https:/ewqazxc.github.io/hexo-blog%22,%22root%22:%22/hexo-blog/%22,%22permalink%22:%22:year/:month/:day/:title/%22,%22permalink_defaults%22:null,%22pretty_urls%22:%7B%22trailing_index%22:true,%22trailing_html%22:true%7D,%22source_dir%22:%22source%22,%22public_dir%22:%22public%22,%22tag_dir%22:%22tags%22,%22archive_dir%22:%22archives%22,%22category_dir%22:%22categories%22,%22code_dir%22:%22downloads/code%22,%22i18n_dir%22:%22:lang%22,%22skip_render%22:null,%22new_post_name%22:%22:title.md%22,%22default_layout%22:%22post%22,%22titlecase%22:false,%22external_link%22:%7B%22enable%22:true,%22field%22:%22site%22,%22exclude%22:%22%22%7D,%22filename_case%22:0,%22render_drafts%22:false,%22post_asset_folder%22:false,%22relative_link%22:false,%22future%22:true,%22highlight%22:%7B%22enable%22:true,%22auto_detect%22:false,%22line_number%22:true,%22tab_replace%22:%22%22,%22wrap%22:true,%22hljs%22:false%7D,%22default_category%22:%22uncategorized%22,%22category_map%22:null,%22tag_map%22:null,%22date_format%22:%22YYYY-MM-DD%22,%22time_format%22:%22HH:mm:ss%22,%22use_date_for_updated%22:false,%22per_page%22:10,%22pagination_dir%22:%22page%22,%22theme%22:%22landscape%22,%22server%22:%7B%22port%22:4000,%22log%22:false,%22compress%22:false,%22header%22:true,%22cache%22:false%7D,%22deploy%22:%7B%22type%22:%22%22%7D,%22ignore%22:null,%22meta_generator%22:true,%22keywords%22:null,%22index_generator%22:%7B%22per_page%22:10,%22order_by%22:%22-date%22,%22path%22:%22%22%7D,%22include%22:null,%22exclude%22:null,%22archive_generator%22:%7B%22per_page%22:10,%22yearly%22:true,%22monthly%22:true,%22daily%22:false%7D,%22category_generator%22:%7B%22per_page%22:10%7D,%22tag_generator%22:%7B%22per_page%22:10%7D,%22marked%22:%7B%22gfm%22:true,%22pedantic%22:false,%22breaks%22:true,%22smartLists%22:true,%22smartypants%22:true,%22modifyAnchors%22:%22%22,%22autolink%22:true,%22sanitizeUrl%22:false,%22headerIds%22:true%7D%7D.css">
+ -->
+  
+<link rel="stylesheet" href="/hexo-blog/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/hexo-blog/" id="logo">#一如既往、</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/hexo-blog/" id="subtitle">不知道写的什么的博客~</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/hexo-blog/">主页</a>
+        
+          <a class="main-nav-link" href="/hexo-blog/archives">归档</a>
+        
+          <a class="main-nav-link" href="/hexo-blog/about/me.html">关于</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://ewqazxc.github.io/hexo-blog"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-collections/Linux/Win10 运行Linux" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo-blog/2020/09/14/collections/Linux/Win10%20%E8%BF%90%E8%A1%8CLinux/" class="article-date">
+  <time datetime="2020-09-13T16:00:00.000Z" itemprop="datePublished">2020-09-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Win10 运行Linux
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="如何在Win10-中运行Linux-子系统"><a href="#如何在Win10-中运行Linux-子系统" class="headerlink" title="如何在Win10 中运行Linux 子系统"></a>如何在Win10 中运行Linux 子系统</h2><ol>
+<li><p>启用组件</p>
+<p>打开控制面板 -&gt; 程序 -&gt; 程序和功能，点击<code>启用或者关闭Windows 功能</code>，找到并勾选<code>适用于Linux的windows 子系统</code>，点击确定即可，然后根据提示重启。</p>
+<p>需要注意，这种方法目前只支持X64的系统</p>
+</li>
+<li><p>开启开发者模式</p>
+<p>打开设置，输入开发人员模式，在进入的菜单选中开发人员模式即可</p>
+</li>
+<li><p>下载Ubuntu</p>
+<p>打开Win10 自带的Microsoft Store，搜索Ubuntu 选中下载</p>
+</li>
+<li><p>安装Ubuntu</p>
+<p>在上一步选中下载后，点击<code>启动</code>，然后按任意键，根据提示输入运行的账户和密码</p>
+<p>注意：输入密码时，Ubuntu 默认是不显示的</p>
+</li>
+<li><p>配置系统</p>
+</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update  //更新系统</span><br><span class="line"></span><br><span class="line">sudo apt-get install xorg  //安装xorg 键入y并回车确定 </span><br><span class="line">// xorg （电脑操作系bai统）默认显示服务du器的一个软件包</span><br><span class="line"></span><br><span class="line">sudo apt-get install xfce4  //xfce4   键入y并回车确定</span><br><span class="line">// xfce是linux的一个桌面程序，xfce终端是这个桌面的终端</span><br><span class="line"></span><br><span class="line">sudo apt-get install xrdp  //xrdp远程组件  键入y并回车确定</span><br><span class="line">// xrdp在目前最新版Ubuntu 16.04下,如果实现Windows远程访问</span><br><span class="line"></span><br><span class="line">sudo sed -i <span class="string">'s/port=3389/port=3390/g'</span> /etc/xrdp/xrdp.ini  //配置远程端口3390</span><br><span class="line"></span><br><span class="line">sudo <span class="built_in">echo</span> xfce4-session &gt;~/.xsession  //写入 xfce4配置</span><br><span class="line"></span><br><span class="line"><span class="comment">#第2，3，4行输入之后分别键入y并回车确定，最后输入：</span></span><br><span class="line">sudo service xrdp restart  //重启xrdp</span><br></pre></td></tr></table></figure>
+<p>其中 2，3，4 主要是为了实现远程桌面终端功能，若不需要可直接跳过</p>
+<h2 id="Linux-开启ssh-服务"><a href="#Linux-开启ssh-服务" class="headerlink" title="Linux 开启ssh 服务"></a>Linux 开启ssh 服务</h2><ol>
+<li>首先更新源<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br></pre></td></tr></table></figure></li>
+<li>安装ssh 服务<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install openssh-server</span><br></pre></td></tr></table></figure></li>
+<li>检测是否已启动<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -e | grep ssh</span><br></pre></td></tr></table></figure>
+运行后，看到有ssh 字样说明已启动，如果没有就手动启动<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/ssh start</span><br></pre></td></tr></table></figure></li>
+<li>配置ssh-server，配置文件位于/etc/ssh/sshd_config，默认端口为22，为了安全，一般自定义为其它端口，然后重启<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo /etc/init.d/ssh restart</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p><strong>遇到的问题</strong></p>
+<ul>
+<li><p>开启sshd 服务时报错<code>sshd: no hostkeys available — exiting</code></p>
+<ul>
+<li>解决方案:<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ssh-keygen -t dsa -f /etc/ssh/ssh_host_dsa_key</span></span><br><span class="line"><span class="comment"># ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key</span></span><br><span class="line"><span class="comment"># /usr/sbin/sshd</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>开启ssh 后，连接失败<code>Permission denied (publickey).</code></p>
+<ul>
+<li>解决方案：允许ssh 密码登录权限</li>
+</ul>
+<ol>
+<li>打开 /etc/ssh/sshd_config，修改PasswordAuthentication no 为：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PasswordAuthentication yes</span><br></pre></td></tr></table></figure></li>
+<li>重启服务 <code>/etc/init.d/sshd restart</code></li>
+</ol>
+<ul>
+<li>注意：修改文件时可以sudo vim 打开文件，Linux 对权限要求严格，不用管理员权限很多事做不了</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/09/14/collections/Linux/Win10%20%E8%BF%90%E8%A1%8CLinux/" data-id="ckf2pli0y0001rsqah2ysc3tj" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/hexo-blog/2020/09/15/collections/Project/Antd4%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">未来</strong>
+      <div class="article-nav-title">
+        
+          Antd4项目搭建
+        
+      </div>
+    </a>
+  
+  
+    <a href="/hexo-blog/2020/09/12/collections/Git/Gitlab-ci%20%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E5%89%8D%E7%AB%AF%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">过去</strong>
+      <div class="article-nav-title">Gitlab-ci 从零开始的前端自动化部署</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/hexo-blog/categories/hexo/">hexo</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/09/">九月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/07/">七月 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/hexo-blog/2020/09/20/collections/Linux/Ubuntu%20%E5%90%AF%E5%8A%A8ssh%20%E6%9C%8D%E5%8A%A1/">Ubuntu 启动ssh 服务</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2020/09/20/collections/Linux/Ubuntu%20%E5%88%87%E6%8D%A2%E9%98%BF%E9%87%8C%E6%BA%90/">Ubuntu 安装gitlab</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2020/09/15/collections/Linux/Linux%E4%B8%AD%E7%9A%84apt%E5%91%BD%E4%BB%A4/">Linux 中的apt 命令</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2020/09/15/collections/Project/Antd4%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/">Antd4项目搭建</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2020/09/14/collections/Linux/Win10%20%E8%BF%90%E8%A1%8CLinux/">Win10 运行Linux</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+
+      &copy; 2020 ewqazxc<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+  <div hidden>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/hexo-blog/" class="mobile-nav-link">主页</a>
+  
+    <a href="/hexo-blog/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/hexo-blog/about/me.html" class="mobile-nav-link">关于</a>
+  
+</nav>
+    
+
+
+<script src="/hexo-blog/js/jquery-2.0.3.min.js"></script>
+
+
+
+  
+<link rel="stylesheet" href="/hexo-blog/fancybox/jquery.fancybox.css">
+
+  
+<script src="/hexo-blog/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/hexo-blog/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
