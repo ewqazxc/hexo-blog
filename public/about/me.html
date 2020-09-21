@@ -7,15 +7,15 @@
   
   <title>关于本站 | #一如既往、</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="——简单整理下自己学习的东西React 源码阅读记录–20200730  用了N久的React，从未阅读过其源码，这次能看多少呢?  下载源码从https:&#x2F;&#x2F;github.com&#x2F;facebook&#x2F;react.git直接下载了个zip压缩包代码，从目录上看。。。看不出怎么生成React的在packages 下看到了react文件夹，这个看着更像是React源码。然而，除了在src&#x2F;React.j">
+  <meta name="description" content="——简单整理下自己学习的东西">
 <meta property="og:type" content="website">
 <meta property="og:title" content="关于本站">
 <meta property="og:url" content="https://ewqazxc.github.io/hexo-blog/about/me.html">
 <meta property="og:site_name" content="#一如既往、">
-<meta property="og:description" content="——简单整理下自己学习的东西React 源码阅读记录–20200730  用了N久的React，从未阅读过其源码，这次能看多少呢?  下载源码从https:&#x2F;&#x2F;github.com&#x2F;facebook&#x2F;react.git直接下载了个zip压缩包代码，从目录上看。。。看不出怎么生成React的在packages 下看到了react文件夹，这个看着更像是React源码。然而，除了在src&#x2F;React.j">
+<meta property="og:description" content="——简单整理下自己学习的东西">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-07-25T15:09:55.000Z">
-<meta property="article:modified_time" content="2020-08-02T13:54:42.401Z">
+<meta property="article:modified_time" content="2020-09-21T15:56:22.623Z">
 <meta property="article:author" content="ewqazxc">
 <meta name="twitter:card" content="summary">
   
@@ -26,7 +26,7 @@
     <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
   
   <!-- 
-<link rel="stylesheet" href="/hexo-blog/%7B%22title%22:%22#%E4%B8%80%E5%A6%82%E6%97%A2%E5%BE%80%E3%80%81%22,%22subtitle%22:%22%E4%B8%8D%E7%9F%A5%E9%81%93%E5%86%99%E7%9A%84%E4%BB%80%E4%B9%88%E7%9A%84%E5%8D%9A%E5%AE%A2~%22,%22description%22:%22description%22,%22author%22:%22ewqazxc%22,%22language%22:%22zh-CN%22,%22timezone%22:%22Asia/Shanghai%22,%22url%22:%22https:/ewqazxc.github.io/hexo-blog%22,%22root%22:%22/hexo-blog/%22,%22permalink%22:%22:year/:month/:day/:title/%22,%22permalink_defaults%22:null,%22pretty_urls%22:%7B%22trailing_index%22:true,%22trailing_html%22:true%7D,%22source_dir%22:%22source%22,%22public_dir%22:%22public%22,%22tag_dir%22:%22tags%22,%22archive_dir%22:%22archives%22,%22category_dir%22:%22categories%22,%22code_dir%22:%22downloads/code%22,%22i18n_dir%22:%22:lang%22,%22skip_render%22:null,%22new_post_name%22:%22:title.md%22,%22default_layout%22:%22post%22,%22titlecase%22:false,%22external_link%22:%7B%22enable%22:true,%22field%22:%22site%22,%22exclude%22:%22%22%7D,%22filename_case%22:0,%22render_drafts%22:false,%22post_asset_folder%22:false,%22relative_link%22:false,%22future%22:true,%22highlight%22:%7B%22enable%22:true,%22auto_detect%22:false,%22line_number%22:true,%22tab_replace%22:%22%22,%22wrap%22:true,%22hljs%22:false%7D,%22default_category%22:%22uncategorized%22,%22category_map%22:null,%22tag_map%22:null,%22date_format%22:%22YYYY-MM-DD%22,%22time_format%22:%22HH:mm:ss%22,%22use_date_for_updated%22:false,%22per_page%22:10,%22pagination_dir%22:%22page%22,%22theme%22:%22landscape%22,%22server%22:%7B%22port%22:4000,%22log%22:false,%22compress%22:false,%22header%22:true,%22cache%22:false%7D,%22deploy%22:%7B%22type%22:%22%22%7D,%22ignore%22:null,%22meta_generator%22:true,%22keywords%22:null,%22index_generator%22:%7B%22per_page%22:10,%22order_by%22:%22-date%22,%22path%22:%22%22%7D,%22include%22:null,%22exclude%22:null,%22archive_generator%22:%7B%22per_page%22:10,%22yearly%22:true,%22monthly%22:true,%22daily%22:false%7D,%22category_generator%22:%7B%22per_page%22:10%7D,%22tag_generator%22:%7B%22per_page%22:10%7D,%22marked%22:%7B%22gfm%22:true,%22pedantic%22:false,%22breaks%22:true,%22smartLists%22:true,%22smartypants%22:true,%22modifyAnchors%22:%22%22,%22autolink%22:true,%22sanitizeUrl%22:false,%22headerIds%22:true%7D%7D.css">
+<link rel="stylesheet" href="/hexo-blog/%7B%22title%22:%22#%E4%B8%80%E5%A6%82%E6%97%A2%E5%BE%80%E3%80%81%22,%22subtitle%22:%22%E4%B8%8D%E7%9F%A5%E9%81%93%E5%86%99%E7%9A%84%E4%BB%80%E4%B9%88%E7%9A%84%E5%8D%9A%E5%AE%A2~%22,%22description%22:%22description%22,%22author%22:%22ewqazxc%22,%22language%22:%22zh-CN%22,%22timezone%22:%22Asia/Shanghai%22,%22url%22:%22https:/ewqazxc.github.io/hexo-blog%22,%22root%22:%22/hexo-blog/%22,%22permalink%22:%22:year/:month/:day/:title/%22,%22permalink_defaults%22:null,%22pretty_urls%22:%7B%22trailing_index%22:true,%22trailing_html%22:true%7D,%22source_dir%22:%22source%22,%22public_dir%22:%22public%22,%22tag_dir%22:%22tags%22,%22archive_dir%22:%22archives%22,%22category_dir%22:%22categories%22,%22code_dir%22:%22downloads/code%22,%22i18n_dir%22:%22:lang%22,%22skip_render%22:null,%22new_post_name%22:%22:title.md%22,%22default_layout%22:%22post%22,%22titlecase%22:false,%22external_link%22:%7B%22enable%22:true,%22field%22:%22site%22,%22exclude%22:%22%22%7D,%22filename_case%22:0,%22render_drafts%22:false,%22post_asset_folder%22:false,%22relative_link%22:false,%22future%22:true,%22highlight%22:%7B%22enable%22:true,%22auto_detect%22:false,%22line_number%22:true,%22tab_replace%22:%22%22,%22wrap%22:true,%22hljs%22:false%7D,%22default_category%22:%22uncategorized%22,%22category_map%22:null,%22tag_map%22:null,%22date_format%22:%22YYYY-MM-DD%22,%22time_format%22:%22HH:mm:ss%22,%22use_date_for_updated%22:false,%22per_page%22:10,%22pagination_dir%22:%22page%22,%22theme%22:%22landscape%22,%22server%22:%7B%22port%22:4000,%22log%22:false,%22compress%22:false,%22header%22:true,%22cache%22:false%7D,%22deploy%22:%7B%22type%22:%22%22%7D,%22ignore%22:null,%22meta_generator%22:true,%22keywords%22:null,%22index_generator%22:%7B%22per_page%22:10,%22order_by%22:%22-date%22,%22path%22:%22%22%7D,%22include%22:null,%22exclude%22:null,%22category_generator%22:%7B%22per_page%22:10%7D,%22archive_generator%22:%7B%22per_page%22:10,%22yearly%22:true,%22monthly%22:true,%22daily%22:false%7D,%22tag_generator%22:%7B%22per_page%22:10%7D,%22marked%22:%7B%22gfm%22:true,%22pedantic%22:false,%22breaks%22:true,%22smartLists%22:true,%22smartypants%22:true,%22modifyAnchors%22:%22%22,%22autolink%22:true,%22sanitizeUrl%22:false,%22headerIds%22:true%7D%7D.css">
  -->
   
 <link rel="stylesheet" href="/hexo-blog/css/style.css">
@@ -93,34 +93,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="——简单整理下自己学习的东西"><a href="#——简单整理下自己学习的东西" class="headerlink" title="——简单整理下自己学习的东西"></a>——简单整理下自己学习的东西</h2><h1 id="React-源码阅读记录"><a href="#React-源码阅读记录" class="headerlink" title="React 源码阅读记录"></a>React 源码阅读记录</h1><p>–20200730</p>
-<blockquote>
-<p>用了N久的React，从未阅读过其源码，这次能看多少呢?</p>
-</blockquote>
-<h2 id="下载源码"><a href="#下载源码" class="headerlink" title="下载源码"></a>下载源码</h2><p>从<a href="https://github.com/facebook/react.git" target="_blank" rel="noopener">https://github.com/facebook/react.git</a>直接下载了个zip压缩包代码，从目录上看。。。看不出怎么生成React的<br>在<code>packages</code> 下看到了<code>react</code>文件夹，这个看着更像是React源码。<br>然而，除了在<code>src/React.js</code>中看到一堆熟悉的Api，并不懂这东西是如何编译的，都不知道从哪里看起。。。<br>因此，还是参考下他人的学习记录吧！<a href="https://blog.csdn.net/qq_32281471/article/details/94968617" target="_blank" rel="noopener">https://blog.csdn.net/qq_32281471/article/details/94968617</a></p>
-<ol>
-<li><p>克隆代码到本地</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;facebook&#x2F;react.git</span><br></pre></td></tr></table></figure></li>
-<li><p>查看分支<code>git branch -a</code>，切换到指定版本分支</p>
-<blockquote>
-<p>项目中都使用到16.9.3，但在分支中最高只到16.8.6 就先看这个吧</p>
-</blockquote>
-</li>
-<li><p>安转依赖<code>yarn install</code> ，从源码编译出 <code>react.development.js</code> 和 <code>react-dom.development.js</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yarn run build react&#x2F;index react-dom&#x2F;index</span><br><span class="line">&#x2F;&#x2F; react 和 react-dom 中间空格分隔，单独编译会覆盖&#96;build&#96; 底下文件</span><br></pre></td></tr></table></figure>
-<p>构建出的文件，在 <code>build/node_modukes/react</code> ，有 <code>commonjs</code> 和 <code>umd</code> 两个版本</p>
-</li>
-<li><p>直接打开 <code>fixtures/packaging/babel-standalone/dev.html</code> ，该页面使用的是最新编译出来的 <code>react.development.js</code> 和 <code>react-dom.development.js</code><br>此时，可以在 <code>packages/react/src</code> 下修改源码后，重新编译查看修改后的效果</p>
-</li>
-</ol>
-<h2 id="react-目录结构"><a href="#react-目录结构" class="headerlink" title="react 目录结构"></a>react 目录结构</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">- react</span><br><span class="line">|- npm</span><br><span class="line">|-|- index.js</span><br><span class="line">|- src</span><br><span class="line">|-|- React.js</span><br><span class="line">|-|- ReactBaseClasses.js</span><br><span class="line">|-|- ...</span><br><span class="line">|- index.js</span><br><span class="line">|- package.json</span><br><span class="line">|- README.md</span><br></pre></td></tr></table></figure>
-<h3 id="index-js"><a href="#index-js" class="headerlink" title="index.js"></a>index.js</h3><p>作为导出<code>react.js</code> 的入口</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#39;use strict&#39;;</span><br><span class="line">const React &#x3D; require(&#39;.&#x2F;src&#x2F;React&#39;);</span><br><span class="line">module.exports &#x3D; React.default || React;</span><br></pre></td></tr></table></figure>
-
-<h3 id="package-json"><a href="#package-json" class="headerlink" title="package.json"></a>package.json</h3><p>一些基本信息</p>
-<h3 id="npm-index-js"><a href="#npm-index-js" class="headerlink" title="npm index.js"></a>npm index.js</h3><p>区分打包环境</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#39;use strict&#39;;</span><br><span class="line">if (process.env.NODE_ENV &#x3D;&#x3D;&#x3D; &#39;production&#39;) &#123;</span><br><span class="line">  module.exports &#x3D; require(&#39;.&#x2F;cjs&#x2F;react.production.min.js&#39;);</span><br><span class="line">&#125; else &#123;</span><br><span class="line">  module.exports &#x3D; require(&#39;.&#x2F;cjs&#x2F;react.development.js&#39;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+        <h2 id="——简单整理下自己学习的东西"><a href="#——简单整理下自己学习的东西" class="headerlink" title="——简单整理下自己学习的东西"></a>——简单整理下自己学习的东西</h2>
       
     </div>
     <footer class="article-footer">
@@ -170,6 +143,10 @@
       <ul>
         
           <li>
+            <a href="/hexo-blog/2020/09/21/collections/WeiChat/JS-SDK%E4%BD%BF%E7%94%A8%E6%9D%83%E9%99%90%E7%AD%BE%E5%90%8D%E7%AE%97%E6%B3%95/">微信 JS-SDK使用权限签名算法</a>
+          </li>
+        
+          <li>
             <a href="/hexo-blog/2020/09/20/collections/Linux/Ubuntu%20%E5%90%AF%E5%8A%A8ssh%20%E6%9C%8D%E5%8A%A1/">Ubuntu 启动ssh 服务</a>
           </li>
         
@@ -183,10 +160,6 @@
         
           <li>
             <a href="/hexo-blog/2020/09/15/collections/Project/Antd4%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/">Antd4项目搭建</a>
-          </li>
-        
-          <li>
-            <a href="/hexo-blog/2020/09/14/collections/Linux/Win10%20%E8%BF%90%E8%A1%8CLinux/">Win10 运行Linux</a>
           </li>
         
       </ul>
