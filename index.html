@@ -71,6 +71,168 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-collections/TypeScript/TypeScript 命名空间" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo-blog/2020/09/25/collections/TypeScript/TypeScript%20%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4/" class="article-date">
+  <time datetime="2020-09-25T16:00:00.000Z" itemprop="datePublished">2020-09-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/hexo-blog/2020/09/25/collections/TypeScript/TypeScript%20%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4/">TypeScript 命名空间</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="初始命名空间-Namespace"><a href="#初始命名空间-Namespace" class="headerlink" title="初始命名空间-Namespace"></a>初始命名空间-Namespace</h2><ol>
+<li><p>没有命名空间时的问题<br>首先编写一个page.ts 用以说明:</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> Header &#123;</span><br><span class="line">  <span class="keyword">constructor</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> elem = <span class="built_in">document</span>.createElement(<span class="string">"div"</span>);</span><br><span class="line">    elem.innerText = <span class="string">"This is Header"</span>;</span><br><span class="line">    <span class="built_in">document</span>.body.appendChild(elem);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> Content &#123;</span><br><span class="line">  <span class="keyword">constructor</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> elem = <span class="built_in">document</span>.createElement(<span class="string">"div"</span>);</span><br><span class="line">    elem.innerText = <span class="string">"This is Content"</span>;</span><br><span class="line">    <span class="built_in">document</span>.body.appendChild(elem);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> Footer &#123;</span><br><span class="line">  <span class="keyword">constructor</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> elem = <span class="built_in">document</span>.createElement(<span class="string">"div"</span>);</span><br><span class="line">    elem.innerText = <span class="string">"This is Footer"</span>;</span><br><span class="line">    <span class="built_in">document</span>.body.appendChild(elem);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> Page &#123;</span><br><span class="line">  <span class="keyword">constructor</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">new</span> Header();</span><br><span class="line">    <span class="keyword">new</span> Content();</span><br><span class="line">    <span class="keyword">new</span> Footer();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在页面中通过<code>new Page();</code>，就可以看到对应效果。看起来没什么问题，实际上从编译后的page.js 中可以看出全部都是var 声明的全局变量。<strong>过多的全局变量会让我们代码变得不可维护</strong></p>
+</li>
+<li><p>命名空间的使用<br><code>命名空间</code>这个语法，很类似编程中常说的模块化思想，比如<code>webpack</code>打包时，每个模块都有自己的环境，不会污染其它模块，不会有全局变量产生。</p>
+</li>
+</ol>
+<p>命名空间声明的关键词是namespace，比如声明一个<code>namespace Home</code>，需要暴露出去的类，可以使用<code>export</code>关键词，这样只有暴露出去的类是全局的，其它的不会再生出全局污染了，修改后代码如下：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> Home &#123;</span><br><span class="line">  <span class="keyword">class</span> Header &#123;</span><br><span class="line">    <span class="keyword">constructor</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="keyword">const</span> elem = <span class="built_in">document</span>.createElement(<span class="string">"div"</span>);</span><br><span class="line">      elem.innerText = <span class="string">"This is Header"</span>;</span><br><span class="line">      <span class="built_in">document</span>.body.appendChild(elem);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">class</span> Content &#123;</span><br><span class="line">    <span class="keyword">constructor</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="keyword">const</span> elem = <span class="built_in">document</span>.createElement(<span class="string">"div"</span>);</span><br><span class="line">      elem.innerText = <span class="string">"This is Content"</span>;</span><br><span class="line">      <span class="built_in">document</span>.body.appendChild(elem);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">class</span> Footer &#123;</span><br><span class="line">    <span class="keyword">constructor</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="keyword">const</span> elem = <span class="built_in">document</span>.createElement(<span class="string">"div"</span>);</span><br><span class="line">      elem.innerText = <span class="string">"This is Footer"</span>;</span><br><span class="line">      <span class="built_in">document</span>.body.appendChild(elem);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">export</span> <span class="keyword">class</span> Page &#123;</span><br><span class="line">    <span class="keyword">constructor</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="keyword">new</span> Header();</span><br><span class="line">      <span class="keyword">new</span> Content();</span><br><span class="line">      <span class="keyword">new</span> Footer();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这就是 TypeScript 给我们提供的类似模块化开发的语法，它的好处就是让全局变量减少了很多，实现了基本的封装，减少了全局变量的污染。</p>
+<h2 id="深入命名空间-Namespace"><a href="#深入命名空间-Namespace" class="headerlink" title="深入命名空间 Namespace"></a>深入命名空间 Namespace</h2><ol>
+<li><p>用命名空间实现组件化<br>新建一个components.ts：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> Components &#123;</span><br><span class="line">  <span class="keyword">export</span> <span class="keyword">class</span> Header &#123;</span><br><span class="line">    <span class="keyword">constructor</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="keyword">const</span> elem = <span class="built_in">document</span>.createElement(<span class="string">"div"</span>);</span><br><span class="line">      elem.innerText = <span class="string">"This is Header"</span>;</span><br><span class="line">      <span class="built_in">document</span>.body.appendChild(elem);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">export</span> <span class="keyword">class</span> Content &#123;</span><br><span class="line">    <span class="keyword">constructor</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="keyword">const</span> elem = <span class="built_in">document</span>.createElement(<span class="string">"div"</span>);</span><br><span class="line">      elem.innerText = <span class="string">"This is Content"</span>;</span><br><span class="line">      <span class="built_in">document</span>.body.appendChild(elem);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">export</span> <span class="keyword">class</span> Footer &#123;</span><br><span class="line">    <span class="keyword">constructor</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="keyword">const</span> elem = <span class="built_in">document</span>.createElement(<span class="string">"div"</span>);</span><br><span class="line">      elem.innerText = <span class="string">"This is Footer"</span>;</span><br><span class="line">      <span class="built_in">document</span>.body.appendChild(elem);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里的每个类都进行了导出，然后就可以在page.ts 中使用这些组件：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> Home &#123;</span><br><span class="line">  <span class="keyword">export</span> <span class="keyword">class</span> Page &#123;</span><br><span class="line">    <span class="keyword">constructor</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="keyword">new</span> Components.Header();</span><br><span class="line">      <span class="keyword">new</span> Components.Content();</span><br><span class="line">      <span class="keyword">new</span> Components.Footer();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>重新编译，引入component.js 即可正常显示效果</p>
+</li>
+<li><p>多文件编译成一个文件</p>
+</li>
+</ol>
+<p>打开<code>tsconfig.json</code>文件，然后找到<code>outFile</code>配置项，这个就是用来生成一个文件的设置，如果设置了它，就不在支持<code>&quot;module&quot;:&quot;commonjs&quot;</code>设置了，我们需要把它改成<code>&quot;module&quot;:&quot;amd&quot;</code></p>
+<p>设置后重新编译，就不需要再引入component.js 了</p>
+<ol start="3">
+<li>子命名空间</li>
+</ol>
+<p>在命名空间内可以再写命名空间，比如在components.ts 下</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> Components &#123;</span><br><span class="line">  <span class="keyword">export</span> <span class="keyword">namespace</span> SubComponents &#123;</span><br><span class="line">    <span class="keyword">export</span> <span class="keyword">class</span> Test &#123;&#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//someting ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个子命名空间为<code>Components.SubComponents.Test</code></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/09/25/collections/TypeScript/TypeScript%20%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4/" data-id="ckfl8kopj00210vq2fsavg64m" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-collections/WeiChat/JS-SDK使用权限签名算法" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo-blog/2020/09/21/collections/WeiChat/JS-SDK%E4%BD%BF%E7%94%A8%E6%9D%83%E9%99%90%E7%AD%BE%E5%90%8D%E7%AE%97%E6%B3%95/" class="article-date">
+  <time datetime="2020-09-21T14:22:22.000Z" itemprop="datePublished">2020-09-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/hexo-blog/2020/09/21/collections/WeiChat/JS-SDK%E4%BD%BF%E7%94%A8%E6%9D%83%E9%99%90%E7%AD%BE%E5%90%8D%E7%AE%97%E6%B3%95/">微信 JS-SDK使用权限签名算法</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="获取-access-token"><a href="#获取-access-token" class="headerlink" title="获取 access_token"></a>获取 access_token</h2><p><a href="https://developers.weixin.qq.com/doc/offiaccount/Basic_Information/Get_access_token.html" target="_blank" rel="noopener">官方文档</a></p>
+<p>access_token是公众号的全局唯一接口调用凭据，公众号调用各接口时都需使用access_token。开发者需要进行妥善保存。access_token的存储至少要保留512个字符空间。access_token的有效期目前为2个小时，需定时刷新，重复获取将导致上次获取的access_token失效。</p>
+<ul>
+<li>接口调用请求说明<br>https请求方式: GET <a href="https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&amp;appid=APPID&amp;secret=APPSECRET" target="_blank" rel="noopener">https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&amp;appid=APPID&amp;secret=APPSECRET</a></li>
+</ul>
+<p>参数说明</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>是否必须</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>grant_type</td>
+<td>是</td>
+<td>获取access_token填写client_credential</td>
+</tr>
+<tr>
+<td>appid</td>
+<td>是</td>
+<td>第三方用户唯一凭证</td>
+</tr>
+<tr>
+<td>secret</td>
+<td>是</td>
+<td>第三方用户唯一凭证密钥，即appsecret</td>
+</tr>
+</tbody></table>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"access_token"</span>: <span class="string">"37_3XIsfX3H0-M8cFhrFfR49EKu5t_wih0X28MK906lRky3tXX6QxMG7Napa9rB6beM2N0hcJFeV6PS6PCSvoTC3tB4xwhmsus0qoYqZWtRnRDMTnlgv8qPmqipxFBOuFuJHXJyJ1URa9SJ6tBDMNReABAHIM"</span>,</span><br><span class="line">  <span class="string">"expires_in"</span>: <span class="number">7200</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="获取-jsapi-ticket"><a href="#获取-jsapi-ticket" class="headerlink" title="获取 jsapi_ticket"></a>获取 jsapi_ticket</h2><p>用第一步拿到的access_token 采用http GET方式请求获得jsapi_ticket（有效期7200秒，开发者必须在自己的服务全局缓存jsapi_ticket）：<br><a href="https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=ACCESS_TOKEN&amp;type=jsapi" target="_blank" rel="noopener">https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=ACCESS_TOKEN&amp;type=jsapi</a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"errcode"</span>: <span class="number">0</span>,</span><br><span class="line">  <span class="string">"errmsg"</span>: <span class="string">"ok"</span>,</span><br><span class="line">  <span class="string">"ticket"</span>: <span class="string">"HoagFKDcsGMVCIY2vOjf9hnXmHkAZqPV_IVoFARtQo7ncUBqyYxOJV5GxUeVYbPKBRuQWNegvbiUAYJrpgouUQ"</span>,</span><br><span class="line">  <span class="string">"expires_in"</span>: <span class="number">7200</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="签名算法"><a href="#签名算法" class="headerlink" title="签名算法"></a>签名算法</h2><ul>
+<li>签名生成规则如下：<ul>
+<li>参与签名的字段包括noncestr（随机字符串）</li>
+<li>有效的jsapi_ticket</li>
+<li>timestamp（时间戳）</li>
+<li>url（当前网页的URL，不包含#及其后面部分） </li>
+</ul>
+</li>
+</ul>
+<p>对所有待签名参数按照字段名的ASCII 码从小到大排序（字典序）后，使用URL键值对的格式（即key1=value1&amp;key2=value2…）拼接成字符串string1。这里需要注意的是所有参数名均为小写字符。对string1作sha1加密，字段名和字段值都采用原始值，不进行URL 转义。</p>
+<p>即signature=sha1(string1)。 示例：</p>
+<figure class="highlight md"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">noncestr=Wm3WZYTPz0wzccnW</span><br><span class="line">jsapi<span class="emphasis">_ticket=sM4AOVdWfPE4DxkXGEs8VMCPGGVi4C3VM0P37wVUCFvkVAy_</span>90u5h9nbSlYy3-Sl-HhTdfl2fzFy1AOcHKP7qg</span><br><span class="line">timestamp=1414587457</span><br><span class="line">url=http://mp.weixin.qq.com?params=value</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>步骤1. 对所有待签名参数按照字段名的ASCII 码从小到大排序（字典序）后，使用URL键值对的格式（即key1=value1&amp;key2=value2…）拼接成字符串string1</p>
+<figure class="highlight md"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jsapi<span class="emphasis">_ticket=sM4AOVdWfPE4DxkXGEs8VMCPGGVi4C3VM0P37wVUCFvkVAy_</span>90u5h9nbSlYy3-Sl-HhTdfl2fzFy1AOcHKP7qg&amp;noncestr=Wm3WZYTPz0wzccnW&amp;timestamp=1414587457&amp;url=http://mp.weixin.qq.com?params=value</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>步骤2. 对string1进行sha1签名，得到signature：<br><a href="https://tool.oschina.net/encrypt?type=2" target="_blank" rel="noopener">在线工具</a></p>
+<figure class="highlight md"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0f9de62fce790f9a083d5c99e95740ceb90c27ed</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><strong>注意事项</strong></p>
+<p>签名用的noncestr和timestamp必须与wx.config中的nonceStr和timestamp相同。</p>
+<p>签名用的url必须是调用JS接口页面的完整URL。</p>
+<p>出于安全考虑，开发者必须在服务器端实现签名的逻辑。</p>
+<p>如出现invalid signature 等错误详见附录5常见错误及解决办法。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/09/21/collections/WeiChat/JS-SDK%E4%BD%BF%E7%94%A8%E6%9D%83%E9%99%90%E7%AD%BE%E5%90%8D%E7%AE%97%E6%B3%95/" data-id="ckfl8kopk00220vq2hx9mco1g" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-collections/Linux/Ubuntu 切换阿里源" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/hexo-blog/2020/09/20/collections/Linux/Ubuntu%20%E5%88%87%E6%8D%A2%E9%98%BF%E9%87%8C%E6%BA%90/" class="article-date">
@@ -112,7 +274,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/09/20/collections/Linux/Ubuntu%20%E5%88%87%E6%8D%A2%E9%98%BF%E9%87%8C%E6%BA%90/" data-id="ckfba913w001o1cn67h0ba8mi" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/09/20/collections/Linux/Ubuntu%20%E5%88%87%E6%8D%A2%E9%98%BF%E9%87%8C%E6%BA%90/" data-id="ckfl8koph001x0vq25rm045mx" class="article-share-link">分享</a>
       
       
     </footer>
@@ -176,7 +338,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/09/20/collections/Linux/Ubuntu%20%E5%90%AF%E5%8A%A8ssh%20%E6%9C%8D%E5%8A%A1/" data-id="ckfba913w001p1cn6gb3620u8" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/09/20/collections/Linux/Ubuntu%20%E5%90%AF%E5%8A%A8ssh%20%E6%9C%8D%E5%8A%A1/" data-id="ckfl8kopi001y0vq25iwe7dar" class="article-share-link">分享</a>
       
       
     </footer>
@@ -258,7 +420,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/09/14/collections/Linux/Linux%E4%B8%AD%E7%9A%84apt%E5%91%BD%E4%BB%A4/" data-id="ckfba913v001n1cn62c1f2kka" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/09/14/collections/Linux/Linux%E4%B8%AD%E7%9A%84apt%E5%91%BD%E4%BB%A4/" data-id="ckfl8kopg001w0vq2dmq078ql" class="article-share-link">分享</a>
       
       
     </footer>
@@ -313,7 +475,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/09/14/collections/Project/Antd4%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/" data-id="ckfba913x001r1cn6aynabeey" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/09/14/collections/Project/Antd4%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/" data-id="ckfl8kopj00200vq26q6yf64m" class="article-share-link">分享</a>
       
       
     </footer>
@@ -397,7 +559,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/09/13/collections/Linux/Win10%20%E8%BF%90%E8%A1%8CLinux/" data-id="ckfba913x001q1cn6f9incj4m" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/09/13/collections/Linux/Win10%20%E8%BF%90%E8%A1%8CLinux/" data-id="ckfl8kopi001z0vq2boif53j0" class="article-share-link">分享</a>
       
       
     </footer>
@@ -605,7 +767,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/09/11/collections/Git/Gitlab-ci%20%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E5%89%8D%E7%AB%AF%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/" data-id="ckfba913z001s1cn6bp4w4wam" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/09/11/collections/Git/Gitlab-ci%20%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E5%89%8D%E7%AB%AF%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/" data-id="ckfl8kopo00240vq2hhmaaksm" class="article-share-link">分享</a>
       
       
     </footer>
@@ -720,111 +882,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/09/10/collections/Articles/2020%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF%E6%9C%AA%E6%9D%A5%E4%B8%89%E5%B9%B4%E5%89%8D%E7%9E%BB%E6%80%A7%E6%80%9D%E8%80%83/" data-id="ckfba913d00121cn6fxah1v16" class="article-share-link">分享</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-collections/Git/Git Commit 规范参考" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/hexo-blog/2020/09/09/collections/Git/Git%20Commit%20%E8%A7%84%E8%8C%83%E5%8F%82%E8%80%83/" class="article-date">
-  <time datetime="2020-09-09T16:00:00.000Z" itemprop="datePublished">2020-09-10</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/hexo-blog/2020/09/09/collections/Git/Git%20Commit%20%E8%A7%84%E8%8C%83%E5%8F%82%E8%80%83/">Git Commit 规范参考</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="规范-Commit-的好处"><a href="#规范-Commit-的好处" class="headerlink" title="规范 Commit 的好处"></a>规范 Commit 的好处</h2><ol>
-<li>提供更明确的历史信息，方便判断提交目的和浏览</li>
-<li>可以过滤某些不必要的提交，方便快速查找信息</li>
-<li>自动化生产Changelog</li>
-<li>向同事、公众与其它利益关系人传达变化的性质</li>
-<li>基于提交的类型，自动决定语义化的版本变更</li>
-</ol>
-<ul>
-<li>每一个提交尽量保证其目的单一性</li>
-</ul>
-<h2 id="Commit-格式"><a href="#Commit-格式" class="headerlink" title="Commit 格式"></a>Commit 格式</h2><h3 id="网上常用格式参考"><a href="#网上常用格式参考" class="headerlink" title="网上常用格式参考"></a>网上常用格式参考</h3><ol>
-<li><a href="https://github.com/facebook/react/commits/master" target="_blank" rel="noopener">react-commit</a></li>
-<li><a href="https://github.com/vuejs/vue/commits/dev" target="_blank" rel="noopener">vuejs-commit</a></li>
-<li><a href="https://github.com/angular/angular/commits/master" target="_blank" rel="noopener">angular-commit</a></li>
-</ol>
-<h3 id="Angular-规范"><a href="#Angular-规范" class="headerlink" title="Angular 规范"></a><a href="https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#commits" target="_blank" rel="noopener">Angular 规范</a></h3><p>每个commit message 包含一个 <code>header</code>,<code>body</code> 和<code>footer</code>。<br><code>header</code> 有一个特殊的格式，包含<code>type</code>，<code>scope</code> 和<code>subject</code></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="built_in">type</span>&gt;(&lt;scope&gt;): &lt;subject&gt;</span><br><span class="line">&lt;BLANK LINE&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;BLANK LINE&gt;</span><br><span class="line">&lt;footer&gt;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>Type 用于说明commit 的类型：</p>
-<ul>
-<li>feat  新的功能</li>
-<li>fix  修复bug</li>
-<li>docs  只是文档的更改</li>
-<li>style 不影响代码含义的更改（例如空格、格式化）</li>
-<li>refactor  既不是修复bug 也不是添加新功能的代码更改</li>
-<li>perf  提高性能的代码更改</li>
-<li>test  添加或修正测试</li>
-<li>chore  对构建或者辅助工具的更改，例如生成文档</li>
-</ul>
-</li>
-<li><p>Scope 用于说明commit 影响的范围，当影响的范围有多个时候，可以使用<code>*</code></p>
-</li>
-<li><p>Subject 用于对commit 变化的间接描述：</p>
-<ul>
-<li>使用祈使句，一般以动词原形开始，例如使用change 而不是changed 或者changes</li>
-<li>第一个字母小写</li>
-<li>结尾不加句号（.）</li>
-</ul>
-</li>
-<li><p>Body 用于对commit 详细描述，使用祈使句，一般以动词原形开始，包含这次行为的动机以及与之前行为的对比</p>
-</li>
-<li><p>Footer 有以下两种情况</p>
-<ol>
-<li>不兼容的变动：<br>所有不兼容的变动都必须在footer 区域进行说明，以<code>BREAKING CHANGE:</code>开头，后面是对变动的描述，变动的理由和迁移注释<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">BREAKING CHANGE: isolate scope bindings definition has changed and</span><br><span class="line">the inject option <span class="keyword">for</span> the directive controller injection was removed.</span><br><span class="line"></span><br><span class="line">To migrate the code follow the example below:</span><br><span class="line"></span><br><span class="line">Before:</span><br><span class="line"></span><br><span class="line">scope: &#123;</span><br><span class="line">  myAttr: <span class="string">'attribute'</span>,</span><br><span class="line">  myBind: <span class="string">'bind'</span>,</span><br><span class="line">  myExpression: <span class="string">'expression'</span>,</span><br><span class="line">  myEval: <span class="string">'evaluate'</span>,</span><br><span class="line">  myAccessor: <span class="string">'accessor'</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">After:</span><br><span class="line"></span><br><span class="line">scope: &#123;</span><br><span class="line">  myAttr: <span class="string">'@'</span>,</span><br><span class="line">  myBind: <span class="string">'@'</span>,</span><br><span class="line">  myExpression: <span class="string">'&amp;'</span>,</span><br><span class="line">  // myEval - usually not useful, but <span class="keyword">in</span> cases <span class="built_in">where</span> the expression is assignable, you can use <span class="string">'='</span></span><br><span class="line">  myAccessor: <span class="string">'='</span> // <span class="keyword">in</span> directive<span class="string">'s template change myAccessor() to myAccessor</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">The removed `inject` wasn'</span>t generaly useful <span class="keyword">for</span> directives so there should be no code using it.</span><br></pre></td></tr></table></figure></li>
-<li>关闭issue 针对某个issue的提交<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 关闭单个</span></span><br><span class="line">Close <span class="comment">#234</span></span><br><span class="line"><span class="comment"># 关闭多个</span></span><br><span class="line">Close <span class="comment">#123,#456,#789</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<ul>
-<li>Revert 如果commit 用于撤销之前的commit，则以<code>revert:</code>开头，后面是撤销这个commit 的header。在body 里写<code>This reverts commit &lt;hash&gt;</code><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">revert: feat(pencil): add <span class="string">'graphiteWidth'</span> option</span><br><span class="line"></span><br><span class="line">This reverts commit 667ecc1654a317a13331b17617d973392f415f02.</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="Commit-相关的工具"><a href="#Commit-相关的工具" class="headerlink" title="Commit 相关的工具"></a>Commit 相关的工具</h2><h3 id="填写提示工具-commitizen"><a href="#填写提示工具-commitizen" class="headerlink" title="填写提示工具 commitizen"></a>填写提示工具 <a href="https://github.com/commitizen/cz-cli" target="_blank" rel="noopener">commitizen</a></h3><p>这是个用来给commit 一个引导的作用，根据提示完善commit</p>
-<h3 id="格式校验工具-commitlint"><a href="#格式校验工具-commitlint" class="headerlink" title="格式校验工具 commitlint"></a>格式校验工具 <a href="https://github.com/marionebl/commitlint" target="_blank" rel="noopener">commitlint</a></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yarn add @commitlint/&#123;config-conventional,cli&#125; --dev</span><br><span class="line"><span class="comment"># Configure commitlint to use angular config</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"module.exports = &#123;extends: ['@commitlint/config-conventional']&#125;"</span> &gt; commitlint.config.js</span><br></pre></td></tr></table></figure>
-<p>示例使用的是 <code>config-coventional</code>规范，安装后还需要使用<code>commitmsg hook</code>,husky</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add husky</span><br></pre></td></tr></table></figure>
-<p>然后配置package.json</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"husky"</span>: &#123;</span><br><span class="line">    <span class="attr">"hooks"</span>: &#123;</span><br><span class="line">      <span class="attr">"pre-commit"</span>: <span class="string">"npm test"</span>,</span><br><span class="line">      <span class="attr">"commit-msg"</span>: <span class="string">"commitlint -E HUSKY_GIT_PARAMS"</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="生成Changelog-工具-Conventional-Changelog"><a href="#生成Changelog-工具-Conventional-Changelog" class="headerlink" title="生成Changelog 工具 Conventional Changelog"></a>生成Changelog 工具 <a href="https://github.com/conventional-changelog" target="_blank" rel="noopener">Conventional Changelog</a></h3><p>使用的工具是 Conventional Changelog，推荐使用 standard-version。commit 符合 Conventional Commits Specification 中描述的格式，就可以用程序自动生成 Changelog。</p>
-<p>安装</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add standard-version --dev</span><br></pre></td></tr></table></figure>
-<p>然后配置package.json配置执行的脚本。</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"scripts"</span>: &#123;</span><br><span class="line">    <span class="attr">"release"</span>: <span class="string">"standard-version"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>执行该脚本命令，产生的结果：生成文件 CHANGELOG、自动修改库的版本号、产生一个 commit,<br>每一次执行，不会覆盖之前的 CHANGELOG，只会在 CHANGELOG 的顶部添加新的内容。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/09/09/collections/Git/Git%20Commit%20%E8%A7%84%E8%8C%83%E5%8F%82%E8%80%83/" data-id="ckfba913i00151cn6hkmf6g74" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/09/10/collections/Articles/2020%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF%E6%9C%AA%E6%9D%A5%E4%B8%89%E5%B9%B4%E5%89%8D%E7%9E%BB%E6%80%A7%E6%80%9D%E8%80%83/" data-id="ckfl8kop100180vq2cb3dgl3j" class="article-share-link">分享</a>
       
       
     </footer>
@@ -866,135 +924,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/09/09/collections/Git/commitizen%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BD%BF%E7%94%A8/" data-id="ckfba913j00161cn672z0e64l" class="article-share-link">分享</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-collections/JavaScript/JavaScript深入理解之继承" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/hexo-blog/2020/08/31/collections/JavaScript/JavaScript%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E4%B9%8B%E7%BB%A7%E6%89%BF/" class="article-date">
-  <time datetime="2020-08-31T16:00:00.000Z" itemprop="datePublished">2020-09-01</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/hexo-blog/2020/08/31/collections/JavaScript/JavaScript%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E4%B9%8B%E7%BB%A7%E6%89%BF/">JavaScript深入理解之继承</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>——Js 继承的6种方式</p>
-<p>首先，提供一个父类</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = name;</span><br><span class="line">  <span class="keyword">this</span>.sum = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.name);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">Person.prototype.age = <span class="number">10</span>; <span class="comment">// 原型属性</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="1-通过原型链继承"><a href="#1-通过原型链继承" class="headerlink" title="1 通过原型链继承"></a>1 通过原型链继承</h2><ul>
-<li>重点：将实例的原型指向父类的实例，就是利用原型让一个引用类型继承另一个引用类型的属性和方法</li>
-<li>特点：<ol>
-<li>实例可继承的属性有：实例的构造函数的属性，父类构造函数的属性，父类原型的属性</li>
-<li>新实例不会继承父类实例的属性</li>
-</ol>
-</li>
-<li>缺点：<ol>
-<li>新实例无法向父类构造函数传参</li>
-<li>继承单一</li>
-<li>所有新实例都会共享父类实例的属性，原型上的属性时共享的，一个实例修改了原型属性，另一个实例的原型属性也会被修改<figure class="highlight js"><figcaption><span>原型链继承</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Per</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = <span class="string">'per'</span>;</span><br><span class="line">&#125;</span><br><span class="line">Per.prototype = <span class="keyword">new</span> Person();</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> Per1 = <span class="keyword">new</span> Per();</span><br><span class="line">per1.age; <span class="comment">// 10</span></span><br><span class="line">per1 <span class="keyword">instanceof</span> Person; <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-</li>
-</ul>
-<h2 id="2-借用构造函数继承"><a href="#2-借用构造函数继承" class="headerlink" title="2 借用构造函数继承"></a>2 借用构造函数继承</h2><ul>
-<li><p>重点：用call()和apply()将父类构造函数引入子类函数，在子类函数中做了父类函数的自执行（复制）</p>
-</li>
-<li><p>特点：</p>
-<ol>
-<li>只继承父类构造函数的属性，没有继承父类原型的属性</li>
-<li>解决了原型链继承的三个缺点</li>
-<li>可以继承多个构造函数属性，执行多个父类</li>
-<li>在子实例中可向父实例传参</li>
-</ol>
-</li>
-<li><p>缺点：</p>
-<ol>
-<li>只能继承父类构造函数的属性</li>
-<li>无法实现构造函数的复用，每次都会重新调用</li>
-<li>每个新实例都有父类构造函数的副本，臃肿</li>
-</ol>
-<figure class="highlight js"><figcaption><span>借用构造函数继承</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Con</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  Person.call(<span class="keyword">this</span>,<span class="string">'children'</span>);</span><br><span class="line">  <span class="keyword">this</span>.age = <span class="number">12</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> con1 = <span class="keyword">new</span> Con();</span><br><span class="line">con1.name; <span class="comment">// children</span></span><br><span class="line">con1.age; <span class="comment">// 12</span></span><br><span class="line">con1 <span class="keyword">instanceof</span> Person; <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h2 id="3-组合继承（原型链-构造函数）"><a href="#3-组合继承（原型链-构造函数）" class="headerlink" title="3 组合继承（原型链+构造函数）"></a>3 组合继承（原型链+构造函数）</h2><ul>
-<li><p>重点：结合了两种模式的优点、传参和复用</p>
-</li>
-<li><p>特点：</p>
-<ol>
-<li>可以继承父类原型上的属性，可以传参，可复用</li>
-<li>每个新实例引入的构造函数属性是私有的</li>
-</ol>
-</li>
-<li><p>缺点：调用了两次父类构造函数（耗内存），子类的构造函数会代替原型上的那个父类构造函数</p>
-<figure class="highlight js"><figcaption><span>组合继承</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Sub</span>(<span class="params">name</span>)</span>&#123;</span><br><span class="line">  Person.call(<span class="keyword">this</span>,name); <span class="comment">// 借用构造函数模式</span></span><br><span class="line">&#125;</span><br><span class="line">Sub.prototype = <span class="keyword">new</span> Person(); <span class="comment">// 原型链继承</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> sub1 = <span class="keyword">new</span> Sub(<span class="string">'sub'</span>);</span><br><span class="line">sub.name; <span class="comment">// sub</span></span><br><span class="line">sub.age; <span class="comment">// 10</span></span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h2 id="4-原型式继承"><a href="#4-原型式继承" class="headerlink" title="4 原型式继承"></a>4 原型式继承</h2><ul>
-<li><p>重点：用一个函数包装一个对象，然后返回这个函数的调用，这个函数就变成了可以随意添加属性的实例或对象。object.create()就是这个原理</p>
-</li>
-<li><p>特点： 类似赋值一个对象，用函数来包装</p>
-</li>
-<li><p>缺点：</p>
-<ol>
-<li>所有实例都会继承原型上的属性</li>
-<li>无法实现复用（新实例属性都是后面添加的）</li>
-</ol>
-<figure class="highlight js"><figcaption><span>原型式继承</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">content</span>(<span class="params">obj</span>)</span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">F</span>(<span class="params"></span>)</span>&#123;&#125;;</span><br><span class="line">  F.prototype = obj; <span class="comment">// 继承传入的参数</span></span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> F(); <span class="comment">// 返回函数对象</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> sup = <span class="keyword">new</span> Person();</span><br><span class="line"><span class="keyword">let</span> sup1 = content(sup);</span><br><span class="line">sup1.age; <span class="comment">// 10</span></span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h2 id="5-寄生式继承"><a href="#5-寄生式继承" class="headerlink" title="5 寄生式继承"></a>5 寄生式继承</h2><ul>
-<li><p>重点：就是给原型式继承外面套了个壳子</p>
-</li>
-<li><p>优点：没有创建自定义类型，因为只是套了个壳子返回对象，这个函数顺理成章就成了创建的新对象</p>
-</li>
-<li><p>缺点：没用到原型，无法复用</p>
-<figure class="highlight js"><figcaption><span>寄生式继承</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">content</span>(<span class="params">obj</span>)</span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">F</span>(<span class="params"></span>)</span>&#123;&#125;;</span><br><span class="line">  F.prototype = obj;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> F();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> sup = <span class="keyword">new</span> Person();</span><br><span class="line"><span class="comment">// 套壳</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">subObj</span>(<span class="params">obj</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">let</span> sub = content(obj);</span><br><span class="line">  sub.name = <span class="string">'subObj'</span>;</span><br><span class="line">  <span class="keyword">return</span> sub;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> sub2 = subObj(sup);</span><br><span class="line"><span class="keyword">typeof</span> subObj; <span class="comment">// function</span></span><br><span class="line"><span class="keyword">typeof</span> sup2; <span class="comment">// object</span></span><br><span class="line">sup2.name; <span class="comment">// subObj</span></span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h2 id="6-寄生组合式继承"><a href="#6-寄生组合式继承" class="headerlink" title="6 寄生组合式继承"></a>6 寄生组合式继承</h2><ul>
-<li><p>寄生：在函数内返回对象然后调用</p>
-</li>
-<li><p>组合：</p>
-<ol>
-<li>函数的原型等于另一个实例</li>
-<li>在函数中用apply 或者call 引入另一个构造函数，可传参</li>
-</ol>
-</li>
-<li><p>重点：修复了组合继承的问题</p>
-<figure class="highlight js"><figcaption><span>寄生组合式继承</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 寄生</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">content</span>(<span class="params">obj</span>)</span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">F</span>(<span class="params"></span>)</span>&#123;&#125;;</span><br><span class="line">  F.prototype = obj;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> F();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> con = content(Person.prototype);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 组合</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Sub</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  Person.call(<span class="keyword">this</span>);</span><br><span class="line">&#125; <span class="comment">// 解决组合式两次调用的问题</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 重点</span></span><br><span class="line">Sub.prototype = con; <span class="comment">// 继承con 实例</span></span><br><span class="line">con.constructor = Sub; <span class="comment">// 修复实例</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> sub1 = <span class="keyword">new</span> Sub();</span><br><span class="line">sub1.age; <span class="comment">// 10</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/31/collections/JavaScript/JavaScript%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E4%B9%8B%E7%BB%A7%E6%89%BF/" data-id="ckfba913l00181cn6d7f3gnsw" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/09/09/collections/Git/commitizen%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BD%BF%E7%94%A8/" data-id="ckfl8kop5001f0vq2f4zh8kff" class="article-share-link">分享</a>
       
       
     </footer>
@@ -1008,7 +938,7 @@
 
   <nav id="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/hexo-blog/page/2/">2</a><a class="page-number" href="/hexo-blog/page/3/">3</a><a class="extend next" rel="next" href="/hexo-blog/page/2/">下一页 &gt;&gt;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/hexo-blog/page/2/">2</a><a class="page-number" href="/hexo-blog/page/3/">3</a><a class="page-number" href="/hexo-blog/page/4/">4</a><a class="extend next" rel="next" href="/hexo-blog/page/2/">下一页 &gt;&gt;</a>
   </nav>
 
 </section>
@@ -1047,6 +977,14 @@
       <ul>
         
           <li>
+            <a href="/hexo-blog/2020/09/25/collections/TypeScript/TypeScript%20%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4/">TypeScript 命名空间</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2020/09/21/collections/WeiChat/JS-SDK%E4%BD%BF%E7%94%A8%E6%9D%83%E9%99%90%E7%AD%BE%E5%90%8D%E7%AE%97%E6%B3%95/">微信 JS-SDK使用权限签名算法</a>
+          </li>
+        
+          <li>
             <a href="/hexo-blog/2020/09/20/collections/Linux/Ubuntu%20%E5%88%87%E6%8D%A2%E9%98%BF%E9%87%8C%E6%BA%90/">Ubuntu 安装gitlab</a>
           </li>
         
@@ -1056,14 +994,6 @@
         
           <li>
             <a href="/hexo-blog/2020/09/14/collections/Linux/Linux%E4%B8%AD%E7%9A%84apt%E5%91%BD%E4%BB%A4/">Linux 中的apt 命令</a>
-          </li>
-        
-          <li>
-            <a href="/hexo-blog/2020/09/14/collections/Project/Antd4%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/">Antd4项目搭建</a>
-          </li>
-        
-          <li>
-            <a href="/hexo-blog/2020/09/13/collections/Linux/Win10%20%E8%BF%90%E8%A1%8CLinux/">Win10 运行Linux</a>
           </li>
         
       </ul>
