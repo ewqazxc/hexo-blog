@@ -1,5 +1,5 @@
 ---
-title: Ubuntu 安装gitlab
+title: Ubuntu 更换阿里云软件源
 date: 2020-09-20 17:44:33
 ---
 
