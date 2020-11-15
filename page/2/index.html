@@ -71,6 +71,537 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-collections/Linux/Linux中的apt命令" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo-blog/2020/09/14/collections/Linux/Linux%E4%B8%AD%E7%9A%84apt%E5%91%BD%E4%BB%A4/" class="article-date">
+  <time datetime="2020-09-14T16:00:00.000Z" itemprop="datePublished">2020-09-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/hexo-blog/2020/09/14/collections/Linux/Linux%E4%B8%AD%E7%9A%84apt%E5%91%BD%E4%BB%A4/">Linux 中的apt 命令</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="什么是apt"><a href="#什么是apt" class="headerlink" title="什么是apt"></a>什么是apt</h2><p><code>apt</code>是一个命令行实用程序，用于Ubuntu，Debian 和相关Linux 发行版上安装、更新、删除和管理deb 包。</p>
+<p>它是apt-get 和apt-cache 工具的常用命令和选项的组合。</p>
+<h2 id="更新包索引-apt-update"><a href="#更新包索引-apt-update" class="headerlink" title="更新包索引 apt update"></a>更新包索引 apt update</h2><p><code>apt update</code></p>
+<p>APT 包索引基本上是一个数据库，它保存系统中启用的存储库中可用包的记录</p>
+<p>要更新包索引，请运行以下命令，这将从APT 存储库中提取最新更改</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br></pre></td></tr></table></figure>
+<ul>
+<li>始终在升级或安装新软件包之前更新软件包索引</li>
+</ul>
+<h2 id="升级包-apt-upgrade"><a href="#升级包-apt-upgrade" class="headerlink" title="升级包 apt upgrade"></a>升级包 apt upgrade</h2><p><code>apt upgrade</code></p>
+<p>定期更新Linux 系统是整个系统安全性最重要的方面之一</p>
+<p>要将已安装的软件包升级到最新版本，请运行：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt upgrade</span><br></pre></td></tr></table></figure>
+<p>该命令不会升级那些需要删除已安装软件包的软件包</p>
+<p>如果要升级单个包则：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt upgrade packageName</span><br></pre></td></tr></table></figure>
+<p>配置自动安全更新始终是个好主意</p>
+<h2 id="完全升级-apt-full-upgrade"><a href="#完全升级-apt-full-upgrade" class="headerlink" title="完全升级 apt full-upgrade"></a>完全升级 apt full-upgrade</h2><p>upgrade 和full-upgrade 之间的区别在于，如果需要升级整个系统，则后者将删除已安装的软件包</p>
+<p><code>sudo apt full-upgrade</code> <strong>使用此命令时要格外小心</strong></p>
+<h2 id="安装包-apt-install"><a href="#安装包-apt-install" class="headerlink" title="安装包 apt install"></a>安装包 apt install</h2><ol>
+<li>安装单个软件包<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install packageName</span><br></pre></td></tr></table></figure></li>
+<li>安装多个软件包，空格分隔<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install packageA packageB</span><br></pre></td></tr></table></figure></li>
+<li>安装本地deb 文件，需要提供文件的完整路径，否则将尝试从APT 存储库检索并安装<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install /full/path/file.deb</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="删除包-apt-remove-purge-autoremove"><a href="#删除包-apt-remove-purge-autoremove" class="headerlink" title="删除包 apt remove/purge/autoremove"></a>删除包 apt remove/purge/autoremove</h2><ol>
+<li>删除单个软件包<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt remove packageName</span><br></pre></td></tr></table></figure></li>
+<li>删除多个软件包，空格分隔<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt remove packageA packageB</span><br></pre></td></tr></table></figure></li>
+<li>删除包的同时，purge 删除包括所有配置文件<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt purge packageName</span><br></pre></td></tr></table></figure></li>
+<li>删除未使用的包 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt autoremove</span><br></pre></td></tr></table></figure>
+每当在系统上安装依赖于其他软件包的新软件包时，也会安装软件包依赖项。删除程序包后，依赖项将保留在系统上。这些剩余的包不再被其他任何东西使用，可以删除。</li>
+</ol>
+<h2 id="查看包列表-apt-list"><a href="#查看包列表-apt-list" class="headerlink" title="查看包列表 apt list"></a>查看包列表 apt list</h2><ol>
+<li>列出所有包<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt list</span><br></pre></td></tr></table></figure></li>
+<li>列出特定包，使用grep 命令进行过滤<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt list | grep packageName</span><br></pre></td></tr></table></figure></li>
+<li>列出已安装的包<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt list --installed</span><br></pre></td></tr></table></figure></li>
+<li>列出可升级软件包，升级软件包之前看看<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt list --upgradeable</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="搜索包-apt-search"><a href="#搜索包-apt-search" class="headerlink" title="搜索包 apt search"></a>搜索包 apt search</h2><p>此命令会在可用包列表中搜索到指定包</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt search packageName</span><br></pre></td></tr></table></figure>
+<h2 id="查看包的信息-apt-show"><a href="#查看包的信息-apt-show" class="headerlink" title="查看包的信息 apt show"></a>查看包的信息 apt show</h2><p>在删除或安装新软件包之前，有关包依赖性，安装大写，软件包源等信息,可通过以下命令查看</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt show packageName</span><br></pre></td></tr></table></figure>
+
+<h2 id="更多apt-命令-可输入-man-apt-查看"><a href="#更多apt-命令-可输入-man-apt-查看" class="headerlink" title="更多apt 命令 可输入 man apt 查看"></a>更多apt 命令 可输入 man apt 查看</h2>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/09/14/collections/Linux/Linux%E4%B8%AD%E7%9A%84apt%E5%91%BD%E4%BB%A4/" data-id="ckhj97rab00272ina8mxy7ko9" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-collections/Linux/Win10 运行Linux" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo-blog/2020/09/13/collections/Linux/Win10%20%E8%BF%90%E8%A1%8CLinux/" class="article-date">
+  <time datetime="2020-09-13T16:00:00.000Z" itemprop="datePublished">2020-09-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/hexo-blog/2020/09/13/collections/Linux/Win10%20%E8%BF%90%E8%A1%8CLinux/">Win10 运行Linux</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="如何在Win10-中运行Linux-子系统"><a href="#如何在Win10-中运行Linux-子系统" class="headerlink" title="如何在Win10 中运行Linux 子系统"></a>如何在Win10 中运行Linux 子系统</h2><ol>
+<li><p>启用组件</p>
+<p>打开控制面板 -&gt; 程序 -&gt; 程序和功能，点击<code>启用或者关闭Windows 功能</code>，找到并勾选<code>适用于Linux的windows 子系统</code>，点击确定即可，然后根据提示重启。</p>
+<p>需要注意，这种方法目前只支持X64的系统</p>
+</li>
+<li><p>开启开发者模式</p>
+<p>打开设置，输入开发人员模式，在进入的菜单选中开发人员模式即可</p>
+</li>
+<li><p>下载Ubuntu</p>
+<p>打开Win10 自带的Microsoft Store，搜索Ubuntu 选中下载</p>
+</li>
+<li><p>安装Ubuntu</p>
+<p>在上一步选中下载后，点击<code>启动</code>，然后按任意键，根据提示输入运行的账户和密码</p>
+<p>注意：输入密码时，Ubuntu 默认是不显示的</p>
+</li>
+<li><p>配置系统</p>
+</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update  //更新系统</span><br><span class="line"></span><br><span class="line">sudo apt-get install xorg  //安装xorg 键入y并回车确定 </span><br><span class="line">// xorg （电脑操作系bai统）默认显示服务du器的一个软件包</span><br><span class="line"></span><br><span class="line">sudo apt-get install xfce4  //xfce4   键入y并回车确定</span><br><span class="line">// xfce是linux的一个桌面程序，xfce终端是这个桌面的终端</span><br><span class="line"></span><br><span class="line">sudo apt-get install xrdp  //xrdp远程组件  键入y并回车确定</span><br><span class="line">// xrdp在目前最新版Ubuntu 16.04下,如果实现Windows远程访问</span><br><span class="line"></span><br><span class="line">sudo sed -i <span class="string">'s/port=3389/port=3390/g'</span> /etc/xrdp/xrdp.ini  //配置远程端口3390</span><br><span class="line"></span><br><span class="line">sudo <span class="built_in">echo</span> xfce4-session &gt;~/.xsession  //写入 xfce4配置</span><br><span class="line"></span><br><span class="line"><span class="comment">#第2，3，4行输入之后分别键入y并回车确定，最后输入：</span></span><br><span class="line">sudo service xrdp restart  //重启xrdp</span><br></pre></td></tr></table></figure>
+<p>其中 2，3，4 主要是为了实现远程桌面终端功能，若不需要可直接跳过</p>
+<h2 id="Linux-开启ssh-服务"><a href="#Linux-开启ssh-服务" class="headerlink" title="Linux 开启ssh 服务"></a>Linux 开启ssh 服务</h2><ol>
+<li>首先更新源<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br></pre></td></tr></table></figure></li>
+<li>安装ssh 服务<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install openssh-server</span><br></pre></td></tr></table></figure></li>
+<li>检测是否已启动<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -e | grep ssh</span><br></pre></td></tr></table></figure>
+运行后，看到有ssh 字样说明已启动，如果没有就手动启动<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/ssh start</span><br></pre></td></tr></table></figure></li>
+<li>配置ssh-server，配置文件位于/etc/ssh/sshd_config，默认端口为22，为了安全，一般自定义为其它端口，然后重启<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo /etc/init.d/ssh restart</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p><strong>遇到的问题</strong></p>
+<ul>
+<li><p>开启sshd 服务时报错<code>sshd: no hostkeys available — exiting</code></p>
+<ul>
+<li>解决方案:<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ssh-keygen -t dsa -f /etc/ssh/ssh_host_dsa_key</span></span><br><span class="line"><span class="comment"># ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key</span></span><br><span class="line"><span class="comment"># /usr/sbin/sshd</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>开启ssh 后，连接失败<code>Permission denied (publickey).</code></p>
+<ul>
+<li>解决方案：允许ssh 密码登录权限</li>
+</ul>
+<ol>
+<li>打开 /etc/ssh/sshd_config，修改PasswordAuthentication no 为：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PasswordAuthentication yes</span><br></pre></td></tr></table></figure></li>
+<li>重启服务 <code>/etc/init.d/sshd restart</code></li>
+</ol>
+<ul>
+<li>注意：修改文件时可以sudo vim 打开文件，Linux 对权限要求严格，不用管理员权限很多事做不了</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/09/13/collections/Linux/Win10%20%E8%BF%90%E8%A1%8CLinux/" data-id="ckhj97rad002a2inafvpvcj2z" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-collections/Git/Gitlab-ci 从零开始的前端自动化部署" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo-blog/2020/09/11/collections/Git/Gitlab-ci%20%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E5%89%8D%E7%AB%AF%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/" class="article-date">
+  <time datetime="2020-09-11T16:00:00.000Z" itemprop="datePublished">2020-09-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/hexo-blog/2020/09/11/collections/Git/Gitlab-ci%20%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E5%89%8D%E7%AB%AF%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/">Gitlab-ci 从零开始的前端自动化部署</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="查看原文"><a href="#查看原文" class="headerlink" title="查看原文"></a><a href="https://zhuanlan.zhihu.com/p/184936276" target="_blank" rel="noopener">查看原文</a></h2><h2 id="一-概念介绍"><a href="#一-概念介绍" class="headerlink" title="一 概念介绍"></a>一 概念介绍</h2><p>1.1 gitlab-ci &amp;&amp; 自动化部署工具的运行机制<br>以gitlab-ci 为例：</p>
+<ol>
+<li>通过在项目根目录下配置.gitlab-ci.yml 文件，可以控制ci流程的不同阶段，例如install/检查/编译/部署服务器.gitlab 平台会扫描.gitlab-ci.yml 文件，并根据此处理ci 流程</li>
+<li>ci 流程在每次团队成员push/merge 后触发。每当你push/merge 一次，gitlab-ci 都会检查项目下有没有.gitlab-ci.yml 文件，如果有，它会执行你在里面编写的脚本，并完整地走一遍从install -&gt; eslint 检查 -&gt; 编译 -&gt; 部署服务器 的流程</li>
+<li>gitlab-ci 提供了指定ci 运行平台的机制，它提供了一个叫gitlab-runner 的软件，只要在对应的平台（机器或者docker）上下载并运行这个命令行软件，并输入从gitlab 交互界面获取的token，就可以把当前机器和对应的gitlab-ci 流程绑定，也即：每次跑ci 都在这个平台上进行</li>
+<li>.gitlab-ci 的所有流程都是可视化的，每个流程节点的状态都可以在gitlab 的交互界面上看到，包括执行成功或失败。因为它的执行看上去就和多节管道一样，所以通常用”pipeLine” 来称呼它</li>
+<li>不同push/merge 所触发的CI 流程不会互相影响，也就是说，你的一次push 引发的CI 流程并不会因为接下来另一位同事的push 而阻断，它们是互不影响的。这一特点方便让测试同学根据不同版本进行测试</li>
+<li>pipeline 不仅能被动触发，也是可以手动触发的</li>
+</ol>
+<p>1.2 自动化部署给我们带来的好处</p>
+<ol>
+<li>提高前端的开发效率和开发测试之间的协调效率</li>
+</ol>
+<ul>
+<li>Before：如果按照传统的流程，在项目上线前的测试阶段，前端修复bug 之后，要手动把代码部署之后，才能通知测试在测试环境进行测试；这会造成几个问题，本身手动部署服务的工作时比较繁琐的，占用了开发时间，同时开发-测试之间的环节的偶尔问题，则会增加团队沟通成本</li>
+<li>After：通过gitlab-ci，前端在提交代码后就不用管了，ci 流程会自动部署到测试或集成环境的服务器，大幅度节约了开发的时间；同时，因为开发和测试可以共用gitlab 里的pipeline 界面，测试同学能够随时把握代码部署的情况，同时还可以通过交互界面手动启动pipeline，自己去部署测试，从而节约和开发之间的沟通时间</li>
+</ul>
+<ol start="2">
+<li>从更细的粒度把握代码质量</li>
+</ol>
+<ul>
+<li>我们可以把eslint 或其它的代码检查加到pipeline 流程中，每当团队成员提交和合并一次，pipeline 都会触发一次并对代码做一次全面检测，这样就从一个更细的粒度上控制代码质量了</li>
+</ul>
+<h2 id="二-知识预备"><a href="#二-知识预备" class="headerlink" title="二 知识预备"></a>二 知识预备</h2><ul>
+<li>gitlab-ci 涉及的抽象概念</li>
+<li>YML 文件的基本语法规则</li>
+<li>。gitlab-ci.yml 配置的特定关键字</li>
+</ul>
+<p>2.1 gitlab-ci 涉及的抽象概念</p>
+<ol>
+<li>pipeline &amp; job</li>
+</ol>
+<ul>
+<li>pipeline：是gitlab 根据项目的.gitlab-ci.yml 文件执行的流程，它由许多个任务节点组成，而这些pipeline 上的每一个任务节点，都是一个独立的job</li>
+<li>每个job 都会配置一个stage 属性，来表示这个job 所处的阶段</li>
+<li>一个pipeline 有若干个stage 每个stage 上至少有一个job</li>
+</ul>
+<ol start="2">
+<li>runner 可以理解为：在特定机器上根据项目的.gitlab-ci.yml 文件，对项目执行pipeline 的程序。</li>
+</ol>
+<ul>
+<li>shared runner：gitlab 平台提供的免费使用的runner 程序，它由Google 云平台提供支持，每个开发团队有十几个。对于公共开源项目是免费使用的，如果是私人项目则有每月2000分钟的CI 时间上限</li>
+<li>specific runner：自定义的，在自己选择的机器上运行的runner 程序，gitlab 给我们提供了一个叫<a href="https://docs.gitlab.com/runner/install/" target="_blank" rel="noopener">gitlab-runner</a> 的命令行软件，只要在对应机器上下载安装这个软件，并且运行gitlab-runner register 命令，然后输入从gitlab-ci 交互界面获取的token 进行注册，就可以在自己的机器上远程运行pipeline 程序</li>
+<li>shared 和 specific 的区别<ol>
+<li>shared runner是所有项目都可以使用的，而specific runner 只能针对特定项目运行</li>
+<li>shared runner默认基于docker 运行，没有提起装配的执行pipeline 的环境，例如node 等。而specific runner 可以自由选择平台，可以是各种类型的机器，如Linux/Windows 等，并在上面装配必须的运行环境，当然也可以选择Docker/K8s 等</li>
+<li>私人项目使用shared runner 受运行时间的限制，而specific runner 的使用则是完全自由的</li>
+</ol>
+</li>
+</ul>
+<ol start="3">
+<li>executor：specific runner是在我们自己选择的平台上执行的，这个平台就是我们现在所说的”executor”，我们在特定机器上通过gitlab-runner 这个命令行软件注册runner 的时候，命令行就会提示我们输入相应的<a href="https://docs.gitlab.com/runner/executors/#selecting-the-executor" target="_blank" rel="noopener">平台类型</a>，可供选择的平台一共有如下几种，<br><img src="/hexo-blog/imgs/Git/executor.png" alt="平台类型"></li>
+</ol>
+<p>2.2 YML 文件的基本语法规则</p>
+<p>CI 流程的运行控制，决定于项目根目录下编写的配置文件——.gitlab-ci.yml，正因为如此，我们需要掌握YML 的基本语法规则。</p>
+<p>YML 是一种编写哦诶之文件的语言，比JSON 更为简洁和方便，因此，我们首先要掌握的就是YML 文件的编写语法</p>
+<p>一份简单的YML 文件如下：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">install-job:</span> <span class="comment"># 注释</span></span><br><span class="line">  <span class="attr">tags:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">sss</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">install</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">npm</span> <span class="string">install</span></span><br></pre></td></tr></table></figure>
+<p>从这里我们就可以看出：</p>
+<ul>
+<li>YML 通过缩进组织层级</li>
+<li>YML 允许通过#符号编写注释</li>
+</ul>
+<p>在基本结构上，YML 和JSON 也类似</p>
+<ul>
+<li>JSON/YML 都是由对象，数组，以及对象和数组的嵌套结构组成的</li>
+</ul>
+<p><strong>YML 中数组的写法</strong></p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">colors</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">red</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">blue</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">yellow</span></span><br><span class="line"><span class="comment"># = &#123; "colors": ["red", "blue", "yellow"]&#125;</span></span><br></pre></td></tr></table></figure>
+<p><strong>YML 中对象的写法</strong></p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">people:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">zhangsan</span></span><br><span class="line">  <span class="attr">age:</span> <span class="number">14</span></span><br><span class="line"><span class="comment"># &#123; "people": &#123; "name": "zhangsan", "age": 14 &#125;&#125;</span></span><br></pre></td></tr></table></figure>
+<p><strong>数组和对象之间形成的嵌套结构</strong></p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">a:</span></span><br><span class="line">  <span class="attr">b:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">d</span></span><br><span class="line">  <span class="attr">c:</span> <span class="string">e</span></span><br><span class="line"><span class="comment"># &#123; "a": &#123; "b": ["d"], "c": "e" &#125;&#125;</span></span><br></pre></td></tr></table></figure>
+<p><strong>从JSON到YML之间的过度学习的注意要点</strong></p>
+<ul>
+<li>不需要”{}”去区分层级边界，而是使用缩进</li>
+<li>注释符号 #</li>
+<li>如果不涉及特殊符号比如”[“，一般是不需要给YML 中的字符串加双引号或者单引号的（加了也行）</li>
+</ul>
+<p>2.3 gitlab-ci.yml 配置的特定关键字</p>
+<p>在了解了YML 文件的语法格式后，接下来需要了解的就是gitlab-ci 独特的配置关键字，这些关键字将在.gitlab-ci.yml 中使用，并用来控制一个pipeline 具体的运作过程</p>
+<p>常用的有：stages stage script tags</p>
+<p><strong>stages &amp; stage</strong></p>
+<ul>
+<li>stages 定义在YML 文件的最外层，它的值是一个数组，用于定义一个pipeline 不同的流程节点<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">stages:</span> <span class="comment"># 分段</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">install</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">eslint</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">build</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">deploy</span></span><br></pre></td></tr></table></figure>
+则在Gitlab交互界面中能够看到如下展示：<br><img src="/hexo-blog/imgs/Git/stages.jpg" alt="stages"></li>
+</ul>
+<p>上面提到过：job 是pipeline 的任务节点，它构成了pipeline 的基本单元</p>
+<p>而stage/script/tags 这三个关键字，都是作为job 的紫属性来使用的，如下所示，install 就是我们定义的一个job</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">install:</span></span><br><span class="line">  <span class="attr">tags:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">sss</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">install</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">npm</span> <span class="string">install</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>stage</strong> 是一个字符串，且是stages 数组的一个子项，表示的是当前的pipeline 节点</p>
+<p>当前stage 的执行情况能在交互面板上看得清清楚楚：</p>
+<ul>
+<li>蓝色 正在执行</li>
+<li>灰色 尚未执行</li>
+<li>绿色 执行成功</li>
+<li>红色 执行失败</li>
+</ul>
+<p><strong>script</strong> 是当前pipeline 节点运行的shell 脚本（以项目根目录为上下文执行）</p>
+<p>这个script 使我们控制CI 流程的核心，我们所有的工作，从安装，编译到部署都是通过script 中定义的shell 脚本来完成的</p>
+<p>如果脚本执行成功，pipeline 就会进入下一个job 节点，如果执行失败那么pipeline 就会终止</p>
+<p><strong>tags</strong> 是当前job 的标记</p>
+<p>这个tags 关键字是很重要的，因为gitlab 的runner 会通过tags 去判断能否执行当前这个job</p>
+<p>例如我们在gitlab 的面板中能看到当前激活的runner 的信息</p>
+<figure class="highlight md"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Gitlab 项目首页 -&gt; setting -&gt; CI/CD -&gt; Runners</span><br></pre></td></tr></table></figure>
+<p><img src="/hexo-blog/imgs/Git/runner%E4%B8%AD%E7%9A%84tags.jpg" alt="Runner 中的tags"></p>
+<p>上面的这个sss 就是当前Runner 的tags，这意味着：这个runner 只会执行tag 为sss 的job。如果一个job 没有tag 或者tag 不是sss，那么及时这个runner 是激活且空闲的，也不会去执行</p>
+<h2 id="三-gitlab-ci-实战"><a href="#三-gitlab-ci-实战" class="headerlink" title="三 gitlab-ci 实战"></a>三 gitlab-ci 实战</h2><p>3.1 编写一个gitlab-ci 的”Helllo world”</p>
+<ol>
+<li>在平台上下载并安装Gitlab-runner 命令行 <a href="https://docs.gitlab.com/runner/install/" target="_blank" rel="noopener">https://docs.gitlab.com/runner/install/</a></li>
+</ol>
+<ul>
+<li><p>Win10</p>
+<ol>
+<li>创建一个文件夹放置下载的 gitlab-runner.exe 文件</li>
+<li>以管理员运行以下命令<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.\gitlab-runner.exe install</span><br><span class="line">.\gitlab-runner.exe start</span><br><span class="line"><span class="comment"># 输出Runtime platform 则成功</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+<li><p>Mac</p>
+<ol>
+<li>下载工具<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo curl --output /usr/<span class="built_in">local</span>/bin/gitlab-runner https://gitlab-runner-downloads.s3.amazonaws.com/latest/binaries/gitlab-runner-darwin-amd64</span><br><span class="line">sudo chmod +x /usr/<span class="built_in">local</span>/bin/gitlab-runner</span><br></pre></td></tr></table></figure></li>
+<li>初始化gitlab-runner<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gitlab-runner install</span><br><span class="line">gitlab-runner start</span><br><span class="line"><span class="comment"># 输出Runtime platform 则成功</span></span><br></pre></td></tr></table></figure></li>
+<li>注册runner <a href="https://link.zhihu.com/?target=https%3A//docs.gitlab.com/runner/register/index.html">参考资料</a></li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gitlab-runner register</span><br></pre></td></tr></table></figure>
+<p>然后写入相应的token，url和tag等相关信息就注册完毕了<br><img src="/hexo-blog/imgs/Git/%E6%B3%A8%E5%86%8Crunner.jpg" alt="注册runner"><br>上面要求输入的Runner 绑定的token 和url，获取方式如下：</p>
+<figure class="highlight md"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Gitlab 项目首页 -&gt; setting -&gt; CI/CD -&gt; Runners -&gt; Specific Runners</span><br></pre></td></tr></table></figure>
+<p>新版的直接找Runners 也有<br><img src="/hexo-blog/imgs/Git/SpecificRunners.jpg" alt="Specific Runners"></p>
+<ol start="4">
+<li>激活Runner</li>
+</ol>
+<p>注册完了可能还需要激活，这时我们可以看下面板，如果有个黑色的感叹号，说明runner 注册成功了，但是尚未激活（绿色为已激活，可跳过本步骤）</p>
+<p>激活方法是本地运行</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo gitlab-runner verify</span><br><span class="line"><span class="comment"># Verifying runner ... is alive</span></span><br></pre></td></tr></table></figure>
+<p>这时候会去看Gitlab 面板是否激活了Runner</p>
+<ol start="5">
+<li>梳理和规划pipeline 的不同阶段和过程</li>
+</ol>
+<p>在编写.gitlab-ci.yml 前，首先需要考虑的是我们的pipeline 分几个阶段处理</p>
+<p>从前端工程师的角度出发，一个前端项目的pipeline 处理包括以下几个阶段</p>
+<ul>
+<li><ol>
+<li>install 阶段 就是执行npm install 命令，根据package.json 安装node_modules 依赖包</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>eslint 阶段 执行eslint 检查，判断代码格式是否符合规范，如果不符合则pipeline 终止</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>build 阶段 编译生成生产代码</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>deploy 阶段 部署阶段，也就是把build 阶段生成的生产代码，部署到生产访问的服务器上</li>
+</ol>
+<p>这里又具体有以下两部分工作<br>A. 申请服务器 &amp; 安装web服务<br>B. 部署资源 每次pipeline 都进行<br>类似<code>sshpass -p $PASSWORD scp -r ./build $CUSTOM_USERNAME@$CUSTOM_IP:/var/www/html</code></p>
+</li>
+</ul>
+<ol start="7">
+<li>编写.gitlab-ci.yml 配置文件<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">stages:</span> <span class="comment"># 分段</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">install</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">eslint</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">build</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">deploy</span></span><br><span class="line"></span><br><span class="line"><span class="attr">cache:</span> <span class="comment"># 缓存</span></span><br><span class="line">  <span class="attr">paths:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">node_modules</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">build</span></span><br><span class="line"><span class="attr">install-job:</span></span><br><span class="line">  <span class="attr">tags:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">sss</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">install</span></span><br><span class="line">  <span class="attr">script:</span> <span class="string">npm</span> <span class="string">install</span></span><br><span class="line"></span><br><span class="line"><span class="attr">eslint-job:</span></span><br><span class="line">  <span class="attr">tags:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">sss</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">eslint</span></span><br><span class="line">  <span class="attr">script:</span> </span><br><span class="line">    <span class="bullet">-</span> <span class="string">npm</span> <span class="string">run</span> <span class="string">eslint</span></span><br><span class="line"></span><br><span class="line"><span class="attr">build-job:</span></span><br><span class="line">  <span class="attr">tags:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">sss</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">build</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">npm</span> <span class="string">run</span> <span class="string">build</span></span><br><span class="line"></span><br><span class="line"><span class="attr">deploy-job:</span></span><br><span class="line">  <span class="attr">tags:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">sss</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">deploy</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">sshpass</span> <span class="string">-p</span> <span class="string">$PASSWORD</span> <span class="string">scp</span> <span class="string">-r</span> <span class="string">./build</span> <span class="string">$CUSTOM_UNSERNAME@$CUSTOM_IP:/var/www/html</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<p><strong>package.json</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  ...</span><br><span class="line">  "script": &#123;</span><br><span class="line">    "start": "... start",</span><br><span class="line">    "biuld": "... build",</span><br><span class="line">    "eslint": "eslint ./src"</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="8">
+<li>提交项目代码</li>
+</ol>
+<p>commit 然后push，在gitlab 面板中查看runner 运行情况，完成后回到页面查看效果</p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/09/11/collections/Git/Gitlab-ci%20%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E5%89%8D%E7%AB%AF%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/" data-id="ckhj97rai002f2inafokk625g" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-collections/Articles/2020前端技术未来三年前瞻性思考" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo-blog/2020/09/10/collections/Articles/2020%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF%E6%9C%AA%E6%9D%A5%E4%B8%89%E5%B9%B4%E5%89%8D%E7%9E%BB%E6%80%A7%E6%80%9D%E8%80%83/" class="article-date">
+  <time datetime="2020-09-10T14:55:00.000Z" itemprop="datePublished">2020-09-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/hexo-blog/2020/09/10/collections/Articles/2020%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF%E6%9C%AA%E6%9D%A5%E4%B8%89%E5%B9%B4%E5%89%8D%E7%9E%BB%E6%80%A7%E6%80%9D%E8%80%83/">2020 前端技术未来三年前瞻性思考</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>作者：云谦 <a href="https://mp.weixin.qq.com/s/wYbj9d3bVExfu3owx7sJuQ" target="_blank" rel="noopener">查看原文</a></p>
+<p>习惯从业务场景、用户体验、研发速度、维护成本四个维度来看框架等前端技术，大部分的技术点都能找到合适的位置，解决的问题是如何<code>快速上线和维护满足业务的好用的产品</code>。</p>
+<h2 id="业务场景"><a href="#业务场景" class="headerlink" title="业务场景"></a>业务场景</h2><blockquote>
+<p>从框架的角度看业务需要</p>
+</blockquote>
+<ul>
+<li>框架负责：<ol>
+<li>对接后端框架</li>
+<li>对接输出环节，包括支付宝容器，PC 和mobile 浏览器，组件研发等</li>
+<li>对接第三方服务，包括统计，鉴权等</li>
+</ol>
+</li>
+<li>未来三年：<ol>
+<li>更多的业务有移动办公需求，小程序会继续加量</li>
+<li>更多复杂场景的出现，包括重型应用，应用集群等，WebAssembbly,微前端，Module Fedration 等技术会在此发挥作用</li>
+<li>标准应用中NoCode/LowCode 的占比逐渐增大，开发者逐渐习惯这种研发方式，包括云凤蝶或更垂直的NoCode 平台，imgcook 等</li>
+<li>需要对接的业务场景越来越多，框架层需要做取舍、收敛和适时的减法</li>
+</ol>
+</li>
+</ul>
+<h2 id="用户体验"><a href="#用户体验" class="headerlink" title="用户体验"></a>用户体验</h2><blockquote>
+<p>什么是默认好用？以及如何做到默认好用？</p>
+</blockquote>
+<ul>
+<li><p>更好的用户体验，前端+设计师负责：</p>
+<ol>
+<li>前端尺寸要小，这样页面载入更快</li>
+<li>合理的Code Splitting、Bundle Splitting 和按需加载策略，这样重要内容载入更快</li>
+<li>UI好看，交互流畅且好用</li>
+<li>合理的缓存和预加载策略，这样页面切换更快</li>
+</ol>
+<p><em>之前觉得5G 来了尺寸肯定不是问题，直到我看到需要下载60M js 资源的页面，内网环境打开页面都要8s+。现在的图形库、UI库根本不把尺寸当回事。</em></p>
+</li>
+<li><p>未来三年，如果我们希望有更好的用户体验：</p>
+<ol>
+<li>图形库、UI库得自己做瘦身/按需加载/正确的tree-shaking/设计合理的按需编译</li>
+<li>更多框架层内置的性能优化方案</li>
+<li>框架接管请求层，不止是发请求，基于路由，提供缓存和预加载策略</li>
+<li>混合研发如果成为主流，需要解决沙箱满的问题，参考<a href="https://m.statscrop.com/www/techui.in" target="_blank" rel="noopener">tech ui 首页</a>，换module federation 或者坐等浏览器实现标准的沙箱环境</li>
+</ol>
+</li>
+</ul>
+<h2 id="研发速度"><a href="#研发速度" class="headerlink" title="研发速度"></a>研发速度</h2><blockquote>
+<p>如何快速完成研发，并完成交付上线</p>
+</blockquote>
+<ul>
+<li><p>各方配合，不止是框架：</p>
+<ol>
+<li>工具提速、框架瘦身、TS 定义等</li>
+<li>组件封装，包含 antd/antv/tech-ui</li>
+<li>数据准备，包含oneapi</li>
+<li>交付流畅性，包含DEMO 中心，MOCK 平台，联调最佳实践等</li>
+<li>辅助工具</li>
+</ol>
+</li>
+<li><p>未来三年</p>
+<ol>
+<li>编译速度肯定会大幅度提升，路肯定不止一条；重CPU 部分会基于Rust/Go 实现，但不是整体，整体方案的终态我更倾向npm pre-built cdn+ bundless 的组合；这不止是框架/工具等事，ui 库和工具库也许合理规划和配置，不然一个项目用5个图形库+10个依赖antd 等库，10000+的文件要编译，快不起来的</li>
+<li>更多垂直领域高级别的封装，继承款姐/UI/数据/数据流，快速产出中台应用，形态可能是平台，也可能是ProCode；封装等级越高，开发越快，但定制越难，需权衡</li>
+<li>命令行在很多场景下不够用，借助辅助工具可进一步提效；形态有编辑器插件、Chrome 插件和In-Context Editing</li>
+</ol>
+</li>
+</ul>
+<h2 id="维护成本"><a href="#维护成本" class="headerlink" title="维护成本"></a>维护成本</h2><blockquote>
+<p>产品不仅要开发，还要维护，何况款姐和依赖库还在不断升级</p>
+</blockquote>
+<ul>
+<li>成本问题：<ol>
+<li>新人的上手成本</li>
+<li>开发人员迭代的接手成本</li>
+<li>技术栈升级成本</li>
+</ol>
+</li>
+<li>未来三年，对于框架而言：<ol>
+<li>降低技术栈升级成本。这需要框架有更好的顶层设计，更好的抽象，抹平底层技术栈，解决3-5年后依赖的技术栈变更后迁移成本最小化的问题；功能方面权衡一方集成/二方提供/三方引入，设计上适度组合，适度eject</li>
+<li>写一样的代码。持续打磨最佳实践，方案唯一化，一不是绝对的一，而是特定场景下的一；框架支持多端适配，未来是PC+小程序，长远看，多套写法应该走向统一</li>
+</ol>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/09/10/collections/Articles/2020%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF%E6%9C%AA%E6%9D%A5%E4%B8%89%E5%B9%B4%E5%89%8D%E7%9E%BB%E6%80%A7%E6%80%9D%E8%80%83/" data-id="ckhj97r9u001g2ina17k55xyg" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-collections/Git/commitizen工具的使用" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo-blog/2020/09/09/collections/Git/commitizen%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BD%BF%E7%94%A8/" class="article-date">
+  <time datetime="2020-09-09T16:00:00.000Z" itemprop="datePublished">2020-09-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/hexo-blog/2020/09/09/collections/Git/commitizen%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BD%BF%E7%94%A8/">commitizen 工具的使用</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="填写提示工具-commitizen"><a href="#填写提示工具-commitizen" class="headerlink" title="填写提示工具 commitizen"></a>填写提示工具 <a href="https://github.com/commitizen/cz-cli" target="_blank" rel="noopener">commitizen</a></h2><p>这个工具将给git commit 提供一个引导的功能，便于开发者根据提示完善commit 信息</p>
+<ol>
+<li>安装commitizen<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install commitizen -g</span><br></pre></td></tr></table></figure></li>
+<li>在项目中进行初始化<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">commitizen init cz-conventional-changelog --save-dev --save-exact</span><br><span class="line"><span class="comment"># 或者使用yarn 命令</span></span><br><span class="line">yarn commitizen init cz-conventional-changelog --save-dev --save-exact</span><br></pre></td></tr></table></figure></li>
+<li>利用<code>git cz</code>代替平时使用的<code>git commit</code>，即可根据提示一步步完善提交信息</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/09/09/collections/Git/commitizen%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BD%BF%E7%94%A8/" data-id="ckhj97ra0001o2inaca50e2ts" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-collections/Git/Git Commit 规范参考" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/hexo-blog/2020/09/09/collections/Git/Git%20Commit%20%E8%A7%84%E8%8C%83%E5%8F%82%E8%80%83/" class="article-date">
@@ -165,49 +696,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/09/09/collections/Git/Git%20Commit%20%E8%A7%84%E8%8C%83%E5%8F%82%E8%80%83/" data-id="ckgp8pmym001i4atb18y0abwk" class="article-share-link">分享</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-collections/Git/commitizen工具的使用" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/hexo-blog/2020/09/09/collections/Git/commitizen%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BD%BF%E7%94%A8/" class="article-date">
-  <time datetime="2020-09-09T16:00:00.000Z" itemprop="datePublished">2020-09-10</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/hexo-blog/2020/09/09/collections/Git/commitizen%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BD%BF%E7%94%A8/">commitizen 工具的使用</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="填写提示工具-commitizen"><a href="#填写提示工具-commitizen" class="headerlink" title="填写提示工具 commitizen"></a>填写提示工具 <a href="https://github.com/commitizen/cz-cli" target="_blank" rel="noopener">commitizen</a></h2><p>这个工具将给git commit 提供一个引导的功能，便于开发者根据提示完善commit 信息</p>
-<ol>
-<li>安装commitizen<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install commitizen -g</span><br></pre></td></tr></table></figure></li>
-<li>在项目中进行初始化<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">commitizen init cz-conventional-changelog --save-dev --save-exact</span><br><span class="line"><span class="comment"># 或者使用yarn 命令</span></span><br><span class="line">yarn commitizen init cz-conventional-changelog --save-dev --save-exact</span><br></pre></td></tr></table></figure></li>
-<li>利用<code>git cz</code>代替平时使用的<code>git commit</code>，即可根据提示一步步完善提交信息</li>
-</ol>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/09/09/collections/Git/commitizen%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BD%BF%E7%94%A8/" data-id="ckgp8pmyn001j4atbcnotdnpq" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/09/09/collections/Git/Git%20Commit%20%E8%A7%84%E8%8C%83%E5%8F%82%E8%80%83/" data-id="ckhj97ra0001n2inadsmjfzbw" class="article-share-link">分享</a>
       
       
     </footer>
@@ -335,7 +824,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/31/collections/JavaScript/JavaScript%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E4%B9%8B%E7%BB%A7%E6%89%BF/" data-id="ckgp8pmyq001l4atb4ifv5w0a" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/31/collections/JavaScript/JavaScript%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E4%B9%8B%E7%BB%A7%E6%89%BF/" data-id="ckhj97ra2001s2inab2bcabmv" class="article-share-link">分享</a>
       
       
     </footer>
@@ -392,7 +881,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/26/collections/JavaScript/%E6%89%8B%E5%86%99%E5%AE%9E%E7%8E%B0Promise/" data-id="ckgp8pmyz001y4atbfrj0camg" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/26/collections/JavaScript/%E6%89%8B%E5%86%99%E5%AE%9E%E7%8E%B0Promise/" data-id="ckhj97raa00252ina85sr589j" class="article-share-link">分享</a>
       
       
     </footer>
@@ -442,7 +931,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/25/collections/JavaScript/%E5%87%BD%E6%95%B0%E6%9F%AF%E9%87%8C%E5%8C%96%E7%9A%84%E5%AE%9E%E7%8E%B0/" data-id="ckgp8pmyy001v4atb51qi0w0e" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/25/collections/JavaScript/%E5%87%BD%E6%95%B0%E6%9F%AF%E9%87%8C%E5%8C%96%E7%9A%84%E5%AE%9E%E7%8E%B0/" data-id="ckhj97ra800222ina32zz47fj" class="article-share-link">分享</a>
       
       
     </footer>
@@ -501,227 +990,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/25/collections/JavaScript/js%E6%A8%A1%E6%8B%9Fnew%E6%93%8D%E4%BD%9C%E7%AC%A6%E7%9A%84%E5%AE%9E%E7%8E%B0/" data-id="ckgp8pmyw001s4atb7jwdaepw" class="article-share-link">分享</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-collections/JavaScript/手写call、apply及bind函数" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/hexo-blog/2020/08/24/collections/JavaScript/%E6%89%8B%E5%86%99call%E3%80%81apply%E5%8F%8Abind%E5%87%BD%E6%95%B0/" class="article-date">
-  <time datetime="2020-08-24T16:00:00.000Z" itemprop="datePublished">2020-08-25</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/hexo-blog/2020/08/24/collections/JavaScript/%E6%89%8B%E5%86%99call%E3%80%81apply%E5%8F%8Abind%E5%87%BD%E6%95%B0/">手写call、apply及bind函数</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="call函数的实现步骤"><a href="#call函数的实现步骤" class="headerlink" title="call函数的实现步骤"></a>call函数的实现步骤</h2><ol>
-<li>判断调用对象是否为函数，即使我们是定义在函数的原型上的，但是可能出现使用call 等方式调用的情况</li>
-<li>判断传入上下文对象是否存在，如果不存在，则设置为window</li>
-<li>处理传入的参数，截取第一个参数后的所有参数</li>
-<li>将函数作为上下文对象来调用这个方法，并保存返回结果</li>
-<li>使用上下文对象来调用这个方法，并保存返回结果</li>
-<li>删除刚才新增的属性</li>
-<li>返回结果</li>
-</ol>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// call 函数实现</span></span><br><span class="line">  <span class="built_in">Function</span>.prototype.myCall = <span class="function"><span class="keyword">function</span>(<span class="params">context</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 判断调用对象</span></span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">typeof</span> <span class="keyword">this</span> !== <span class="string">'function'</span>)&#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">'Error'</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取参数</span></span><br><span class="line">    <span class="keyword">let</span> args = [...arguments].slice(<span class="number">1</span>),result = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 判断context 是否传入，如果未传入则设置为 window</span></span><br><span class="line">    context = context || <span class="built_in">window</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 将调用函数设为对象的方法</span></span><br><span class="line">    context.fn = <span class="keyword">this</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 调用函数</span></span><br><span class="line">    result = context.fn(...args);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 将属性删除</span></span><br><span class="line">    <span class="keyword">delete</span> context.fn;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="apply-函数的实现步骤"><a href="#apply-函数的实现步骤" class="headerlink" title="apply 函数的实现步骤"></a>apply 函数的实现步骤</h2><ol>
-<li>判断调用对象是否为函数，即使我们是定义在函数的原型上的，但是可能出现使用call 等方式调用的情况</li>
-<li>判断传入上下文对象是否存在，如果不存在，则设置为window</li>
-<li>将函数作为上下文对象的一个属性</li>
-<li>判断参数值是否传入</li>
-<li>使用上下文对象来调用这个方法，并保存结果</li>
-<li>删除刚才新增的属性</li>
-<li>返回结果</li>
-</ol>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// apply 函数实现</span></span><br><span class="line">  <span class="built_in">Function</span>.prototype.myApply = <span class="function"><span class="keyword">function</span>(<span class="params">context</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 判断对象是否为函数</span></span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">typeof</span> <span class="keyword">this</span> !== <span class="string">'undefined'</span>)&#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">'Error'</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> result = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 判断context 是否存在，若果未传入则为 window</span></span><br><span class="line">    context = context || <span class="built_in">window</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 将函数设为对象的方法</span></span><br><span class="line">    context.fn = <span class="keyword">this</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 调用方法</span></span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">arguments</span>[<span class="number">1</span>])&#123;</span><br><span class="line">      result = context.fn(...arguments[<span class="number">1</span>]);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      result = context.fn();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 将属性删除</span></span><br><span class="line">    <span class="keyword">delete</span> context.fn;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="bind-函数的实现"><a href="#bind-函数的实现" class="headerlink" title="bind 函数的实现"></a>bind 函数的实现</h2><ol>
-<li>判断调用对象是否为函数，即使我们是定义在函数的原型上的，但是可能出现使用call 等方式调用的情况</li>
-<li>保存当前函数的引用，获取其余传入参数值</li>
-<li>创建一个函数返回</li>
-<li>函数内部使用apply 来绑定函数调用，需要判断函数作为构造函数的情况，这个时候需要传入当前函数的this 给 apply 调用，其余情况都传入指定的上下文对象</li>
-</ol>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bind 函数实现</span></span><br><span class="line">  <span class="built_in">Function</span>.prototype.myBind = <span class="function"><span class="keyword">function</span>(<span class="params">context</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 判断调用对象是否为函数</span></span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">typeof</span> <span class="keyword">this</span> !== <span class="string">'function'</span>)&#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">'Error'</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取参数</span></span><br><span class="line">    <span class="keyword">let</span> args = [...arguments].slice(<span class="number">1</span>), fn = <span class="keyword">this</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">Fn</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="comment">// 根据调用方式 传入不同绑定值</span></span><br><span class="line">      <span class="keyword">return</span> fn.apply(</span><br><span class="line">        <span class="keyword">this</span> <span class="keyword">instanceof</span> Fn ? <span class="keyword">this</span> : context,</span><br><span class="line">        args.concat(...arguments)</span><br><span class="line">      );</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-
-<p>参考资料：</p>
-<ul>
-<li><a href="https://github.com/mqyqingfeng/Blog/issues/11" target="_blank" rel="noopener">《JavaScript 深入之 call 和 apply 的模拟实现》</a></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/24/collections/JavaScript/%E6%89%8B%E5%86%99call%E3%80%81apply%E5%8F%8Abind%E5%87%BD%E6%95%B0/" data-id="ckgp8pmyz001x4atb4qzla4yu" class="article-share-link">分享</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-collections/JavaScript/Js的深浅拷贝" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/hexo-blog/2020/08/23/collections/JavaScript/Js%E7%9A%84%E6%B7%B1%E6%B5%85%E6%8B%B7%E8%B4%9D/" class="article-date">
-  <time datetime="2020-08-23T16:00:00.000Z" itemprop="datePublished">2020-08-24</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/hexo-blog/2020/08/23/collections/JavaScript/Js%E7%9A%84%E6%B7%B1%E6%B5%85%E6%8B%B7%E8%B4%9D/">Js的深浅拷贝</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li>浅拷贝：创建一个新对象，这个对象有着原始对象属性值的一份精准拷贝。如果属性时基本类型，拷贝的就是基本类型的值，如果属性是引用类型，拷贝的就是内存地址，所以如果其中一个对象改变了这个地址，就会影响到另一个对象</li>
-<li>深拷贝：讲一个对象从内存中完整的拷贝一份出来，从堆内存中开辟一个新的区域存放新对象，且修改新对象不会影响原对象</li>
-</ul>
-<p>简单的说，浅拷贝创建的新对象，其中的引用对象依旧与原对象有关；深拷贝创建的新对象，则是一个全新的对象，只是内容与原对象相同，再无瓜葛</p>
-<h2 id="浅拷贝的实现方式"><a href="#浅拷贝的实现方式" class="headerlink" title="浅拷贝的实现方式"></a>浅拷贝的实现方式</h2><ul>
-<li>Object.assign() 方法：用于将所有可枚举属性的值从一个或多个源对象赋值到目标对象。它将返回目标对象。</li>
-<li>Array.prototype.silce()：slice()方法返回一个新的数组对象，这一对象是一个由begin 和end（不包括end）决定的原数组的浅拷贝。原始数组不会被改变</li>
-<li>拓展运算符<code>...</code>：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = &#123;</span><br><span class="line">  name:<span class="string">'jack'</span>,</span><br><span class="line">  flag:&#123;</span><br><span class="line">    title:<span class="string">'better day by day'</span>,</span><br><span class="line">    time:<span class="string">'2011-11-11'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> b = &#123;...a&#125;;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h2 id="深拷贝的实现方式"><a href="#深拷贝的实现方式" class="headerlink" title="深拷贝的实现方式"></a>深拷贝的实现方式</h2><ul>
-<li>乞丐版：JSON.parse(JSON.stringify(object))，缺点诸多（会忽略undefined、symbol、函数；不能解决循环引用；不能处理正则、new Date()）</li>
-<li>基础版：浅拷贝+递归 （只考虑了普通的object 和array 两种数据类型）<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">cloneDeep</span>(<span class="params">target, map = new WeakMap(</span>))</span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(<span class="keyword">typeof</span> target === <span class="string">'object'</span>)&#123;</span><br><span class="line">    <span class="keyword">let</span> cloneTarget = <span class="built_in">Array</span>.isArray(target) ? [] : &#123;&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(map.get(target))&#123;</span><br><span class="line">      <span class="keyword">return</span> target;</span><br><span class="line">    &#125;</span><br><span class="line">    map.set(target, cloneTarget);</span><br><span class="line">    <span class="keyword">for</span>( <span class="keyword">const</span> key <span class="keyword">in</span> target)&#123;</span><br><span class="line">      cloneTarget[key] = cloneDeep(target[key], map);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> cloneTarget;</span><br><span class="line"></span><br><span class="line">  &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> target;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li>终极版：全面考虑各种数据类型<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义各种数据类型的Tag</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 可连续遍历的数组</span></span><br><span class="line"><span class="keyword">const</span> mapTag = <span class="string">'[object Map]'</span>;</span><br><span class="line"><span class="keyword">const</span> setTag = <span class="string">'[object Set]'</span>;</span><br><span class="line"><span class="keyword">const</span> arrayTag = <span class="string">'[object Array]'</span>;</span><br><span class="line"><span class="keyword">const</span> objectTag = <span class="string">'[object Object]'</span>;</span><br><span class="line"><span class="keyword">const</span> argsTag = <span class="string">'[object Arguments]'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 不可连续遍历的数据类型</span></span><br><span class="line"><span class="keyword">const</span> boolTag = <span class="string">'[object Boolean]'</span>;</span><br><span class="line"><span class="keyword">const</span> dateTag = <span class="string">'[object Date]'</span>;</span><br><span class="line"><span class="keyword">const</span> numberTag = <span class="string">'[object Number]'</span>;</span><br><span class="line"><span class="keyword">const</span> stringTag = <span class="string">'[object String]'</span>;</span><br><span class="line"><span class="keyword">const</span> symbolTag = <span class="string">'[object Symbol]'</span>;</span><br><span class="line"><span class="keyword">const</span> errorTag = <span class="string">'[object Error]'</span>;</span><br><span class="line"><span class="keyword">const</span> regexpTag = <span class="string">'[object RegExp]'</span>;</span><br><span class="line"><span class="keyword">const</span> funcTag = <span class="string">'[object Function]'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 不可连续遍历的数据类型的Tag</span></span><br><span class="line"><span class="keyword">const</span> deepTag = [mapTag, setTag, arrayTag, objectTag, argsTag];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 判断是不是引用数据类型</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isObject</span>(<span class="params">target</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> type = <span class="keyword">typeof</span> target;</span><br><span class="line">    <span class="keyword">return</span> target !== <span class="literal">null</span> &amp;&amp; (type === <span class="string">'object'</span> || type === <span class="string">'function'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取数据类型</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getType</span>(<span class="params">target</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Object</span>.prototype.toString.call(target);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化被克隆的对象 可连续遍历的</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getInit</span>(<span class="params">target</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> Ctor = target.constructor;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Ctor();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 克隆Symbol</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">cloneSymbol</span>(<span class="params">targe</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Object</span>(<span class="built_in">Symbol</span>.prototype.valueOf.call(targe));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 克隆正则</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">cloneReg</span>(<span class="params">targe</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> reFlags = <span class="regexp">/\w*$/</span>;</span><br><span class="line">    <span class="keyword">const</span> result = <span class="keyword">new</span> targe.constructor(targe.source, reFlags.exec(targe));</span><br><span class="line">    result.lastIndex = targe.lastIndex;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 克隆函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">cloneFunction</span>(<span class="params">func</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> bodyReg = <span class="regexp">/(?&lt;=&#123;)(.|\n)+(?=&#125;)/m</span>;</span><br><span class="line">    <span class="keyword">const</span> paramReg = <span class="regexp">/(?&lt;=\().+(?=\)\s+&#123;)/</span>;</span><br><span class="line">    <span class="keyword">const</span> funcString = func.toString();</span><br><span class="line">    <span class="keyword">if</span> (func.prototype) &#123;</span><br><span class="line">        <span class="keyword">const</span> param = paramReg.exec(funcString);</span><br><span class="line">        <span class="keyword">const</span> body = bodyReg.exec(funcString);</span><br><span class="line">        <span class="keyword">if</span> (body) &#123;</span><br><span class="line">            <span class="keyword">if</span> (param) &#123;</span><br><span class="line">                <span class="keyword">const</span> paramArr = param[<span class="number">0</span>].split(<span class="string">','</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Function</span>(...paramArr, body[<span class="number">0</span>]);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Function</span>(body[<span class="number">0</span>]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">eval</span>(funcString);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 克隆不可遍历的类型</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">cloneOtherType</span>(<span class="params">targe, type</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> Ctor = targe.constructor;</span><br><span class="line">    <span class="keyword">switch</span> (type) &#123;</span><br><span class="line">        <span class="keyword">case</span> boolTag:</span><br><span class="line">        <span class="keyword">case</span> numberTag:</span><br><span class="line">        <span class="keyword">case</span> stringTag:</span><br><span class="line">        <span class="keyword">case</span> errorTag:</span><br><span class="line">        <span class="keyword">case</span> dateTag:</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> Ctor(targe);</span><br><span class="line">        <span class="keyword">case</span> regexpTag:</span><br><span class="line">            <span class="keyword">return</span> cloneReg(targe);</span><br><span class="line">        <span class="keyword">case</span> symbolTag:</span><br><span class="line">            <span class="keyword">return</span> cloneSymbol(targe);</span><br><span class="line">        <span class="keyword">case</span> funcTag:</span><br><span class="line">            <span class="keyword">return</span> cloneFunction(targe);</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通用while 循环 处理对象和数组时使用</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">forEach</span>(<span class="params">array, iteratee</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> index = <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">const</span> length = array.length;</span><br><span class="line">    <span class="keyword">while</span> (++index &lt; length) &#123;</span><br><span class="line">        iteratee(array[index], index);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> array;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">clone</span>(<span class="params">target, map = new WeakMap(</span>))</span>&#123;</span><br><span class="line">  <span class="comment">// 克隆原始类型</span></span><br><span class="line">  <span class="keyword">if</span>(!isObject(target))&#123;</span><br><span class="line">    <span class="keyword">return</span> target;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 初始化</span></span><br><span class="line">  <span class="keyword">const</span> type = getType(target); <span class="comment">// 获取数据类型</span></span><br><span class="line">  <span class="keyword">let</span> cloneTarget;</span><br><span class="line">  <span class="keyword">if</span>(deepTag.includes(type))&#123;</span><br><span class="line">    <span class="comment">// 可连续遍历的数据类型 先进行初始化</span></span><br><span class="line">    cloneTarget = getInit(target, type);</span><br><span class="line">  &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="comment">// 不可连续遍历的数据类型 分类处理</span></span><br><span class="line">    <span class="keyword">return</span> cloneOtherType(target, type);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 处理循环引用 </span></span><br><span class="line">  <span class="keyword">if</span>(map.get(target))&#123;</span><br><span class="line">    <span class="keyword">return</span> target();</span><br><span class="line">  &#125;</span><br><span class="line">  map.set(target, cloneTarget);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 处理 set</span></span><br><span class="line">  <span class="keyword">if</span>(type === setTag) &#123;</span><br><span class="line">    target.forEach(<span class="function"><span class="params">value</span> =&gt;</span> &#123;</span><br><span class="line">      cloneTarget.add(clone(value));</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">return</span> cloneTarget;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 处理 map</span></span><br><span class="line">  <span class="keyword">if</span>(type=== mapTag) &#123;</span><br><span class="line">    target.forEach(<span class="function">(<span class="params">value, key</span>)=&gt;</span>&#123;</span><br><span class="line">      cloneTarget.set(key, clone(value));</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">return</span> cloneTarget;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 处理对象和数组</span></span><br><span class="line">  <span class="keyword">const</span> keys = type === arratTag ? <span class="keyword">void</span> <span class="number">0</span> : <span class="built_in">Object</span>.keys(target);</span><br><span class="line">  forEach(keys || target, (value, key)=&gt;&#123;</span><br><span class="line">    <span class="keyword">if</span>(keys)&#123;</span><br><span class="line">      key = value;</span><br><span class="line">    &#125;</span><br><span class="line">    cloneTarget[key] = clone(target[key], map);</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="keyword">return</span> cloneTarget;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<p>参考资料：</p>
-<ul>
-<li><a href="https://mp.weixin.qq.com/s/vXbFsG59L1Ba0DMcZeU2Bg" target="_blank" rel="noopener">如何写出一个惊艳面试官的深拷贝</a></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/23/collections/JavaScript/Js%E7%9A%84%E6%B7%B1%E6%B5%85%E6%8B%B7%E8%B4%9D/" data-id="ckgp8pmys001n4atbfu593mc5" class="article-share-link">分享</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-collections/JavaScript/手动实现数组的一些方法" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/hexo-blog/2020/08/23/collections/JavaScript/%E6%89%8B%E5%8A%A8%E5%AE%9E%E7%8E%B0%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%80%E4%BA%9B%E6%96%B9%E6%B3%95/" class="article-date">
-  <time datetime="2020-08-23T15:27:00.000Z" itemprop="datePublished">2020-08-23</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/hexo-blog/2020/08/23/collections/JavaScript/%E6%89%8B%E5%8A%A8%E5%AE%9E%E7%8E%B0%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%80%E4%BA%9B%E6%96%B9%E6%B3%95/">手动实现数组的一些方法</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="手动实现-Array-prototype-map-方法"><a href="#手动实现-Array-prototype-map-方法" class="headerlink" title="手动实现 Array.prototype.map 方法"></a>手动实现 Array.prototype.map 方法</h2><p>map() 方法创建一个新数组，其结果是该数组中的每个元素都调用一个提供函数后返回的结果。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">map</span>(<span class="params">arr, mapCallback</span>)</span>&#123;</span><br><span class="line">  <span class="comment">// 首先。检查传递的参数是否正确</span></span><br><span class="line">  <span class="keyword">if</span>(!<span class="built_in">Array</span>.isArray(arr) || !arr.length || <span class="keyword">typeof</span> mapCallback !== <span class="string">'funciton'</span>)&#123;</span><br><span class="line">    <span class="keyword">return</span> [];</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> result = [];</span><br><span class="line">    <span class="comment">// 每次调用此函数时，都会先创建一个 result 数组</span></span><br><span class="line">    <span class="comment">// 因为我们不想改变原始数组</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i=<span class="number">0</span>, len=arr.length;i &lt; len; i++) &#123;</span><br><span class="line">      result.push(mapCallback(arr[i], i, arr));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<h2 id="手动实现-Array-prototype-filter-方法"><a href="#手动实现-Array-prototype-filter-方法" class="headerlink" title="手动实现 Array.prototype.filter 方法"></a>手动实现 Array.prototype.filter 方法</h2><p>filter() 方法创建一个新数组，其包含通过所提供函数实现的测试的所有元素</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">filter</span>(<span class="params">arr, filterCallback</span>)</span>&#123;</span><br><span class="line">  <span class="comment">// 首先 检查传递的参数是否正确</span></span><br><span class="line">  <span class="keyword">if</span>(!<span class="built_in">Array</span>.isArray(arr) || !arr.length || <span class="keyword">typeof</span> filterCallback !== <span class="string">'function'</span>)&#123;</span><br><span class="line">    <span class="keyword">return</span> [];</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> result = [];</span><br><span class="line">    <span class="comment">// 每次调用此函数时，都会先创建一个 result 数组</span></span><br><span class="line">    <span class="comment">// 因为我们不想改变原始数组</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i=<span class="number">0</span>, len=arr.length; i&lt;len; i++)&#123;</span><br><span class="line">      <span class="comment">// 检查 filterCallback 的返回值是否是真值</span></span><br><span class="line">      <span class="keyword">if</span>(filterCallback(arr[i], i, arr))&#123;</span><br><span class="line">        <span class="comment">// 如果条件为真，则将数组元素push 到 result 中</span></span><br><span class="line">        result.push(arr[i]);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<h2 id="手动实现Array-prototype-reduce方法"><a href="#手动实现Array-prototype-reduce方法" class="headerlink" title="手动实现Array.prototype.reduce方法"></a>手动实现Array.prototype.reduce方法</h2><p>reduce() 方法对数组中的每个元素执行一个由您提供的reducer 函数（升序执行），将其结果汇总为单个返回值</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">reduce</span>(<span class="params">arr, reduceCallback, initialValue</span>)</span>&#123;</span><br><span class="line">  <span class="comment">// 首先 检查传递的参数是否正确</span></span><br><span class="line">  <span class="keyword">if</span>(!<span class="built_in">Array</span>.isArray(arr) || !arr.length || <span class="keyword">typeof</span> reduceCallback !== <span class="string">'funciton'</span>)&#123;</span><br><span class="line">    <span class="keyword">return</span> [];</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 如果没有将initialValue 传递给函数，我们将使用第一个数组项作为initialValue</span></span><br><span class="line">    <span class="keyword">let</span> hasInitialValue = initialValue !== <span class="keyword">void</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">let</span> value = hasInitialValue ? initialValue : arr[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果有传递initialValue 则索引将从 1 开始，否则从 0 开始</span></span><br><span class="line">    <span class="keyword">for</span>( <span class="keyword">let</span> i = hasInitialValue ? <span class="number">1</span>:<span class="number">0</span>, len=arr.length; i&lt;len ;i++)&#123;</span><br><span class="line">      value = reduceCallback(value, arr[i], i, arr);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> value;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>reducer 函数接收4个参数:</li>
-</ul>
-<ol>
-<li>Accumulator (acc) (累计器)</li>
-<li>Current Value (cur) (当前值)</li>
-<li>Current Index (idx) (当前索引)</li>
-<li>Source Array (src) (源数组)</li>
-</ol>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/23/collections/JavaScript/%E6%89%8B%E5%8A%A8%E5%AE%9E%E7%8E%B0%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%80%E4%BA%9B%E6%96%B9%E6%B3%95/" data-id="ckgp8pmz0001z4atb7683bkz6" class="article-share-link">分享</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-collections/JavaScript/写一个通用的事件侦听器函数" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/hexo-blog/2020/08/22/collections/JavaScript/%E5%86%99%E4%B8%80%E4%B8%AA%E9%80%9A%E7%94%A8%E7%9A%84%E4%BA%8B%E4%BB%B6%E4%BE%A6%E5%90%AC%E5%99%A8%E5%87%BD%E6%95%B0/" class="article-date">
-  <time datetime="2020-08-22T16:00:00.000Z" itemprop="datePublished">2020-08-23</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/hexo-blog/2020/08/22/collections/JavaScript/%E5%86%99%E4%B8%80%E4%B8%AA%E9%80%9A%E7%94%A8%E7%9A%84%E4%BA%8B%E4%BB%B6%E4%BE%A6%E5%90%AC%E5%99%A8%E5%87%BD%E6%95%B0/">写一个通用的事件侦听器函数</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="通用的事件侦听器函数"><a href="#通用的事件侦听器函数" class="headerlink" title="通用的事件侦听器函数"></a>通用的事件侦听器函数</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> EventUtils = &#123;</span><br><span class="line">  <span class="comment">// 视能力分别使用dom0|dom2|IE 方式，来绑定事件</span></span><br><span class="line">  <span class="comment">// 添加事件</span></span><br><span class="line">  addEvent: <span class="function"><span class="keyword">function</span>(<span class="params">element, type, handler</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(element.addEventListener)&#123;</span><br><span class="line">      element.addEventListener(type, handler, <span class="literal">false</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(element.attachEvent)&#123;</span><br><span class="line">      element.attachEvent(<span class="string">"on"</span> + type, handler);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      element[<span class="string">"on"</span>+type] = handler;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 移除事件</span></span><br><span class="line">  removeEvent: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(element.removeEventListener)&#123;</span><br><span class="line">      element.removeEventListener(type, handler, <span class="literal">false</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(element.detachEvent)&#123;</span><br><span class="line">      element.detachEvent(<span class="string">"on"</span> + type, handler);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      element[<span class="string">"on"</span> + type] = <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 获取事件目标</span></span><br><span class="line">  getTarget: <span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> event.target || event.srcElement;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 获取event 对象的引用，渠道时间按的所有信息，确保随时能使用 event</span></span><br><span class="line">  getEvent: <span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> event || <span class="built_in">window</span>.event;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 阻止事件（主要是冒泡，因为IE 不支持事件捕获）</span></span><br><span class="line">  stopPropagation: <span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(event.stopPropagation)&#123;</span><br><span class="line">      event.stopPropagation();</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      event.cancelBubble = <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 取消事件的默认行为</span></span><br><span class="line">  preventDefault: <span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(event.preventDefault)&#123;</span><br><span class="line">      event.preventDefault();</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      event.returnValue = <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/22/collections/JavaScript/%E5%86%99%E4%B8%80%E4%B8%AA%E9%80%9A%E7%94%A8%E7%9A%84%E4%BA%8B%E4%BB%B6%E4%BE%A6%E5%90%AC%E5%99%A8%E5%87%BD%E6%95%B0/" data-id="ckgp8pmyx001u4atb074o1tol" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/25/collections/JavaScript/js%E6%A8%A1%E6%8B%9Fnew%E6%93%8D%E4%BD%9C%E7%AC%A6%E7%9A%84%E5%AE%9E%E7%8E%B0/" data-id="ckhj97ra6001z2inahfyu33ty" class="article-share-link">分享</a>
       
       
     </footer>
@@ -761,7 +1030,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/10/">十月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/09/">九月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/07/">七月 2020</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/11/">十一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/10/">十月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/09/">九月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/07/">七月 2020</a></li></ul>
     </div>
   </div>
 
@@ -774,23 +1043,23 @@
       <ul>
         
           <li>
+            <a href="/hexo-blog/2020/11/09/collections/Internet/Fetch%20API%E4%BB%8B%E7%BB%8D%E5%8F%8A%E4%BD%BF%E7%94%A8Fetch%20%E5%8F%91%E9%80%81%E8%AF%B7%E6%B1%82/">Fetch API介绍及使用Fetch发送请求</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2020/11/08/collections/Git/git%E6%96%87%E4%BB%B6%E5%90%8D%E5%A4%A7%E5%B0%8F%E5%86%99%E6%97%A0%E6%B3%95%E4%BF%AE%E6%94%B9/">git文件名大小写无法修改</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2020/11/02/collections/Git/git%20log%E5%9C%A8win10%E5%87%BA%E7%8E%B0%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81/">git log在win10出现中文乱码</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2020/10/31/collections/CentOs/centos%20%E7%B3%BB%E7%BB%9F%E4%BD%BF%E7%94%A8Verdaccio%E6%90%AD%E5%BB%BAnpm%E7%A7%81%E5%BA%93/">centos 系统使用verdaccio搭建npm私库</a>
+          </li>
+        
+          <li>
             <a href="/hexo-blog/2020/10/04/collections/Project/qiankun%E5%BE%AE%E5%89%8D%E7%AB%AF%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/">qiankun微前端项目搭建</a>
-          </li>
-        
-          <li>
-            <a href="/hexo-blog/2020/09/25/collections/TypeScript/TypeScript%20%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4/">TypeScript 命名空间</a>
-          </li>
-        
-          <li>
-            <a href="/hexo-blog/2020/09/21/collections/WeiChat/JS-SDK%E4%BD%BF%E7%94%A8%E6%9D%83%E9%99%90%E7%AD%BE%E5%90%8D%E7%AE%97%E6%B3%95/">微信 JS-SDK使用权限签名算法</a>
-          </li>
-        
-          <li>
-            <a href="/hexo-blog/2020/09/20/collections/Linux/Ubuntu%20%E5%88%87%E6%8D%A2%E9%98%BF%E9%87%8C%E6%BA%90/">Ubuntu 更换阿里云软件源</a>
-          </li>
-        
-          <li>
-            <a href="/hexo-blog/2020/09/20/collections/Linux/Ubuntu%20%E5%90%AF%E5%8A%A8ssh%20%E6%9C%8D%E5%8A%A1/">Ubuntu 启动ssh 服务</a>
           </li>
         
       </ul>

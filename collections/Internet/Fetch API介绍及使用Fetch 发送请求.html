@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Fetch API介绍及使用Fetch发送请求 | #一如既往、</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Fetch APIFetch API 提供了一个JavaScript 接口，用于访问和操纵HTTP 的请求和响应等，提供了一个全局fetch() 方法来跨网络一步获取资源。 与AJAX 的区别Fetch 规范与jQuery.ajax() 主要有三种方式的不同：  当接收到一个代表错误的HTTP 状态码，即使响应的HTTP 状态码是404 或500。从fetch() 返回的Promise** 不会被">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Fetch API介绍及使用Fetch发送请求">
+<meta property="og:url" content="https://ewqazxc.github.io/hexo-blog/collections/Internet/Fetch%20API%E4%BB%8B%E7%BB%8D%E5%8F%8A%E4%BD%BF%E7%94%A8Fetch%20%E5%8F%91%E9%80%81%E8%AF%B7%E6%B1%82.html">
+<meta property="og:site_name" content="#一如既往、">
+<meta property="og:description" content="Fetch APIFetch API 提供了一个JavaScript 接口，用于访问和操纵HTTP 的请求和响应等，提供了一个全局fetch() 方法来跨网络一步获取资源。 与AJAX 的区别Fetch 规范与jQuery.ajax() 主要有三种方式的不同：  当接收到一个代表错误的HTTP 状态码，即使响应的HTTP 状态码是404 或500。从fetch() 返回的Promise** 不会被">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-11-09T15:05:05.000Z">
+<meta property="article:modified_time" content="2020-11-15T15:08:26.113Z">
+<meta property="article:author" content="ewqazxc">
+<meta name="twitter:card" content="summary">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <!-- 
+<link rel="stylesheet" href="/hexo-blog/%7B%22title%22:%22#%E4%B8%80%E5%A6%82%E6%97%A2%E5%BE%80%E3%80%81%22,%22subtitle%22:%22%E4%B8%8D%E7%9F%A5%E9%81%93%E5%86%99%E7%9A%84%E4%BB%80%E4%B9%88%E7%9A%84%E5%8D%9A%E5%AE%A2~%22,%22description%22:%22description%22,%22author%22:%22ewqazxc%22,%22language%22:%22zh-CN%22,%22timezone%22:%22Asia/Shanghai%22,%22url%22:%22https:/ewqazxc.github.io/hexo-blog%22,%22root%22:%22/hexo-blog/%22,%22permalink%22:%22:year/:month/:day/:title/%22,%22permalink_defaults%22:null,%22pretty_urls%22:%7B%22trailing_index%22:true,%22trailing_html%22:true%7D,%22source_dir%22:%22source%22,%22public_dir%22:%22public%22,%22tag_dir%22:%22tags%22,%22archive_dir%22:%22archives%22,%22category_dir%22:%22categories%22,%22code_dir%22:%22downloads/code%22,%22i18n_dir%22:%22:lang%22,%22skip_render%22:null,%22new_post_name%22:%22:title.md%22,%22default_layout%22:%22post%22,%22titlecase%22:false,%22external_link%22:%7B%22enable%22:true,%22field%22:%22site%22,%22exclude%22:%22%22%7D,%22filename_case%22:0,%22render_drafts%22:false,%22post_asset_folder%22:false,%22relative_link%22:false,%22future%22:true,%22highlight%22:%7B%22enable%22:true,%22auto_detect%22:false,%22line_number%22:true,%22tab_replace%22:%22%22,%22wrap%22:true,%22hljs%22:false,%22first_line_number%22:%22always1%22%7D,%22default_category%22:%22uncategorized%22,%22category_map%22:null,%22tag_map%22:null,%22date_format%22:%22YYYY-MM-DD%22,%22time_format%22:%22HH:mm:ss%22,%22use_date_for_updated%22:false,%22per_page%22:10,%22pagination_dir%22:%22page%22,%22theme%22:%22landscape%22,%22server%22:%7B%22port%22:4000,%22log%22:false,%22compress%22:false,%22header%22:true,%22cache%22:false%7D,%22deploy%22:%7B%22type%22:%22%22%7D,%22ignore%22:null,%22meta_generator%22:true,%22keywords%22:null,%22index_generator%22:%7B%22per_page%22:10,%22order_by%22:%22-date%22,%22path%22:%22%22%7D,%22include%22:null,%22exclude%22:null,%22archive_generator%22:%7B%22per_page%22:10,%22yearly%22:true,%22monthly%22:true,%22daily%22:false%7D,%22category_generator%22:%7B%22per_page%22:10%7D,%22tag_generator%22:%7B%22per_page%22:10%7D,%22marked%22:%7B%22gfm%22:true,%22pedantic%22:false,%22breaks%22:true,%22smartLists%22:true,%22smartypants%22:true,%22modifyAnchors%22:%22%22,%22autolink%22:true,%22sanitizeUrl%22:false,%22headerIds%22:true%7D%7D.css">
+ -->
+  
+<link rel="stylesheet" href="/hexo-blog/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/hexo-blog/" id="logo">#一如既往、</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/hexo-blog/" id="subtitle">不知道写的什么的博客~</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/hexo-blog/">主页</a>
+        
+          <a class="main-nav-link" href="/hexo-blog/archives">归档</a>
+        
+          <a class="main-nav-link" href="/hexo-blog/about/me.html">关于</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://ewqazxc.github.io/hexo-blog"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="page-" class="article article-type-page" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo-blog/collections/Internet/Fetch%20API%E4%BB%8B%E7%BB%8D%E5%8F%8A%E4%BD%BF%E7%94%A8Fetch%20%E5%8F%91%E9%80%81%E8%AF%B7%E6%B1%82.html" class="article-date">
+  <time datetime="2020-11-09T15:05:05.000Z" itemprop="datePublished">2020-11-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Fetch API介绍及使用Fetch发送请求
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Fetch-API"><a href="#Fetch-API" class="headerlink" title="Fetch API"></a>Fetch API</h2><p><code>Fetch API</code> 提供了一个JavaScript 接口，用于访问和操纵HTTP 的请求和响应等，提供了一个全局<code>fetch()</code> 方法来跨网络一步获取资源。</p>
+<h2 id="与AJAX-的区别"><a href="#与AJAX-的区别" class="headerlink" title="与AJAX 的区别"></a>与AJAX 的区别</h2><p>Fetch 规范与jQuery.ajax() 主要有三种方式的不同：</p>
+<ul>
+<li>当接收到一个代表错误的HTTP 状态码，即使响应的HTTP 状态码是404 或500。从<code>fetch()</code> 返回的Promise** 不会被标记为reject,而是标记为resolve,但是会把resolve 的返回值的<code>ok</code> 属性设置为false。<strong>仅当网络故障或请求被阻止时，才返回reject</strong></li>
+<li><code>fetch()</code> 可以接收跨域cookies，也可以使用<code>fetch()</code> 建立起跨域会话</li>
+<li><code>fetch</code> 不会发送cookies，除非使用了credentials的<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/WindowOrWorkerGlobalScope/fetch#Parameters" target="_blank" rel="noopener">初始化选项</a> </li>
+</ul>
+<h2 id="Fetch-示例"><a href="#Fetch-示例" class="headerlink" title="Fetch() 示例"></a>Fetch() 示例</h2><p>给<code>fetch()</code> 提供一个参数指明资源路径，会返回一个包含响应结果的promise，当然它只是一个HTTP 响应，为了获取JSON 的内容，需要使用<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Body/json" target="_blank" rel="noopener">json()</a> 方法</p>
+<ol>
+<li><p>默认发送get 请求</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fetch(<span class="string">'http://example.com/movies.json'</span>)</span><br><span class="line">  .then(<span class="function"><span class="params">response</span>=&gt;</span>response.json())</span><br><span class="line">  .then(<span class="function"><span class="params">data</span>=&gt;</span> <span class="built_in">console</span>.log(data))</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>带参数的get 请求</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> id = <span class="number">1</span>;</span><br><span class="line">fetch(<span class="string">`http://example.com/movies.json?id=<span class="subst">$&#123;id&#125;</span>`</span>)</span><br><span class="line">  .then(<span class="function"><span class="params">response</span>=&gt;</span>response.json())</span><br><span class="line">  .then(<span class="function"><span class="params">data</span>=&gt;</span> <span class="built_in">console</span>.log(data))</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>发送post 请求</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> data = &#123;<span class="attr">id</span>: <span class="number">1</span>&#125;;</span><br><span class="line">fetch(<span class="string">'http://example.com/postApi'</span>,&#123;</span><br><span class="line">    method:<span class="string">'POST'</span>,</span><br><span class="line">    body:data</span><br><span class="line">&#125;)	</span><br><span class="line">.then(<span class="function"><span class="params">response</span> =&gt;</span> response.json())</span><br><span class="line">.then(<span class="function"><span class="params">data</span> =&gt;</span> <span class="built_in">console</span>.log(data));</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="Fetch"><a href="#Fetch" class="headerlink" title="Fetch()"></a>Fetch()</h2><ul>
+<li>用于发起获取资源的请求，返回一个Promise，这个Promise 会在请求响应后被resolve，并传回Response 对象。</li>
+<li>当遇到网络错误时，<code>fetch()</code> 返回的Promise 会被reject，并传回<code>TypeError</code>.</li>
+<li>成功的fetch() 检查不仅要包括Promise 被resolve，还要包括Response.ok 属性为true。</li>
+<li>HTTP 404 状态并不被认为是网络错误。</li>
+</ul>
+<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fetch(input ,&#123; init &#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h3><ol>
+<li><p><code>input</code>——定义要获取的资源，可以是</p>
+<ul>
+<li>字符串，包含要获取资源的URL</li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Request" target="_blank" rel="noopener">Request</a> 对象</li>
+</ul>
+</li>
+<li><p><code>init</code>—— 可选 | 一个配置项对象，包括所有对请求的设置，可选的参数有：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myInit=&#123;</span><br><span class="line">  <span class="comment">//请求的 body 信息 //如：Blob、BufferSource、FormData、URLSearchParams 或者 USVString 对象</span></span><br><span class="line">  body: <span class="built_in">JSON</span>.stringify(data), <span class="comment">//这里必须匹配 'Content-Type' //注意 GET 或 HEAD 方法的请求不能包含 body 信息。 </span></span><br><span class="line"></span><br><span class="line">  <span class="comment">//请求的 cache 模式。//如：default, no-cache, reload, force-cache, only-if-cached</span></span><br><span class="line">  cache: <span class="string">'no-cache'</span>, 	 </span><br><span class="line">  </span><br><span class="line">  <span class="comment">//请求的 credentials。//包括：omit、same-origin，include</span></span><br><span class="line">  credentials: <span class="string">'same-origin'</span>,  </span><br><span class="line">    </span><br><span class="line">  <span class="comment">//请求的头信息</span></span><br><span class="line">  headers: &#123;	</span><br><span class="line">    <span class="string">'user-agent'</span>: <span class="string">'Mozilla/4.0 MDN Example'</span>,</span><br><span class="line">    <span class="string">'content-type'</span>: <span class="string">'application/json'</span></span><br><span class="line">  &#125;,</span><br><span class="line">    </span><br><span class="line">  <span class="comment">//请求使用的方法  //如：GET, POST, PUT, DELETE等</span></span><br><span class="line">  method: <span class="string">'POST'</span>, </span><br><span class="line">  </span><br><span class="line">  <span class="comment">//请求的模式	 //如 cors、 no-cors 或者 same-origin。</span></span><br><span class="line">  mode: <span class="string">'cors'</span>, </span><br><span class="line">    </span><br><span class="line">  <span class="comment">//重定向模式 //如 follow|自动重定向, error|如果产生重定向将自动终止并且抛出一个错误, manual|手动处理重定向</span></span><br><span class="line">  redirect: <span class="string">'follow'</span>, </span><br><span class="line">  </span><br><span class="line">  <span class="comment">//USVString  //如 no-referrer、client或一个 URL。默认是 client</span></span><br><span class="line">  referrer: <span class="string">'no-referrer'</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="发送带凭证的请求"><a href="#发送带凭证的请求" class="headerlink" title="发送带凭证的请求"></a>发送带凭证的请求</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//发送包含凭据的请求</span></span><br><span class="line">fetch(<span class="string">'https://example.com'</span>, &#123;</span><br><span class="line">  credentials: <span class="string">'include'</span>  </span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//如果你只想在请求URL与调用脚本位于同一起源处时发送凭据</span></span><br><span class="line">fetch(<span class="string">'https://example.com'</span>, &#123;</span><br><span class="line">  credentials: <span class="string">'same-origin'</span>  </span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//确保浏览器不在请求中包含凭据</span></span><br><span class="line">fetch(<span class="string">'https://example.com'</span>, &#123;</span><br><span class="line">  credentials: <span class="string">'omit'</span>  </span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="上传json-数据"><a href="#上传json-数据" class="headerlink" title="上传json 数据"></a>上传json 数据</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> data = &#123;<span class="attr">username</span>: <span class="string">'example'</span>&#125;;</span><br><span class="line"></span><br><span class="line">fetch(<span class="string">'https://example.com/profile'</span>, &#123;</span><br><span class="line">  method: <span class="string">'POST'</span>, </span><br><span class="line">  body: <span class="built_in">JSON</span>.stringify(data), </span><br><span class="line">  headers: <span class="keyword">new</span> Headers(&#123;</span><br><span class="line">    <span class="string">'Content-Type'</span>: <span class="string">'application/json'</span></span><br><span class="line">  &#125;)</span><br><span class="line">&#125;).then(<span class="function"><span class="params">res</span> =&gt;</span> res.json())</span><br><span class="line">.catch(<span class="function"><span class="params">error</span> =&gt;</span> <span class="built_in">console</span>.error(<span class="string">'Error:'</span>, error))</span><br><span class="line">.then(<span class="function"><span class="params">response</span> =&gt;</span> <span class="built_in">console</span>.log(<span class="string">'Success:'</span>, response));</span><br></pre></td></tr></table></figure>
+
+<h3 id="上传文件"><a href="#上传文件" class="headerlink" title="上传文件"></a>上传文件</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> formData = <span class="keyword">new</span> FormData();</span><br><span class="line"><span class="keyword">var</span> fileField = <span class="built_in">document</span>.querySelector(<span class="string">"input[type='file']"</span>);<span class="comment">// 获取&lt;input type="file" /&gt; 元素</span></span><br><span class="line"></span><br><span class="line">formData.append(<span class="string">'username'</span>, <span class="string">'abc123'</span>);</span><br><span class="line">formData.append(<span class="string">'avatar'</span>, fileField.files[<span class="number">0</span>]);</span><br><span class="line"></span><br><span class="line">fetch(<span class="string">'https://example.com/profile/avatar'</span>, &#123;</span><br><span class="line">  method: <span class="string">'PUT'</span>,</span><br><span class="line">  body: formData</span><br><span class="line">&#125;)</span><br><span class="line">.then(<span class="function"><span class="params">response</span> =&gt;</span> response.json())</span><br><span class="line">.catch(<span class="function"><span class="params">error</span> =&gt;</span> <span class="built_in">console</span>.error(<span class="string">'Error:'</span>, error))</span><br><span class="line">.then(<span class="function"><span class="params">response</span> =&gt;</span> <span class="built_in">console</span>.log(<span class="string">'Success:'</span>, response));</span><br></pre></td></tr></table></figure>
+
+<h3 id="上传多个文件"><a href="#上传多个文件" class="headerlink" title="上传多个文件"></a>上传多个文件</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> formData = <span class="keyword">new</span> FormData();<span class="regexp">/</span></span><br><span class="line"><span class="regexp">var photos = document.querySelector("input[type='file'][multiple]");</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">formData.append('title', 'My Vegas Vacation');</span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/ formData 只接受文件、Blob 或字符串，不能直接传递数组，所以必须循环嵌入</span></span><br><span class="line"><span class="regexp">for (let i = 0; i &lt; photos.files.length; i++) &#123; </span></span><br><span class="line"><span class="regexp">    formData.append('photo', photos.files[i]); </span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">fetch('https:/</span><span class="regexp">/example.com/</span>posts<span class="string">', &#123;</span></span><br><span class="line"><span class="string">  method: '</span>POST<span class="string">',</span></span><br><span class="line"><span class="string">  body: formData</span></span><br><span class="line"><span class="string">&#125;)</span></span><br><span class="line"><span class="string">.then(response =&gt; response.json())</span></span><br><span class="line"><span class="string">.then(response =&gt; console.log('</span>Success:<span class="string">', JSON.stringify(response)))</span></span><br><span class="line"><span class="string">.catch(error =&gt; console.error('</span><span class="built_in">Error</span>:<span class="string">', error));</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="检测请求是否成功"><a href="#检测请求是否成功" class="headerlink" title="检测请求是否成功"></a>检测请求是否成功</h3><ul>
+<li>如果遇到网络故障，<code>fetch() promise</code> 将会 <code>reject</code>，带上一个 <code>TypeError</code> 对象。虽然这个情况经常是遇到了权限问题或类似问题——比如 404 不是一个网络故障。想要精确的判断 fetch() 是否成功，需要包含 <code>promise resolved</code> 的情况，此时再判断<code>Response.ok</code> 是不是为<code>true</code>。类似以下代码：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">fetch(<span class="string">'flowers.jpg'</span>).then(<span class="function"><span class="keyword">function</span>(<span class="params">response</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(response.ok) &#123;</span><br><span class="line">    <span class="keyword">return</span> response.blob();</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Network response was not ok.'</span>);</span><br><span class="line">&#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params">myBlob</span>) </span>&#123; </span><br><span class="line">  <span class="keyword">var</span> objectURL = URL.createObjectURL(myBlob); </span><br><span class="line">  myImage.src = objectURL; </span><br><span class="line">&#125;).catch(<span class="function"><span class="keyword">function</span>(<span class="params">error</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'There has been a problem with your fetch operation: '</span>, error.message);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="自定义请求对象"><a href="#自定义请求对象" class="headerlink" title="自定义请求对象"></a>自定义请求对象</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myHeaders = <span class="keyword">new</span> Headers();</span><br><span class="line"><span class="keyword">var</span> myInit = &#123;</span><br><span class="line">  method: <span class="string">'GET'</span>,</span><br><span class="line">  headers: myHeaders,</span><br><span class="line">  mode: <span class="string">'cors'</span>,</span><br><span class="line">  cache: <span class="string">'default'</span> </span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> myRequest = <span class="keyword">new</span> Request(<span class="string">'flowers.jpg'</span>, myInit);</span><br><span class="line">fetch(myRequest).then(<span class="function"><span class="keyword">function</span>(<span class="params">response</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> response.blob();</span><br><span class="line">&#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params">myBlob</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> objectURL = URL.createObjectURL(myBlob);</span><br><span class="line">  myImage.src = objectURL;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="与xml-的区别"><a href="#与xml-的区别" class="headerlink" title="与xml 的区别"></a>与xml 的区别</h2><ul>
+<li>与xml不同的是，Fetch 可以很容易地被其他技术使用，例如 Service Workers。它还提供了专门的逻辑空间来定义其他与 HTTP 相关的概念，例如 CORS 和 HTTP 的扩展。Fetch 提供了对 Request 和 Response （以及其他与网络请求有关的）对象的通用定义，使之应用于更多场景。</li>
+</ul>
+<h3 id="1-Headers"><a href="#1-Headers" class="headerlink" title="1. Headers"></a>1. Headers</h3><p>Headers 接口允许您对HTTP请求和响应头执行各种操作。 包括检索，设置，添加和删除。可以通过 Headers()构造函数来创建一个你自己的 headers 对象</p>
+<ul>
+<li><p>方法：</p>
+<ul>
+<li>append()——给现有的header添加一个值, 或者添加一个未存在的header并赋值</li>
+<li>delete()——从Headers对象中删除指定header</li>
+<li>entries()——以 迭代器 的形式返回Headers对象中所有的键值对</li>
+<li>get()——以 ByteString 的形式从Headers对象中返回指定header的全部值</li>
+<li>has()——以布尔值的形式从Headers对象中返回是否存在指定的header</li>
+</ul>
+</li>
+<li><p>示例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> myHeaders = <span class="keyword">new</span> Headers(); </span><br><span class="line">myHeaders.append(<span class="string">'Content-Type'</span>, <span class="string">'text/xml'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//可以传一个多维数组或者对象字面量来创建：</span></span><br><span class="line">myHeaders = <span class="keyword">new</span> Headers(&#123;</span><br><span class="line">  <span class="string">"Content-Type"</span>: <span class="string">"text/plain"</span>,</span><br><span class="line">  <span class="string">"X-Custom-Header"</span>: <span class="string">"ProcessThisImmediately"</span>,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">//内容可以获取与修改</span></span><br><span class="line"><span class="built_in">console</span>.log(myHeaders.has(<span class="string">"Content-Type"</span>)); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(myHeaders.has(<span class="string">"Set-Cookie"</span>)); <span class="comment">// false</span></span><br><span class="line">myHeaders.append(<span class="string">"X-Custom-Header"</span>, <span class="string">"AnotherValue"</span>);</span><br><span class="line"><span class="built_in">console</span>.log(myHeaders.getAll(<span class="string">"X-Custom-Header"</span>)); <span class="comment">// ["ProcessThisImmediately", "AnotherValue"]</span></span><br><span class="line">myHeaders.delete(<span class="string">"X-Custom-Header"</span>);</span><br><span class="line"><span class="built_in">console</span>.log(myHeaders.getAll(<span class="string">"X-Custom-Header"</span>)); <span class="comment">// [ ]</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="2-Request"><a href="#2-Request" class="headerlink" title="2. Request"></a>2. Request</h3><p>Request接口用来表示资源请求。可以通过 Request()构造函数来创建一个你自己的 Request对象</p>
+<ul>
+<li><p>属性：</p>
+<ul>
+<li>method——只读| 包含请求的方法</li>
+<li>url——只读| 包含请求的url</li>
+<li>headers——只读| 包含请求相关的Headers对象</li>
+<li>mode——只读| 包含请求模式</li>
+<li>credentials——只读| 包含请求的证书</li>
+<li>cache——只读| 包含请求的缓存模式</li>
+</ul>
+</li>
+<li><p>示例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//示例1</span></span><br><span class="line"><span class="keyword">const</span> myRequest = <span class="keyword">new</span> Request(<span class="string">'http://localhost/flowers.jpg'</span>);<span class="comment">//创建一个request对象</span></span><br><span class="line"><span class="keyword">const</span> myURL = myRequest.url; <span class="comment">// http://localhost/flowers.jpg</span></span><br><span class="line"><span class="keyword">const</span> myMethod = myRequest.method; <span class="comment">// GET</span></span><br><span class="line"><span class="keyword">const</span> myCred = myRequest.credentials; <span class="comment">// omit</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//示例2</span></span><br><span class="line"><span class="keyword">const</span> myRequest = <span class="keyword">new</span> Request(<span class="string">'http://localhost/api'</span>, &#123;<span class="attr">method</span>: <span class="string">'POST'</span>, <span class="attr">body</span>: <span class="string">'&#123;"foo":"bar"&#125;'</span>&#125;);</span><br><span class="line"><span class="keyword">const</span> myURL = myRequest.url; <span class="comment">// http://localhost/api</span></span><br><span class="line"><span class="keyword">const</span> myMethod = myRequest.method; <span class="comment">// POST</span></span><br><span class="line"><span class="keyword">const</span> myCred = myRequest.credentials; <span class="comment">// omit</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//可以将Request对象作为参数传递给fetch()</span></span><br><span class="line">fetch(myRequest)</span><br><span class="line">  .then(<span class="function"><span class="params">response</span> =&gt;</span> response.blob())</span><br><span class="line">  .then(<span class="function"><span class="params">blob</span> =&gt;</span> &#123;</span><br><span class="line">    myImage.src = URL.createObjectURL(blob);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="3-Responese"><a href="#3-Responese" class="headerlink" title="3. Responese"></a>3. Responese</h3><p>Response 接口呈现了对一次请求的响应数据。Response实例是在 fetch() 处理完 promise 之后返回的。你也可以通过 Response()构造函数来创建一个你自己的 Response对象</p>
+<ul>
+<li><p>属性：</p>
+<ul>
+<li>headers——只读| 包含此 Response 所关联的 Headers对象</li>
+<li>ok——只读| 包含了一个布尔值，标示该 Response 成功（HTTP 状态码的范围在 200-299）</li>
+<li>redirected——只读| 表示该 Response 是否来自一个重定向，如果是的话，它的 URL 列表将会有多个条目</li>
+<li>status——只读| 包含 Response 的状态码 （例如 200 表示成功）</li>
+<li>statusText——只读| 包含了与该 Response 状态码一致的状态信息（例如，OK对应 200）</li>
+<li>type——只读| 包含 Response 的类型（例如，basic、cors）</li>
+<li>url——只读| 包含 Response 的URL</li>
+</ul>
+</li>
+<li><p>示例：</p>
+<ul>
+<li>调用了 fetch()获取一张图片并将其显示在 HTML 的 IMG 标签中 , fetch() 函数返回了一个 Promise，它使用 Response 对象进行解析.。你会注意到，由于我们正在请求一张图片，我们需要运行blob为响应提供正确的 MIME 类型<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> image = <span class="built_in">document</span>.querySelector(<span class="string">'.my-image'</span>);</span><br><span class="line">fetch(<span class="string">'flowers.jpg'</span>).then(<span class="function"><span class="keyword">function</span>(<span class="params">response</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> response.blob();</span><br><span class="line">&#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params">blob</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> objectURL = URL.createObjectURL(blob);</span><br><span class="line">  image.src = objectURL;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Body"><a href="#Body" class="headerlink" title="Body"></a>Body</h3><p>Body mixin 提供了与 response/request 中的 body 有关的方法，可以定义它的内容形式以及处理方式。</p>
+<p>Body定义了以下方法（这些方法都被 Request 和Response所实现）以获取 body 内容。这些方法都会返回一个被解析后的Promise对象和数据</p>
+<ul>
+<li>arrayBuffer()</li>
+<li>blob()</li>
+<li>json()</li>
+<li>text()</li>
+<li>formData()</li>
+</ul>
+<h2 id="查看原文"><a href="#查看原文" class="headerlink" title="查看原文"></a><a href="https://juejin.im/post/6868138631714848775#heading-4" target="_blank" rel="noopener">查看原文</a></h2>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ewqazxc.github.io/hexo-blog/collections/Internet/Fetch%20API%E4%BB%8B%E7%BB%8D%E5%8F%8A%E4%BD%BF%E7%94%A8Fetch%20%E5%8F%91%E9%80%81%E8%AF%B7%E6%B1%82.html" data-id="ckhj97r9l001d2ina9hawcxo7" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/hexo-blog/categories/hexo/">hexo</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/11/">十一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/10/">十月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/09/">九月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/07/">七月 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/hexo-blog/2020/11/09/collections/Internet/Fetch%20API%E4%BB%8B%E7%BB%8D%E5%8F%8A%E4%BD%BF%E7%94%A8Fetch%20%E5%8F%91%E9%80%81%E8%AF%B7%E6%B1%82/">Fetch API介绍及使用Fetch发送请求</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2020/11/08/collections/Git/git%E6%96%87%E4%BB%B6%E5%90%8D%E5%A4%A7%E5%B0%8F%E5%86%99%E6%97%A0%E6%B3%95%E4%BF%AE%E6%94%B9/">git文件名大小写无法修改</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2020/11/02/collections/Git/git%20log%E5%9C%A8win10%E5%87%BA%E7%8E%B0%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81/">git log在win10出现中文乱码</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2020/10/31/collections/CentOs/centos%20%E7%B3%BB%E7%BB%9F%E4%BD%BF%E7%94%A8Verdaccio%E6%90%AD%E5%BB%BAnpm%E7%A7%81%E5%BA%93/">centos 系统使用verdaccio搭建npm私库</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2020/10/04/collections/Project/qiankun%E5%BE%AE%E5%89%8D%E7%AB%AF%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/">qiankun微前端项目搭建</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+
+      &copy; 2020 ewqazxc<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+  <div hidden>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/hexo-blog/" class="mobile-nav-link">主页</a>
+  
+    <a href="/hexo-blog/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/hexo-blog/about/me.html" class="mobile-nav-link">关于</a>
+  
+</nav>
+    
+
+
+<script src="/hexo-blog/js/jquery-2.0.3.min.js"></script>
+
+
+
+  
+<link rel="stylesheet" href="/hexo-blog/fancybox/jquery.fancybox.css">
+
+  
+<script src="/hexo-blog/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/hexo-blog/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
