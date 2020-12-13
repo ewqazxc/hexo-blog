@@ -71,6 +71,299 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-collections/JavaScript/ECMAScript2021的几个新特性" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo-blog/2020/12/12/collections/JavaScript/ECMAScript2021%E7%9A%84%E5%87%A0%E4%B8%AA%E6%96%B0%E7%89%B9%E6%80%A7/" class="article-date">
+  <time datetime="2020-12-12T16:00:00.000Z" itemprop="datePublished">2020-12-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/hexo-blog/2020/12/12/collections/JavaScript/ECMAScript2021%E7%9A%84%E5%87%A0%E4%B8%AA%E6%96%B0%E7%89%B9%E6%80%A7/">ECMAScript2021的几个新特性</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-String-prototype-replaceAll"><a href="#1-String-prototype-replaceAll" class="headerlink" title="1. String.prototype.replaceAll"></a>1. String.prototype.replaceAll</h2><p><a href="https://github.com/tc39/proposal-string-replaceall" target="_blank" rel="noopener">String.prototype.replaceAll</a></p>
+<p>先来回顾下<code>String.prototype.replace</code> 的用法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> str = <span class="string">'Hello World! Hello World!'</span>;</span><br><span class="line"><span class="keyword">const</span> newStr = str.replace(<span class="string">'World'</span>,<span class="string">'XiaoMing'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(newStr);<span class="comment">// Hello XiaoMing! Hello World!</span></span><br></pre></td></tr></table></figure>
+<p>这种写法，只有第一个匹配的会被替换，想要做到全部替换就需要使用正则表达式</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> str = <span class="string">'Hello World! Hello World!'</span>;</span><br><span class="line"><span class="keyword">const</span> newStr = str.replace(<span class="regexp">/World/g</span>,<span class="string">'XiaoMing'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(newStr);<span class="comment">// Hello XiaoMing! Hello XiaoMing!</span></span><br></pre></td></tr></table></figure>
+<p>不过，在使用正则的时候，如果需求是匹配<code>+</code>等符号时，还需要进行转义，如：<code>/\+/g</code><br>也许你会想到另一种方案：使用<code>split + join</code> 的方式<br>但这样做也是有性能开销的，加上这种操作十分常见，于是就诞生了<code>String.prototype.replaceAll</code> 这个API，简化这个操作</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> str = <span class="string">'Hello World! Hello World!'</span>;</span><br><span class="line"><span class="keyword">const</span> newStr = str.replaceAll(<span class="string">'World'</span>,<span class="string">'XiaoMing'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(newStr);<span class="comment">// Hello XiaoMing! Hello XiaoMing!</span></span><br></pre></td></tr></table></figure>
+<p><code>String.prototype.replace(searchValue, replaceValue)</code></p>
+<ul>
+<li>注意：当searchValue 是非全局正则表达式时，replaceAll 会引发异常，如果searchValue 是全局正则表达式时，replaceAll 与replace 行为是一致的</li>
+</ul>
+<h2 id="2-Promise-any"><a href="#2-Promise-any" class="headerlink" title="2. Promise.any"></a>2. Promise.any</h2><p><a href="https://github.com/tc39/proposal-promise-any" target="_blank" rel="noopener">Promise.any</a></p>
+<ul>
+<li><p>Promise.all (ES2015)只有当传入的每个Promise 实例的状态都变成fulfilled 时，才返回fulfilled，只要有一个被reject，返回的状态就变成rejected</p>
+</li>
+<li><p>Promise.race (ES2015)当传入的Promise 实例中有一个率先改变状态，那么就返回该状态，也就是返回最先改变的Promise 实例的返回值</p>
+</li>
+<li><p>Promise.allSettled (ES2020)只有等到所有传入的Promise 实例都返回结果，不管是fulfilled 还是rejected，整个实例才会结束</p>
+</li>
+<li><p>Promise.any (ES2021)当其中任何一个Promise 完成(fulfilled)时，就返回那个已经有完成值的Promise。如果所有的Promise 都变成rejected ，那么返回一个拒绝的Promise</p>
+</li>
+<li><p>Promise.any() 跟Promise.race() 方法很像，有一个不同点是，any不会因为某个Promise 变成rejected 而结束</p>
+</li>
+</ul>
+<h2 id="3-WeakRefs"><a href="#3-WeakRefs" class="headerlink" title="3. WeakRefs"></a>3. WeakRefs</h2><p><a href="https://github.com/tc39/proposal-weakrefs" target="_blank" rel="noopener">WeakRefs</a></p>
+<ul>
+<li>注意：要尽量避免使用WeakRef 和FinalizationRegistry ，垃圾回收机制依赖于JavaScript 引擎的实现，不同的引擎或是不同的版本的引擎可能会有所不同</li>
+</ul>
+<p>这个提案主要包括两个主要的新功能：</p>
+<ul>
+<li>使用 WeakRef 类创建对象的弱引用</li>
+<li>使用 FinalizationRegistry 类对对象在进行垃圾回收后，运行用户定义的终结器</li>
+</ul>
+<p>他们可以分开始用也可以一起使用，<br>WeakRef 实例不会阻止GC 回收，但是GC 会在两次EventLoop 之间回收WeakRef 实例。GC 回收后的WeakRef 实例的deref() 方法将会返回undefined</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> ref = <span class="keyword">new</span> WeakRef(obj);</span><br><span class="line"><span class="keyword">let</span> isLive = ref.deref(); <span class="comment">// 如果obj 被回收了，那么isLive 就是undefined</span></span><br></pre></td></tr></table></figure>
+<p>FinalizationRegistry 注册Callback，某个对象被GC 回收后调用。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> registry = <span class="keyword">new</span> FinalizationRegistry(<span class="function"><span class="params">heldValue</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">//...</span></span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 通过register 注册任何你想要清理回调的对象，传入该对象和所含的值</span></span><br><span class="line">registry.register(theObj, <span class="string">'some value'</span>);</span><br></pre></td></tr></table></figure>
+<p><a href="https://github.com/tc39/proposal-weakrefs/blob/master/reference.md" target="_blank" rel="noopener">更多的细节</a></p>
+<h2 id="4-Logical-Assignment-Operators-逻辑赋值操作符"><a href="#4-Logical-Assignment-Operators-逻辑赋值操作符" class="headerlink" title="4. Logical Assignment Operators 逻辑赋值操作符"></a>4. Logical Assignment Operators 逻辑赋值操作符</h2><p><a href="https://github.com/tc39/proposal-logical-assignment" target="_blank" rel="noopener">Logical Assignment Operators 逻辑赋值操作符</a></p>
+<p>看下ES2020 新增的空值合并操作符 ??<br>当左操作数为undefined 或 null 时，该操作符会将右侧操作数赋值给左侧变量</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> name = <span class="literal">null</span> ?? <span class="string">'value'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(name); <span class="comment">// value</span></span><br></pre></td></tr></table></figure>
+<p>有了逻辑赋值运算符，可以改写成：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> name ??= <span class="string">'value'</span>;</span><br><span class="line"></span><br><span class="line">a ||= b; <span class="comment">// == a || (a = b)</span></span><br><span class="line">a &amp;&amp;= b; <span class="comment">// == a &amp;&amp; (a = b)</span></span><br><span class="line">a ??= b; <span class="comment">// == a ?? (a = b)</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="5-Numeric-separators-数字分隔符"><a href="#5-Numeric-separators-数字分隔符" class="headerlink" title="5. Numeric  separators 数字分隔符"></a>5. Numeric  separators 数字分隔符</h2><p><a href="https://github.com/tc39/proposal-numeric-separator" target="_blank" rel="noopener">Numeric separators 数字分隔符</a></p>
+<p>数字的可读性随着数字变长而变差，数字分隔符会让长数字更加清晰易读</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> x = <span class="number">1000000000000</span>;</span><br><span class="line"><span class="keyword">const</span> y = <span class="number">1</span>_000_000_000_000;</span><br><span class="line"><span class="keyword">const</span>.log(x === y); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>在二进制、十六进制、BigInt 等中都可以使用</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/12/12/collections/JavaScript/ECMAScript2021%E7%9A%84%E5%87%A0%E4%B8%AA%E6%96%B0%E7%89%B9%E6%80%A7/" data-id="ckin8e2ad00222vt7232k01jq" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Coding/6个规则去净化你的代码" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo-blog/2020/11/21/Coding/6%E4%B8%AA%E8%A7%84%E5%88%99%E5%8E%BB%E5%87%80%E5%8C%96%E4%BD%A0%E7%9A%84%E4%BB%A3%E7%A0%81/" class="article-date">
+  <time datetime="2020-11-21T16:00:00.000Z" itemprop="datePublished">2020-11-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/hexo-blog/2020/11/21/Coding/6%E4%B8%AA%E8%A7%84%E5%88%99%E5%8E%BB%E5%87%80%E5%8C%96%E4%BD%A0%E7%9A%84%E4%BB%A3%E7%A0%81/">6个规则去净化你的代码</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1、-注重命名"><a href="#1、-注重命名" class="headerlink" title="1、 注重命名"></a>1、 注重命名</h2><p>将两个数组合并成一个数组，并生成一个唯一值的数值，也许你会这样命名：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mergeNumberListIntoUniqueList</span>(<span class="params">listOne, listTwo</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> [...new <span class="built_in">Set</span>([...listOne,...listTwo])];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样的命名不算槽糕，但也不是很友好，建议将一个功能函数拆分为两个功能函数，使得命名更友好且复用性好</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mergeLists</span>(<span class="params">listOne, listTwo</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> [...listOne,...listTwo];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createUniqueList</span>(<span class="params">list</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> [...new <span class="built_in">Set</span>(list)];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2、-IF语句简化"><a href="#2、-IF语句简化" class="headerlink" title="2、 IF语句简化"></a>2、 IF语句简化</h2><p>一般if:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(value === <span class="string">'duck'</span> || value === <span class="string">'dog'</span> || value === <span class="string">'cat'</span>)&#123;</span><br><span class="line">  <span class="comment">// something</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>简化后:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> options = [<span class="string">'duck'</span>,<span class="string">'dog'</span>,<span class="string">'cat'</span>];</span><br><span class="line"><span class="keyword">if</span>(opitons.includes(value))&#123;</span><br><span class="line">  <span class="comment">// something</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>将乱七八糟的条件判断放到一个变量中存储，比看起来臃肿的表达式要好很多</p>
+<h2 id="3、-及早返回"><a href="#3、-及早返回" class="headerlink" title="3、 及早返回"></a>3、 及早返回</h2><p>例如以下代码:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">handleEvent</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (event) &#123;</span><br><span class="line">    <span class="keyword">const</span> target = event.target;</span><br><span class="line">    <span class="keyword">if</span> (target) &#123;</span><br><span class="line">      <span class="comment">// something</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>及早返回使代码更加易读</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">handleEvent</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!event || !event.target) &#123;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// something</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="4、-解构赋值"><a href="#4、-解构赋值" class="headerlink" title="4、 解构赋值"></a>4、 解构赋值</h2><p>对object 和 array 进行结构赋值</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// object</span></span><br><span class="line"><span class="keyword">const</span> numbers = &#123; <span class="attr">one</span>:<span class="number">1</span>, <span class="attr">two</span>: <span class="number">2</span>&#125;;</span><br><span class="line"><span class="keyword">const</span> &#123; one, two&#125; = numbers;</span><br><span class="line"></span><br><span class="line"><span class="comment">// array</span></span><br><span class="line"><span class="keyword">const</span> numbers = [<span class="number">1</span>,<span class="number">2</span>];</span><br><span class="line"><span class="keyword">const</span> [one,two] = numbers;</span><br></pre></td></tr></table></figure>
+
+<h2 id="5、童子军规则"><a href="#5、童子军规则" class="headerlink" title="5、童子军规则"></a>5、童子军规则</h2><p><strong>永远保持离开时的露营比你发现它时更整洁。</strong>如果你在地面上发现了脏东西，那么无论是不是你留下的，都要清理干净，要有意地为下一组露营者改善环境。</p>
+<p>编写代码也应该是这样子，在代码中发现了脏代码，那么可以尝试去修改它，即使是一个没有被引用的变量名。</p>
+<h2 id="6、-代码风格"><a href="#6、-代码风格" class="headerlink" title="6、 代码风格"></a>6、 代码风格</h2><p>在团队中使用一种代码风格，比如限定代码缩进的规范是两个空格还是四个空格;使用单引号还是双引号;使用同类的一种框架，还是流行两种解决方案的框架…这样团队中人员接手项目的成本就会降低，开发人员的心里减少排斥感</p>
+<blockquote>
+<p><a href="https://juejin.cn/post/6897100630494543886" target="_blank" rel="noopener">6个规则去净化你的代码</a></p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/11/21/Coding/6%E4%B8%AA%E8%A7%84%E5%88%99%E5%8E%BB%E5%87%80%E5%8C%96%E4%BD%A0%E7%9A%84%E4%BB%A3%E7%A0%81/" data-id="ckin8e28700042vt743bsh03u" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-collections/Flutter/安卓APP 签名" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo-blog/2020/11/16/collections/Flutter/%E5%AE%89%E5%8D%93APP%20%E7%AD%BE%E5%90%8D/" class="article-date">
+  <time datetime="2020-11-16T15:55:50.000Z" itemprop="datePublished">2020-11-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/hexo-blog/2020/11/16/collections/Flutter/%E5%AE%89%E5%8D%93APP%20%E7%AD%BE%E5%90%8D/">安卓APP 签名相关</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="一-生成APP-签名"><a href="#一-生成APP-签名" class="headerlink" title="一 生成APP 签名"></a>一 生成APP 签名</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">keytool -genkey -v -keystore ~/key.jks -keyalg RSA -keysize 2048 -validity 10000 -<span class="built_in">alias</span> key</span><br><span class="line"></span><br><span class="line">JDK1.8\bin&gt;keytool -genkey -<span class="built_in">alias</span> android.key.jks -keyalg RSA -validity 20000 -keystore android.key.jks</span><br><span class="line"></span><br><span class="line">keytool -genkey -<span class="built_in">alias</span> androidAppKey -keyalg RSA -validity 20000 -keystore androidAppKey</span><br><span class="line">keytool -genkey -<span class="built_in">alias</span> androidAppKey -keyalg RSA -validity 10000 -keystore androidAppKey</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">输入密钥库口令:</span><br><span class="line">再次输入新口令:</span><br><span class="line">您的名字与姓氏是什么?</span><br><span class="line">  [Unknown]:  XC</span><br><span class="line">您的组织单位名称是什么?</span><br><span class="line">  [Unknown]:  TL</span><br><span class="line">您的组织名称是什么?</span><br><span class="line">  [Unknown]:  TL</span><br><span class="line">您所在的城市或区域名称是什么?</span><br><span class="line">  [Unknown]:  FZ</span><br><span class="line">您所在的省/市/自治区名称是什么?</span><br><span class="line">  [Unknown]:  FZ</span><br><span class="line">该单位的双字母国家/地区代码是什么?</span><br><span class="line">  [Unknown]:  CN</span><br><span class="line">CN=XC, OU=TL, O=TL, L=FZ, ST=FZ, C=CN是否正确?</span><br><span class="line">  [否]:  Y</span><br><span class="line"></span><br><span class="line">输入 &lt;android.keystore&gt; 的密钥口令</span><br><span class="line">        (如果和密钥库口令相同, 按回车):</span><br><span class="line">再次输入新口令:</span><br><span class="line">Warning:</span><br><span class="line">JKS 密钥库使用专用格式。建议使用</span><br><span class="line"> <span class="string">"keytool -importkeystore -srckeystore android.keystore -destkeystore android.keystore -deststoretype pkcs12"</span></span><br><span class="line"> <span class="string">"keytool -importkeystore -srckeystore android.key.jks -destkeystore android.key.jks -deststoretype pkcs12"</span></span><br><span class="line"> keytool -importkeystore -srckeystore androidAppKey -destkeystore androidAppKey -deststoretype pkcs12</span><br><span class="line">迁移到行业标准格式 PKCS12。</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p><code>keytool -list -v -keystore H:\devTool\SDK\JDK1.8\bin\android.key.jks</code></p>
+<h2 id="二-查看应用签名"><a href="#二-查看应用签名" class="headerlink" title="二 查看应用签名"></a>二 查看应用签名</h2><p><a href="https://www.jianshu.com/p/3d21f76a8edd" target="_blank" rel="noopener">https://www.jianshu.com/p/3d21f76a8edd</a></p>
+<ol>
+<li><p>查看三方应用签名<br>在没有keystore文件和密钥的情况下，要想查看我们所需应用的签名信息，就需要借助keytool工具来完成。</p>
+<p>首先解压要查看的apk包，通过数据证书管理工具keytool查看apk的签名信息。具体步骤如下：</p>
+<ul>
+<li>1 将apk修改后缀为.rar文件后进行解压；</li>
+<li>2 进入解压后的META-INF目录，找到该目录下的xxx.RSA文件；</li>
+<li>3 通过命令cmd打开DOS窗口，输入命令 ：keytool -printcert -file [RSA文件路径]；</li>
+</ul>
+</li>
+</ol>
+<h2 id="三-异常错误处理"><a href="#三-异常错误处理" class="headerlink" title="三 异常错误处理"></a>三 异常错误处理</h2><h3 id="报错：keystore-password-was-incorrect"><a href="#报错：keystore-password-was-incorrect" class="headerlink" title="报错：keystore password was incorrect"></a>报错：keystore password was incorrect</h3><p>keyPassword 与 storePassword 取值一致</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">signingConfigs &#123;</span><br><span class="line">    release &#123;</span><br><span class="line">        keyAlias keystoreProperties[<span class="string">'keyAlias'</span>]</span><br><span class="line">        keyPassword keystoreProperties[<span class="string">'keyPassword'</span>]</span><br><span class="line">        storeFile file(keystoreProperties[<span class="string">'storeFile'</span>])</span><br><span class="line">        storePassword keystoreProperties[<span class="string">'keyPassword'</span>]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/11/16/collections/Flutter/%E5%AE%89%E5%8D%93APP%20%E7%AD%BE%E5%90%8D/" data-id="ckin8e2a9001w2vt7efa64s33" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-collections/Flutter/Flutter 安装" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo-blog/2020/11/16/collections/Flutter/Flutter%20%E5%AE%89%E8%A3%85/" class="article-date">
+  <time datetime="2020-11-16T15:45:50.000Z" itemprop="datePublished">2020-11-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/hexo-blog/2020/11/16/collections/Flutter/Flutter%20%E5%AE%89%E8%A3%85/">Flutter 安装</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="一-安装-Flutter"><a href="#一-安装-Flutter" class="headerlink" title="一 安装 Flutter"></a>一 安装 Flutter</h2><ol>
+<li><p>获取 Flutter SDK<br><a href="https://flutter.dev/docs/development/tools/sdk/releases#windows" target="_blank" rel="noopener">官网下载</a><br><a href="https://github.com/flutter/flutter/releases" target="_blank" rel="noopener">GitHub 下载</a></p>
+</li>
+<li><p>更新环境变量</p>
+</li>
+</ol>
+<p>要在终端运行 flutter 命令， 需要添加以下环境变量到系统 PATH：</p>
+<ul>
+<li>转到 “控制面板&gt;用户帐户&gt;用户帐户&gt;更改我的环境变量”</li>
+<li>在“用户变量”下检查是否有名为“Path”的条目:<ul>
+<li>如果该条目存在, 追加 flutter\bin 的全路径，使用 ; 作为分隔符.</li>
+<li>如果条目不存在, 创建一个新用户变量 Path ，然后将 flutter\bin 的全路径作为它的值.</li>
+</ul>
+</li>
+<li>在“用户变量”下检查是否有名为”PUB_HOSTED_URL”和”FLUTTER_STORAGE_BASE_URL”的条目，如果没有，也添加它们。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export PUB_HOSTED_URL&#x3D;https:&#x2F;&#x2F;pub.flutter-io.cn</span><br><span class="line">export FLUTTER_STORAGE_BASE_URL&#x3D;https:&#x2F;&#x2F;storage.flutter-io.cn</span><br></pre></td></tr></table></figure>
+
+<h2 id="二-使用flutter-doctor-检测依赖是否完整"><a href="#二-使用flutter-doctor-检测依赖是否完整" class="headerlink" title="二 使用flutter doctor 检测依赖是否完整"></a>二 使用<code>flutter doctor</code> 检测依赖是否完整</h2><ul>
+<li>环境变量需要 JDK、git</li>
+</ul>
+<h3 id="Flutter-Unable-to-locate-Android-SDK"><a href="#Flutter-Unable-to-locate-Android-SDK" class="headerlink" title="Flutter Unable to locate Android SDK."></a>Flutter Unable to locate Android SDK.</h3><ul>
+<li>添加环境变量：ANDROID_HOME H:\devTool\AndroidSDK</li>
+</ul>
+<h3 id="Android-licenses-not-accepted"><a href="#Android-licenses-not-accepted" class="headerlink" title="Android licenses not accepted."></a>Android licenses not accepted.</h3><ul>
+<li>To resolve this, run: flutter doctor –android-licenses.<br>Accept? (y/N): y<br>All SDK package licenses accepted</li>
+</ul>
+<h3 id="Flutter-plugin-not-installed"><a href="#Flutter-plugin-not-installed" class="headerlink" title="Flutter plugin not installed;"></a>Flutter plugin not installed;</h3><ul>
+<li>安装 Flutter 插件<ul>
+<li>打开 Android Studio，直接进入设置界面 ，然后在 Preferences 的插件中搜索 Flutter</li>
+<li>点击安装 Flutter 插件，记得最后一定要重启 IDE。</li>
+<li>再次 flutter doctor 检测就会发现这个问题已经解决了。</li>
+</ul>
+</li>
+</ul>
+<h3 id="Dart-plugin-not-installed"><a href="#Dart-plugin-not-installed" class="headerlink" title="Dart plugin not installed"></a>Dart plugin not installed</h3><ul>
+<li>安装 Dart 插件</li>
+</ul>
+<h3 id="Enable-VT-x-in-your-BIOS-security-setting-refer-to-documention-for-your-computer"><a href="#Enable-VT-x-in-your-BIOS-security-setting-refer-to-documention-for-your-computer" class="headerlink" title="Enable VT-x in your BIOS security setting (refer to documention for your computer)"></a>Enable VT-x in your BIOS security setting (refer to documention for your computer)</h3><ul>
+<li>重启的你的电脑,进入到 BIOS 中</li>
+<li>选择 Config －－cpu －－ Intel－Virtualization Technology 将这个选项开启</li>
+<li>然后执行虚拟机 就没有问题了</li>
+</ul>
+<h2 id="三-编译器配置"><a href="#三-编译器配置" class="headerlink" title="三 编译器配置"></a>三 编译器配置</h2><p><a href="https://flutterchina.club/get-started/editor/" target="_blank" rel="noopener">Android Studio / VS Code</a></p>
+<h2 id="四-体验-flutter"><a href="#四-体验-flutter" class="headerlink" title="四 体验 flutter"></a>四 体验 flutter</h2><h3 id="vscode"><a href="#vscode" class="headerlink" title="vscode"></a>vscode</h3><ol>
+<li><p>运行<code>Flutter: New Project</code>，创建一个 flutter 项目，其中包含一个使用<a href="https://material.io/guidelines/" target="_blank" rel="noopener">Material 组件</a>的简单的演示应用程序<br><code>在项目目录中，您的应用程序的代码位于 lib/main.dart.</code></p>
+</li>
+<li><p>按 F5 键或调用 Debug&gt;Start Debugging，运行应用程序</p>
+</li>
+<li><p>修改<code>lib/main.dart</code>文件，保存看热重载效果</p>
+</li>
+</ol>
+<h4 id="Could-not-resolve-the-package-‘characters‘-in-‘package-characters-characters-dart‘"><a href="#Could-not-resolve-the-package-‘characters‘-in-‘package-characters-characters-dart‘" class="headerlink" title="Could not resolve the package ‘characters‘ in ‘package:characters/characters.dart‘."></a>Could not resolve the package ‘characters‘ in ‘package:characters/characters.dart‘.</h4><ul>
+<li><code>flutter clean</code></li>
+</ul>
+<h4 id="卡在-Running-Gradle-task-‘assembleDebug’"><a href="#卡在-Running-Gradle-task-‘assembleDebug’" class="headerlink" title="卡在 Running Gradle task ‘assembleDebug’."></a>卡在 Running Gradle task ‘assembleDebug’.</h4><ul>
+<li>修改项目中 android/build.gradle 文件</li>
+<li>修改 Flutter 的配置文件, 该文件在 Flutter 安装目录/packages/flutter_tools/gradle/flutter.gradle</li>
+</ul>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">buildscript</span> &#123;</span><br><span class="line">    <span class="keyword">repositories</span> &#123;</span><br><span class="line">        <span class="comment">// maven &#123; url 'https://maven.aliyun.com/repository/public/' &#125;</span></span><br><span class="line">        maven &#123; url <span class="string">'https://maven.aliyun.com/repository/google'</span> &#125;</span><br><span class="line">        maven &#123; url <span class="string">'https://maven.aliyun.com/repository/public'</span> &#125;</span><br><span class="line">        maven &#123; url  <span class="string">'https://maven.aliyun.com/repository/gradle-plugin'</span> &#125;</span><br><span class="line">        <span class="comment">// google()</span></span><br><span class="line">        <span class="comment">// jcenter()</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">dependencies</span> &#123;</span><br><span class="line">        <span class="keyword">classpath</span> <span class="string">'com.android.tools.build:gradle:3.5.0'</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/11/16/collections/Flutter/Flutter%20%E5%AE%89%E8%A3%85/" data-id="ckin8e2a8001v2vt7asra20b6" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-collections/Internet/Fetch API介绍及使用Fetch 发送请求" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/hexo-blog/2020/11/09/collections/Internet/Fetch%20API%E4%BB%8B%E7%BB%8D%E5%8F%8A%E4%BD%BF%E7%94%A8Fetch%20%E5%8F%91%E9%80%81%E8%AF%B7%E6%B1%82/" class="article-date">
@@ -218,7 +511,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/11/09/collections/Internet/Fetch%20API%E4%BB%8B%E7%BB%8D%E5%8F%8A%E4%BD%BF%E7%94%A8Fetch%20%E5%8F%91%E9%80%81%E8%AF%B7%E6%B1%82/" data-id="ckhj97raj002h2ina3kcketql" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/11/09/collections/Internet/Fetch%20API%E4%BB%8B%E7%BB%8D%E5%8F%8A%E4%BD%BF%E7%94%A8Fetch%20%E5%8F%91%E9%80%81%E8%AF%B7%E6%B1%82/" data-id="ckin8e2av002s2vt7890w23k9" class="article-share-link">分享</a>
       
       
     </footer>
@@ -268,7 +561,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/11/08/collections/Git/git%E6%96%87%E4%BB%B6%E5%90%8D%E5%A4%A7%E5%B0%8F%E5%86%99%E6%97%A0%E6%B3%95%E4%BF%AE%E6%94%B9/" data-id="ckhj97ra1001q2ina47glblh0" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/11/08/collections/Git/git%E6%96%87%E4%BB%B6%E5%90%8D%E5%A4%A7%E5%B0%8F%E5%86%99%E6%97%A0%E6%B3%95%E4%BF%AE%E6%94%B9/" data-id="ckin8e2ac00202vt7go7qcvn9" class="article-share-link">分享</a>
       
       
     </footer>
@@ -307,7 +600,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/11/02/collections/Git/git%20log%E5%9C%A8win10%E5%87%BA%E7%8E%B0%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81/" data-id="ckhj97ra1001p2inaf08th48x" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/11/02/collections/Git/git%20log%E5%9C%A8win10%E5%87%BA%E7%8E%B0%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81/" data-id="ckin8e2ab001z2vt7361b0mnd" class="article-share-link">分享</a>
       
       
     </footer>
@@ -374,7 +667,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/10/31/collections/CentOs/centos%20%E7%B3%BB%E7%BB%9F%E4%BD%BF%E7%94%A8Verdaccio%E6%90%AD%E5%BB%BAnpm%E7%A7%81%E5%BA%93/" data-id="ckhj97r9w001i2ina3djn1edt" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/10/31/collections/CentOs/centos%20%E7%B3%BB%E7%BB%9F%E4%BD%BF%E7%94%A8Verdaccio%E6%90%AD%E5%BB%BAnpm%E7%A7%81%E5%BA%93/" data-id="ckin8e2a4001q2vt71toobuf9" class="article-share-link">分享</a>
       
       
     </footer>
@@ -463,7 +756,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/10/04/collections/Project/qiankun%E5%BE%AE%E5%89%8D%E7%AB%AF%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/" data-id="ckhj97rae002c2ina2d9159a2" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/10/04/collections/Project/qiankun%E5%BE%AE%E5%89%8D%E7%AB%AF%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/" data-id="ckin8e2ap002n2vt7fhtthrph" class="article-share-link">分享</a>
       
       
     </footer>
@@ -528,274 +821,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/09/25/collections/TypeScript/TypeScript%20%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4/" data-id="ckhj97raf002d2ina0rcr5q5d" class="article-share-link">分享</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-collections/WeiChat/JS-SDK使用权限签名算法" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/hexo-blog/2020/09/21/collections/WeiChat/JS-SDK%E4%BD%BF%E7%94%A8%E6%9D%83%E9%99%90%E7%AD%BE%E5%90%8D%E7%AE%97%E6%B3%95/" class="article-date">
-  <time datetime="2020-09-21T14:22:22.000Z" itemprop="datePublished">2020-09-21</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/hexo-blog/2020/09/21/collections/WeiChat/JS-SDK%E4%BD%BF%E7%94%A8%E6%9D%83%E9%99%90%E7%AD%BE%E5%90%8D%E7%AE%97%E6%B3%95/">微信 JS-SDK使用权限签名算法</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="获取-access-token"><a href="#获取-access-token" class="headerlink" title="获取 access_token"></a>获取 access_token</h2><p><a href="https://developers.weixin.qq.com/doc/offiaccount/Basic_Information/Get_access_token.html" target="_blank" rel="noopener">官方文档</a></p>
-<p>access_token是公众号的全局唯一接口调用凭据，公众号调用各接口时都需使用access_token。开发者需要进行妥善保存。access_token的存储至少要保留512个字符空间。access_token的有效期目前为2个小时，需定时刷新，重复获取将导致上次获取的access_token失效。</p>
-<ul>
-<li>接口调用请求说明<br>https请求方式: GET <a href="https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&amp;appid=APPID&amp;secret=APPSECRET" target="_blank" rel="noopener">https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&amp;appid=APPID&amp;secret=APPSECRET</a></li>
-</ul>
-<p>参数说明</p>
-<table>
-<thead>
-<tr>
-<th>参数</th>
-<th>是否必须</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>grant_type</td>
-<td>是</td>
-<td>获取access_token填写client_credential</td>
-</tr>
-<tr>
-<td>appid</td>
-<td>是</td>
-<td>第三方用户唯一凭证</td>
-</tr>
-<tr>
-<td>secret</td>
-<td>是</td>
-<td>第三方用户唯一凭证密钥，即appsecret</td>
-</tr>
-</tbody></table>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"access_token"</span>: <span class="string">"37_3XIsfX3H0-M8cFhrFfR49EKu5t_wih0X28MK906lRky3tXX6QxMG7Napa9rB6beM2N0hcJFeV6PS6PCSvoTC3tB4xwhmsus0qoYqZWtRnRDMTnlgv8qPmqipxFBOuFuJHXJyJ1URa9SJ6tBDMNReABAHIM"</span>,</span><br><span class="line">  <span class="string">"expires_in"</span>: <span class="number">7200</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="获取-jsapi-ticket"><a href="#获取-jsapi-ticket" class="headerlink" title="获取 jsapi_ticket"></a>获取 jsapi_ticket</h2><p>用第一步拿到的access_token 采用http GET方式请求获得jsapi_ticket（有效期7200秒，开发者必须在自己的服务全局缓存jsapi_ticket）：<br><a href="https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=ACCESS_TOKEN&amp;type=jsapi" target="_blank" rel="noopener">https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=ACCESS_TOKEN&amp;type=jsapi</a></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"errcode"</span>: <span class="number">0</span>,</span><br><span class="line">  <span class="string">"errmsg"</span>: <span class="string">"ok"</span>,</span><br><span class="line">  <span class="string">"ticket"</span>: <span class="string">"HoagFKDcsGMVCIY2vOjf9hnXmHkAZqPV_IVoFARtQo7ncUBqyYxOJV5GxUeVYbPKBRuQWNegvbiUAYJrpgouUQ"</span>,</span><br><span class="line">  <span class="string">"expires_in"</span>: <span class="number">7200</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="签名算法"><a href="#签名算法" class="headerlink" title="签名算法"></a>签名算法</h2><ul>
-<li>签名生成规则如下：<ul>
-<li>参与签名的字段包括noncestr（随机字符串）</li>
-<li>有效的jsapi_ticket</li>
-<li>timestamp（时间戳）</li>
-<li>url（当前网页的URL，不包含#及其后面部分） </li>
-</ul>
-</li>
-</ul>
-<p>对所有待签名参数按照字段名的ASCII 码从小到大排序（字典序）后，使用URL键值对的格式（即key1=value1&amp;key2=value2…）拼接成字符串string1。这里需要注意的是所有参数名均为小写字符。对string1作sha1加密，字段名和字段值都采用原始值，不进行URL 转义。</p>
-<p>即signature=sha1(string1)。 示例：</p>
-<figure class="highlight md"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">noncestr=Wm3WZYTPz0wzccnW</span><br><span class="line">jsapi<span class="emphasis">_ticket=sM4AOVdWfPE4DxkXGEs8VMCPGGVi4C3VM0P37wVUCFvkVAy_</span>90u5h9nbSlYy3-Sl-HhTdfl2fzFy1AOcHKP7qg</span><br><span class="line">timestamp=1414587457</span><br><span class="line">url=http://mp.weixin.qq.com?params=value</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>步骤1. 对所有待签名参数按照字段名的ASCII 码从小到大排序（字典序）后，使用URL键值对的格式（即key1=value1&amp;key2=value2…）拼接成字符串string1</p>
-<figure class="highlight md"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jsapi<span class="emphasis">_ticket=sM4AOVdWfPE4DxkXGEs8VMCPGGVi4C3VM0P37wVUCFvkVAy_</span>90u5h9nbSlYy3-Sl-HhTdfl2fzFy1AOcHKP7qg&amp;noncestr=Wm3WZYTPz0wzccnW&amp;timestamp=1414587457&amp;url=http://mp.weixin.qq.com?params=value</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>步骤2. 对string1进行sha1签名，得到signature：<br><a href="https://tool.oschina.net/encrypt?type=2" target="_blank" rel="noopener">在线工具</a></p>
-<figure class="highlight md"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0f9de62fce790f9a083d5c99e95740ceb90c27ed</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<p><strong>注意事项</strong></p>
-<p>签名用的noncestr和timestamp必须与wx.config中的nonceStr和timestamp相同。</p>
-<p>签名用的url必须是调用JS接口页面的完整URL。</p>
-<p>出于安全考虑，开发者必须在服务器端实现签名的逻辑。</p>
-<p>如出现invalid signature 等错误详见附录5常见错误及解决办法。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/09/21/collections/WeiChat/JS-SDK%E4%BD%BF%E7%94%A8%E6%9D%83%E9%99%90%E7%AD%BE%E5%90%8D%E7%AE%97%E6%B3%95/" data-id="ckhj97raf002e2inag6wih3s0" class="article-share-link">分享</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-collections/Linux/Ubuntu 切换阿里源" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/hexo-blog/2020/09/20/collections/Linux/Ubuntu%20%E5%88%87%E6%8D%A2%E9%98%BF%E9%87%8C%E6%BA%90/" class="article-date">
-  <time datetime="2020-09-20T09:44:33.000Z" itemprop="datePublished">2020-09-20</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/hexo-blog/2020/09/20/collections/Linux/Ubuntu%20%E5%88%87%E6%8D%A2%E9%98%BF%E9%87%8C%E6%BA%90/">Ubuntu 更换阿里云软件源</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Ubuntu更换阿里云软件源"><a href="#Ubuntu更换阿里云软件源" class="headerlink" title="Ubuntu更换阿里云软件源"></a>Ubuntu更换阿里云软件源</h2><ol>
-<li><p>备份</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>修改 sources.list</p>
-</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/apt/sources.list</span><br></pre></td></tr></table></figure>
-<p>新的内容：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">deb http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; trusty main restricted universe multiverse</span><br><span class="line">deb http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; trusty-security main restricted universe multiverse</span><br><span class="line">deb http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; trusty-updates main restricted universe multiverse</span><br><span class="line">deb http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; trusty-proposed main restricted universe multiverse</span><br><span class="line">deb http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; trusty-backports main restricted universe multiverse</span><br><span class="line">deb-src http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; trusty main restricted universe multiverse</span><br><span class="line">deb-src http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; trusty-security main restricted universe multiverse</span><br><span class="line">deb-src http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; trusty-updates main restricted universe multiverse</span><br><span class="line">deb-src http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; trusty-proposed main restricted universe multiverse</span><br><span class="line">deb-src http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; trusty-backports main restricted universe multiverse</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>更新<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/09/20/collections/Linux/Ubuntu%20%E5%88%87%E6%8D%A2%E9%98%BF%E9%87%8C%E6%BA%90/" data-id="ckhj97rac00282ina9xun533d" class="article-share-link">分享</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-collections/Linux/Ubuntu 启动ssh 服务" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/hexo-blog/2020/09/20/collections/Linux/Ubuntu%20%E5%90%AF%E5%8A%A8ssh%20%E6%9C%8D%E5%8A%A1/" class="article-date">
-  <time datetime="2020-09-20T09:44:33.000Z" itemprop="datePublished">2020-09-20</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/hexo-blog/2020/09/20/collections/Linux/Ubuntu%20%E5%90%AF%E5%8A%A8ssh%20%E6%9C%8D%E5%8A%A1/">Ubuntu 启动ssh 服务</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Ubuntu-启动ssh-服务"><a href="#Ubuntu-启动ssh-服务" class="headerlink" title="Ubuntu 启动ssh 服务"></a>Ubuntu 启动ssh 服务</h2><ol>
-<li><p>检查ssh 服务是否已启动</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ps -e | grep ssh</span><br><span class="line">2899 ?        00:00:00 sshd</span><br><span class="line">2907 ?        00:00:00 sshd</span><br><span class="line"><span class="comment"># 有输出则已启动</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>安装ssh 服务</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install openssh-client <span class="comment"># 客户端</span></span><br><span class="line">sudo apt-get install openssh-server <span class="comment"># 服务端</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>启动ssh 服务</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo /etc/init.d/ssh start</span><br></pre></td></tr></table></figure>
-<p>首次安装可能缺少相关秘钥，查看<code>/usr/sbin/sshd</code>下是否有相关文件，有可以试试chmod 600 后再试</p>
-</li>
-</ol>
-<p>没有的话，按以下命令生成</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t dsa -f /etc/ssh/ssh_host_dsa_key</span><br><span class="line">ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key</span><br></pre></td></tr></table></figure>
-<p>启动后可以通过1 的指令查看是否启动</p>
-<ol start="4">
-<li><p>修改ssh 端口号<br>ssh 默认端口号 22</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gedit /etc/ssh/ssh_config</span><br></pre></td></tr></table></figure>
-<p>修改其中的Port 值，重新启动</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo /etc/init.d/ssh restart</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>ssh 远程登录</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">ssh username@linuxip</span><br><span class="line"></span><br><span class="line"><span class="built_in">exit</span> <span class="comment"># 断开链接</span></span><br><span class="line"><span class="comment"># 查看ip 地址</span></span><br><span class="line">ifconfig -a</span><br><span class="line"><span class="comment"># sudo apt install net-tools</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Permission denied (publickey). </span></span><br><span class="line"><span class="comment"># 解决方案一，sshkey</span></span><br><span class="line"><span class="comment"># 主机一：</span></span><br><span class="line"><span class="comment"># ssh-keygen -t rsa</span></span><br><span class="line"><span class="comment"># 将生产的pub文件拷贝到主机二上</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 主机二：</span></span><br><span class="line"><span class="comment"># cat 1.pub &gt;&gt; .ssh/authorized_keys </span></span><br><span class="line"><span class="comment"># chmod 600 .ssh/authorized_keys </span></span><br><span class="line"><span class="comment"># chmod 700 .ssh</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 解决方案二，允许ssh密码登录权限</span></span><br><span class="line"><span class="comment"># 登录目标机器 打开 /etc/ssh/sshd_config ，修改PasswordAuthentication no 为：</span></span><br><span class="line"><span class="comment"># PasswordAuthentication yes</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 重启服务</span></span><br><span class="line"><span class="comment"># /etc/init.d/sshd restart</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>数据传输</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ scp -r usr@43.224.34.73:/home/lk   /root  //将远程IP地址为43.224.34.73的usr用户下路径为 /home/lk 的所有文件拷贝到本地 /root 文件夹中</span><br><span class="line"></span><br><span class="line">$ scp usr@43.224.34.73:/home/lk/test.jar   /root  //将远程IP地址为43.224.34.73的usr用户下路径为 /home/lk 的test.jar文件拷贝到本地 /root 文件夹中</span><br><span class="line"></span><br><span class="line">$ scp -r /root  usr@43.224.34.73:/home/lk    //将本地 /root 中的所有文件拷贝到远程IP地址为43.224.34.73的usr用户下路径为 /home/lk 的文件夹中</span><br><span class="line"></span><br><span class="line">$ scp /root/test.jar   usr@43.224.34.73:/home/lk   //将本地 /root 中的test.jar文件拷贝到远程IP地址为43.224.34.73的usr用户下路径为 /home/lk 的文件夹中</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/09/20/collections/Linux/Ubuntu%20%E5%90%AF%E5%8A%A8ssh%20%E6%9C%8D%E5%8A%A1/" data-id="ckhj97rac00292inac0jbebv8" class="article-share-link">分享</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-collections/Project/Antd4项目搭建" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/hexo-blog/2020/09/14/collections/Project/Antd4%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/" class="article-date">
-  <time datetime="2020-09-14T16:00:00.000Z" itemprop="datePublished">2020-09-15</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/hexo-blog/2020/09/14/collections/Project/Antd4%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/">Antd4项目搭建</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><ol>
-<li>使用create umi 快速的初始化脚手架<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用 npm</span></span><br><span class="line">npx create umi</span><br><span class="line"><span class="comment"># 使用 yarn</span></span><br><span class="line">yarn create umi</span><br></pre></td></tr></table></figure></li>
-<li>选择开发项目模板 - ant-design-pro</li>
-<li>选择对应模板版本 - Pro V5<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">这里包了个错：在空文件夹中使用，或者使用用 yarn create umi myapp</span><br><span class="line">因此重新选个空文件夹继续</span><br></pre></td></tr></table></figure></li>
-<li>项目初始化成功，拉取依赖包后进入开发<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn install</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">install时报错：error puppeteer-core@5.3.0: The engine &quot;node&quot; is incompatible with this module. Expected version &quot;&gt;&#x3D;10.18.1&quot;. Got &quot;10.16.0</span><br><span class="line"></span><br><span class="line">升级下node...windows 下需要到官网下载最新包安装</span><br></pre></td></tr></table></figure>
-
-<h2 id="开发"><a href="#开发" class="headerlink" title="开发"></a>开发</h2><p>install 相关依赖后，即可进入正常开发，以下是一些辅助命令</p>
-<ul>
-<li>start 启动</li>
-<li>build 编译项目 输出至 dist</li>
-<li>analyze 分析依赖大小</li>
-<li>lint 代码检查</li>
-<li>lint:fix 自动修复lint 错误</li>
-<li>i18n-remove 尝试删除项目中所有的i18n代码，对于复杂的运行时代码，表现并不好，慎用</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/09/14/collections/Project/Antd4%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/" data-id="ckhj97rad002b2inacfa6fe8i" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/09/25/collections/TypeScript/TypeScript%20%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4/" data-id="ckin8e2aq002o2vt714xm1xd8" class="article-share-link">分享</a>
       
       
     </footer>
@@ -809,7 +835,7 @@
 
   <nav id="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/hexo-blog/page/2/">2</a><a class="page-number" href="/hexo-blog/page/3/">3</a><a class="page-number" href="/hexo-blog/page/4/">4</a><a class="extend next" rel="next" href="/hexo-blog/page/2/">下一页 &gt;&gt;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/hexo-blog/page/2/">2</a><a class="page-number" href="/hexo-blog/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/hexo-blog/page/5/">5</a><a class="extend next" rel="next" href="/hexo-blog/page/2/">下一页 &gt;&gt;</a>
   </nav>
 
 </section>
@@ -835,7 +861,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/11/">十一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/10/">十月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/09/">九月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/07/">七月 2020</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/12/">十二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/11/">十一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/10/">十月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/09/">九月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/07/">七月 2020</a></li></ul>
     </div>
   </div>
 
@@ -848,23 +874,23 @@
       <ul>
         
           <li>
+            <a href="/hexo-blog/2020/12/12/collections/JavaScript/ECMAScript2021%E7%9A%84%E5%87%A0%E4%B8%AA%E6%96%B0%E7%89%B9%E6%80%A7/">ECMAScript2021的几个新特性</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2020/11/21/Coding/6%E4%B8%AA%E8%A7%84%E5%88%99%E5%8E%BB%E5%87%80%E5%8C%96%E4%BD%A0%E7%9A%84%E4%BB%A3%E7%A0%81/">6个规则去净化你的代码</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2020/11/16/collections/Flutter/%E5%AE%89%E5%8D%93APP%20%E7%AD%BE%E5%90%8D/">安卓APP 签名相关</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2020/11/16/collections/Flutter/Flutter%20%E5%AE%89%E8%A3%85/">Flutter 安装</a>
+          </li>
+        
+          <li>
             <a href="/hexo-blog/2020/11/09/collections/Internet/Fetch%20API%E4%BB%8B%E7%BB%8D%E5%8F%8A%E4%BD%BF%E7%94%A8Fetch%20%E5%8F%91%E9%80%81%E8%AF%B7%E6%B1%82/">Fetch API介绍及使用Fetch发送请求</a>
-          </li>
-        
-          <li>
-            <a href="/hexo-blog/2020/11/08/collections/Git/git%E6%96%87%E4%BB%B6%E5%90%8D%E5%A4%A7%E5%B0%8F%E5%86%99%E6%97%A0%E6%B3%95%E4%BF%AE%E6%94%B9/">git文件名大小写无法修改</a>
-          </li>
-        
-          <li>
-            <a href="/hexo-blog/2020/11/02/collections/Git/git%20log%E5%9C%A8win10%E5%87%BA%E7%8E%B0%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81/">git log在win10出现中文乱码</a>
-          </li>
-        
-          <li>
-            <a href="/hexo-blog/2020/10/31/collections/CentOs/centos%20%E7%B3%BB%E7%BB%9F%E4%BD%BF%E7%94%A8Verdaccio%E6%90%AD%E5%BB%BAnpm%E7%A7%81%E5%BA%93/">centos 系统使用verdaccio搭建npm私库</a>
-          </li>
-        
-          <li>
-            <a href="/hexo-blog/2020/10/04/collections/Project/qiankun%E5%BE%AE%E5%89%8D%E7%AB%AF%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/">qiankun微前端项目搭建</a>
           </li>
         
       </ul>

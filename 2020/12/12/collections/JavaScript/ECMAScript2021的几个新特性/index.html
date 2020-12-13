@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>ECMAScript2021的几个新特性 | #一如既往、</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1. String.prototype.replaceAllString.prototype.replaceAll 先来回顾下String.prototype.replace 的用法： 123const str &#x3D; &#39;Hello World! Hello World!&#39;;const newStr &#x3D; str.replace(&#39;World&#39;,&#39;XiaoMing&#39;);console.log(newSt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ECMAScript2021的几个新特性">
+<meta property="og:url" content="https://ewqazxc.github.io/hexo-blog/2020/12/12/collections/JavaScript/ECMAScript2021%E7%9A%84%E5%87%A0%E4%B8%AA%E6%96%B0%E7%89%B9%E6%80%A7/index.html">
+<meta property="og:site_name" content="#一如既往、">
+<meta property="og:description" content="1. String.prototype.replaceAllString.prototype.replaceAll 先来回顾下String.prototype.replace 的用法： 123const str &#x3D; &#39;Hello World! Hello World!&#39;;const newStr &#x3D; str.replace(&#39;World&#39;,&#39;XiaoMing&#39;);console.log(newSt">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-12-12T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-13T14:35:46.068Z">
+<meta property="article:author" content="ewqazxc">
+<meta name="twitter:card" content="summary">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <!-- 
+<link rel="stylesheet" href="/hexo-blog/%7B%22title%22:%22#%E4%B8%80%E5%A6%82%E6%97%A2%E5%BE%80%E3%80%81%22,%22subtitle%22:%22%E4%B8%8D%E7%9F%A5%E9%81%93%E5%86%99%E7%9A%84%E4%BB%80%E4%B9%88%E7%9A%84%E5%8D%9A%E5%AE%A2~%22,%22description%22:%22description%22,%22author%22:%22ewqazxc%22,%22language%22:%22zh-CN%22,%22timezone%22:%22Asia/Shanghai%22,%22url%22:%22https:/ewqazxc.github.io/hexo-blog%22,%22root%22:%22/hexo-blog/%22,%22permalink%22:%22:year/:month/:day/:title/%22,%22permalink_defaults%22:null,%22pretty_urls%22:%7B%22trailing_index%22:true,%22trailing_html%22:true%7D,%22source_dir%22:%22source%22,%22public_dir%22:%22public%22,%22tag_dir%22:%22tags%22,%22archive_dir%22:%22archives%22,%22category_dir%22:%22categories%22,%22code_dir%22:%22downloads/code%22,%22i18n_dir%22:%22:lang%22,%22skip_render%22:null,%22new_post_name%22:%22:title.md%22,%22default_layout%22:%22post%22,%22titlecase%22:false,%22external_link%22:%7B%22enable%22:true,%22field%22:%22site%22,%22exclude%22:%22%22%7D,%22filename_case%22:0,%22render_drafts%22:false,%22post_asset_folder%22:false,%22relative_link%22:false,%22future%22:true,%22highlight%22:%7B%22enable%22:true,%22auto_detect%22:false,%22line_number%22:true,%22tab_replace%22:%22%22,%22wrap%22:true,%22hljs%22:false,%22first_line_number%22:%22always1%22%7D,%22default_category%22:%22uncategorized%22,%22category_map%22:null,%22tag_map%22:null,%22date_format%22:%22YYYY-MM-DD%22,%22time_format%22:%22HH:mm:ss%22,%22use_date_for_updated%22:false,%22per_page%22:10,%22pagination_dir%22:%22page%22,%22theme%22:%22landscape%22,%22server%22:%7B%22port%22:4000,%22log%22:false,%22compress%22:false,%22header%22:true,%22cache%22:false%7D,%22deploy%22:%7B%22type%22:%22%22%7D,%22ignore%22:null,%22meta_generator%22:true,%22keywords%22:null,%22index_generator%22:%7B%22per_page%22:10,%22order_by%22:%22-date%22,%22path%22:%22%22%7D,%22include%22:null,%22exclude%22:null,%22archive_generator%22:%7B%22per_page%22:10,%22yearly%22:true,%22monthly%22:true,%22daily%22:false%7D,%22category_generator%22:%7B%22per_page%22:10%7D,%22tag_generator%22:%7B%22per_page%22:10%7D,%22marked%22:%7B%22gfm%22:true,%22pedantic%22:false,%22breaks%22:true,%22smartLists%22:true,%22smartypants%22:true,%22modifyAnchors%22:%22%22,%22autolink%22:true,%22sanitizeUrl%22:false,%22headerIds%22:true%7D%7D.css">
+ -->
+  
+<link rel="stylesheet" href="/hexo-blog/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/hexo-blog/" id="logo">#一如既往、</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/hexo-blog/" id="subtitle">不知道写的什么的博客~</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/hexo-blog/">主页</a>
+        
+          <a class="main-nav-link" href="/hexo-blog/archives">归档</a>
+        
+          <a class="main-nav-link" href="/hexo-blog/about/me.html">关于</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://ewqazxc.github.io/hexo-blog"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-collections/JavaScript/ECMAScript2021的几个新特性" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo-blog/2020/12/12/collections/JavaScript/ECMAScript2021%E7%9A%84%E5%87%A0%E4%B8%AA%E6%96%B0%E7%89%B9%E6%80%A7/" class="article-date">
+  <time datetime="2020-12-12T16:00:00.000Z" itemprop="datePublished">2020-12-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      ECMAScript2021的几个新特性
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-String-prototype-replaceAll"><a href="#1-String-prototype-replaceAll" class="headerlink" title="1. String.prototype.replaceAll"></a>1. String.prototype.replaceAll</h2><p><a href="https://github.com/tc39/proposal-string-replaceall" target="_blank" rel="noopener">String.prototype.replaceAll</a></p>
+<p>先来回顾下<code>String.prototype.replace</code> 的用法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> str = <span class="string">'Hello World! Hello World!'</span>;</span><br><span class="line"><span class="keyword">const</span> newStr = str.replace(<span class="string">'World'</span>,<span class="string">'XiaoMing'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(newStr);<span class="comment">// Hello XiaoMing! Hello World!</span></span><br></pre></td></tr></table></figure>
+<p>这种写法，只有第一个匹配的会被替换，想要做到全部替换就需要使用正则表达式</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> str = <span class="string">'Hello World! Hello World!'</span>;</span><br><span class="line"><span class="keyword">const</span> newStr = str.replace(<span class="regexp">/World/g</span>,<span class="string">'XiaoMing'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(newStr);<span class="comment">// Hello XiaoMing! Hello XiaoMing!</span></span><br></pre></td></tr></table></figure>
+<p>不过，在使用正则的时候，如果需求是匹配<code>+</code>等符号时，还需要进行转义，如：<code>/\+/g</code><br>也许你会想到另一种方案：使用<code>split + join</code> 的方式<br>但这样做也是有性能开销的，加上这种操作十分常见，于是就诞生了<code>String.prototype.replaceAll</code> 这个API，简化这个操作</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> str = <span class="string">'Hello World! Hello World!'</span>;</span><br><span class="line"><span class="keyword">const</span> newStr = str.replaceAll(<span class="string">'World'</span>,<span class="string">'XiaoMing'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(newStr);<span class="comment">// Hello XiaoMing! Hello XiaoMing!</span></span><br></pre></td></tr></table></figure>
+<p><code>String.prototype.replace(searchValue, replaceValue)</code></p>
+<ul>
+<li>注意：当searchValue 是非全局正则表达式时，replaceAll 会引发异常，如果searchValue 是全局正则表达式时，replaceAll 与replace 行为是一致的</li>
+</ul>
+<h2 id="2-Promise-any"><a href="#2-Promise-any" class="headerlink" title="2. Promise.any"></a>2. Promise.any</h2><p><a href="https://github.com/tc39/proposal-promise-any" target="_blank" rel="noopener">Promise.any</a></p>
+<ul>
+<li><p>Promise.all (ES2015)只有当传入的每个Promise 实例的状态都变成fulfilled 时，才返回fulfilled，只要有一个被reject，返回的状态就变成rejected</p>
+</li>
+<li><p>Promise.race (ES2015)当传入的Promise 实例中有一个率先改变状态，那么就返回该状态，也就是返回最先改变的Promise 实例的返回值</p>
+</li>
+<li><p>Promise.allSettled (ES2020)只有等到所有传入的Promise 实例都返回结果，不管是fulfilled 还是rejected，整个实例才会结束</p>
+</li>
+<li><p>Promise.any (ES2021)当其中任何一个Promise 完成(fulfilled)时，就返回那个已经有完成值的Promise。如果所有的Promise 都变成rejected ，那么返回一个拒绝的Promise</p>
+</li>
+<li><p>Promise.any() 跟Promise.race() 方法很像，有一个不同点是，any不会因为某个Promise 变成rejected 而结束</p>
+</li>
+</ul>
+<h2 id="3-WeakRefs"><a href="#3-WeakRefs" class="headerlink" title="3. WeakRefs"></a>3. WeakRefs</h2><p><a href="https://github.com/tc39/proposal-weakrefs" target="_blank" rel="noopener">WeakRefs</a></p>
+<ul>
+<li>注意：要尽量避免使用WeakRef 和FinalizationRegistry ，垃圾回收机制依赖于JavaScript 引擎的实现，不同的引擎或是不同的版本的引擎可能会有所不同</li>
+</ul>
+<p>这个提案主要包括两个主要的新功能：</p>
+<ul>
+<li>使用 WeakRef 类创建对象的弱引用</li>
+<li>使用 FinalizationRegistry 类对对象在进行垃圾回收后，运行用户定义的终结器</li>
+</ul>
+<p>他们可以分开始用也可以一起使用，<br>WeakRef 实例不会阻止GC 回收，但是GC 会在两次EventLoop 之间回收WeakRef 实例。GC 回收后的WeakRef 实例的deref() 方法将会返回undefined</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> ref = <span class="keyword">new</span> WeakRef(obj);</span><br><span class="line"><span class="keyword">let</span> isLive = ref.deref(); <span class="comment">// 如果obj 被回收了，那么isLive 就是undefined</span></span><br></pre></td></tr></table></figure>
+<p>FinalizationRegistry 注册Callback，某个对象被GC 回收后调用。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> registry = <span class="keyword">new</span> FinalizationRegistry(<span class="function"><span class="params">heldValue</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">//...</span></span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 通过register 注册任何你想要清理回调的对象，传入该对象和所含的值</span></span><br><span class="line">registry.register(theObj, <span class="string">'some value'</span>);</span><br></pre></td></tr></table></figure>
+<p><a href="https://github.com/tc39/proposal-weakrefs/blob/master/reference.md" target="_blank" rel="noopener">更多的细节</a></p>
+<h2 id="4-Logical-Assignment-Operators-逻辑赋值操作符"><a href="#4-Logical-Assignment-Operators-逻辑赋值操作符" class="headerlink" title="4. Logical Assignment Operators 逻辑赋值操作符"></a>4. Logical Assignment Operators 逻辑赋值操作符</h2><p><a href="https://github.com/tc39/proposal-logical-assignment" target="_blank" rel="noopener">Logical Assignment Operators 逻辑赋值操作符</a></p>
+<p>看下ES2020 新增的空值合并操作符 ??<br>当左操作数为undefined 或 null 时，该操作符会将右侧操作数赋值给左侧变量</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> name = <span class="literal">null</span> ?? <span class="string">'value'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(name); <span class="comment">// value</span></span><br></pre></td></tr></table></figure>
+<p>有了逻辑赋值运算符，可以改写成：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> name ??= <span class="string">'value'</span>;</span><br><span class="line"></span><br><span class="line">a ||= b; <span class="comment">// == a || (a = b)</span></span><br><span class="line">a &amp;&amp;= b; <span class="comment">// == a &amp;&amp; (a = b)</span></span><br><span class="line">a ??= b; <span class="comment">// == a ?? (a = b)</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="5-Numeric-separators-数字分隔符"><a href="#5-Numeric-separators-数字分隔符" class="headerlink" title="5. Numeric  separators 数字分隔符"></a>5. Numeric  separators 数字分隔符</h2><p><a href="https://github.com/tc39/proposal-numeric-separator" target="_blank" rel="noopener">Numeric separators 数字分隔符</a></p>
+<p>数字的可读性随着数字变长而变差，数字分隔符会让长数字更加清晰易读</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> x = <span class="number">1000000000000</span>;</span><br><span class="line"><span class="keyword">const</span> y = <span class="number">1</span>_000_000_000_000;</span><br><span class="line"><span class="keyword">const</span>.log(x === y); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>在二进制、十六进制、BigInt 等中都可以使用</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/12/12/collections/JavaScript/ECMAScript2021%E7%9A%84%E5%87%A0%E4%B8%AA%E6%96%B0%E7%89%B9%E6%80%A7/" data-id="ckin8e2ad00222vt7232k01jq" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/hexo-blog/2020/11/21/Coding/6%E4%B8%AA%E8%A7%84%E5%88%99%E5%8E%BB%E5%87%80%E5%8C%96%E4%BD%A0%E7%9A%84%E4%BB%A3%E7%A0%81/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">过去</strong>
+      <div class="article-nav-title">6个规则去净化你的代码</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/hexo-blog/categories/hexo/">hexo</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/12/">十二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/11/">十一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/10/">十月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/09/">九月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/07/">七月 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/hexo-blog/2020/12/12/collections/JavaScript/ECMAScript2021%E7%9A%84%E5%87%A0%E4%B8%AA%E6%96%B0%E7%89%B9%E6%80%A7/">ECMAScript2021的几个新特性</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2020/11/21/Coding/6%E4%B8%AA%E8%A7%84%E5%88%99%E5%8E%BB%E5%87%80%E5%8C%96%E4%BD%A0%E7%9A%84%E4%BB%A3%E7%A0%81/">6个规则去净化你的代码</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2020/11/16/collections/Flutter/%E5%AE%89%E5%8D%93APP%20%E7%AD%BE%E5%90%8D/">安卓APP 签名相关</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2020/11/16/collections/Flutter/Flutter%20%E5%AE%89%E8%A3%85/">Flutter 安装</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2020/11/09/collections/Internet/Fetch%20API%E4%BB%8B%E7%BB%8D%E5%8F%8A%E4%BD%BF%E7%94%A8Fetch%20%E5%8F%91%E9%80%81%E8%AF%B7%E6%B1%82/">Fetch API介绍及使用Fetch发送请求</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+
+      &copy; 2020 ewqazxc<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+  <div hidden>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/hexo-blog/" class="mobile-nav-link">主页</a>
+  
+    <a href="/hexo-blog/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/hexo-blog/about/me.html" class="mobile-nav-link">关于</a>
+  
+</nav>
+    
+
+
+<script src="/hexo-blog/js/jquery-2.0.3.min.js"></script>
+
+
+
+  
+<link rel="stylesheet" href="/hexo-blog/fancybox/jquery.fancybox.css">
+
+  
+<script src="/hexo-blog/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/hexo-blog/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
