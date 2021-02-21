@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>#一如既往、</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Fabric.js Javascript Canvas Library                             Home     Demos     Tutorial     Docs     Custom Build     Support     Tests&#x2F;Benchmarks     Team">
+<meta property="og:type" content="website">
+<meta property="og:title" content="#一如既往、">
+<meta property="og:url" content="https://ewqazxc.github.io/hexo-blog/collections/Fabricjs/introduction/demo/fabricHome.html">
+<meta property="og:site_name" content="#一如既往、">
+<meta property="og:description" content="Fabric.js Javascript Canvas Library                             Home     Demos     Tutorial     Docs     Custom Build     Support     Tests&#x2F;Benchmarks     Team">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-02-21T15:23:46.633Z">
+<meta property="article:modified_time" content="2021-02-21T15:23:46.633Z">
+<meta property="article:author" content="ewqazxc">
+<meta name="twitter:card" content="summary">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <!-- 
+<link rel="stylesheet" href="/hexo-blog/%7B%22title%22:%22#%E4%B8%80%E5%A6%82%E6%97%A2%E5%BE%80%E3%80%81%22,%22subtitle%22:%22%E4%B8%8D%E7%9F%A5%E9%81%93%E5%86%99%E7%9A%84%E4%BB%80%E4%B9%88%E7%9A%84%E5%8D%9A%E5%AE%A2~%22,%22description%22:%22description%22,%22author%22:%22ewqazxc%22,%22language%22:%22zh-CN%22,%22timezone%22:%22Asia/Shanghai%22,%22url%22:%22https:/ewqazxc.github.io/hexo-blog%22,%22root%22:%22/hexo-blog/%22,%22permalink%22:%22:year/:month/:day/:title/%22,%22permalink_defaults%22:null,%22pretty_urls%22:%7B%22trailing_index%22:true,%22trailing_html%22:true%7D,%22source_dir%22:%22source%22,%22public_dir%22:%22public%22,%22tag_dir%22:%22tags%22,%22archive_dir%22:%22archives%22,%22category_dir%22:%22categories%22,%22code_dir%22:%22downloads/code%22,%22i18n_dir%22:%22:lang%22,%22skip_render%22:null,%22new_post_name%22:%22:title.md%22,%22default_layout%22:%22post%22,%22titlecase%22:false,%22external_link%22:%7B%22enable%22:true,%22field%22:%22site%22,%22exclude%22:%22%22%7D,%22filename_case%22:0,%22render_drafts%22:false,%22post_asset_folder%22:false,%22relative_link%22:false,%22future%22:true,%22highlight%22:%7B%22enable%22:true,%22auto_detect%22:false,%22line_number%22:true,%22tab_replace%22:%22%22,%22wrap%22:true,%22hljs%22:false,%22first_line_number%22:%22always1%22%7D,%22default_category%22:%22uncategorized%22,%22category_map%22:null,%22tag_map%22:null,%22date_format%22:%22YYYY-MM-DD%22,%22time_format%22:%22HH:mm:ss%22,%22use_date_for_updated%22:false,%22per_page%22:10,%22pagination_dir%22:%22page%22,%22theme%22:%22landscape%22,%22server%22:%7B%22port%22:4000,%22log%22:false,%22compress%22:false,%22header%22:true,%22cache%22:false%7D,%22deploy%22:%7B%22type%22:%22%22%7D,%22ignore%22:null,%22meta_generator%22:true,%22keywords%22:null,%22index_generator%22:%7B%22per_page%22:10,%22order_by%22:%22-date%22,%22path%22:%22%22%7D,%22include%22:null,%22exclude%22:null,%22archive_generator%22:%7B%22per_page%22:10,%22yearly%22:true,%22monthly%22:true,%22daily%22:false%7D,%22category_generator%22:%7B%22per_page%22:10%7D,%22tag_generator%22:%7B%22per_page%22:10%7D,%22marked%22:%7B%22gfm%22:true,%22pedantic%22:false,%22breaks%22:true,%22smartLists%22:true,%22smartypants%22:true,%22modifyAnchors%22:%22%22,%22autolink%22:true,%22sanitizeUrl%22:false,%22headerIds%22:true%7D%7D.css">
+ -->
+  
+<link rel="stylesheet" href="/hexo-blog/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/hexo-blog/" id="logo">#一如既往、</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/hexo-blog/" id="subtitle">不知道写的什么的博客~</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/hexo-blog/">主页</a>
+        
+          <a class="main-nav-link" href="/hexo-blog/archives">归档</a>
+        
+          <a class="main-nav-link" href="/hexo-blog/about/me.html">关于</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://ewqazxc.github.io/hexo-blog"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="page-" class="article article-type-page" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo-blog/collections/Fabricjs/introduction/demo/fabricHome.html" class="article-date">
+  <time datetime="2021-02-21T15:23:46.633Z" itemprop="datePublished">2021-02-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Fabric.js Javascript Canvas Library</title>
+  <link rel="stylesheet" href="css/master.css">
+  <link rel="stylesheet" href="../css/ads.css">
+  <script id="twitter-wjs" src="//platform.twitter.com/widgets.js"></script>
+  <script type="text/javascript" async="" src="http://www.google-analytics.com/ga.js"></script>
+  <script src="lib/fabric.js"></script>
+  <script src="js/master.js"></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <ul id="header">
+    <li><a href="http://fabricjs.com/" target="_blank" rel="noopener">Home</a></li>
+    <li><a href="http://fabricjs.com/demos" target="_blank" rel="noopener">Demos</a></li>
+    <li><a href="http://fabricjs.com/articles" target="_blank" rel="noopener">Tutorial</a></li>
+    <li><a href="http://fabricjs.com/docs" target="_blank" rel="noopener">Docs</a></li>
+    <li><a href="http://fabricjs.com/build" target="_blank" rel="noopener">Custom Build</a></li>
+    <li><a href="http://fabricjs.com/help" target="_blank" rel="noopener">Support</a></li>
+    <li><a href="http://fabricjs.com/test" target="_blank" rel="noopener">Tests/Benchmarks</a></li>
+    <li><a href="http://fabricjs.com/team" target="_blank" rel="noopener">Team</a></li>
+    <li class="github secondary">
+      <!-- Place this tag where you want the button to render. -->
+      <span></span>
+    </li>
+    <li class="twitter secondary">
+      <a href="https://twitter.com/fabricjs" target="_blank" rel="noopener" class="twitter-follow-button" data-show-count="true">Follow @fabricjs</a>
+    </li>
+    <li id="carbonads-container">
+      <script async="" type="text/javascript"
+        src="//cdn.carbonads.com/carbon.js?serve=CKYIEK7E&amp;placement=fabricjscom" id="_carbonads_js"></script>
+    </li>
+  </ul>
+  <script async="" defer="" src="https://buttons.github.io/buttons.js"></script>
+  <script>
+    (function () {
+
+      if (document.location.hostname === 'localhost') {
+        var links = document.getElementById('header').getElementsByTagName('a');
+        for (var i = 0, len = links.length; i < len; i++) {
+          links[i].href = links[i].href.replace('fabricjs.com', 'localhost:4000');
+        }
+      }
+      else {
+        !function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = "//platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");
+      }
+    })();
+    (function () {
+      window.addEventListener('load', function () {
+        setTimeout(function () {
+          var ads = document.getElementById('carbonads');
+          var ads2 = document.getElementById('carbonads-container');
+          var style = window.getComputedStyle(ads2);
+          if (!ads || style.display === 'none') {
+            var nag = document.getElementById('nag');
+            if (!nag) {
+              var newDiv = document.createElement('div');
+              newDiv.id = 'gentle-reminder';
+              newDiv.className = 'reminder';
+              newDiv.innerHTML = 'Do you like fabricJS?<br />If you want it continue running and you do not mind tech related ads, please allow this website in your adblocker.<br /><br />❤️ Thank You!';
+              document.body.appendChild(newDiv)
+            }
+          }
+        }, 4000);
+      });
+    })();
+  </script>
+
+
+  <div id="bd-wrapper">
+    <div id="features">
+
+      <h1 style="font-weight: normal">
+        <strong>Fabric.js</strong> is a powerful and simple<br>Javascript <strong>HTML5 canvas library</strong>
+      </h1>
+      <h4 style="margin: 5px !important">Fabric provides <strong>interactive object model</strong> on top of canvas
+        element</h4>
+      <h4 style="margin: 5px !important">Fabric also has <strong>SVG-to-canvas</strong> (and
+        <strong>canvas-to-SVG</strong>) parser</h4>
+      <div style="position: relative">
+        <div class="canvas-container" style="width: 500px; height: 1850px; position: relative; user-select: none;">
+          <canvas id="intro-canvas" width="500" height="1850" class="lower-canvas"
+            style="position: absolute; width: 500px; height: 1850px; left: 0px; top: 0px; touch-action: none; user-select: none;"></canvas><canvas
+            class="upper-canvas " width="500" height="1850"
+            style="position: absolute; width: 500px; height: 1850px; left: 0px; top: 0px; touch-action: none; user-select: none; cursor: move;"></canvas><button
+            id="to-svg">toSVG</button><button id="to-json">toJSON</button></div>
+        <div class="tooltip simple-shapes">
+          Using Fabric.js, you can create and populate objects on canvas; objects like <b>simple geometrical shapes</b>
+        </div>
+        <div class="tooltip complex-shapes">
+          or <b>complex shapes</b> consisting of hundreds or thousands of simple paths
+        </div>
+        <div class="tooltip images">
+          or good old <b>images</b>
+        </div>
+        <div class="tooltip text">
+          You can add <b>text</b> and dynamically manipulate its <b>size, alignment, font family</b>, and other
+          properties
+        </div>
+        <div class="tooltip gradients">
+          You can give any shape a <b>gradient</b>
+        </div>
+        <div class="tooltip filters">
+          and apply <b>image filters</b> to images
+        </div>
+        <div class="tooltip animation">
+          There's built-in <b>animation</b> support
+        </div>
+        <div class="tooltip groups">
+          You can <b>group</b> objects together, and manipulate them at the same time
+        </div>
+        <div class="tooltip shadows">
+          You can add <b>shadow</b> to any object. Or make it <b>draggable</b> only by its content. Try this star →
+        </div>
+        <div class="tooltip flipping">
+          Objects can be easily <b>flipped</b> in any direction. Or <b>locked</b> in movement, scaling, etc.<br> ← Try
+          these cats.
+        </div>
+        <div class="tooltip events">
+          There's an extensive <b>event</b> system
+        </div>
+        <div class="tooltip clipping">
+          You can <b>clip</b> any object to any shape
+        </div>
+        <div class="tooltip patterns">
+          or use <b>pattern</b> to fill its content
+        </div>
+        <div class="tooltip freedrawing">
+          and, of course, use <b>free drawing</b> to create anything you like
+        </div>
+        <div class="tooltip serialization">
+          Canvas can be <b>serialized</b> to JSON or SVG, and <b>restored</b> at any time
+        </div>
+      </div>
+
+      <script>
+        (function () {
+          fabric.Object.prototype.originX = fabric.Object.prototype.originY = 'center';
+          fabric.Object.prototype.transparentCorners = false;
+
+          var canvas = this.__canvas = new fabric.Canvas('intro-canvas');
+
+          // simple shapes
+          var rect = new fabric.Rect({ width: 80, height: 60, left: 100, top: 100, fill: '#f55', strokeWidth: 0 })
+          var circle = new fabric.Circle({ radius: 30, left: 50, top: 50, fill: 'rgb(50, 205, 50)', strokeWidth: 0 });
+          var triangle = new fabric.Triangle({ width: 80, height: 80, left: 150, top: 130, fill: '#55f', strokeWidth: 0 });
+
+          canvas.add(triangle, rect, circle);
+
+          // simple shapes with border
+          var rect = new fabric.Rect({ width: 79, height: 59, left: 190, top: 100, fill: '#f55', strokeWidth: 1, stroke: 'black' })
+          var circle = new fabric.Circle({ radius: 29.5, left: 140, top: 50, fill: 'rgb(50, 205, 50)', strokeWidth: 1, stroke: 'black' });
+          var triangle = new fabric.Triangle({ width: 79, height: 79, left: 240, top: 130, fill: '#55f', strokeWidth: 1, stroke: 'black' });
+
+          canvas.add(triangle, rect, circle);
+
+          // complex shapes
+          fabric.loadSVGFromURL('assets/57.svg', function (objects, options) {
+            var shape = fabric.util.groupSVGElements(objects, options);
+            shape.set({
+              left: 400,
+              top: 110,
+              angle: -15
+            })
+              .scale(0.3);
+            canvas.add(shape);
+            canvas.calcOffset();
+          });
+
+          // images
+          fabric.Image.fromURL('assets/printio.png', function (image) {
+            image.set({
+              left: 130,
+              top: 350,
+              angle: 10
+            });
+            image.scale(0.3).setCoords();
+            canvas.add(image);
+            canvas.calcOffset();
+            canvas.setActiveObject(supportText);
+
+            // filters
+            image.clone(function (clone) {
+              clone.set({
+                left: 380,
+                top: 650
+              });
+              clone.filters.push(new fabric.Image.filters.Invert());
+              clone.applyFilters();
+              canvas.add(clone);
+            });
+          });
+
+          // arrow
+          fabric.loadSVGFromURL('assets/156.svg', function (objects, options) {
+            var shape = fabric.util.groupSVGElements(objects, options);
+            shape.set({
+              left: 280,
+              top: 500,
+              angle: 70,
+              scaleX: 2,
+              scaleY: 1.5,
+              flipY: true
+            });
+
+            canvas.add(shape);
+            canvas.calcOffset();
+          });
+
+          // gradients
+          fabric.loadSVGFromURL('assets/gradients/svg_radial_4.svg', function (objects, options) {
+            var shape = fabric.util.groupSVGElements(objects, options);
+            shape.set({
+              left: 380,
+              top: 300,
+              angle: -15,
+              originX: 'center',
+              originY: 'center',
+            }).scale(0.5);
+
+            canvas.add(shape);
+            canvas.calcOffset();
+          });
+          fabric.loadSVGFromURL('assets/gradients/svg_linear_8.svg', function (objects, options) {
+            var shape = fabric.util.groupSVGElements(objects, options);
+            shape.set({
+              left: 380,
+              top: 400,
+              angle: 15,
+              originX: 'center',
+              originY: 'center',
+            }).scale(0.75)
+
+            canvas.add(shape);
+            canvas.calcOffset();
+          });
+          var styleU = {
+            underline: true,
+          };
+          var supportText = new fabric.Textbox("This lib is free for everyone.\nSome things are not.\nPeople behind FabricJS acknowledge that Black people have to fight for basic rights, against systemic racism, unequal opportunities and injustice across the 🌎.\nWe know this is wrong and we are 💔. 💪🏽💪🏾💪🏿!", {
+            width: 460,
+            fontSize: 36,
+            fontFamily: 'Helvetica',
+            fill: 'white',
+            backgroundColor: 'black',
+            styles: {
+              0: {
+                21: styleU,
+                22: styleU,
+                23: styleU,
+                24: styleU,
+                25: styleU,
+                26: styleU,
+                27: styleU,
+                28: styleU,
+              },
+              1: {
+
+              },
+            },
+            left: 250,
+            top: 260,
+            textAlign: 'center',
+          });
+
+          // text
+          var text1 = new fabric.Text('Fabric', {
+            left: 90,
+            top: 570,
+            angle: -5,
+            fontFamily: 'Helvetica',
+            strokeWidth: 0,
+            fontSize: 20,
+            fill: 'red'
+          });
+          var text2 = new fabric.Text('has', {
+            fontSize: 60,
+            left: 170,
+            top: 560,
+            fontFamily: 'Impact',
+            fill: '#eee',
+            strokeWidth: 2,
+            stroke: 'red'
+          });
+          var text3 = new fabric.Text('multiline text', {
+            left: 140,
+            top: 615,
+            angle: -5,
+            fontFamily: 'Georgia',
+            strokeWidth: 0,
+            fontSize: 20,
+            fontWeight: 'bold',
+            fill: 'green',
+            textBackgroundColor: '#efe'
+          });
+          var text4 = new fabric.Text('with extensive \ndecoration support', {
+            left: 140,
+            top: 660,
+            angle: -5,
+            fontFamily: 'Courier',
+            fontSize: 18,
+            underline: true,
+            strokeWidth: 0,
+            fill: 'blue',
+            textAlign: 'center'
+          });
+          var text5 = new fabric.Text('and\neven\nalignment', {
+            left: 140,
+            top: 730,
+            angle: 5,
+            fontFamily: 'Arial',
+            fontStyle: 'italic',
+            fontSize: 20,
+            strokeWidth: 0,
+            fill: 'grey',
+            textAlign: 'right'
+          });
+          canvas.add(text1, text2, text3, text4, text5, supportText);
+          // shadow and per-pixel drag drop
+          fabric.loadSVGFromURL('assets/112.svg', function (objects, options) {
+            var shape = fabric.util.groupSVGElements(objects, options);
+            shape.set({
+              left: 130,
+              top: 980,
+              angle: -15,
+              perPixelTargetFind: true,
+              targetFindTolerance: 4,
+              hasControls: false,
+              hasBorders: false,
+              hoverCursor: 'pointer',
+              originX: 'center',
+              originY: 'center',
+            })
+              .setShadow({ color: 'rgba(0,0,0,0.5)', offsetX: 10, offsetY: 10, blur: 10 });
+
+            canvas.add(shape);
+          });
+
+          // to svg
+          var btnEl = document.createElement('button');
+          btnEl.innerHTML = 'toSVG';
+          btnEl.id = 'to-svg';
+          canvas.getElement().parentNode.appendChild(btnEl);
+          btnEl.onclick = function () {
+            let svg = canvas.toSVG();
+            console.log(svg);
+            alert(svg)
+          };
+
+          // to json
+          var btnEl = document.createElement('button');
+          btnEl.innerHTML = 'toJSON';
+          btnEl.id = 'to-json';
+          canvas.getElement().parentNode.appendChild(btnEl);
+          btnEl.onclick = function () {
+            let json = canvas.toJSON();
+            console.log(json);
+            alert(JSON.stringify(json));
+          };
+
+          // group
+          var ellipse1 = new fabric.Ellipse({
+            rx: 80,
+            ry: 40,
+            fill: '#800080',
+            stroke: '#555',
+            strokeWidth: 5,
+            angle: 30
+          });
+          var ellipse2 = new fabric.Ellipse({
+            rx: 80,
+            ry: 40,
+            fill: '#FFFF00',
+            stroke: '#555',
+            strokeWidth: 5,
+            angle: -30
+          });
+          var text = new fabric.Text('I am a group!', {
+            fill: '#333',
+            fontFamily: 'Helvetica',
+            fontSize: 17
+          });
+          var group = new fabric.Group([ellipse1, ellipse2, text], {
+            left: 400,
+            top: 1000,
+            angle: 30
+          });
+          canvas.add(group);
+
+          // locked, flipped
+          fabric.loadSVGFromURL('assets/57.svg', function (objects, options) {
+            var shape = fabric.util.groupSVGElements(objects, options);
+            shape.set({
+              left: 100,
+              top: 1200,
+              lockScalingX: true,
+              lockScalingY: true,
+            })
+              .scale(0.25);
+            shape.opacity = 0.75;
+            canvas.add(shape);
+
+            shape.clone(function (clone) {
+              clone.set('left', 250);
+              clone.flipX = true;
+              clone.lockMovementY = true;
+              canvas.add(clone);
+            });
+
+            shape.clone(function (clone) {
+              clone.set('left', 400);
+              clone.flipY = true;
+              clone.lockMovementX = true;
+              canvas.add(clone);
+            });
+          });
+
+          // events
+          (function () {
+            var rect = new fabric.Rect({ width: 200, height: 50, fill: '#faa', rx: 10, ry: 10, strokeWidth: 0 });
+            var text = new fabric.Text('Do stuff with me!', { fontSize: 20, fontFamily: 'Georgia', strokeWidth: 0 });
+            var group = new fabric.Group([rect, text], { left: 250, top: 1320 });
+            canvas.add(group).calcOffset();
+            window.ooo = text;
+            group.on('mousedown', function () {
+              text.text = 'Mouse down';
+              group.dirty = true;
+            });
+            group.on('mouseup', function () {
+              text.text = 'Mouse up';
+              group.dirty = true;
+            });
+            group.on('scaling', function () {
+              text.text = 'Scaling';
+              group.dirty = true;
+            });
+            group.on('moving', function () {
+              text.text = 'Moving';
+              group.dirty = true;
+            });
+            group.on('rotating', function () {
+              text.text = 'Rotating';
+              group.dirty = true;
+            });
+            group.on('mousemove', function () {
+              text.text = 'Mouse move';
+              group.dirty = true;
+            });
+            group.on('mouseover', function () {
+              text.text = 'Mouse over';
+              group.dirty = true;
+            });
+            group.on('mouseout', function () {
+              text.text = 'Mouse out';
+              group.dirty = true;
+            });
+            group.on('skewing', function () {
+              text.text = 'skewing';
+              group.dirty = true;
+            });
+          })();
+
+          // clipping
+          fabric.Image.fromURL('assets/printio.png', function (image) {
+            image.set({
+              left: 250,
+              top: 1450,
+              clipTo: function (ctx) {
+                ctx.arc(0, 0, 220, 0, Math.PI * 2, true);
+              }
+            })
+              .scale(0.3);
+            canvas.add(image).calcOffset();
+          });
+
+          // patterns
+          fabric.util.loadImage('assets/retina_wood.png', function (img) {
+            var pattern = new fabric.Pattern({
+              source: img,
+              repeat: 'repeat'
+            });
+            var text = new fabric.Text('Patterns', {
+              fontSize: 150,
+              left: 250,
+              top: 1600,
+              strokeWidth: 2,
+              stroke: 'black',
+              fontFamily: 'Impact',
+              fill: pattern
+            });
+            canvas.add(text);
+          });
+
+          // free drawing
+          var path = { "type": "path", "originX": "center", "originY": "center", "left": 173, "top": 1800, "width": 232, "height": 49, "fill": null, "overlayFill": null, "stroke": "#aaf", "strokeWidth": 10, "strokeDashArray": null, "scaleX": 1, "scaleY": 1, "angle": 0, "flipX": false, "flipY": false, "opacity": 1, "selectable": true, "hasControls": true, "hasBorders": true, "hasRotatingPoint": true, "transparentCorners": true, "TargetFind": false, "shadow": { "color": "#aaf", "blur": 0, "offsetX": 0, "offsetY": 0 }, "visible": true, "path": [["M", 0, 42], ["Q", 0, 42, 0, 42], ["Q", 0, 42, 0.5, 42], ["Q", 1, 42, 1, 41.5], ["Q", 1, 41, 3, 39], ["Q", 5, 37, 10.5, 31], ["Q", 16, 25, 24.5, 18], ["Q", 33, 11, 37, 8], ["Q", 41, 5, 45.5, 2.5], ["Q", 50, 0, 52.5, 0], ["Q", 55, 0, 57, 0], ["Q", 59, 0, 60, 3], ["Q", 61, 6, 64, 19.5], ["Q", 67, 33, 68, 37], ["Q", 69, 41, 69.5, 44], ["Q", 70, 47, 71.5, 48], ["Q", 73, 49, 76, 49], ["Q", 79, 49, 85.5, 44], ["Q", 92, 39, 100.5, 33], ["Q", 109, 27, 113.5, 23], ["Q", 118, 19, 125.5, 16], ["Q", 133, 13, 139.5, 13.5], ["Q", 146, 14, 149, 17.5], ["Q", 152, 21, 153.5, 24], ["Q", 155, 27, 156.5, 29.5], ["Q", 158, 32, 160.5, 32.5], ["Q", 163, 33, 166, 32], ["Q", 169, 31, 172, 27.5], ["Q", 175, 24, 179, 20.5], ["Q", 183, 17, 185.5, 14.5], ["Q", 188, 12, 189.5, 12], ["Q", 191, 12, 192.5, 12], ["Q", 194, 12, 195.5, 15], ["Q", 197, 18, 199, 19.5], ["Q", 201, 21, 203, 22.5], ["Q", 205, 24, 207.5, 24], ["Q", 210, 24, 214.5, 23.5], ["Q", 219, 23, 222.5, 20.5], ["Q", 226, 18, 229, 15.5], ["L", 232, 13]], "pathOffset": { "x": 116, "y": 24.5 } };
+
+          fabric.Path.fromObject(path, function (path) {
+            canvas.add(path);
+
+            path.clone(function (clone) {
+              clone.stroke = '#afa';
+              clone.angle = 180;
+              clone.top -= 50;
+              clone.left += 150;
+              canvas.add(clone);
+            });
+          });
+
+        })();
+
+
+        // animation
+        fabric.Image.fromURL('assets/ladybug.png', function (image) {
+          image.set({
+            left: 50,
+            top: 840,
+            angle: 10,
+            opacity: 0.1
+          })
+            .scale(0.6);
+
+          __canvas.add(image);
+
+          this.__image = image;
+        });
+
+        function animate() {
+          var isStart = Math.round(__image.left) === 50;
+          __image && __image.animate({
+            'left': isStart ? 400 : 50,
+            opacity: isStart ? 1 : 0.1,
+            angle: isStart ? 100 : 10,
+            scaleX: isStart ? 1 : 0.6,
+            scaleY: isStart ? 1 : 0.6
+          }, {
+            duration: 1500,
+            onChange: __canvas.requestRenderAllBound,
+            onComplete: animate
+          });
+        }
+
+        window.onscroll = function () {
+          if (typeof __image === 'undefined') return;
+          animate();
+          window.onscroll = null;
+        };
+      </script>
+
+      <h3>Other features include</h3>
+      <ul style="width: 250px; text-align: left; margin: 0 auto">
+        <li>Subclassing</li>
+        <li>Touch devices support</li>
+        <li>Node.js support <em>(and npm package)</em></li>
+      </ul>
+
+      <p class="next-steps">
+        <a href="/demos">Check out <b>demos</b></a>
+        <a href="/fabric-intro-part-1">Read <b>introduction</b></a><br>
+        <a href="//cdnjs.cloudflare.com/ajax/libs/fabric.js/4.3.1/fabric.min.js" target="_blank" rel="noopener">Download version <b>4.3.1</b></a>
+      </p>
+
+    </div>
+
+    <div id="printio-lab-project">
+      <a href="http://printio.ru" target="_blank" rel="noopener">Printio.ru</a> Lab Project
+    </div>
+    <div id="changelog">
+      <a href="/changelog"><b>Read the CHANGELOG</b></a>
+    </div>
+
+  </div>
+
+  <script>
+    (function () {
+      window.addEventListener('load', function () {
+        var canvas = this.__canvas || this.canvas,
+          canvases = this.__canvases || this.canvases;
+
+        canvas && canvas.calcOffset && canvas.calcOffset();
+
+        if (canvases && canvases.length) {
+          for (var i = 0, len = canvases.length; i < len; i++) {
+            canvases[i].calcOffset();
+          }
+        }
+      });
+    })();
+  </script>
+
+
+
+  <div id="gentle-reminder" class="reminder">Do you like fabricJS?<br>If you want it continue running and you do not
+    mind tech related ads, please allow this website in your adblocker.<br><br>❤️ Thank You!</div>
+</body>
+
+</html>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ewqazxc.github.io/hexo-blog/collections/Fabricjs/introduction/demo/fabricHome.html" data-id="cklfaxaoh003925q41l17ervw" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/hexo-blog/categories/hexo/">hexo</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/12/">十二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/11/">十一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/10/">十月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/09/">九月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/07/">七月 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/hexo-blog/2020/12/12/collections/JavaScript/ECMAScript2021%E7%9A%84%E5%87%A0%E4%B8%AA%E6%96%B0%E7%89%B9%E6%80%A7/">ECMAScript2021的几个新特性</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2020/11/21/Coding/6%E4%B8%AA%E8%A7%84%E5%88%99%E5%8E%BB%E5%87%80%E5%8C%96%E4%BD%A0%E7%9A%84%E4%BB%A3%E7%A0%81/">6个规则去净化你的代码</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2020/11/16/collections/Flutter/%E5%AE%89%E5%8D%93APP%20%E7%AD%BE%E5%90%8D/">安卓APP 签名相关</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2020/11/16/collections/Flutter/Flutter%20%E5%AE%89%E8%A3%85/">Flutter 安装</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2020/11/09/collections/Internet/Fetch%20API%E4%BB%8B%E7%BB%8D%E5%8F%8A%E4%BD%BF%E7%94%A8Fetch%20%E5%8F%91%E9%80%81%E8%AF%B7%E6%B1%82/">Fetch API介绍及使用Fetch发送请求</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+
+      &copy; 2021 ewqazxc<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+  <div hidden>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/hexo-blog/" class="mobile-nav-link">主页</a>
+  
+    <a href="/hexo-blog/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/hexo-blog/about/me.html" class="mobile-nav-link">关于</a>
+  
+</nav>
+    
+
+
+<script src="/hexo-blog/js/jquery-2.0.3.min.js"></script>
+
+
+
+  
+<link rel="stylesheet" href="/hexo-blog/fancybox/jquery.fancybox.css">
+
+  
+<script src="/hexo-blog/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/hexo-blog/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
