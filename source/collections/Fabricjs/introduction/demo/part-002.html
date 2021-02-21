@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.3.1/fabric.min.js"></script>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+      .canvsBox {
+        width: 500px;
+        height: 500px;
+        border: 1px solid silver;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="canvsBox">
+      <canvas id="c" width="500" height="500"></canvas>
+      <img
+        id="my-image"
+        hidden
+        src="http://fabricjs.com/site_assets//svg-caching.png"
+      />
+    </div>
+    <script type="text/javascript">
+      var canvas = new fabric.Canvas("c");
+
+      const imgElement = document.getElementById("my-image");
+      // const imgElement = document.getElementById("h2-title");// 无效
+
+      // const imgInstance = new fabric.Image(imgElement, {
+      //   left: 100,
+      //   top: 100,
+      //   angle: 30,
+      //   opacity: 0.85,
+      // });
+      // canvas.add(imgInstance);
+      // imgInstance.filters.push(new fabric.Image.filters.Grayscale());
+      // imgInstance.applyFilters();
+
+      const imgUrl = "/avatar.jpg";
+      // const imgUrl = "http://fabricjs.com/site_assets//svg-caching.png";
+      // fabric.Image.fromURL(imgUrl, function (oImg) {
+      //   // oImg.set({ scale: .5 });
+      //   oImg.scale(0.2).set("flipX", true);
+      //   console.log("oImg::", oImg);
+      //   oImg.filters.push(new fabric.Image.filters.Grayscale());
+      //   oImg.applyFilters();
+      //   canvas.add(oImg);
+      // });
+
+      fabric.Image.fromURL(imgUrl, function (img) {
+        img.set({ left: 50 });
+        img.scale(0.2);
+        img.filters.push(new fabric.Image.filters.Sepia());
+        img.filters.push(
+          new fabric.Image.filters.Brightness({ brightness: 0 })
+        );
+        img.applyFilters();
+        canvas.add(img);
+      });
+      fabric.Image.fromURL(imgUrl, function (img) {
+        img.set({ left: 100 });
+        img.scale(0.2);
+        img.filters.push(new fabric.Image.filters.Sepia());
+        img.filters.push(
+          new fabric.Image.filters.Brightness({ brightness: 0.25 })
+        );
+        img.applyFilters();
+        canvas.add(img);
+      });
+      fabric.Image.fromURL(imgUrl, function (img) {
+        img.set({ left: 150 });
+        img.scale(0.2);
+        img.filters.push(new fabric.Image.filters.Sepia());
+        img.filters.push(
+          new fabric.Image.filters.Brightness({ brightness: 0.5 })
+        );
+        img.applyFilters();
+        canvas.add(img);
+      });
+      fabric.Image.fromURL(imgUrl, function (img) {
+        img.set({ left: 200 });
+        img.scale(0.2);
+        img.filters.push(new fabric.Image.filters.Sepia());
+        img.filters.push(
+          new fabric.Image.filters.Brightness({ brightness: 0.75 })
+        );
+        img.applyFilters();
+        canvas.add(img);
+      });
+
+      // create a rectangle with angle=45
+      var rect = new fabric.Rect({
+        left: 100,
+        top: 100,
+        fill: "red",
+        width: 20,
+        height: 20,
+        // angle: 45,
+      });
+      canvas.add(rect);
+      rect.animate("angle", 45, {
+        onChange: canvas.renderAll.bind(canvas),
+      });
+      setTimeout(() => {
+        rect.animate("left", "+=100", {
+          onChange: canvas.renderAll.bind(canvas),
+        });
+      }, 1000);
+      setTimeout(() => {
+        console.log("rect.animate::", rect.animate);
+        rect.animate("angle", "-=35", {
+          onChange: canvas.renderAll.bind(canvas),
+          easing: fabric.util.ease.easeOutBounce,
+        });
+        setTimeout(() => {
+          rect.animate("left", "10", {
+            onChange: canvas.renderAll.bind(canvas),
+            duration: 3000,
+          });
+        }, 1000);
+      }, 2000);
+
+      // TOP 150
+      var circle = new fabric.Circle({
+        left: 100,
+        top: 150,
+        radius: 50,
+      });
+
+      var gradient = new fabric.Gradient({
+        // type: "linear",
+        // gradientUnits: "pixels", // or 'percentage'
+        // coords: { x1: 0, y1: 0, x2: 0, y2: circle.height },
+        // colorStops: [
+        //   { offset: 0, color: "#000" },
+        //   { offset: 1, color: "#fff" },
+        // ],
+
+        type: "linear",
+        gradientUnits: "percentage", // 百分比
+        coords: { x1: 0, y1: 0, x2: 1, y2: 0 },
+        colorStops: [
+          { offset: 0, color: "red" },
+          { offset: 1, color: "blue" },
+        ],
+      });
+
+      circle.set("fill", gradient);
+      canvas.add(circle);
+
+      // TOP 150 e
+
+      // TOP 250
+      var text = new fabric.Text("hello world", { left: 100, top: 250 });
+      canvas.add(text);
+
+      console.log("text::", text);
+      console.log("text.toSVG()::", text.toSVG());
+      var comicSansText = new fabric.Text("I'm in Comic Sans", {
+        fontFamily: "Comic Sans",
+        fontSize: 20,
+        fontWeight: "bold",
+        underline: true,
+        linethrough: true,
+        overline: true,
+        shadow: "green -5px -5px 3px",
+        fontStyle: "italic",
+        left: 200,
+        top: 250,
+      });
+      canvas.add(comicSansText);
+
+      canvas.on("mouse:down", function (options) {
+        console.log(options.e.clientX, options.e.clientY, options);
+        if (options.target) {
+          console.log("点击的对象::", options.target.type);
+        }
+      });
+
+      canvas.on("before:selection:cleared", function (options) {
+        console.log("离开选中状态前::", options);
+        if (options.target) {
+          console.log("离开选中状态前::", options.target.type);
+        }
+      });
+      canvas.on("selection:created", function (options) {
+        console.log("确定选中状态::", options);
+        if (options.target) {
+          console.log("确定选中状态::", options.target.type);
+        }
+      });
+      canvas.on("selection:cleared", function (options) {
+        console.log("取消选中状态后::", options);
+        if (options.target) {
+          console.log("取消选中状态后::", options.target.type);
+        }
+      });
+      canvas.on("object:modified", function (options) {
+        console.log("对象变形::" + options.action, options);
+        if (options.target) {
+          console.log("对象::", options.target.type, options.target);
+        }
+      });
+      canvas.on("object:moving", function (options) {
+        console.log("移动对象::" + options.action, options);
+        if (options.target) {
+          console.log("对象::", options.target.type, options.target);
+        }
+      });
+      canvas.on("object:scaling", function (options) {
+        console.log("缩放对象::" + options.action, options);
+        if (options.target) {
+          console.log("对象::", options.target.type, options.target);
+        }
+      });
+      canvas.on("object:rotating", function (options) {
+        console.log("旋转对象::" + options.action, options);
+        if (options.target) {
+          console.log("对象::", options.target.type, options.target);
+        }
+      });
+      canvas.on("object:added", function (options) {
+        console.log("新增对象::" + options.action, options);
+        if (options.target) {
+          console.log("对象::", options.target.type, options.target);
+        }
+      });
+      canvas.on("object:removed", function (options) {
+        console.log("删除对象::" + options.action, options);
+        if (options.target) {
+          console.log("对象::", options.target.type, options.target);
+        }
+      });
+      canvas.on("object:selected", function (options) {
+        console.log("selected对象::" + options.action, options);
+        if (options.target) {
+          console.log("对象::", options.target.type, options.target);
+        }
+      });
+      comicSansText.on("selected", function () {
+        console.log("selected a comicSansText");
+      });
+      comicSansText.on("mouse:down", function (options) {
+        console.log(
+          "comicSansText::",
+          options,
+          options.e.clientX,
+          options.e.clientY
+        );
+      });
+
+      // canvas.remove(comicSansText);
+      // TOP 250 e
+
+      var zoomPoint = new fabric.Point(100, 100);
+      canvas.zoomToPoint(zoomPoint, 1);
+
+      var delta = new fabric.Point(0, -100);
+      canvas.relativePan(delta);
+    </script>
+  </body>
+</html>

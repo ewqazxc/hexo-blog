@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.3.1/fabric.min.js"></script>
+  </head>
+  <body>
+    <div></div>
+    <canvas id="my-canvas" width="500" height="500"></canvas>
+
+    <script>
+      const canvas = new fabric.Canvas("my-canvas");
+
+      var path = new fabric.Path("M 0 0 L 300 100 L 200 300 ");
+      path.set({ fill: "red", stroke: "black", strokeWidth: 2, opacity: 0.5 });
+      console.log("path::", path);
+      canvas.add(path);
+
+      path.set({ scaleX: 0.5, scaleY: 0.5 });
+    </script>
+  </body>
+</html>

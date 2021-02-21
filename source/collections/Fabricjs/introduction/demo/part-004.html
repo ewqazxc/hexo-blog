@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.3.1/fabric.min.js"></script>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+      .canvsBox {
+        width: 500px;
+        height: 500px;
+        border: 1px solid silver;
+        margin: 0 auto;
+      }
+      #stage {
+        display: flex;
+      }
+      .stage-left,
+      .stage-right {
+        width: 300px;
+      }
+      .stage-center {
+        flex: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="stage">
+      <div class="stage-left"></div>
+      <div class="stage-center">
+        <div class="canvsBox">
+          <canvas id="c" width="500" height="500"></canvas>
+        </div>
+      </div>
+      <div class="stage-right"></div>
+    </div>
+    <script>
+      var canvas = new fabric.Canvas("c");
+      // canvas.isDrawingMode = true;
+      canvas.freeDrawingBrush.color = "red";
+      canvas.freeDrawingBrush.width = 4;
+
+      var rect = new fabric.Rect({
+        left: 100,
+        top: 100,
+        fill: "red",
+        width: 200,
+        height: 200,
+        // angle: 45,
+      });
+      canvas.add(rect);
+      // rect.hasBorders = false; // 边框
+      // rect.hasControls = false;// 操控 不含移动
+      rect.set({
+        borderColor: "red",
+        cornerColor: "green",
+        cornerSize: 6,
+      });
+      rect.set({
+        transparentCorners: false,
+        cornerColor: "blue", // 角点颜色
+        cornerStrokeColor: "red", // 角点边框颜色
+        borderColor: "red", // 边框颜色
+        cornerSize: 30, // 角点大小
+        padding: 5, // 边距
+        cornerStyle: "circle", // 角点形状
+        borderDashArray: [3, 3], // 边框线间距
+      });
+
+      // rect.set("selectable", false);// 禁用选择 不可操作
+
+      canvas.add(
+        new fabric.Circle({ radius: 30, fill: "#f55", top: 100, left: 100 })
+      );
+
+      canvas.selectionColor = "rgba(0,255,0,0.3)";
+      canvas.selectionBorderColor = "aqua";
+      canvas.selectionLineWidth = 2;
+      canvas.selectionDashArray = [10, 5];
+
+      canvas.backgroundColor = "rgba(0,0,255,0.3)";
+      // canvas.setBackgroundImage('../assets/pug.jpg', canvas.renderAll.bind(canvas));
+      canvas.setBackgroundImage(
+        new fabric.Circle({ radius: 30, fill: "#f55" }),
+        canvas.renderAll.bind(canvas)
+      );
+      canvas.setOverlayImage(
+        new fabric.Circle({ radius: 30, fill: "#f55", left: 100 }),
+        canvas.renderAll.bind(canvas)
+      );
+
+      // canvas.renderAll();
+    </script>
+  </body>
+</html>

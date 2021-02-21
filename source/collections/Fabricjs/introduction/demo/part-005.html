@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.3.1/fabric.min.js"></script>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    .canvsBox {
+      width: 500px;
+      height: 500px;
+      border: 1px solid silver;
+      margin: 0 auto;
+    }
+
+    #stage {
+      display: flex;
+    }
+
+    .stage-left,
+    .stage-right {
+      width: 300px;
+    }
+
+    .stage-center {
+      flex: 1;
+    }
+
+    #preViewBox>svg {
+      border: 1px solid silver;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="stage">
+    <div class="stage-left">
+    </div>
+    <div class="stage-center">
+      <div class="canvsBox">
+        <canvas id="c" width="500" height="500"></canvas>
+      </div>
+    </div>
+    <div class="stage-right">
+      <button onclick="canvas.setZoom(1);">canvas.setZoom(1);</button><br />
+      <button onclick="console.log('canvas.toSVG()',canvas.toSVG())">canvas.toSVG();</button><br />
+    </div>
+  </div>
+
+  <script>
+    var canvas = new fabric.Canvas("c");
+    var canvasElement = document.getElementById("c");
+
+    const pageConfig = {
+      width: 400,
+      height: 600
+    }
+
+    var bg = new fabric.Rect({
+      width: 400,
+      height: 600,
+      stroke: 'black',
+      strokeWidth: 2,
+      fill: '',
+      evented: false,
+      selectable: false
+    });
+    bg.fill = new fabric.Pattern({ source: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAASElEQVQ4y2NkYGD4z0A6+M3AwMBKrGJWBgYGZiibEQ0zIInDaCaoelYyHYcX/GeitomjBo4aOGrgQBj4b7RwGFwGsjAwMDAAAD2/BjgezgsZAAAAAElFTkSuQmCC' },
+      function () { bg.dirty = true; canvas.requestRenderAll() });
+    // bg.canvas = canvas;
+    canvas.backgroundImage = bg;
+
+    const pageBorder = new fabric.Rect({
+      width: pageConfig.width, height: pageConfig.height,
+      stroke: 'red',
+      strokeWidth: 1,
+      fill: '',
+      top: 0, left: 0,
+      evented: false,
+      selectable: false
+    });
+    canvas.add(pageBorder);
+    canvas.add(
+      new fabric.Circle({ radius: 30, fill: "#f55", top: 100, left: 100 })
+    );
+    canvas.add(
+      new fabric.Text("hello world", {
+        fontSize: 30,
+        originX: "center",
+        originY: "center",
+        left: 100,
+        top: 200
+      })
+    );
+    
+    canvas.add(new fabric.Textbox("hello world", {
+        fontSize: 30,
+        originX: "center",
+        originY: "center",
+        width: 460,
+        left: 100,
+        top: 200
+      }));
+
+    canvas.on("mouse:wheel", function (opt) {
+      var delta = opt.e.deltaY;
+      var zoom = canvas.getZoom();
+      zoom *= 0.999 ** delta;
+      if (zoom > 20) zoom = 20;
+      if (zoom < 0.01) zoom = 0.01;
+      console.log('zoom::', zoom);
+      // canvas.setZoom(zoom);// 原点 缩放
+      canvas.zoomToPoint({ x: opt.e.offsetX, y: opt.e.offsetY }, zoom);// x,y 点 缩放
+
+      opt.e.preventDefault();
+      opt.e.stopPropagation();
+      var vpt = this.viewportTransform;
+      if (zoom < 400 / 1000) {
+        vpt[4] = 250 - 1000 * zoom / 2;
+        vpt[5] = 250 - 1000 * zoom / 2;
+      } else {
+        if (vpt[4] >= 0) {
+          vpt[4] = 0;
+        } else if (vpt[4] < canvas.getWidth() - 1000 * zoom) {
+          vpt[4] = canvas.getWidth() - 1000 * zoom;
+        }
+        if (vpt[5] >= 0) {
+          vpt[5] = 0;
+        } else if (vpt[5] < canvas.getHeight() - 1000 * zoom) {
+          vpt[5] = canvas.getHeight() - 1000 * zoom;
+        }
+      }
+    });
+
+    canvas.on('mouse:down', function (opt) {
+      var evt = opt.e;
+      if (evt.altKey === true) {
+        this.isDragging = true;
+        this.selection = false;
+        this.lastPosX = evt.clientX;
+        this.lastPosY = evt.clientY;
+      }
+    });
+    canvas.on('mouse:move', function (opt) {
+      if (this.isDragging) {
+        var e = opt.e;
+        var vpt = this.viewportTransform;
+        // vpt[4] += e.clientX - this.lastPosX;
+        // vpt[5] += e.clientY - this.lastPosY;
+        console.log('vpt::', vpt);
+        var zoom = canvas.getZoom();
+        if (zoom < 0.4) {
+          vpt[4] = 250 - 1000 * zoom / 2;
+          vpt[5] = 250 - 1000 * zoom / 2;
+          // vpt[4] += e.clientX - this.lastPosX;
+          // vpt[5] += e.clientY - this.lastPosY;
+        } else {
+          vpt[4] += e.clientX - this.lastPosX;
+          vpt[5] += e.clientY - this.lastPosY;
+          if (vpt[4] >= 0) {
+            vpt[4] = 0;
+          } else if (vpt[4] < canvas.getWidth() - 1000 * zoom) {
+            vpt[4] = canvas.getWidth() - 1000 * zoom;
+          }
+          if (vpt[5] >= 0) {
+            vpt[5] = 0;
+          } else if (vpt[5] < canvas.getHeight() - 1000 * zoom) {
+            vpt[5] = canvas.getHeight() - 1000 * zoom;
+          }
+        }
+        this.requestRenderAll();
+        this.lastPosX = e.clientX;
+        this.lastPosY = e.clientY;
+      }
+    });
+    canvas.on('mouse:up', function (opt) {
+      // on mouse up we want to recalculate new interaction
+      // for all objects, so we call setViewportTransform
+      this.setViewportTransform(this.viewportTransform);
+      this.isDragging = false;
+      this.selection = true;
+    });
+  </script>
+</body>
+
+</html>

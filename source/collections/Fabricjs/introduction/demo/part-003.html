@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.3.1/fabric.min.js"></script>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+      .canvsBox {
+        width: 500px;
+        height: 500px;
+        border: 1px solid silver;
+        margin: 0 auto;
+      }
+      #stage {
+        display: flex;
+      }
+      .stage-left,
+      .stage-right {
+        width: 300px;
+      }
+      .stage-center {
+        flex: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="stage">
+      <div class="stage-left"></div>
+      <div class="stage-center">
+        <div class="canvsBox">
+          <canvas id="c" width="500" height="500"></canvas>
+        </div>
+      </div>
+      <div class="stage-right"></div>
+    </div>
+    <script>
+      var canvas = new fabric.Canvas("c");
+
+      var circle = new fabric.Circle({
+        radius: 100,
+        fill: "#eef",
+        scaleY: 0.5,
+        originX: "center",
+        originY: "center",
+      });
+
+      var text = new fabric.Text("hello world", {
+        fontSize: 30,
+        originX: "center",
+        originY: "center",
+      });
+
+      var group = new fabric.Group([circle, text], {
+        left: 100,
+        top: 50,
+        angle: 15,
+      });
+
+      canvas.add(group);
+
+      group.item(0).set("fill", "red");
+      group.item(1).set({
+        text: "trololo",
+        fill: "white",
+        originX: "left",
+        originY: "center",
+      });
+
+      // 150
+      var circle1 = new fabric.Circle({
+        radius: 50,
+        fill: "red",
+        left: 0,
+      });
+      var circle2 = new fabric.Circle({
+        radius: 50,
+        fill: "green",
+        left: 100,
+      });
+      var circle3 = new fabric.Circle({
+        radius: 50,
+        fill: "blue",
+        left: 200,
+      });
+
+      var group2 = new fabric.Group([circle1, circle2, circle3], {
+        left: 100,
+        top: 180,
+      });
+
+      canvas.add(group2);
+      // 150e
+
+      fabric.Image.fromURL("/assets/pug.jpg", function (img) {
+        var img1 = img.scale(1).set({ left: 100, top: 100 });
+
+        fabric.Image.fromURL("/assets/pug.jpg", function (img) {
+          var img2 = img.scale(1).set({ left: 175, top: 175 });
+
+          fabric.Image.fromURL("/assets/pug.jpg", function (img) {
+            var img3 = img.scale(1).set({ left: 250, top: 250 });
+
+            canvas.add(
+              new fabric.Group([img1, img2, img3], { left: 200, top: 200 })
+            );
+          });
+        });
+      });
+
+      // canvas.loadFromJSON('{"objects":[{"type":"rect","left":50,"top":50,"width":20,"height":20,"fill":"green","overlayFill":null,"stroke":null,"strokeWidth":1,"strokeDashArray":null,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"selectable":true,"hasControls":true,"hasBorders":true,"hasRotatingPoint":false,"transparentCorners":true,"perPixelTargetFind":false,"rx":0,"ry":0},{"type":"circle","left":100,"top":100,"width":100,"height":100,"fill":"red","overlayFill":null,"stroke":null,"strokeWidth":1,"strokeDashArray":null,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"selectable":true,"hasControls":true,"hasBorders":true,"hasRotatingPoint":false,"transparentCorners":true,"perPixelTargetFind":false,"radius":50}],"background":"rgba(0, 0, 0, 0)"}');
+    </script>
+  </body>
+</html>
