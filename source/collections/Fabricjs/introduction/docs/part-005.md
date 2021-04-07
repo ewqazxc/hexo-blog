@@ -1,5 +1,5 @@
 ---
-title: fabricjs Part4-缩放&拖拽
+title: fabricjs Part5-缩放&拖拽
 date: 2021-02-21 23:04:00
 ---
 
