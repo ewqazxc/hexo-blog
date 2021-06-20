@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>git log 使用及格式化参数 | #一如既往、</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1. 参数说明1234567891011121314151617181920212223242526-p	按补丁格式显示每个更新之间的差异--pretty 内容格式化--date 日期格式化--stat	显示每次更新的文件修改统计信息--shortstat	只显示 --stat 中最后的行数修改添加移除统计--name-only	仅显示已修改的文件清单--name-status	显示新增、修改、删">
+<meta property="og:type" content="website">
+<meta property="og:title" content="git log 使用及格式化参数">
+<meta property="og:url" content="https://ewqazxc.github.io/hexo-blog/collections/Git/git%20log%20%E4%BD%BF%E7%94%A8%E5%8F%8A%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%8F%82%E6%95%B0.html">
+<meta property="og:site_name" content="#一如既往、">
+<meta property="og:description" content="1. 参数说明1234567891011121314151617181920212223242526-p	按补丁格式显示每个更新之间的差异--pretty 内容格式化--date 日期格式化--stat	显示每次更新的文件修改统计信息--shortstat	只显示 --stat 中最后的行数修改添加移除统计--name-only	仅显示已修改的文件清单--name-status	显示新增、修改、删">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-04-07T15:23:00.000Z">
+<meta property="article:modified_time" content="2021-06-20T14:37:47.284Z">
+<meta property="article:author" content="ewqazxc">
+<meta name="twitter:card" content="summary">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <!-- 
+<link rel="stylesheet" href="/hexo-blog/%7B%22title%22:%22#%E4%B8%80%E5%A6%82%E6%97%A2%E5%BE%80%E3%80%81%22,%22subtitle%22:%22%E4%B8%8D%E7%9F%A5%E9%81%93%E5%86%99%E7%9A%84%E4%BB%80%E4%B9%88%E7%9A%84%E5%8D%9A%E5%AE%A2~%22,%22description%22:%22description%22,%22author%22:%22ewqazxc%22,%22language%22:%22zh-CN%22,%22timezone%22:%22Asia/Shanghai%22,%22url%22:%22https:/ewqazxc.github.io/hexo-blog%22,%22root%22:%22/hexo-blog/%22,%22permalink%22:%22:year/:month/:day/:title/%22,%22permalink_defaults%22:null,%22pretty_urls%22:%7B%22trailing_index%22:true,%22trailing_html%22:true%7D,%22source_dir%22:%22source%22,%22public_dir%22:%22public%22,%22tag_dir%22:%22tags%22,%22archive_dir%22:%22archives%22,%22category_dir%22:%22categories%22,%22code_dir%22:%22downloads/code%22,%22i18n_dir%22:%22:lang%22,%22skip_render%22:null,%22new_post_name%22:%22:title.md%22,%22default_layout%22:%22post%22,%22titlecase%22:false,%22external_link%22:%7B%22enable%22:true,%22field%22:%22site%22,%22exclude%22:%22%22%7D,%22filename_case%22:0,%22render_drafts%22:false,%22post_asset_folder%22:false,%22relative_link%22:false,%22future%22:true,%22highlight%22:%7B%22enable%22:true,%22auto_detect%22:false,%22line_number%22:true,%22tab_replace%22:%22%22,%22wrap%22:true,%22hljs%22:false,%22first_line_number%22:%22always1%22%7D,%22default_category%22:%22uncategorized%22,%22category_map%22:null,%22tag_map%22:null,%22date_format%22:%22YYYY-MM-DD%22,%22time_format%22:%22HH:mm:ss%22,%22use_date_for_updated%22:false,%22per_page%22:10,%22pagination_dir%22:%22page%22,%22theme%22:%22landscape%22,%22server%22:%7B%22port%22:4000,%22log%22:false,%22compress%22:false,%22header%22:true,%22cache%22:false%7D,%22deploy%22:%7B%22type%22:%22%22%7D,%22ignore%22:null,%22meta_generator%22:true,%22keywords%22:null,%22index_generator%22:%7B%22per_page%22:10,%22order_by%22:%22-date%22,%22path%22:%22%22%7D,%22include%22:null,%22exclude%22:null,%22archive_generator%22:%7B%22per_page%22:10,%22yearly%22:true,%22monthly%22:true,%22daily%22:false%7D,%22category_generator%22:%7B%22per_page%22:10%7D,%22tag_generator%22:%7B%22per_page%22:10%7D,%22marked%22:%7B%22gfm%22:true,%22pedantic%22:false,%22breaks%22:true,%22smartLists%22:true,%22smartypants%22:true,%22modifyAnchors%22:%22%22,%22autolink%22:true,%22sanitizeUrl%22:false,%22headerIds%22:true%7D%7D.css">
+ -->
+  
+<link rel="stylesheet" href="/hexo-blog/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/hexo-blog/" id="logo">#一如既往、</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/hexo-blog/" id="subtitle">不知道写的什么的博客~</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/hexo-blog/">主页</a>
+        
+          <a class="main-nav-link" href="/hexo-blog/archives">归档</a>
+        
+          <a class="main-nav-link" href="/hexo-blog/about/me.html">关于</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://ewqazxc.github.io/hexo-blog"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="page-" class="article article-type-page" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo-blog/collections/Git/git%20log%20%E4%BD%BF%E7%94%A8%E5%8F%8A%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%8F%82%E6%95%B0.html" class="article-date">
+  <time datetime="2021-04-07T15:23:00.000Z" itemprop="datePublished">2021-04-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      git log 使用及格式化参数
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-参数说明"><a href="#1-参数说明" class="headerlink" title="1. 参数说明"></a>1. 参数说明</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">-p	按补丁格式显示每个更新之间的差异</span><br><span class="line">--pretty 内容格式化</span><br><span class="line">--date 日期格式化</span><br><span class="line">--stat	显示每次更新的文件修改统计信息</span><br><span class="line">--shortstat	只显示 --stat 中最后的行数修改添加移除统计</span><br><span class="line">--name-only	仅显示已修改的文件清单</span><br><span class="line">--name-status	显示新增、修改、删除的文件清单</span><br><span class="line">--abbrev-commit	仅显示 SHA-1 的前9个字符，而非所有的 40 个字符</span><br><span class="line">--relative-date	使用较短的相对时间显示（比如，“2 days ago”）</span><br><span class="line">--graph	显示 ASCII 图形表示的分支合并历史</span><br><span class="line">--since/after 显示提交比指定日期更新</span><br><span class="line">--until/before 显示早于特定日期的提交</span><br><span class="line">	&gt;git log --since=2.weeks</span><br><span class="line">	&gt;git log --after="2020-01-01"</span><br><span class="line">	&gt;git log --since ==2019-12-01 --until=2020-01-01</span><br><span class="line">--author 作者</span><br><span class="line">--committer 提交者</span><br><span class="line">--grep 筛选关键字</span><br><span class="line">--grep-reflog 正则筛选</span><br><span class="line">	&gt;git log --grep="xxx" -i  </span><br><span class="line">	-i 忽略大小写</span><br><span class="line">	-E 扩展正则表达式</span><br><span class="line">	-F 将限制模式视为固定的字符串</span><br><span class="line">	-P 将限制模式视为与Perl兼容的正则表达式</span><br><span class="line"></span><br><span class="line">-20 最近二十次提交记录，无则表示导出所有记录到log.txt</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-1-pretty格式说明"><a href="#1-1-pretty格式说明" class="headerlink" title="1.1 pretty格式说明"></a>1.1 pretty格式说明</h3><p>默认格式，固定格式，输出不友好，时间的格式也不符合我们的阅读习惯<br><code>使用 &gt; git log</code></p>
+<h4 id="1-1-1-简单格式"><a href="#1-1-1-简单格式" class="headerlink" title="1.1.1 简单格式"></a>1.1.1 简单格式</h4><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git log --pretty=oneline 一行格式（SHA-1+提交信息）</span><br><span class="line">git log --pretty=short 短格式（SHA-1+作者+日期+提交信息）</span><br><span class="line">git log --pretty=full 长格式（SHA-1+作者+提交者+提交日期+提交信息）</span><br><span class="line">git log --pretty=fuller 长格式（SHA-1+作者+作者提交日期+提交者+提交者提交日期+提交信息）</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-1-2-格式化格式参数"><a href="#1-1-2-格式化格式参数" class="headerlink" title="1.1.2 格式化格式参数"></a>1.1.2 格式化格式参数</h4><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">%H	提交对象（commit）的完整哈希字串</span><br><span class="line">%h	提交对象的简短哈希字串</span><br><span class="line">%T	树对象（tree）的完整哈希字串</span><br><span class="line">%t	树对象的简短哈希字串</span><br><span class="line">%P	父对象（parent）的完整哈希字串</span><br><span class="line">%p	父对象的简短哈希字串</span><br><span class="line">%an	作者（author）的名字</span><br><span class="line">%ae	作者的电子邮件地址</span><br><span class="line">%ad	作者修订日期（可以用 -date= 选项定制格式）</span><br><span class="line">%ar	作者修订日期，按多久以前的方式显示</span><br><span class="line">%cn	提交者(committer)的名字</span><br><span class="line">%ce	提交者的电子邮件地址</span><br><span class="line">%cd	提交日期</span><br><span class="line">%cr	提交日期，按多久以前的方式显示</span><br><span class="line">%s	提交说明</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-2-date格式说明"><a href="#1-2-date格式说明" class="headerlink" title="1.2 date格式说明"></a>1.2 date格式说明</h3><h4 id="1-2-1-小写格式："><a href="#1-2-1-小写格式：" class="headerlink" title="1.2.1 小写格式："></a>1.2.1 小写格式：</h4><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">- %a 星期（缩写）：Sat</span><br><span class="line">- %b 月份（缩写）：Apri</span><br><span class="line">- %c 格式化输出日期时间 月/日/年 时:分:秒：04/25/20 18:21:01</span><br><span class="line">- %d 日期：25</span><br><span class="line">- %j 一年的第几天：116</span><br><span class="line">- %m 月份数字：04</span><br><span class="line">- %p 上下午：AM/PM</span><br><span class="line">- %w 星期几（0-6）：6</span><br><span class="line">- %x 格式化输出短日期：04/25/20</span><br><span class="line">- %y 年份：20</span><br><span class="line">- %z 时区：+0800</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-2大写格式："><a href="#1-2-2大写格式：" class="headerlink" title="1.2.2大写格式："></a>1.2.2大写格式：</h4><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">- %A 星期（全写）：Saturday</span><br><span class="line">- %B 月份（全写）：April</span><br><span class="line">- %H 24小时制：18</span><br><span class="line">- %I 12小时制：06</span><br><span class="line">- %M 分钟：21</span><br><span class="line">- %S 秒：01</span><br><span class="line">- %U 一年的第几周（星期日作为每周的第一天）：16</span><br><span class="line">- %W 一年的第几周（星期一作为每周的第一天）：16</span><br><span class="line">- %X 格式化输出短时间：18:21:01</span><br><span class="line">- %Y 年份：2020</span><br><span class="line">- %Z 时区：+0800</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ewqazxc.github.io/hexo-blog/collections/Git/git%20log%20%E4%BD%BF%E7%94%A8%E5%8F%8A%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%8F%82%E6%95%B0.html" data-id="ckq5aobsf000n2grj6p1q2po5" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/hexo-blog/categories/hexo/">hexo</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2021/06/">六月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2021/05/">五月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2021/04/">四月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/12/">十二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/11/">十一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/10/">十月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/09/">九月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/07/">七月 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/hexo-blog/2021/06/20/collections/Koa/Koa%20%E6%90%AD%E5%BB%BAhttps%20%E7%8E%AF%E5%A2%83/">Koa 本地搭建 HTTPS 环境</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2021/05/09/collections/Windows/Xcopy%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/">Xcopy使用详解</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2021/04/07/collections/Git/git%20log%20%E4%BD%BF%E7%94%A8%E5%8F%8A%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%8F%82%E6%95%B0/">git log 使用及格式化参数</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2020/12/12/collections/JavaScript/ECMAScript2021%E7%9A%84%E5%87%A0%E4%B8%AA%E6%96%B0%E7%89%B9%E6%80%A7/">ECMAScript2021的几个新特性</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2020/11/21/Coding/6%E4%B8%AA%E8%A7%84%E5%88%99%E5%8E%BB%E5%87%80%E5%8C%96%E4%BD%A0%E7%9A%84%E4%BB%A3%E7%A0%81/">6个规则去净化你的代码</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+
+      &copy; 2021 ewqazxc<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+  <div hidden>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/hexo-blog/" class="mobile-nav-link">主页</a>
+  
+    <a href="/hexo-blog/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/hexo-blog/about/me.html" class="mobile-nav-link">关于</a>
+  
+</nav>
+    
+
+
+<script src="/hexo-blog/js/jquery-2.0.3.min.js"></script>
+
+
+
+  
+<link rel="stylesheet" href="/hexo-blog/fancybox/jquery.fancybox.css">
+
+  
+<script src="/hexo-blog/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/hexo-blog/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
