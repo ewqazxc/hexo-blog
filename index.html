@@ -71,6 +71,127 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-collections/Git/Git 默认分支修改" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo-blog/2021/06/30/collections/Git/Git%20%E9%BB%98%E8%AE%A4%E5%88%86%E6%94%AF%E4%BF%AE%E6%94%B9/" class="article-date">
+  <time datetime="2021-06-30T16:00:00.000Z" itemprop="datePublished">2021-07-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/hexo-blog/2021/06/30/collections/Git/Git%20%E9%BB%98%E8%AE%A4%E5%88%86%E6%94%AF%E4%BF%AE%E6%94%B9/">Git 默认分支修改</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="修改默认分支为main-分支"><a href="#修改默认分支为main-分支" class="headerlink" title="修改默认分支为main 分支"></a>修改默认分支为main 分支</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git config --global init.defaultBranch main</span><br><span class="line"></span><br><span class="line"><span class="comment"># git config --global init.defaultBranch 任意名字</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="修改当前项目默认分支"><a href="#修改当前项目默认分支" class="headerlink" title="修改当前项目默认分支"></a>修改当前项目默认分支</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch -M custom_branch</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2021/06/30/collections/Git/Git%20%E9%BB%98%E8%AE%A4%E5%88%86%E6%94%AF%E4%BF%AE%E6%94%B9/" data-id="ckry9larm0027z6q84d6jfbwq" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-collections/Electron/Electron 最小化到托盘" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo-blog/2021/06/23/collections/Electron/Electron%20%E6%9C%80%E5%B0%8F%E5%8C%96%E5%88%B0%E6%89%98%E7%9B%98/" class="article-date">
+  <time datetime="2021-06-23T05:16:00.000Z" itemprop="datePublished">2021-06-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/hexo-blog/2021/06/23/collections/Electron/Electron%20%E6%9C%80%E5%B0%8F%E5%8C%96%E5%88%B0%E6%89%98%E7%9B%98/">Electron 最小化到托盘</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="监听主窗口关闭事件"><a href="#监听主窗口关闭事件" class="headerlink" title="监听主窗口关闭事件"></a>监听主窗口关闭事件</h2><ul>
+<li>主窗口关闭后将<code>mainWindow</code> 对象置空，方便点击托盘显示主窗口时判断<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mainWindow.on(<span class="string">'closed'</span>, (event) =&gt; &#123;</span><br><span class="line">    mainWindow = <span class="literal">null</span>;<span class="comment">// 关闭后 清空对象</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="实现最小化到托盘"><a href="#实现最小化到托盘" class="headerlink" title="实现最小化到托盘"></a>实现最小化到托盘</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; app, Menu, ipcMain, Tray &#125; = <span class="built_in">require</span>(<span class="string">'electron'</span>);</span><br><span class="line"><span class="keyword">let</span> appTray = <span class="literal">null</span>;   <span class="comment">// 引用放外部，防止被当垃圾回收</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 隐藏主窗口，并创建托盘，绑定关闭事件</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">setTray</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 用一个 Tray 来表示一个图标,这个图标处于正在运行的系统的通知区</span></span><br><span class="line">  <span class="comment">//  ，通常被添加到一个 context menu 上.</span></span><br><span class="line">  <span class="comment">// const Menu = electron.Menu;</span></span><br><span class="line">  <span class="comment">// const Tray = electron.Tray;</span></span><br><span class="line">  <span class="comment">// 系统托盘右键菜单</span></span><br><span class="line">  <span class="keyword">let</span> trayMenuTemplate = [</span><br><span class="line">    &#123;     <span class="comment">// 主界面</span></span><br><span class="line">      label: <span class="string">'主界面'</span>,</span><br><span class="line">      click: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (mainWindow) &#123;</span><br><span class="line">          mainWindow.show();</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          createWindow();</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;     <span class="comment">// 系统托盘图标目录</span></span><br><span class="line">      label: <span class="string">'退出'</span>,</span><br><span class="line">      click: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        app.quit();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;];</span><br><span class="line">  <span class="comment">// 当前目录下的app.ico图标</span></span><br><span class="line">  <span class="keyword">let</span> iconPath = path.join(__dirname, <span class="string">'app.ico'</span>);</span><br><span class="line">  appTray = <span class="keyword">new</span> Tray(iconPath);</span><br><span class="line">  <span class="comment">// 图标的上下文菜单</span></span><br><span class="line">  <span class="keyword">const</span> contextMenu = Menu.buildFromTemplate(trayMenuTemplate);</span><br><span class="line">  <span class="comment">// 隐藏主窗口</span></span><br><span class="line">  <span class="comment">// mainWindow.hide();</span></span><br><span class="line">  <span class="comment">// 设置托盘悬浮提示</span></span><br><span class="line">  appTray.setToolTip(<span class="string">'悬浮提示...'</span>);</span><br><span class="line">  <span class="comment">// 设置托盘菜单</span></span><br><span class="line">  appTray.setContextMenu(contextMenu);</span><br><span class="line">  <span class="comment">// 单击托盘小图标显示应用</span></span><br><span class="line">  appTray.on(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 显示主窗口 mainWindow存在时可直接调用`show` 方法</span></span><br><span class="line">    <span class="keyword">if</span> (mainWindow) &#123;</span><br><span class="line">      mainWindow.show();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      createWindow();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 关闭托盘显示</span></span><br><span class="line">    <span class="comment">// appTray.destroy();</span></span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="主进程中启用"><a href="#主进程中启用" class="headerlink" title="主进程中启用"></a>主进程中启用</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">app.whenReady().then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 创建主窗口方法</span></span><br><span class="line">  <span class="comment">// createWindow();</span></span><br><span class="line">  <span class="comment">// 最小化到托盘 多次调用会生成多个托盘</span></span><br><span class="line">  setTray();</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">  app.on(<span class="string">'window-all-closed'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 全部窗口关闭时 是否退出应用</span></span><br><span class="line">    <span class="comment">// if (process.platform !== 'darwin') app.quit();</span></span><br><span class="line">  &#125;)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2021/06/23/collections/Electron/Electron%20%E6%9C%80%E5%B0%8F%E5%8C%96%E5%88%B0%E6%89%98%E7%9B%98/" data-id="ckry9larg0020z6q8f7ny1rvx" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-collections/Electron/Electron 限制只启动一个应用" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo-blog/2021/06/22/collections/Electron/Electron%20%E9%99%90%E5%88%B6%E5%8F%AA%E5%90%AF%E5%8A%A8%E4%B8%80%E4%B8%AA%E5%BA%94%E7%94%A8/" class="article-date">
+  <time datetime="2021-06-22T06:32:00.000Z" itemprop="datePublished">2021-06-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/hexo-blog/2021/06/22/collections/Electron/Electron%20%E9%99%90%E5%88%B6%E5%8F%AA%E5%90%AF%E5%8A%A8%E4%B8%80%E4%B8%AA%E5%BA%94%E7%94%A8/">Electron 限制只启动一个应用</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="4-x-版本"><a href="#4-x-版本" class="headerlink" title="4.x 版本"></a>4.x 版本</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// 限制只可以打开一个应用</span></span><br><span class="line"><span class="keyword">const</span> gotTheLock = app.requestSingleInstanceLock();</span><br><span class="line"><span class="keyword">if</span> (!gotTheLock) &#123;</span><br><span class="line">  app.quit()</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  app.on(<span class="string">'second-instance'</span>, (event, commandLine, workingDirectory) =&gt; &#123;</span><br><span class="line">    <span class="comment">// 当运行第二个实例时,将会聚焦到mainWindow这个窗口</span></span><br><span class="line">    <span class="keyword">if</span> (mainWindow) &#123;</span><br><span class="line">      <span class="keyword">if</span> (mainWindow.isMinimized()) mainWindow.restore()</span><br><span class="line">      mainWindow.focus()</span><br><span class="line">      mainWindow.show()</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      createWindow();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="comment">// 创建 myWindow, 加载应用的其余部分, etc...</span></span><br><span class="line">  <span class="comment">// app.on('ready', () =&gt; &#123;</span></span><br><span class="line">  <span class="comment">// &#125;)</span></span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// ==========================================================</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="旧版本-2-x"><a href="#旧版本-2-x" class="headerlink" title="旧版本 2.x"></a>旧版本 2.x</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// ==========================================================</span></span><br><span class="line"><span class="comment">// 限制只可以打开一个应用,2.x的文档</span></span><br><span class="line"><span class="comment">// const isSecondInstance = app.makeSingleInstance((commandLine, workingDirectory) =&gt; &#123;</span></span><br><span class="line"><span class="comment">//   // Someone tried to run a second instance, we should focus our window.</span></span><br><span class="line"><span class="comment">//   if (mainWindow) &#123;</span></span><br><span class="line"><span class="comment">//     if (mainWindow.isMinimized()) mainWindow.restore()</span></span><br><span class="line"><span class="comment">//     mainWindow.focus()</span></span><br><span class="line"><span class="comment">//     mainWindow.show()</span></span><br><span class="line"><span class="comment">//   &#125;</span></span><br><span class="line"><span class="comment">// &#125;)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// if (isSecondInstance) &#123;</span></span><br><span class="line"><span class="comment">//   app.quit()</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"><span class="comment">// Create myWindow, load the rest of the app, etc...</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2021/06/22/collections/Electron/Electron%20%E9%99%90%E5%88%B6%E5%8F%AA%E5%90%AF%E5%8A%A8%E4%B8%80%E4%B8%AA%E5%BA%94%E7%94%A8/" data-id="ckry9lari0022z6q82tu55yue" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-collections/Koa/Koa 搭建https 环境" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/hexo-blog/2021/06/20/collections/Koa/Koa%20%E6%90%AD%E5%BB%BAhttps%20%E7%8E%AF%E5%A2%83/" class="article-date">
@@ -124,7 +245,129 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2021/06/20/collections/Koa/Koa%20%E6%90%AD%E5%BB%BAhttps%20%E7%8E%AF%E5%A2%83/" data-id="ckq5aobu1002n2grj0a7bda3a" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2021/06/20/collections/Koa/Koa%20%E6%90%AD%E5%BB%BAhttps%20%E7%8E%AF%E5%A2%83/" data-id="ckry9las7002uz6q8bb4iao77" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-collections/Electron/Electron 任务栏菜单" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo-blog/2021/06/19/collections/Electron/Electron%20%E4%BB%BB%E5%8A%A1%E6%A0%8F%E8%8F%9C%E5%8D%95/" class="article-date">
+  <time datetime="2021-06-19T06:19:00.000Z" itemprop="datePublished">2021-06-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/hexo-blog/2021/06/19/collections/Electron/Electron%20%E4%BB%BB%E5%8A%A1%E6%A0%8F%E8%8F%9C%E5%8D%95/">Electron 任务栏菜单</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="任务栏菜单"><a href="#任务栏菜单" class="headerlink" title="任务栏菜单"></a>任务栏菜单</h2><p><code>Menu.buildFromTemplate</code> 创建菜单对象</p>
+<figure class="highlight js"><figcaption><span>main.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; app, Menu &#125; = <span class="built_in">require</span>(<span class="string">'electron'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> isMac = process.platform === <span class="string">'darwin'</span></span><br><span class="line"><span class="keyword">const</span> template = [</span><br><span class="line">  <span class="comment">// &#123; role: 'appMenu' &#125;</span></span><br><span class="line">  ...(isMac ? [&#123;</span><br><span class="line">    label: app.name,</span><br><span class="line">    submenu: [</span><br><span class="line">      &#123; <span class="attr">role</span>: <span class="string">'about'</span> &#125;,</span><br><span class="line">      &#123; <span class="attr">type</span>: <span class="string">'separator'</span> &#125;,</span><br><span class="line">      &#123; <span class="attr">role</span>: <span class="string">'services'</span> &#125;,</span><br><span class="line">      &#123; <span class="attr">type</span>: <span class="string">'separator'</span> &#125;,</span><br><span class="line">      &#123; <span class="attr">role</span>: <span class="string">'hide'</span> &#125;,</span><br><span class="line">      &#123; <span class="attr">role</span>: <span class="string">'hideothers'</span> &#125;,</span><br><span class="line">      &#123; <span class="attr">role</span>: <span class="string">'unhide'</span> &#125;,</span><br><span class="line">      &#123; <span class="attr">type</span>: <span class="string">'separator'</span> &#125;,</span><br><span class="line">      &#123; <span class="attr">role</span>: <span class="string">'quit'</span> &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;] : []),</span><br><span class="line">  <span class="comment">// &#123; role: 'fileMenu' &#125;</span></span><br><span class="line">  &#123;</span><br><span class="line">    label: <span class="string">'文件'</span>,</span><br><span class="line">    submenu: [</span><br><span class="line">      isMac ? &#123; <span class="attr">role</span>: <span class="string">'close'</span> &#125; : &#123; <span class="attr">role</span>: <span class="string">'quit'</span> &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// &#123; role: 'editMenu' &#125;</span></span><br><span class="line">  &#123;</span><br><span class="line">    label: <span class="string">'Edit'</span>,</span><br><span class="line">    submenu: [</span><br><span class="line">      &#123; <span class="attr">role</span>: <span class="string">'undo'</span> &#125;,</span><br><span class="line">      &#123; <span class="attr">role</span>: <span class="string">'redo'</span> &#125;,</span><br><span class="line">      &#123; <span class="attr">type</span>: <span class="string">'separator'</span> &#125;,</span><br><span class="line">      &#123; <span class="attr">role</span>: <span class="string">'cut'</span> &#125;,</span><br><span class="line">      &#123; <span class="attr">role</span>: <span class="string">'copy'</span> &#125;,</span><br><span class="line">      &#123; <span class="attr">role</span>: <span class="string">'paste'</span> &#125;,</span><br><span class="line">      ...(isMac ? [</span><br><span class="line">        &#123; <span class="attr">role</span>: <span class="string">'pasteAndMatchStyle'</span> &#125;,</span><br><span class="line">        &#123; <span class="attr">role</span>: <span class="string">'delete'</span> &#125;,</span><br><span class="line">        &#123; <span class="attr">role</span>: <span class="string">'selectAll'</span> &#125;,</span><br><span class="line">        &#123; <span class="attr">type</span>: <span class="string">'separator'</span> &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          label: <span class="string">'Speech'</span>,</span><br><span class="line">          submenu: [</span><br><span class="line">            &#123; <span class="attr">role</span>: <span class="string">'startSpeaking'</span> &#125;,</span><br><span class="line">            &#123; <span class="attr">role</span>: <span class="string">'stopSpeaking'</span> &#125;</span><br><span class="line">          ]</span><br><span class="line">        &#125;</span><br><span class="line">      ] : [</span><br><span class="line">        &#123; <span class="attr">role</span>: <span class="string">'delete'</span> &#125;,</span><br><span class="line">        &#123; <span class="attr">type</span>: <span class="string">'separator'</span> &#125;,</span><br><span class="line">        &#123; <span class="attr">role</span>: <span class="string">'selectAll'</span> &#125;</span><br><span class="line">      ])</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// &#123; role: 'viewMenu' &#125;</span></span><br><span class="line">  &#123;</span><br><span class="line">    label: <span class="string">'View'</span>,</span><br><span class="line">    submenu: [</span><br><span class="line">      &#123; <span class="attr">role</span>: <span class="string">'reload'</span> &#125;,</span><br><span class="line">      &#123; <span class="attr">role</span>: <span class="string">'forceReload'</span> &#125;,</span><br><span class="line">      &#123; <span class="attr">role</span>: <span class="string">'toggleDevTools'</span> &#125;,</span><br><span class="line">      &#123; <span class="attr">type</span>: <span class="string">'separator'</span> &#125;,</span><br><span class="line">      &#123; <span class="attr">role</span>: <span class="string">'resetZoom'</span> &#125;,</span><br><span class="line">      &#123; <span class="attr">role</span>: <span class="string">'zoomIn'</span> &#125;,</span><br><span class="line">      &#123; <span class="attr">role</span>: <span class="string">'zoomOut'</span> &#125;,</span><br><span class="line">      &#123; <span class="attr">type</span>: <span class="string">'separator'</span> &#125;,</span><br><span class="line">      &#123; <span class="attr">role</span>: <span class="string">'togglefullscreen'</span> &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// &#123; role: 'windowMenu' &#125;</span></span><br><span class="line">  &#123;</span><br><span class="line">    label: <span class="string">'Window'</span>,</span><br><span class="line">    submenu: [</span><br><span class="line">      &#123; <span class="attr">role</span>: <span class="string">'minimize'</span> &#125;,</span><br><span class="line">      &#123; <span class="attr">role</span>: <span class="string">'zoom'</span> &#125;,</span><br><span class="line">      ...(isMac ? [</span><br><span class="line">        &#123; <span class="attr">type</span>: <span class="string">'separator'</span> &#125;,</span><br><span class="line">        &#123; <span class="attr">role</span>: <span class="string">'front'</span> &#125;,</span><br><span class="line">        &#123; <span class="attr">type</span>: <span class="string">'separator'</span> &#125;,</span><br><span class="line">        &#123; <span class="attr">role</span>: <span class="string">'window'</span> &#125;</span><br><span class="line">      ] : [</span><br><span class="line">        &#123; <span class="attr">role</span>: <span class="string">'close'</span> &#125;</span><br><span class="line">      ])</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    role: <span class="string">'help'</span>,</span><br><span class="line">    submenu: [</span><br><span class="line">      &#123;</span><br><span class="line">        label: <span class="string">'Learn More'</span>,</span><br><span class="line">        click: <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">          <span class="keyword">const</span> &#123; shell &#125; = <span class="built_in">require</span>(<span class="string">'electron'</span>)</span><br><span class="line">          <span class="keyword">await</span> shell.openExternal(<span class="string">'https://electronjs.org'</span>)</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123; <span class="attr">role</span>: <span class="string">'toggleDevTools'</span> &#125;,</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> menu = Menu.buildFromTemplate(template)</span><br><span class="line">Menu.setApplicationMenu(menu)</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2021/06/19/collections/Electron/Electron%20%E4%BB%BB%E5%8A%A1%E6%A0%8F%E8%8F%9C%E5%8D%95/" data-id="ckry9lare001yz6q8hyodao4w" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-collections/Electron/Electron 项目搭建" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo-blog/2021/06/18/collections/Electron/Electron%20%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/" class="article-date">
+  <time datetime="2021-06-18T12:56:00.000Z" itemprop="datePublished">2021-06-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/hexo-blog/2021/06/18/collections/Electron/Electron%20%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/">Electron 项目搭建</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h2><p>创建工程目录</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir my-electron-app &amp;&amp; <span class="built_in">cd</span> my-electron-app</span><br><span class="line">npm init</span><br></pre></td></tr></table></figure>
+
+<p>安装 electron</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev electron</span><br></pre></td></tr></table></figure>
+
+<p>添加启动脚本</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"scripts"</span>: &#123;</span><br><span class="line">    <span class="attr">"start"</span>: <span class="string">"electron ."</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="运行主进程"><a href="#运行主进程" class="headerlink" title="运行主进程"></a>运行主进程</h2><p>任何 Electron 应用程序的入口都是 main 文件。 这个文件控制了主进程，它运行在一个完整的 Node.js 环境中，负责控制您应用的生命周期，显示原生界面，执行特殊操作并管理渲染器进程<br>执行期间，Electron 将依据应用中 package.json 配置下 main 字段中配置的值查找此文件，您应该已在应用脚手架步骤中配置。<br>要初始化这个 main 文件，需要在您项目的根目录下创建一个名为 main.js 的空文件。</p>
+<blockquote>
+<p>注意：如果您此时再次运行 start 命令，您的应用将不再抛出任何错误！ 然而，它不会做任何事因为我们还没有在 main.js 中添加任何代码。</p>
+</blockquote>
+<h2 id="创建页面"><a href="#创建页面" class="headerlink" title="创建页面"></a>创建页面</h2><figure class="highlight html"><figcaption><span>index.html</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Security-Policy"</span> <span class="attr">content</span>=<span class="string">"default-src 'self'; script-src 'self'"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-Content-Security-Policy"</span> <span class="attr">content</span>=<span class="string">"default-src 'self'; script-src 'self'"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Hello World!<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello World!<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    We are using Node.js <span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">"node-version"</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span>,</span><br><span class="line">    Chromium <span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">"chrome-version"</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span>,</span><br><span class="line">    and Electron <span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">"electron-version"</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span>.</span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="在窗口中打开页面"><a href="#在窗口中打开页面" class="headerlink" title="在窗口中打开页面"></a>在窗口中打开页面</h2><ol>
+<li>引入electron 模块<ul>
+<li>app 控制应用程序的事件生命周期</li>
+<li>BrowserWindow 创建和管理应用程序的窗口<figure class="highlight js"><figcaption><span>main.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; app, BrowserWindow &#125; = <span class="built_in">require</span>(<span class="string">'electron'</span>)</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>添加createWindow() 方法 将index.html 加载到窗口实例中<figure class="highlight js"><figcaption><span>main.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createWindow</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> win = <span class="keyword">new</span> BrowserWindow(&#123;</span><br><span class="line">    width: <span class="number">800</span>,</span><br><span class="line">    height: <span class="number">600</span></span><br><span class="line">  &#125;)</span><br><span class="line">  win.loadFile(<span class="string">'index.html'</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>调用createWindow() 打开新窗口<figure class="highlight js"><figcaption><span>main.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">app.whenReady().then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  createWindow()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>在 Electron 中，只有在 app 模块的 ready 事件被激发后才能创建浏览器窗口。 您可以通过使用 app.whenReady() API来监听此事件。 在whenReady()成功后调用createWindow()。</p>
+</blockquote>
+<h2 id="管理窗口的生命周期"><a href="#管理窗口的生命周期" class="headerlink" title="管理窗口的生命周期"></a>管理窗口的生命周期</h2></li>
+</ol>
+<ul>
+<li>关闭所有窗口时 退出应用<figure class="highlight js"><figcaption><span>main.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">app.on(<span class="string">'window-all-closed'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (process.platform !== <span class="string">'darwin'</span>) app.quit()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+<li>如果没有窗口打开则打开一个新窗口<figure class="highlight js"><figcaption><span>main.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">app.whenReady().then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  createWindow()</span><br><span class="line"></span><br><span class="line">  app.on(<span class="string">'activate'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (BrowserWindow.getAllWindows().length === <span class="number">0</span>) createWindow()</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="通过预加载脚本从渲染器访问Node-js"><a href="#通过预加载脚本从渲染器访问Node-js" class="headerlink" title="通过预加载脚本从渲染器访问Node.js"></a>通过预加载脚本从渲染器访问Node.js</h2><figure class="highlight js"><figcaption><span>preload.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">'DOMContentLoaded'</span>, () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> replaceText = <span class="function">(<span class="params">selector, text</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> element = <span class="built_in">document</span>.getElementById(selector)</span><br><span class="line">    <span class="keyword">if</span> (element) element.innerText = text</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">const</span> dependency <span class="keyword">of</span> [<span class="string">'chrome'</span>, <span class="string">'node'</span>, <span class="string">'electron'</span>]) &#123;</span><br><span class="line">    replaceText(<span class="string">`<span class="subst">$&#123;dependency&#125;</span>-version`</span>, process.versions[dependency])</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><figcaption><span>main.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在文件头部引入 Node.js 中的 path 模块</span></span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 修改现有的 createWindow() 函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createWindow</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> win = <span class="keyword">new</span> BrowserWindow(&#123;</span><br><span class="line">    width: <span class="number">800</span>,</span><br><span class="line">    height: <span class="number">600</span>,</span><br><span class="line">    webPreferences: &#123;</span><br><span class="line">      preload: path.join(__dirname, <span class="string">'preload.js'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  win.loadFile(<span class="string">'index.html'</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure></li>
+<li>__dirname 字符串指向当前正在执行脚本的路径 (本例中，你的项目的根文件夹)。</li>
+<li>path.join API 将多个路径段联结在一起，创建一个跨平台的组合路径字符串。</li>
+</ul>
+<h2 id="为页面添加脚本"><a href="#为页面添加脚本" class="headerlink" title="为页面添加脚本"></a>为页面添加脚本</h2><figure class="highlight html"><figcaption><span>index.html</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"./renderer.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="打包发布"><a href="#打包发布" class="headerlink" title="打包发布"></a>打包发布</h2><ol>
+<li><p>将 Electron Forge 添加到您应用的开发依赖中，并使用其”import”命令设置 Forge 的脚手架：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev @electron-forge/cli</span><br><span class="line">npx electron-forge import</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用Forge 的make 命令来创建可发布的应用</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run make</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>##</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2021/06/18/collections/Electron/Electron%20%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/" data-id="ckry9larj0023z6q8ay2409zh" class="article-share-link">分享</a>
       
       
     </footer>
@@ -175,7 +418,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2021/05/09/collections/Windows/Xcopy%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/" data-id="ckq5aobu6002w2grjegvudi9b" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2021/05/09/collections/Windows/Xcopy%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/" data-id="ckry9lasf0033z6q83rtua5ol" class="article-share-link">分享</a>
       
       
     </footer>
@@ -220,7 +463,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2021/04/07/collections/Git/git%20log%20%E4%BD%BF%E7%94%A8%E5%8F%8A%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%8F%82%E6%95%B0/" data-id="ckq5aobto00222grj2nrk626n" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2021/04/07/collections/Git/git%20log%20%E4%BD%BF%E7%94%A8%E5%8F%8A%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%8F%82%E6%95%B0/" data-id="ckry9larp002az6q83vklf75u" class="article-share-link">分享</a>
       
       
     </footer>
@@ -304,7 +547,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/12/12/collections/JavaScript/ECMAScript2021%E7%9A%84%E5%87%A0%E4%B8%AA%E6%96%B0%E7%89%B9%E6%80%A7/" data-id="ckq5aobts00272grjhp8xd6it" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/12/12/collections/JavaScript/ECMAScript2021%E7%9A%84%E5%87%A0%E4%B8%AA%E6%96%B0%E7%89%B9%E6%80%A7/" data-id="ckry9lart002ez6q82sfg323l" class="article-share-link">分享</a>
       
       
     </footer>
@@ -364,402 +607,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/11/21/Coding/6%E4%B8%AA%E8%A7%84%E5%88%99%E5%8E%BB%E5%87%80%E5%8C%96%E4%BD%A0%E7%9A%84%E4%BB%A3%E7%A0%81/" data-id="ckq5aobrx00042grj0ai6dtb9" class="article-share-link">分享</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-collections/Flutter/安卓APP 签名" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/hexo-blog/2020/11/16/collections/Flutter/%E5%AE%89%E5%8D%93APP%20%E7%AD%BE%E5%90%8D/" class="article-date">
-  <time datetime="2020-11-16T15:55:50.000Z" itemprop="datePublished">2020-11-16</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/hexo-blog/2020/11/16/collections/Flutter/%E5%AE%89%E5%8D%93APP%20%E7%AD%BE%E5%90%8D/">安卓APP 签名相关</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="一-生成APP-签名"><a href="#一-生成APP-签名" class="headerlink" title="一 生成APP 签名"></a>一 生成APP 签名</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">keytool -genkey -v -keystore ~/key.jks -keyalg RSA -keysize 2048 -validity 10000 -<span class="built_in">alias</span> key</span><br><span class="line"></span><br><span class="line">JDK1.8\bin&gt;keytool -genkey -<span class="built_in">alias</span> android.key.jks -keyalg RSA -validity 20000 -keystore android.key.jks</span><br><span class="line"></span><br><span class="line">keytool -genkey -<span class="built_in">alias</span> androidAppKey -keyalg RSA -validity 20000 -keystore androidAppKey</span><br><span class="line">keytool -genkey -<span class="built_in">alias</span> androidAppKey -keyalg RSA -validity 10000 -keystore androidAppKey</span><br></pre></td></tr></table></figure>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">输入密钥库口令:</span><br><span class="line">再次输入新口令:</span><br><span class="line">您的名字与姓氏是什么?</span><br><span class="line">  [Unknown]:  XC</span><br><span class="line">您的组织单位名称是什么?</span><br><span class="line">  [Unknown]:  TL</span><br><span class="line">您的组织名称是什么?</span><br><span class="line">  [Unknown]:  TL</span><br><span class="line">您所在的城市或区域名称是什么?</span><br><span class="line">  [Unknown]:  FZ</span><br><span class="line">您所在的省/市/自治区名称是什么?</span><br><span class="line">  [Unknown]:  FZ</span><br><span class="line">该单位的双字母国家/地区代码是什么?</span><br><span class="line">  [Unknown]:  CN</span><br><span class="line">CN=XC, OU=TL, O=TL, L=FZ, ST=FZ, C=CN是否正确?</span><br><span class="line">  [否]:  Y</span><br><span class="line"></span><br><span class="line">输入 &lt;android.keystore&gt; 的密钥口令</span><br><span class="line">        (如果和密钥库口令相同, 按回车):</span><br><span class="line">再次输入新口令:</span><br><span class="line">Warning:</span><br><span class="line">JKS 密钥库使用专用格式。建议使用</span><br><span class="line"> <span class="string">"keytool -importkeystore -srckeystore android.keystore -destkeystore android.keystore -deststoretype pkcs12"</span></span><br><span class="line"> <span class="string">"keytool -importkeystore -srckeystore android.key.jks -destkeystore android.key.jks -deststoretype pkcs12"</span></span><br><span class="line"> keytool -importkeystore -srckeystore androidAppKey -destkeystore androidAppKey -deststoretype pkcs12</span><br><span class="line">迁移到行业标准格式 PKCS12。</span><br></pre></td></tr></table></figure>
-
-<hr>
-<p><code>keytool -list -v -keystore H:\devTool\SDK\JDK1.8\bin\android.key.jks</code></p>
-<h2 id="二-查看应用签名"><a href="#二-查看应用签名" class="headerlink" title="二 查看应用签名"></a>二 查看应用签名</h2><p><a href="https://www.jianshu.com/p/3d21f76a8edd" target="_blank" rel="noopener">https://www.jianshu.com/p/3d21f76a8edd</a></p>
-<ol>
-<li><p>查看三方应用签名<br>在没有keystore文件和密钥的情况下，要想查看我们所需应用的签名信息，就需要借助keytool工具来完成。</p>
-<p>首先解压要查看的apk包，通过数据证书管理工具keytool查看apk的签名信息。具体步骤如下：</p>
-<ul>
-<li>1 将apk修改后缀为.rar文件后进行解压；</li>
-<li>2 进入解压后的META-INF目录，找到该目录下的xxx.RSA文件；</li>
-<li>3 通过命令cmd打开DOS窗口，输入命令 ：keytool -printcert -file [RSA文件路径]；</li>
-</ul>
-</li>
-</ol>
-<h2 id="三-异常错误处理"><a href="#三-异常错误处理" class="headerlink" title="三 异常错误处理"></a>三 异常错误处理</h2><h3 id="报错：keystore-password-was-incorrect"><a href="#报错：keystore-password-was-incorrect" class="headerlink" title="报错：keystore password was incorrect"></a>报错：keystore password was incorrect</h3><p>keyPassword 与 storePassword 取值一致</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">signingConfigs &#123;</span><br><span class="line">    release &#123;</span><br><span class="line">        keyAlias keystoreProperties[<span class="string">'keyAlias'</span>]</span><br><span class="line">        keyPassword keystoreProperties[<span class="string">'keyPassword'</span>]</span><br><span class="line">        storeFile file(keystoreProperties[<span class="string">'storeFile'</span>])</span><br><span class="line">        storePassword keystoreProperties[<span class="string">'keyPassword'</span>]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/11/16/collections/Flutter/%E5%AE%89%E5%8D%93APP%20%E7%AD%BE%E5%90%8D/" data-id="ckq5aobtl00202grj5revf8uz" class="article-share-link">分享</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-collections/Flutter/Flutter 安装" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/hexo-blog/2020/11/16/collections/Flutter/Flutter%20%E5%AE%89%E8%A3%85/" class="article-date">
-  <time datetime="2020-11-16T15:45:50.000Z" itemprop="datePublished">2020-11-16</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/hexo-blog/2020/11/16/collections/Flutter/Flutter%20%E5%AE%89%E8%A3%85/">Flutter 安装</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="一-安装-Flutter"><a href="#一-安装-Flutter" class="headerlink" title="一 安装 Flutter"></a>一 安装 Flutter</h2><ol>
-<li><p>获取 Flutter SDK<br><a href="https://flutter.dev/docs/development/tools/sdk/releases#windows" target="_blank" rel="noopener">官网下载</a><br><a href="https://github.com/flutter/flutter/releases" target="_blank" rel="noopener">GitHub 下载</a></p>
-</li>
-<li><p>更新环境变量</p>
-</li>
-</ol>
-<p>要在终端运行 flutter 命令， 需要添加以下环境变量到系统 PATH：</p>
-<ul>
-<li>转到 “控制面板&gt;用户帐户&gt;用户帐户&gt;更改我的环境变量”</li>
-<li>在“用户变量”下检查是否有名为“Path”的条目:<ul>
-<li>如果该条目存在, 追加 flutter\bin 的全路径，使用 ; 作为分隔符.</li>
-<li>如果条目不存在, 创建一个新用户变量 Path ，然后将 flutter\bin 的全路径作为它的值.</li>
-</ul>
-</li>
-<li>在“用户变量”下检查是否有名为”PUB_HOSTED_URL”和”FLUTTER_STORAGE_BASE_URL”的条目，如果没有，也添加它们。</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export PUB_HOSTED_URL&#x3D;https:&#x2F;&#x2F;pub.flutter-io.cn</span><br><span class="line">export FLUTTER_STORAGE_BASE_URL&#x3D;https:&#x2F;&#x2F;storage.flutter-io.cn</span><br></pre></td></tr></table></figure>
-
-<h2 id="二-使用flutter-doctor-检测依赖是否完整"><a href="#二-使用flutter-doctor-检测依赖是否完整" class="headerlink" title="二 使用flutter doctor 检测依赖是否完整"></a>二 使用<code>flutter doctor</code> 检测依赖是否完整</h2><ul>
-<li>环境变量需要 JDK、git</li>
-</ul>
-<h3 id="Flutter-Unable-to-locate-Android-SDK"><a href="#Flutter-Unable-to-locate-Android-SDK" class="headerlink" title="Flutter Unable to locate Android SDK."></a>Flutter Unable to locate Android SDK.</h3><ul>
-<li>添加环境变量：ANDROID_HOME H:\devTool\AndroidSDK</li>
-</ul>
-<h3 id="Android-licenses-not-accepted"><a href="#Android-licenses-not-accepted" class="headerlink" title="Android licenses not accepted."></a>Android licenses not accepted.</h3><ul>
-<li>To resolve this, run: flutter doctor –android-licenses.<br>Accept? (y/N): y<br>All SDK package licenses accepted</li>
-</ul>
-<h3 id="Flutter-plugin-not-installed"><a href="#Flutter-plugin-not-installed" class="headerlink" title="Flutter plugin not installed;"></a>Flutter plugin not installed;</h3><ul>
-<li>安装 Flutter 插件<ul>
-<li>打开 Android Studio，直接进入设置界面 ，然后在 Preferences 的插件中搜索 Flutter</li>
-<li>点击安装 Flutter 插件，记得最后一定要重启 IDE。</li>
-<li>再次 flutter doctor 检测就会发现这个问题已经解决了。</li>
-</ul>
-</li>
-</ul>
-<h3 id="Dart-plugin-not-installed"><a href="#Dart-plugin-not-installed" class="headerlink" title="Dart plugin not installed"></a>Dart plugin not installed</h3><ul>
-<li>安装 Dart 插件</li>
-</ul>
-<h3 id="Enable-VT-x-in-your-BIOS-security-setting-refer-to-documention-for-your-computer"><a href="#Enable-VT-x-in-your-BIOS-security-setting-refer-to-documention-for-your-computer" class="headerlink" title="Enable VT-x in your BIOS security setting (refer to documention for your computer)"></a>Enable VT-x in your BIOS security setting (refer to documention for your computer)</h3><ul>
-<li>重启的你的电脑,进入到 BIOS 中</li>
-<li>选择 Config －－cpu －－ Intel－Virtualization Technology 将这个选项开启</li>
-<li>然后执行虚拟机 就没有问题了</li>
-</ul>
-<h2 id="三-编译器配置"><a href="#三-编译器配置" class="headerlink" title="三 编译器配置"></a>三 编译器配置</h2><p><a href="https://flutterchina.club/get-started/editor/" target="_blank" rel="noopener">Android Studio / VS Code</a></p>
-<h2 id="四-体验-flutter"><a href="#四-体验-flutter" class="headerlink" title="四 体验 flutter"></a>四 体验 flutter</h2><h3 id="vscode"><a href="#vscode" class="headerlink" title="vscode"></a>vscode</h3><ol>
-<li><p>运行<code>Flutter: New Project</code>，创建一个 flutter 项目，其中包含一个使用<a href="https://material.io/guidelines/" target="_blank" rel="noopener">Material 组件</a>的简单的演示应用程序<br><code>在项目目录中，您的应用程序的代码位于 lib/main.dart.</code></p>
-</li>
-<li><p>按 F5 键或调用 Debug&gt;Start Debugging，运行应用程序</p>
-</li>
-<li><p>修改<code>lib/main.dart</code>文件，保存看热重载效果</p>
-</li>
-</ol>
-<h4 id="Could-not-resolve-the-package-‘characters‘-in-‘package-characters-characters-dart‘"><a href="#Could-not-resolve-the-package-‘characters‘-in-‘package-characters-characters-dart‘" class="headerlink" title="Could not resolve the package ‘characters‘ in ‘package:characters/characters.dart‘."></a>Could not resolve the package ‘characters‘ in ‘package:characters/characters.dart‘.</h4><ul>
-<li><code>flutter clean</code></li>
-</ul>
-<h4 id="卡在-Running-Gradle-task-‘assembleDebug’"><a href="#卡在-Running-Gradle-task-‘assembleDebug’" class="headerlink" title="卡在 Running Gradle task ‘assembleDebug’."></a>卡在 Running Gradle task ‘assembleDebug’.</h4><ul>
-<li>修改项目中 android/build.gradle 文件</li>
-<li>修改 Flutter 的配置文件, 该文件在 Flutter 安装目录/packages/flutter_tools/gradle/flutter.gradle</li>
-</ul>
-<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">buildscript</span> &#123;</span><br><span class="line">    <span class="keyword">repositories</span> &#123;</span><br><span class="line">        <span class="comment">// maven &#123; url 'https://maven.aliyun.com/repository/public/' &#125;</span></span><br><span class="line">        maven &#123; url <span class="string">'https://maven.aliyun.com/repository/google'</span> &#125;</span><br><span class="line">        maven &#123; url <span class="string">'https://maven.aliyun.com/repository/public'</span> &#125;</span><br><span class="line">        maven &#123; url  <span class="string">'https://maven.aliyun.com/repository/gradle-plugin'</span> &#125;</span><br><span class="line">        <span class="comment">// google()</span></span><br><span class="line">        <span class="comment">// jcenter()</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">dependencies</span> &#123;</span><br><span class="line">        <span class="keyword">classpath</span> <span class="string">'com.android.tools.build:gradle:3.5.0'</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/11/16/collections/Flutter/Flutter%20%E5%AE%89%E8%A3%85/" data-id="ckq5aobtl001z2grjb5lubznz" class="article-share-link">分享</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-collections/Internet/Fetch API介绍及使用Fetch 发送请求" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/hexo-blog/2020/11/09/collections/Internet/Fetch%20API%E4%BB%8B%E7%BB%8D%E5%8F%8A%E4%BD%BF%E7%94%A8Fetch%20%E5%8F%91%E9%80%81%E8%AF%B7%E6%B1%82/" class="article-date">
-  <time datetime="2020-11-09T15:05:05.000Z" itemprop="datePublished">2020-11-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/hexo-blog/2020/11/09/collections/Internet/Fetch%20API%E4%BB%8B%E7%BB%8D%E5%8F%8A%E4%BD%BF%E7%94%A8Fetch%20%E5%8F%91%E9%80%81%E8%AF%B7%E6%B1%82/">Fetch API介绍及使用Fetch发送请求</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Fetch-API"><a href="#Fetch-API" class="headerlink" title="Fetch API"></a>Fetch API</h2><p><code>Fetch API</code> 提供了一个JavaScript 接口，用于访问和操纵HTTP 的请求和响应等，提供了一个全局<code>fetch()</code> 方法来跨网络一步获取资源。</p>
-<h2 id="与AJAX-的区别"><a href="#与AJAX-的区别" class="headerlink" title="与AJAX 的区别"></a>与AJAX 的区别</h2><p>Fetch 规范与jQuery.ajax() 主要有三种方式的不同：</p>
-<ul>
-<li>当接收到一个代表错误的HTTP 状态码，即使响应的HTTP 状态码是404 或500。从<code>fetch()</code> 返回的Promise** 不会被标记为reject,而是标记为resolve,但是会把resolve 的返回值的<code>ok</code> 属性设置为false。<strong>仅当网络故障或请求被阻止时，才返回reject</strong></li>
-<li><code>fetch()</code> 可以接收跨域cookies，也可以使用<code>fetch()</code> 建立起跨域会话</li>
-<li><code>fetch</code> 不会发送cookies，除非使用了credentials的<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/WindowOrWorkerGlobalScope/fetch#Parameters" target="_blank" rel="noopener">初始化选项</a> </li>
-</ul>
-<h2 id="Fetch-示例"><a href="#Fetch-示例" class="headerlink" title="Fetch() 示例"></a>Fetch() 示例</h2><p>给<code>fetch()</code> 提供一个参数指明资源路径，会返回一个包含响应结果的promise，当然它只是一个HTTP 响应，为了获取JSON 的内容，需要使用<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Body/json" target="_blank" rel="noopener">json()</a> 方法</p>
-<ol>
-<li><p>默认发送get 请求</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fetch(<span class="string">'http://example.com/movies.json'</span>)</span><br><span class="line">  .then(<span class="function"><span class="params">response</span>=&gt;</span>response.json())</span><br><span class="line">  .then(<span class="function"><span class="params">data</span>=&gt;</span> <span class="built_in">console</span>.log(data))</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>带参数的get 请求</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> id = <span class="number">1</span>;</span><br><span class="line">fetch(<span class="string">`http://example.com/movies.json?id=<span class="subst">$&#123;id&#125;</span>`</span>)</span><br><span class="line">  .then(<span class="function"><span class="params">response</span>=&gt;</span>response.json())</span><br><span class="line">  .then(<span class="function"><span class="params">data</span>=&gt;</span> <span class="built_in">console</span>.log(data))</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>发送post 请求</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> data = &#123;<span class="attr">id</span>: <span class="number">1</span>&#125;;</span><br><span class="line">fetch(<span class="string">'http://example.com/postApi'</span>,&#123;</span><br><span class="line">    method:<span class="string">'POST'</span>,</span><br><span class="line">    body:data</span><br><span class="line">&#125;)	</span><br><span class="line">.then(<span class="function"><span class="params">response</span> =&gt;</span> response.json())</span><br><span class="line">.then(<span class="function"><span class="params">data</span> =&gt;</span> <span class="built_in">console</span>.log(data));</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<h2 id="Fetch"><a href="#Fetch" class="headerlink" title="Fetch()"></a>Fetch()</h2><ul>
-<li>用于发起获取资源的请求，返回一个Promise，这个Promise 会在请求响应后被resolve，并传回Response 对象。</li>
-<li>当遇到网络错误时，<code>fetch()</code> 返回的Promise 会被reject，并传回<code>TypeError</code>.</li>
-<li>成功的fetch() 检查不仅要包括Promise 被resolve，还要包括Response.ok 属性为true。</li>
-<li>HTTP 404 状态并不被认为是网络错误。</li>
-</ul>
-<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fetch(input ,&#123; init &#125;);</span><br></pre></td></tr></table></figure>
-
-<h3 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h3><ol>
-<li><p><code>input</code>——定义要获取的资源，可以是</p>
-<ul>
-<li>字符串，包含要获取资源的URL</li>
-<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Request" target="_blank" rel="noopener">Request</a> 对象</li>
-</ul>
-</li>
-<li><p><code>init</code>—— 可选 | 一个配置项对象，包括所有对请求的设置，可选的参数有：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myInit=&#123;</span><br><span class="line">  <span class="comment">//请求的 body 信息 //如：Blob、BufferSource、FormData、URLSearchParams 或者 USVString 对象</span></span><br><span class="line">  body: <span class="built_in">JSON</span>.stringify(data), <span class="comment">//这里必须匹配 'Content-Type' //注意 GET 或 HEAD 方法的请求不能包含 body 信息。 </span></span><br><span class="line"></span><br><span class="line">  <span class="comment">//请求的 cache 模式。//如：default, no-cache, reload, force-cache, only-if-cached</span></span><br><span class="line">  cache: <span class="string">'no-cache'</span>, 	 </span><br><span class="line">  </span><br><span class="line">  <span class="comment">//请求的 credentials。//包括：omit、same-origin，include</span></span><br><span class="line">  credentials: <span class="string">'same-origin'</span>,  </span><br><span class="line">    </span><br><span class="line">  <span class="comment">//请求的头信息</span></span><br><span class="line">  headers: &#123;	</span><br><span class="line">    <span class="string">'user-agent'</span>: <span class="string">'Mozilla/4.0 MDN Example'</span>,</span><br><span class="line">    <span class="string">'content-type'</span>: <span class="string">'application/json'</span></span><br><span class="line">  &#125;,</span><br><span class="line">    </span><br><span class="line">  <span class="comment">//请求使用的方法  //如：GET, POST, PUT, DELETE等</span></span><br><span class="line">  method: <span class="string">'POST'</span>, </span><br><span class="line">  </span><br><span class="line">  <span class="comment">//请求的模式	 //如 cors、 no-cors 或者 same-origin。</span></span><br><span class="line">  mode: <span class="string">'cors'</span>, </span><br><span class="line">    </span><br><span class="line">  <span class="comment">//重定向模式 //如 follow|自动重定向, error|如果产生重定向将自动终止并且抛出一个错误, manual|手动处理重定向</span></span><br><span class="line">  redirect: <span class="string">'follow'</span>, </span><br><span class="line">  </span><br><span class="line">  <span class="comment">//USVString  //如 no-referrer、client或一个 URL。默认是 client</span></span><br><span class="line">  referrer: <span class="string">'no-referrer'</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<h3 id="发送带凭证的请求"><a href="#发送带凭证的请求" class="headerlink" title="发送带凭证的请求"></a>发送带凭证的请求</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//发送包含凭据的请求</span></span><br><span class="line">fetch(<span class="string">'https://example.com'</span>, &#123;</span><br><span class="line">  credentials: <span class="string">'include'</span>  </span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//如果你只想在请求URL与调用脚本位于同一起源处时发送凭据</span></span><br><span class="line">fetch(<span class="string">'https://example.com'</span>, &#123;</span><br><span class="line">  credentials: <span class="string">'same-origin'</span>  </span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//确保浏览器不在请求中包含凭据</span></span><br><span class="line">fetch(<span class="string">'https://example.com'</span>, &#123;</span><br><span class="line">  credentials: <span class="string">'omit'</span>  </span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<h3 id="上传json-数据"><a href="#上传json-数据" class="headerlink" title="上传json 数据"></a>上传json 数据</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> data = &#123;<span class="attr">username</span>: <span class="string">'example'</span>&#125;;</span><br><span class="line"></span><br><span class="line">fetch(<span class="string">'https://example.com/profile'</span>, &#123;</span><br><span class="line">  method: <span class="string">'POST'</span>, </span><br><span class="line">  body: <span class="built_in">JSON</span>.stringify(data), </span><br><span class="line">  headers: <span class="keyword">new</span> Headers(&#123;</span><br><span class="line">    <span class="string">'Content-Type'</span>: <span class="string">'application/json'</span></span><br><span class="line">  &#125;)</span><br><span class="line">&#125;).then(<span class="function"><span class="params">res</span> =&gt;</span> res.json())</span><br><span class="line">.catch(<span class="function"><span class="params">error</span> =&gt;</span> <span class="built_in">console</span>.error(<span class="string">'Error:'</span>, error))</span><br><span class="line">.then(<span class="function"><span class="params">response</span> =&gt;</span> <span class="built_in">console</span>.log(<span class="string">'Success:'</span>, response));</span><br></pre></td></tr></table></figure>
-
-<h3 id="上传文件"><a href="#上传文件" class="headerlink" title="上传文件"></a>上传文件</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> formData = <span class="keyword">new</span> FormData();</span><br><span class="line"><span class="keyword">var</span> fileField = <span class="built_in">document</span>.querySelector(<span class="string">"input[type='file']"</span>);<span class="comment">// 获取&lt;input type="file" /&gt; 元素</span></span><br><span class="line"></span><br><span class="line">formData.append(<span class="string">'username'</span>, <span class="string">'abc123'</span>);</span><br><span class="line">formData.append(<span class="string">'avatar'</span>, fileField.files[<span class="number">0</span>]);</span><br><span class="line"></span><br><span class="line">fetch(<span class="string">'https://example.com/profile/avatar'</span>, &#123;</span><br><span class="line">  method: <span class="string">'PUT'</span>,</span><br><span class="line">  body: formData</span><br><span class="line">&#125;)</span><br><span class="line">.then(<span class="function"><span class="params">response</span> =&gt;</span> response.json())</span><br><span class="line">.catch(<span class="function"><span class="params">error</span> =&gt;</span> <span class="built_in">console</span>.error(<span class="string">'Error:'</span>, error))</span><br><span class="line">.then(<span class="function"><span class="params">response</span> =&gt;</span> <span class="built_in">console</span>.log(<span class="string">'Success:'</span>, response));</span><br></pre></td></tr></table></figure>
-
-<h3 id="上传多个文件"><a href="#上传多个文件" class="headerlink" title="上传多个文件"></a>上传多个文件</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> formData = <span class="keyword">new</span> FormData();<span class="regexp">/</span></span><br><span class="line"><span class="regexp">var photos = document.querySelector("input[type='file'][multiple]");</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">formData.append('title', 'My Vegas Vacation');</span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/ formData 只接受文件、Blob 或字符串，不能直接传递数组，所以必须循环嵌入</span></span><br><span class="line"><span class="regexp">for (let i = 0; i &lt; photos.files.length; i++) &#123; </span></span><br><span class="line"><span class="regexp">    formData.append('photo', photos.files[i]); </span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">fetch('https:/</span><span class="regexp">/example.com/</span>posts<span class="string">', &#123;</span></span><br><span class="line"><span class="string">  method: '</span>POST<span class="string">',</span></span><br><span class="line"><span class="string">  body: formData</span></span><br><span class="line"><span class="string">&#125;)</span></span><br><span class="line"><span class="string">.then(response =&gt; response.json())</span></span><br><span class="line"><span class="string">.then(response =&gt; console.log('</span>Success:<span class="string">', JSON.stringify(response)))</span></span><br><span class="line"><span class="string">.catch(error =&gt; console.error('</span><span class="built_in">Error</span>:<span class="string">', error));</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="检测请求是否成功"><a href="#检测请求是否成功" class="headerlink" title="检测请求是否成功"></a>检测请求是否成功</h3><ul>
-<li>如果遇到网络故障，<code>fetch() promise</code> 将会 <code>reject</code>，带上一个 <code>TypeError</code> 对象。虽然这个情况经常是遇到了权限问题或类似问题——比如 404 不是一个网络故障。想要精确的判断 fetch() 是否成功，需要包含 <code>promise resolved</code> 的情况，此时再判断<code>Response.ok</code> 是不是为<code>true</code>。类似以下代码：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">fetch(<span class="string">'flowers.jpg'</span>).then(<span class="function"><span class="keyword">function</span>(<span class="params">response</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(response.ok) &#123;</span><br><span class="line">    <span class="keyword">return</span> response.blob();</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Network response was not ok.'</span>);</span><br><span class="line">&#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params">myBlob</span>) </span>&#123; </span><br><span class="line">  <span class="keyword">var</span> objectURL = URL.createObjectURL(myBlob); </span><br><span class="line">  myImage.src = objectURL; </span><br><span class="line">&#125;).catch(<span class="function"><span class="keyword">function</span>(<span class="params">error</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'There has been a problem with your fetch operation: '</span>, error.message);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h3 id="自定义请求对象"><a href="#自定义请求对象" class="headerlink" title="自定义请求对象"></a>自定义请求对象</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myHeaders = <span class="keyword">new</span> Headers();</span><br><span class="line"><span class="keyword">var</span> myInit = &#123;</span><br><span class="line">  method: <span class="string">'GET'</span>,</span><br><span class="line">  headers: myHeaders,</span><br><span class="line">  mode: <span class="string">'cors'</span>,</span><br><span class="line">  cache: <span class="string">'default'</span> </span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> myRequest = <span class="keyword">new</span> Request(<span class="string">'flowers.jpg'</span>, myInit);</span><br><span class="line">fetch(myRequest).then(<span class="function"><span class="keyword">function</span>(<span class="params">response</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> response.blob();</span><br><span class="line">&#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params">myBlob</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> objectURL = URL.createObjectURL(myBlob);</span><br><span class="line">  myImage.src = objectURL;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<h2 id="与xml-的区别"><a href="#与xml-的区别" class="headerlink" title="与xml 的区别"></a>与xml 的区别</h2><ul>
-<li>与xml不同的是，Fetch 可以很容易地被其他技术使用，例如 Service Workers。它还提供了专门的逻辑空间来定义其他与 HTTP 相关的概念，例如 CORS 和 HTTP 的扩展。Fetch 提供了对 Request 和 Response （以及其他与网络请求有关的）对象的通用定义，使之应用于更多场景。</li>
-</ul>
-<h3 id="1-Headers"><a href="#1-Headers" class="headerlink" title="1. Headers"></a>1. Headers</h3><p>Headers 接口允许您对HTTP请求和响应头执行各种操作。 包括检索，设置，添加和删除。可以通过 Headers()构造函数来创建一个你自己的 headers 对象</p>
-<ul>
-<li><p>方法：</p>
-<ul>
-<li>append()——给现有的header添加一个值, 或者添加一个未存在的header并赋值</li>
-<li>delete()——从Headers对象中删除指定header</li>
-<li>entries()——以 迭代器 的形式返回Headers对象中所有的键值对</li>
-<li>get()——以 ByteString 的形式从Headers对象中返回指定header的全部值</li>
-<li>has()——以布尔值的形式从Headers对象中返回是否存在指定的header</li>
-</ul>
-</li>
-<li><p>示例：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> myHeaders = <span class="keyword">new</span> Headers(); </span><br><span class="line">myHeaders.append(<span class="string">'Content-Type'</span>, <span class="string">'text/xml'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//可以传一个多维数组或者对象字面量来创建：</span></span><br><span class="line">myHeaders = <span class="keyword">new</span> Headers(&#123;</span><br><span class="line">  <span class="string">"Content-Type"</span>: <span class="string">"text/plain"</span>,</span><br><span class="line">  <span class="string">"X-Custom-Header"</span>: <span class="string">"ProcessThisImmediately"</span>,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">//内容可以获取与修改</span></span><br><span class="line"><span class="built_in">console</span>.log(myHeaders.has(<span class="string">"Content-Type"</span>)); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(myHeaders.has(<span class="string">"Set-Cookie"</span>)); <span class="comment">// false</span></span><br><span class="line">myHeaders.append(<span class="string">"X-Custom-Header"</span>, <span class="string">"AnotherValue"</span>);</span><br><span class="line"><span class="built_in">console</span>.log(myHeaders.getAll(<span class="string">"X-Custom-Header"</span>)); <span class="comment">// ["ProcessThisImmediately", "AnotherValue"]</span></span><br><span class="line">myHeaders.delete(<span class="string">"X-Custom-Header"</span>);</span><br><span class="line"><span class="built_in">console</span>.log(myHeaders.getAll(<span class="string">"X-Custom-Header"</span>)); <span class="comment">// [ ]</span></span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h3 id="2-Request"><a href="#2-Request" class="headerlink" title="2. Request"></a>2. Request</h3><p>Request接口用来表示资源请求。可以通过 Request()构造函数来创建一个你自己的 Request对象</p>
-<ul>
-<li><p>属性：</p>
-<ul>
-<li>method——只读| 包含请求的方法</li>
-<li>url——只读| 包含请求的url</li>
-<li>headers——只读| 包含请求相关的Headers对象</li>
-<li>mode——只读| 包含请求模式</li>
-<li>credentials——只读| 包含请求的证书</li>
-<li>cache——只读| 包含请求的缓存模式</li>
-</ul>
-</li>
-<li><p>示例：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//示例1</span></span><br><span class="line"><span class="keyword">const</span> myRequest = <span class="keyword">new</span> Request(<span class="string">'http://localhost/flowers.jpg'</span>);<span class="comment">//创建一个request对象</span></span><br><span class="line"><span class="keyword">const</span> myURL = myRequest.url; <span class="comment">// http://localhost/flowers.jpg</span></span><br><span class="line"><span class="keyword">const</span> myMethod = myRequest.method; <span class="comment">// GET</span></span><br><span class="line"><span class="keyword">const</span> myCred = myRequest.credentials; <span class="comment">// omit</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//示例2</span></span><br><span class="line"><span class="keyword">const</span> myRequest = <span class="keyword">new</span> Request(<span class="string">'http://localhost/api'</span>, &#123;<span class="attr">method</span>: <span class="string">'POST'</span>, <span class="attr">body</span>: <span class="string">'&#123;"foo":"bar"&#125;'</span>&#125;);</span><br><span class="line"><span class="keyword">const</span> myURL = myRequest.url; <span class="comment">// http://localhost/api</span></span><br><span class="line"><span class="keyword">const</span> myMethod = myRequest.method; <span class="comment">// POST</span></span><br><span class="line"><span class="keyword">const</span> myCred = myRequest.credentials; <span class="comment">// omit</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//可以将Request对象作为参数传递给fetch()</span></span><br><span class="line">fetch(myRequest)</span><br><span class="line">  .then(<span class="function"><span class="params">response</span> =&gt;</span> response.blob())</span><br><span class="line">  .then(<span class="function"><span class="params">blob</span> =&gt;</span> &#123;</span><br><span class="line">    myImage.src = URL.createObjectURL(blob);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h3 id="3-Responese"><a href="#3-Responese" class="headerlink" title="3. Responese"></a>3. Responese</h3><p>Response 接口呈现了对一次请求的响应数据。Response实例是在 fetch() 处理完 promise 之后返回的。你也可以通过 Response()构造函数来创建一个你自己的 Response对象</p>
-<ul>
-<li><p>属性：</p>
-<ul>
-<li>headers——只读| 包含此 Response 所关联的 Headers对象</li>
-<li>ok——只读| 包含了一个布尔值，标示该 Response 成功（HTTP 状态码的范围在 200-299）</li>
-<li>redirected——只读| 表示该 Response 是否来自一个重定向，如果是的话，它的 URL 列表将会有多个条目</li>
-<li>status——只读| 包含 Response 的状态码 （例如 200 表示成功）</li>
-<li>statusText——只读| 包含了与该 Response 状态码一致的状态信息（例如，OK对应 200）</li>
-<li>type——只读| 包含 Response 的类型（例如，basic、cors）</li>
-<li>url——只读| 包含 Response 的URL</li>
-</ul>
-</li>
-<li><p>示例：</p>
-<ul>
-<li>调用了 fetch()获取一张图片并将其显示在 HTML 的 IMG 标签中 , fetch() 函数返回了一个 Promise，它使用 Response 对象进行解析.。你会注意到，由于我们正在请求一张图片，我们需要运行blob为响应提供正确的 MIME 类型<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> image = <span class="built_in">document</span>.querySelector(<span class="string">'.my-image'</span>);</span><br><span class="line">fetch(<span class="string">'flowers.jpg'</span>).then(<span class="function"><span class="keyword">function</span>(<span class="params">response</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> response.blob();</span><br><span class="line">&#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params">blob</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> objectURL = URL.createObjectURL(blob);</span><br><span class="line">  image.src = objectURL;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="Body"><a href="#Body" class="headerlink" title="Body"></a>Body</h3><p>Body mixin 提供了与 response/request 中的 body 有关的方法，可以定义它的内容形式以及处理方式。</p>
-<p>Body定义了以下方法（这些方法都被 Request 和Response所实现）以获取 body 内容。这些方法都会返回一个被解析后的Promise对象和数据</p>
-<ul>
-<li>arrayBuffer()</li>
-<li>blob()</li>
-<li>json()</li>
-<li>text()</li>
-<li>formData()</li>
-</ul>
-<h2 id="查看原文"><a href="#查看原文" class="headerlink" title="查看原文"></a><a href="https://juejin.im/post/6868138631714848775#heading-4" target="_blank" rel="noopener">查看原文</a></h2>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/11/09/collections/Internet/Fetch%20API%E4%BB%8B%E7%BB%8D%E5%8F%8A%E4%BD%BF%E7%94%A8Fetch%20%E5%8F%91%E9%80%81%E8%AF%B7%E6%B1%82/" data-id="ckq5aobua002z2grjebq2f25b" class="article-share-link">分享</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-collections/Git/git文件名大小写无法修改" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/hexo-blog/2020/11/08/collections/Git/git%E6%96%87%E4%BB%B6%E5%90%8D%E5%A4%A7%E5%B0%8F%E5%86%99%E6%97%A0%E6%B3%95%E4%BF%AE%E6%94%B9/" class="article-date">
-  <time datetime="2020-11-08T16:00:00.000Z" itemprop="datePublished">2020-11-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/hexo-blog/2020/11/08/collections/Git/git%E6%96%87%E4%BB%B6%E5%90%8D%E5%A4%A7%E5%B0%8F%E5%86%99%E6%97%A0%E6%B3%95%E4%BF%AE%E6%94%B9/">git文件名大小写无法修改</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="问题背景"><a href="#问题背景" class="headerlink" title="问题背景"></a>问题背景</h2><p>  修改本地项目中文件夹的名字，由大驼峰改为小驼峰，提交后切换分支回来发现还是大驼峰。。。</p>
-<h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>  git 默认配置为忽略大小写，因此无法正确检测大小写的更改</p>
-<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><ol>
-<li><p>配置git</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config core.ignorecase <span class="literal">false</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>手动修改</p>
-</li>
-</ol>
-<ul>
-<li><code>git rm xx</code> 删除本地仓库文件（提前做个备份）</li>
-<li>修改文件名</li>
-<li>重新添加并提交到git</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/11/08/collections/Git/git%E6%96%87%E4%BB%B6%E5%90%8D%E5%A4%A7%E5%B0%8F%E5%86%99%E6%97%A0%E6%B3%95%E4%BF%AE%E6%94%B9/" data-id="ckq5aobtq00252grjfiafaznq" class="article-share-link">分享</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-collections/Git/git log在win10出现中文乱码" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/hexo-blog/2020/11/02/collections/Git/git%20log%E5%9C%A8win10%E5%87%BA%E7%8E%B0%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81/" class="article-date">
-  <time datetime="2020-11-02T16:00:00.000Z" itemprop="datePublished">2020-11-03</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/hexo-blog/2020/11/02/collections/Git/git%20log%E5%9C%A8win10%E5%87%BA%E7%8E%B0%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81/">git log在win10出现中文乱码</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="直接在cmd-bash中输入如下设置命令："><a href="#直接在cmd-bash中输入如下设置命令：" class="headerlink" title="直接在cmd/bash中输入如下设置命令："></a>直接在cmd/bash中输入如下设置命令：</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">git config --global core.quotepath <span class="literal">false</span> </span><br><span class="line">git config --global gui.encoding utf-8</span><br><span class="line">git config --global i18n.commit.encoding utf-8 </span><br><span class="line">git config --global i18n.logoutputencoding utf-8 </span><br><span class="line"><span class="comment"># bash 环境下</span></span><br><span class="line"><span class="built_in">export</span> LESSCHARSET=utf-8</span><br><span class="line"><span class="comment"># cmd环境下：</span></span><br><span class="line"><span class="built_in">set</span> LESSCHARSET=utf-8</span><br></pre></td></tr></table></figure>
-<p>这样设置完后，当前命令窗口是没问题的。</p>
-<p>但是，另打开一个还是不行。然后就想到应该是最后一句的问题。这一个并没有将这个变量保存起来。所以，就直接将最后一个变量添加到Windows环境变量中：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 变量</span></span><br><span class="line">LESSCHARSET</span><br><span class="line"><span class="comment"># 值</span></span><br><span class="line">utf-8</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/11/02/collections/Git/git%20log%E5%9C%A8win10%E5%87%BA%E7%8E%B0%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81/" data-id="ckq5aobtp00242grjdkkxes9l" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/11/21/Coding/6%E4%B8%AA%E8%A7%84%E5%88%99%E5%8E%BB%E5%87%80%E5%8C%96%E4%BD%A0%E7%9A%84%E4%BB%A3%E7%A0%81/" data-id="ckry9lapo0004z6q87x29b3qm" class="article-share-link">分享</a>
       
       
     </footer>
@@ -799,7 +647,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2021/06/">六月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2021/05/">五月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2021/04/">四月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/12/">十二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/11/">十一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/10/">十月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/09/">九月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/07/">七月 2020</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2021/07/">七月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2021/06/">六月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2021/05/">五月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2021/04/">四月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/12/">十二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/11/">十一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/10/">十月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/09/">九月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/07/">七月 2020</a></li></ul>
     </div>
   </div>
 
@@ -812,23 +660,23 @@
       <ul>
         
           <li>
+            <a href="/hexo-blog/2021/06/30/collections/Git/Git%20%E9%BB%98%E8%AE%A4%E5%88%86%E6%94%AF%E4%BF%AE%E6%94%B9/">Git 默认分支修改</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2021/06/23/collections/Electron/Electron%20%E6%9C%80%E5%B0%8F%E5%8C%96%E5%88%B0%E6%89%98%E7%9B%98/">Electron 最小化到托盘</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2021/06/22/collections/Electron/Electron%20%E9%99%90%E5%88%B6%E5%8F%AA%E5%90%AF%E5%8A%A8%E4%B8%80%E4%B8%AA%E5%BA%94%E7%94%A8/">Electron 限制只启动一个应用</a>
+          </li>
+        
+          <li>
             <a href="/hexo-blog/2021/06/20/collections/Koa/Koa%20%E6%90%AD%E5%BB%BAhttps%20%E7%8E%AF%E5%A2%83/">Koa 本地搭建 HTTPS 环境</a>
           </li>
         
           <li>
-            <a href="/hexo-blog/2021/05/09/collections/Windows/Xcopy%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/">Xcopy使用详解</a>
-          </li>
-        
-          <li>
-            <a href="/hexo-blog/2021/04/07/collections/Git/git%20log%20%E4%BD%BF%E7%94%A8%E5%8F%8A%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%8F%82%E6%95%B0/">git log 使用及格式化参数</a>
-          </li>
-        
-          <li>
-            <a href="/hexo-blog/2020/12/12/collections/JavaScript/ECMAScript2021%E7%9A%84%E5%87%A0%E4%B8%AA%E6%96%B0%E7%89%B9%E6%80%A7/">ECMAScript2021的几个新特性</a>
-          </li>
-        
-          <li>
-            <a href="/hexo-blog/2020/11/21/Coding/6%E4%B8%AA%E8%A7%84%E5%88%99%E5%8E%BB%E5%87%80%E5%8C%96%E4%BD%A0%E7%9A%84%E4%BB%A3%E7%A0%81/">6个规则去净化你的代码</a>
+            <a href="/hexo-blog/2021/06/19/collections/Electron/Electron%20%E4%BB%BB%E5%8A%A1%E6%A0%8F%E8%8F%9C%E5%8D%95/">Electron 任务栏菜单</a>
           </li>
         
       </ul>
