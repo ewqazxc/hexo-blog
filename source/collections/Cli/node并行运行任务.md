@@ -1,5 +1,5 @@
 ---
-titile: node并行运行任务
+title: node并行运行任务
 date: 2020-10-06
 ---
 
