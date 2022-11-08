@@ -71,6 +71,84 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-collections/JavaScript/可迭代对象" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo-blog/2020/08/10/collections/JavaScript/%E5%8F%AF%E8%BF%AD%E4%BB%A3%E5%AF%B9%E8%B1%A1/" class="article-date">
+  <time datetime="2020-08-10T16:00:00.000Z" itemprop="datePublished">2020-08-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/hexo-blog/2020/08/10/collections/JavaScript/%E5%8F%AF%E8%BF%AD%E4%BB%A3%E5%AF%B9%E8%B1%A1/">可迭代对象(iterable object) Iterator</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="什么是可迭代对象？"><a href="#什么是可迭代对象？" class="headerlink" title="什么是可迭代对象？"></a>什么是可迭代对象？</h2><p>  一种数据结构只要部署了Iterator 接口，我们就称这种数据结构是“可遍历的”（iterable）。</p>
+<p>  ES6 规定，默认的Iterator 接口部署在数据结构的Symbol.iterator 属性，或者说，一个数据结构只要具有Symbol.iterator 属性，就可以认为是“可遍历的”。</p>
+<p>  ES6 的某些数据结构原生具备Iterator 接口，即不用任何处理，就可以被for …of 循环遍历。原因在于，这些数据结构原生部署了Symbol.iterator 属性。<br>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- <span class="built_in">Array</span></span><br><span class="line">- <span class="built_in">Map</span></span><br><span class="line">- <span class="built_in">Set</span></span><br><span class="line">- <span class="built_in">String</span></span><br><span class="line">- TypedArray</span><br><span class="line">- 函数的 <span class="built_in">arguments</span> 对象</span><br><span class="line">- NodeList 对象</span><br></pre></td></tr></table></figure></p>
+<h2 id="Iterator-遍历器的概念"><a href="#Iterator-遍历器的概念" class="headerlink" title="Iterator 遍历器的概念"></a>Iterator 遍历器的概念</h2><p>  JavaScript 原有的表示“集合”的数据结构，主要是数组（Array）和对象（Object），ES6 新增了Map 和Set。</p>
+<p>  这样就有了四种数据集合，用户可以组合使用它们，定义自己的数据结构，比如数组的成员是Map，Map 的成员是对象，这样子就需要一种统一的接口机制，来处理所有不同的数据结构。</p>
+<p>  遍历器（Iterator）就是这样一种机制。它是一种接口，为各种不同数据结构提供统一的访问机制。任何数据结构只要不是Iterator 接口，就可以完成遍历操作（即依次处理该数据结构的所有成员）。</p>
+<h3 id="Iterator-的作用"><a href="#Iterator-的作用" class="headerlink" title="Iterator 的作用"></a>Iterator 的作用</h3><ol>
+<li><p>为各种数据结构，提供一个统一的、简便的访问接口</p>
+</li>
+<li><p>使数据结构的成员能够按照某种次序排列</p>
+</li>
+<li><p>ES6 创造了一种新的遍历命令for …of 循环，Iterator 接口主要供for …of 消费</p>
+<h3 id="Iterator-的遍历过程"><a href="#Iterator-的遍历过程" class="headerlink" title="Iterator 的遍历过程"></a>Iterator 的遍历过程</h3></li>
+<li><p>创建一个指针对象，指向当前数据结构的起始位置。也就是说，遍历器对象本质上，就是一个指针对象。</p>
+</li>
+<li><p>第一次调用指针对象的next 方法，可以将指针指向数据结构的第一个成员</p>
+</li>
+<li><p>第二次调用只针对新的next 方法，指针就指向数据结构的第二个成员</p>
+</li>
+<li><p>不断调用指针对象的next 方法，直到它指向数据结构的结束为止</p>
+<p>每一次调用next 方法，都会返回数据结构的当前成员信息，具体来说，就是返回一个包含value 和done 两个属性的对象。</p>
+<p>其中，value 属性就是当前成员的值，done 属性是一个布尔值，表示遍历是否结束</p>
+</li>
+</ol>
+<ul>
+<li>模拟next 方法返回值的例子：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> it = makeIterator([<span class="string">'a'</span>,<span class="string">'b'</span>]);</span><br><span class="line"></span><br><span class="line">it.next(); <span class="comment">// &#123; value:"a",done: false &#125;</span></span><br><span class="line">it.next(); <span class="comment">// &#123; value:"b",done: false &#125;</span></span><br><span class="line">it.next(); <span class="comment">// &#123; value: undefined,done: true &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">makeIterator</span>(<span class="params">array</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> nextIndex = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    next: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> nextIndex &lt; array.length ?</span><br><span class="line">      &#123;<span class="attr">value</span>: array[nextIndex++], <span class="attr">done</span>:<span class="literal">false</span>&#125; :</span><br><span class="line">      &#123;<span class="attr">value</span>: <span class="literal">undefined</span>,<span class="attr">done</span>: <span class="literal">true</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+对于遍历器对象来说，done: false和value: undefined属性都是可以省略的，因此上面的makeIterator函数可以简写成下面的形式。<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">makeIterator</span>(<span class="params">array</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> nextIndex = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    next: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> nextIndex &lt; array.length ?</span><br><span class="line">        &#123;<span class="attr">value</span>: array[nextIndex++]&#125; :</span><br><span class="line">        &#123;<span class="attr">done</span>: <span class="literal">true</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="调用Iterator-接口的场合"><a href="#调用Iterator-接口的场合" class="headerlink" title="调用Iterator 接口的场合"></a>调用Iterator 接口的场合</h2><p>有一些场合会默认调用Iterator 接口（即Symbol.iterator 方法）</p>
+<ol>
+<li>结构赋值 对数组和Set结构进行解构赋值时，会默认调用Symbol.iterator 方法<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="keyword">set</span> = new Set().add('a').add('b').add('c');</span><br><span class="line">let [x,y] = <span class="keyword">set</span>;</span><br><span class="line">let [first,...rest] = <span class="keyword">set</span>;</span><br><span class="line">// first = 'a' rest = ['b','c']</span><br></pre></td></tr></table></figure></li>
+<li>扩展运算符<br>扩展运算符（…）也会调用默认的Iterator 接口<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> str = <span class="string">'hello'</span>;</span><br><span class="line">[...str] <span class="comment">// ['h','e','l','l','o']</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> arr = [<span class="string">'b'</span>,<span class="string">'c'</span>];</span><br><span class="line">[<span class="string">'a'</span>,...arr,<span class="string">'d'</span>] <span class="comment">// ['a','b','c','d']</span></span><br></pre></td></tr></table></figure></li>
+<li>yield*<br><code>yield*</code> 后面跟的是一个可遍历的结构，会自动调用该结构的遍历器接口<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> generator = <span class="function"><span class="keyword">function</span>* (<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">yield</span> <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">yield</span>* [<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>];</span><br><span class="line">  <span class="keyword">yield</span> <span class="number">5</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> iterator = generator();</span><br><span class="line"></span><br><span class="line">iterator.next(); <span class="comment">// &#123; value: 1,done: false &#125;</span></span><br><span class="line">iterator.next(); <span class="comment">// &#123; value: 2,done: false &#125;</span></span><br><span class="line">iterator.next(); <span class="comment">// &#123; value: 3,done: false &#125;</span></span><br><span class="line">iterator.next(); <span class="comment">// &#123; value: 4,done: false &#125;</span></span><br><span class="line">iterator.next(); <span class="comment">// &#123; value: 5,done: false &#125;</span></span><br><span class="line">iterator.next(); <span class="comment">// &#123; value: undefined,done: true &#125;</span></span><br></pre></td></tr></table></figure></li>
+<li>其它场合<br>由于数组的遍历会调用遍历器接口，所以任何接受数组作为参数的场合，其实都调用了遍历器接口<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- <span class="keyword">for</span> ...of</span><br><span class="line">- <span class="built_in">Array</span>.from()</span><br><span class="line">- <span class="built_in">Map</span>() <span class="built_in">Set</span>() <span class="built_in">WeakMap</span>() <span class="built_in">WeakSet</span>() </span><br><span class="line">- <span class="built_in">Promise</span>.all()</span><br><span class="line">- <span class="built_in">Promise</span>.race()</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ol>
+<hr>
+<p>yield*<br>Map() Set() WeakMap() WeakSet() </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/10/collections/JavaScript/%E5%8F%AF%E8%BF%AD%E4%BB%A3%E5%AF%B9%E8%B1%A1/" data-id="cla7jq46j0030awoi8x4tgv4t" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-collections/File/基于NodeJs大文件分片上传" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/hexo-blog/2020/08/10/collections/File/%E5%9F%BA%E4%BA%8ENodeJs%E5%A4%A7%E6%96%87%E4%BB%B6%E5%88%86%E7%89%87%E4%B8%8A%E4%BC%A0/" class="article-date">
@@ -125,7 +203,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/10/collections/File/%E5%9F%BA%E4%BA%8ENodeJs%E5%A4%A7%E6%96%87%E4%BB%B6%E5%88%86%E7%89%87%E4%B8%8A%E4%BC%A0/" data-id="ckry9lark0024z6q86t2tgqoh" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/10/collections/File/%E5%9F%BA%E4%BA%8ENodeJs%E5%A4%A7%E6%96%87%E4%BB%B6%E5%88%86%E7%89%87%E4%B8%8A%E4%BC%A0/" data-id="cla7jq465002bawoi4ac96gq9" class="article-share-link">分享</a>
       
       
     </footer>
@@ -243,7 +321,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/09/collections/JavaScript/for%20of%20%E5%92%8Cfor%20await%20of/" data-id="ckry9larz002kz6q8btyfanho" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/09/collections/JavaScript/for%20of%20%E5%92%8Cfor%20await%20of/" data-id="cla7jq46h002uawoi5fu59xx7" class="article-share-link">分享</a>
       
       
     </footer>
@@ -322,7 +400,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/08/collections/JavaScript/Symbol%E7%9A%84for()%E5%92%8CkeyFor()/" data-id="ckry9larx002iz6q80w8mgrfy" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/08/collections/JavaScript/Symbol%E7%9A%84for()%E5%92%8CkeyFor()/" data-id="cla7jq46g002sawoifhwc1oxl" class="article-share-link">分享</a>
       
       
     </footer>
@@ -366,7 +444,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/08/collections/JavaScript/JavaScript%E7%9A%84%E4%B8%B4%E6%97%B6%E5%8C%85%E8%A3%85%E5%AF%B9%E8%B1%A1/" data-id="ckry9larv002gz6q82wiw5ktj" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/08/collections/JavaScript/JavaScript%E7%9A%84%E4%B8%B4%E6%97%B6%E5%8C%85%E8%A3%85%E5%AF%B9%E8%B1%A1/" data-id="cla7jq46e002qawoi8uv76awb" class="article-share-link">分享</a>
       
       
     </footer>
@@ -471,7 +549,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/04/collections/JavaScript/symbol/" data-id="ckry9las1002nz6q81iwocbyd" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/04/collections/JavaScript/symbol/" data-id="cla7jq46i002xawoigsxl3fh9" class="article-share-link">分享</a>
       
       
     </footer>
@@ -532,7 +610,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/03/collections/JavaScript/defineProperty/" data-id="ckry9lary002jz6q87tf80et0" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/03/collections/JavaScript/defineProperty/" data-id="cla7jq46g002tawoi2191e5jw" class="article-share-link">分享</a>
       
       
     </footer>
@@ -603,7 +681,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/02/collections/JavaScript/hasOwnProperty/" data-id="ckry9larz002lz6q805qm9rhs" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/02/collections/JavaScript/hasOwnProperty/" data-id="cla7jq46h002vawoicaz9ft5v" class="article-share-link">分享</a>
       
       
     </footer>
@@ -682,7 +760,7 @@
 <hr>
 <h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">email &lt;example@example.com&gt;</span><br><span class="line">[GitHub](http:&#x2F;&#x2F;github.com)</span><br><span class="line">自动生成链接&lt;http:&#x2F;&#x2F;www.github.com&#x2F;&gt;</span><br></pre></td></tr></table></figure>
 <hr>
-<p>email <a href="mailto:&#101;&#120;&#x61;&#x6d;&#x70;&#x6c;&#101;&#x40;&#x65;&#120;&#x61;&#x6d;&#x70;&#108;&#x65;&#x2e;&#99;&#x6f;&#109;">&#101;&#120;&#x61;&#x6d;&#x70;&#x6c;&#101;&#x40;&#x65;&#120;&#x61;&#x6d;&#x70;&#108;&#x65;&#x2e;&#99;&#x6f;&#109;</a><br><a href="http://github.com" target="_blank" rel="noopener">GitHub</a><br>自动生成链接<a href="http://www.github.com/" target="_blank" rel="noopener">http://www.github.com/</a></p>
+<p>email <a href="mailto:&#101;&#120;&#97;&#109;&#x70;&#x6c;&#x65;&#x40;&#101;&#120;&#97;&#x6d;&#x70;&#x6c;&#101;&#x2e;&#99;&#x6f;&#x6d;">&#101;&#120;&#97;&#109;&#x70;&#x6c;&#x65;&#x40;&#101;&#120;&#97;&#x6d;&#x70;&#x6c;&#101;&#x2e;&#99;&#x6f;&#x6d;</a><br><a href="http://github.com" target="_blank" rel="noopener">GitHub</a><br>自动生成链接<a href="http://www.github.com/" target="_blank" rel="noopener">http://www.github.com/</a></p>
 <hr>
 <h2 id="区块引用"><a href="#区块引用" class="headerlink" title="区块引用"></a>区块引用</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">某某某说：</span><br><span class="line">&gt; 第一行引用</span><br><span class="line">&gt; 第二行引用文字</span><br></pre></td></tr></table></figure>
 <h2 id="这里的引用是居中放大的字体"><a href="#这里的引用是居中放大的字体" class="headerlink" title="这里的引用是居中放大的字体"></a>这里的引用是居中放大的字体</h2><p>某某某说：</p>
@@ -726,7 +804,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/07/28/collections/markdown/" data-id="ckry9laps0006z6q87eix5cev" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/07/28/collections/markdown/" data-id="cla7jq44b0006awoi7d90g3oa" class="article-share-link">分享</a>
       
       
     </footer>
@@ -807,7 +885,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/07/26/hexo/init/" data-id="ckry9lapt0008z6q83z88heas" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/07/26/hexo/init/" data-id="cla7jq44d0008awoi02vy7hkw" class="article-share-link">分享</a>
       
       
     </footer>
@@ -864,6 +942,10 @@
           </li>
         
           <li>
+            <a href="/hexo-blog/2021/06/24/collections/Electron/Electron%20%E6%89%98%E7%9B%98%E9%97%AA%E7%83%81/">Electron 托盘闪烁</a>
+          </li>
+        
+          <li>
             <a href="/hexo-blog/2021/06/23/collections/Electron/Electron%20%E6%9C%80%E5%B0%8F%E5%8C%96%E5%88%B0%E6%89%98%E7%9B%98/">Electron 最小化到托盘</a>
           </li>
         
@@ -873,10 +955,6 @@
         
           <li>
             <a href="/hexo-blog/2021/06/20/collections/Koa/Koa%20%E6%90%AD%E5%BB%BAhttps%20%E7%8E%AF%E5%A2%83/">Koa 本地搭建 HTTPS 环境</a>
-          </li>
-        
-          <li>
-            <a href="/hexo-blog/2021/06/19/collections/Electron/Electron%20%E4%BB%BB%E5%8A%A1%E6%A0%8F%E8%8F%9C%E5%8D%95/">Electron 任务栏菜单</a>
           </li>
         
       </ul>
@@ -893,7 +971,7 @@
     <div id="footer-info" class="inner">
       
 
-      &copy; 2021 ewqazxc<br>
+      &copy; 2022 ewqazxc<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>

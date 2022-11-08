@@ -101,7 +101,47 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2021/06/30/collections/Git/Git%20%E9%BB%98%E8%AE%A4%E5%88%86%E6%94%AF%E4%BF%AE%E6%94%B9/" data-id="ckry9larm0027z6q84d6jfbwq" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2021/06/30/collections/Git/Git%20%E9%BB%98%E8%AE%A4%E5%88%86%E6%94%AF%E4%BF%AE%E6%94%B9/" data-id="cla7jq46a002iawoi7w1a0sp8" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-collections/Electron/Electron 托盘闪烁" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo-blog/2021/06/24/collections/Electron/Electron%20%E6%89%98%E7%9B%98%E9%97%AA%E7%83%81/" class="article-date">
+  <time datetime="2021-06-24T04:00:00.000Z" itemprop="datePublished">2021-06-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/hexo-blog/2021/06/24/collections/Electron/Electron%20%E6%89%98%E7%9B%98%E9%97%AA%E7%83%81/">Electron 托盘闪烁</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Electron如何实现-托盘闪烁"><a href="#Electron如何实现-托盘闪烁" class="headerlink" title="Electron如何实现 托盘闪烁?"></a>Electron如何实现 托盘闪烁?</h2><ul>
+<li>通过托盘图标在一定时间内不断切换实现<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 当前目录下的app.ico图标</span></span><br><span class="line"><span class="keyword">let</span> iconPath = path.join(__dirname, <span class="string">'app.icon'</span>);</span><br><span class="line">appTray = <span class="keyword">new</span> Tray(iconPath);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> count = <span class="number">0</span>;</span><br><span class="line">setInterval(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  count++;</span><br><span class="line">  <span class="keyword">if</span> (count % <span class="number">2</span> == <span class="number">0</span>) &#123;</span><br><span class="line">    appTray.setImage(path.join(__dirname, <span class="string">'empty.icon'</span>))</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    appTray.setImage(path.join(__dirname, <span class="string">'app.icon'</span>))</span><br><span class="line">  &#125;</span><br><span class="line">&#125;, <span class="number">500</span>);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2021/06/24/collections/Electron/Electron%20%E6%89%98%E7%9B%98%E9%97%AA%E7%83%81/" data-id="cla7jq4610023awoid3drasqz" class="article-share-link">分享</a>
       
       
     </footer>
@@ -144,7 +184,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2021/06/23/collections/Electron/Electron%20%E6%9C%80%E5%B0%8F%E5%8C%96%E5%88%B0%E6%89%98%E7%9B%98/" data-id="ckry9larg0020z6q8f7ny1rvx" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2021/06/23/collections/Electron/Electron%20%E6%9C%80%E5%B0%8F%E5%8C%96%E5%88%B0%E6%89%98%E7%9B%98/" data-id="cla7jq4620025awoihiqu2uwr" class="article-share-link">分享</a>
       
       
     </footer>
@@ -182,7 +222,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2021/06/22/collections/Electron/Electron%20%E9%99%90%E5%88%B6%E5%8F%AA%E5%90%AF%E5%8A%A8%E4%B8%80%E4%B8%AA%E5%BA%94%E7%94%A8/" data-id="ckry9lari0022z6q82tu55yue" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2021/06/22/collections/Electron/Electron%20%E9%99%90%E5%88%B6%E5%8F%AA%E5%90%AF%E5%8A%A8%E4%B8%80%E4%B8%AA%E5%BA%94%E7%94%A8/" data-id="cla7jq4630027awoigidjb4tj" class="article-share-link">分享</a>
       
       
     </footer>
@@ -245,7 +285,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2021/06/20/collections/Koa/Koa%20%E6%90%AD%E5%BB%BAhttps%20%E7%8E%AF%E5%A2%83/" data-id="ckry9las7002uz6q8bb4iao77" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2021/06/20/collections/Koa/Koa%20%E6%90%AD%E5%BB%BAhttps%20%E7%8E%AF%E5%A2%83/" data-id="cla7jq46l0034awoi2dpzbgjq" class="article-share-link">分享</a>
       
       
     </footer>
@@ -283,7 +323,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2021/06/19/collections/Electron/Electron%20%E4%BB%BB%E5%8A%A1%E6%A0%8F%E8%8F%9C%E5%8D%95/" data-id="ckry9lare001yz6q8hyodao4w" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2021/06/19/collections/Electron/Electron%20%E4%BB%BB%E5%8A%A1%E6%A0%8F%E8%8F%9C%E5%8D%95/" data-id="cla7jq4600021awoigxxrbs6k" class="article-share-link">分享</a>
       
       
     </footer>
@@ -367,7 +407,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2021/06/18/collections/Electron/Electron%20%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/" data-id="ckry9larj0023z6q8ay2409zh" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2021/06/18/collections/Electron/Electron%20%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/" data-id="cla7jq4640029awoifrmfgqrh" class="article-share-link">分享</a>
       
       
     </footer>
@@ -418,7 +458,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2021/05/09/collections/Windows/Xcopy%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/" data-id="ckry9lasf0033z6q83rtua5ol" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2021/05/09/collections/Windows/Xcopy%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/" data-id="cla7jq46r003dawoi82qi7xgf" class="article-share-link">分享</a>
       
       
     </footer>
@@ -463,7 +503,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2021/04/07/collections/Git/git%20log%20%E4%BD%BF%E7%94%A8%E5%8F%8A%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%8F%82%E6%95%B0/" data-id="ckry9larp002az6q83vklf75u" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2021/04/07/collections/Git/git%20log%20%E4%BD%BF%E7%94%A8%E5%8F%8A%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%8F%82%E6%95%B0/" data-id="cla7jq46b002kawoi90gbgln2" class="article-share-link">分享</a>
       
       
     </footer>
@@ -547,67 +587,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/12/12/collections/JavaScript/ECMAScript2021%E7%9A%84%E5%87%A0%E4%B8%AA%E6%96%B0%E7%89%B9%E6%80%A7/" data-id="ckry9lart002ez6q82sfg323l" class="article-share-link">分享</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Coding/6个规则去净化你的代码" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/hexo-blog/2020/11/21/Coding/6%E4%B8%AA%E8%A7%84%E5%88%99%E5%8E%BB%E5%87%80%E5%8C%96%E4%BD%A0%E7%9A%84%E4%BB%A3%E7%A0%81/" class="article-date">
-  <time datetime="2020-11-21T16:00:00.000Z" itemprop="datePublished">2020-11-22</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/hexo-blog/2020/11/21/Coding/6%E4%B8%AA%E8%A7%84%E5%88%99%E5%8E%BB%E5%87%80%E5%8C%96%E4%BD%A0%E7%9A%84%E4%BB%A3%E7%A0%81/">6个规则去净化你的代码</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="1、-注重命名"><a href="#1、-注重命名" class="headerlink" title="1、 注重命名"></a>1、 注重命名</h2><p>将两个数组合并成一个数组，并生成一个唯一值的数值，也许你会这样命名：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mergeNumberListIntoUniqueList</span>(<span class="params">listOne, listTwo</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> [...new <span class="built_in">Set</span>([...listOne,...listTwo])];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这样的命名不算槽糕，但也不是很友好，建议将一个功能函数拆分为两个功能函数，使得命名更友好且复用性好</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mergeLists</span>(<span class="params">listOne, listTwo</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> [...listOne,...listTwo];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createUniqueList</span>(<span class="params">list</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> [...new <span class="built_in">Set</span>(list)];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="2、-IF语句简化"><a href="#2、-IF语句简化" class="headerlink" title="2、 IF语句简化"></a>2、 IF语句简化</h2><p>一般if:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(value === <span class="string">'duck'</span> || value === <span class="string">'dog'</span> || value === <span class="string">'cat'</span>)&#123;</span><br><span class="line">  <span class="comment">// something</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>简化后:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> options = [<span class="string">'duck'</span>,<span class="string">'dog'</span>,<span class="string">'cat'</span>];</span><br><span class="line"><span class="keyword">if</span>(opitons.includes(value))&#123;</span><br><span class="line">  <span class="comment">// something</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>将乱七八糟的条件判断放到一个变量中存储，比看起来臃肿的表达式要好很多</p>
-<h2 id="3、-及早返回"><a href="#3、-及早返回" class="headerlink" title="3、 及早返回"></a>3、 及早返回</h2><p>例如以下代码:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">handleEvent</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (event) &#123;</span><br><span class="line">    <span class="keyword">const</span> target = event.target;</span><br><span class="line">    <span class="keyword">if</span> (target) &#123;</span><br><span class="line">      <span class="comment">// something</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>及早返回使代码更加易读</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">handleEvent</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!event || !event.target) &#123;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// something</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="4、-解构赋值"><a href="#4、-解构赋值" class="headerlink" title="4、 解构赋值"></a>4、 解构赋值</h2><p>对object 和 array 进行结构赋值</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// object</span></span><br><span class="line"><span class="keyword">const</span> numbers = &#123; <span class="attr">one</span>:<span class="number">1</span>, <span class="attr">two</span>: <span class="number">2</span>&#125;;</span><br><span class="line"><span class="keyword">const</span> &#123; one, two&#125; = numbers;</span><br><span class="line"></span><br><span class="line"><span class="comment">// array</span></span><br><span class="line"><span class="keyword">const</span> numbers = [<span class="number">1</span>,<span class="number">2</span>];</span><br><span class="line"><span class="keyword">const</span> [one,two] = numbers;</span><br></pre></td></tr></table></figure>
-
-<h2 id="5、童子军规则"><a href="#5、童子军规则" class="headerlink" title="5、童子军规则"></a>5、童子军规则</h2><p><strong>永远保持离开时的露营比你发现它时更整洁。</strong>如果你在地面上发现了脏东西，那么无论是不是你留下的，都要清理干净，要有意地为下一组露营者改善环境。</p>
-<p>编写代码也应该是这样子，在代码中发现了脏代码，那么可以尝试去修改它，即使是一个没有被引用的变量名。</p>
-<h2 id="6、-代码风格"><a href="#6、-代码风格" class="headerlink" title="6、 代码风格"></a>6、 代码风格</h2><p>在团队中使用一种代码风格，比如限定代码缩进的规范是两个空格还是四个空格;使用单引号还是双引号;使用同类的一种框架，还是流行两种解决方案的框架…这样团队中人员接手项目的成本就会降低，开发人员的心里减少排斥感</p>
-<blockquote>
-<p><a href="https://juejin.cn/post/6897100630494543886" target="_blank" rel="noopener">6个规则去净化你的代码</a></p>
-</blockquote>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/11/21/Coding/6%E4%B8%AA%E8%A7%84%E5%88%99%E5%8E%BB%E5%87%80%E5%8C%96%E4%BD%A0%E7%9A%84%E4%BB%A3%E7%A0%81/" data-id="ckry9lapo0004z6q87x29b3qm" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/12/12/collections/JavaScript/ECMAScript2021%E7%9A%84%E5%87%A0%E4%B8%AA%E6%96%B0%E7%89%B9%E6%80%A7/" data-id="cla7jq46e002oawoi1f5j122u" class="article-share-link">分享</a>
       
       
     </footer>
@@ -664,6 +644,10 @@
           </li>
         
           <li>
+            <a href="/hexo-blog/2021/06/24/collections/Electron/Electron%20%E6%89%98%E7%9B%98%E9%97%AA%E7%83%81/">Electron 托盘闪烁</a>
+          </li>
+        
+          <li>
             <a href="/hexo-blog/2021/06/23/collections/Electron/Electron%20%E6%9C%80%E5%B0%8F%E5%8C%96%E5%88%B0%E6%89%98%E7%9B%98/">Electron 最小化到托盘</a>
           </li>
         
@@ -673,10 +657,6 @@
         
           <li>
             <a href="/hexo-blog/2021/06/20/collections/Koa/Koa%20%E6%90%AD%E5%BB%BAhttps%20%E7%8E%AF%E5%A2%83/">Koa 本地搭建 HTTPS 环境</a>
-          </li>
-        
-          <li>
-            <a href="/hexo-blog/2021/06/19/collections/Electron/Electron%20%E4%BB%BB%E5%8A%A1%E6%A0%8F%E8%8F%9C%E5%8D%95/">Electron 任务栏菜单</a>
           </li>
         
       </ul>
@@ -693,7 +673,7 @@
     <div id="footer-info" class="inner">
       
 
-      &copy; 2021 ewqazxc<br>
+      &copy; 2022 ewqazxc<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
