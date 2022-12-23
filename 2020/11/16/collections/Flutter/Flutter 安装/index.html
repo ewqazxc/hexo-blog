@@ -15,7 +15,7 @@
 <meta property="og:description" content="一 安装 Flutter 获取 Flutter SDK官网下载GitHub 下载  更新环境变量   要在终端运行 flutter 命令， 需要添加以下环境变量到系统 PATH：  转到 “控制面板&gt;用户帐户&gt;用户帐户&gt;更改我的环境变量” 在“用户变量”下检查是否有名为“Path”的条目: 如果该条目存在, 追加 flutter\bin 的全路径，使用 ; 作为分隔符. 如果条目">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-11-16T15:45:50.000Z">
-<meta property="article:modified_time" content="2022-11-08T01:40:50.240Z">
+<meta property="article:modified_time" content="2022-12-23T15:50:05.989Z">
 <meta property="article:author" content="ewqazxc">
 <meta name="twitter:card" content="summary">
   
@@ -26,12 +26,12 @@
     <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
   
   <!-- 
-<link rel="stylesheet" href="/hexo-blog/%7B%22title%22:%22#%E4%B8%80%E5%A6%82%E6%97%A2%E5%BE%80%E3%80%81%22,%22subtitle%22:%22%E4%B8%8D%E7%9F%A5%E9%81%93%E5%86%99%E7%9A%84%E4%BB%80%E4%B9%88%E7%9A%84%E5%8D%9A%E5%AE%A2~%22,%22description%22:%22description%22,%22author%22:%22ewqazxc%22,%22language%22:%22zh-CN%22,%22timezone%22:%22Asia/Shanghai%22,%22url%22:%22https:/ewqazxc.github.io/hexo-blog%22,%22root%22:%22/hexo-blog/%22,%22permalink%22:%22:year/:month/:day/:title/%22,%22permalink_defaults%22:null,%22pretty_urls%22:%7B%22trailing_index%22:true,%22trailing_html%22:true%7D,%22source_dir%22:%22source%22,%22public_dir%22:%22public%22,%22tag_dir%22:%22tags%22,%22archive_dir%22:%22archives%22,%22category_dir%22:%22categories%22,%22code_dir%22:%22downloads/code%22,%22i18n_dir%22:%22:lang%22,%22skip_render%22:null,%22new_post_name%22:%22:title.md%22,%22default_layout%22:%22post%22,%22titlecase%22:false,%22external_link%22:%7B%22enable%22:true,%22field%22:%22site%22,%22exclude%22:%22%22%7D,%22filename_case%22:0,%22render_drafts%22:false,%22post_asset_folder%22:false,%22relative_link%22:false,%22future%22:true,%22highlight%22:%7B%22enable%22:true,%22auto_detect%22:false,%22line_number%22:true,%22tab_replace%22:%22%22,%22wrap%22:true,%22hljs%22:false,%22first_line_number%22:%22always1%22%7D,%22default_category%22:%22uncategorized%22,%22category_map%22:null,%22tag_map%22:null,%22date_format%22:%22YYYY-MM-DD%22,%22time_format%22:%22HH:mm:ss%22,%22use_date_for_updated%22:false,%22per_page%22:10,%22pagination_dir%22:%22page%22,%22theme%22:%22landscape%22,%22server%22:%7B%22port%22:4000,%22log%22:false,%22compress%22:false,%22header%22:true,%22cache%22:false%7D,%22deploy%22:%7B%22type%22:%22%22%7D,%22ignore%22:null,%22meta_generator%22:true,%22keywords%22:null,%22index_generator%22:%7B%22per_page%22:10,%22order_by%22:%22-date%22,%22path%22:%22%22%7D,%22include%22:null,%22exclude%22:null,%22archive_generator%22:%7B%22per_page%22:10,%22yearly%22:true,%22monthly%22:true,%22daily%22:false%7D,%22category_generator%22:%7B%22per_page%22:10%7D,%22tag_generator%22:%7B%22per_page%22:10%7D,%22marked%22:%7B%22gfm%22:true,%22pedantic%22:false,%22breaks%22:true,%22smartLists%22:true,%22smartypants%22:true,%22modifyAnchors%22:%22%22,%22autolink%22:true,%22sanitizeUrl%22:false,%22headerIds%22:true%7D%7D.css">
+<link rel="stylesheet" href="/hexo-blog/%7B%22title%22:%22#%E4%B8%80%E5%A6%82%E6%97%A2%E5%BE%80%E3%80%81%22,%22subtitle%22:%22%E4%B8%8D%E7%9F%A5%E9%81%93%E5%86%99%E7%9A%84%E4%BB%80%E4%B9%88%E7%9A%84%E5%8D%9A%E5%AE%A2~%22,%22description%22:%22description%22,%22author%22:%22ewqazxc%22,%22language%22:%22zh-CN%22,%22timezone%22:%22Asia/Shanghai%22,%22url%22:%22https:/ewqazxc.github.io/hexo-blog%22,%22root%22:%22/hexo-blog/%22,%22permalink%22:%22:year/:month/:day/:title/%22,%22permalink_defaults%22:null,%22pretty_urls%22:%7B%22trailing_index%22:true,%22trailing_html%22:true%7D,%22source_dir%22:%22source%22,%22public_dir%22:%22public%22,%22tag_dir%22:%22tags%22,%22archive_dir%22:%22archives%22,%22category_dir%22:%22categories%22,%22code_dir%22:%22downloads/code%22,%22i18n_dir%22:%22:lang%22,%22skip_render%22:null,%22new_post_name%22:%22:title.md%22,%22default_layout%22:%22post%22,%22titlecase%22:false,%22external_link%22:%7B%22enable%22:true,%22field%22:%22site%22,%22exclude%22:%22%22%7D,%22filename_case%22:0,%22render_drafts%22:false,%22post_asset_folder%22:false,%22relative_link%22:false,%22future%22:true,%22highlight%22:%7B%22enable%22:true,%22auto_detect%22:false,%22line_number%22:true,%22tab_replace%22:%22%22,%22wrap%22:true,%22exclude_languages%22:%5B%5D,%22language_attr%22:false,%22hljs%22:false,%22first_line_number%22:%22always1%22%7D,%22prismjs%22:%7B%22enable%22:false,%22preprocess%22:true,%22line_number%22:true,%22tab_replace%22:%22%22%7D,%22default_category%22:%22uncategorized%22,%22category_map%22:null,%22tag_map%22:null,%22date_format%22:%22YYYY-MM-DD%22,%22time_format%22:%22HH:mm:ss%22,%22updated_option%22:%22mtime%22,%22per_page%22:10,%22pagination_dir%22:%22page%22,%22theme%22:%22landscape%22,%22server%22:%7B%22port%22:4000,%22log%22:false,%22compress%22:false,%22header%22:true,%22cache%22:false%7D,%22deploy%22:%7B%22type%22:%22%22%7D,%22ignore%22:null,%22meta_generator%22:true,%22keywords%22:null,%22index_generator%22:%7B%22per_page%22:10,%22order_by%22:%22-date%22,%22path%22:%22%22%7D,%22use_date_for_updated%22:false,%22include%22:null,%22exclude%22:null,%22archive_generator%22:%7B%22per_page%22:10,%22yearly%22:true,%22monthly%22:true,%22daily%22:false%7D,%22category_generator%22:%7B%22per_page%22:10%7D,%22tag_generator%22:%7B%22per_page%22:10%7D,%22marked%22:%7B%22gfm%22:true,%22pedantic%22:false,%22breaks%22:true,%22smartLists%22:true,%22smartypants%22:true,%22modifyAnchors%22:0,%22autolink%22:true,%22mangle%22:true,%22sanitizeUrl%22:false,%22dompurify%22:false,%22headerIds%22:true,%22anchorAlias%22:false,%22lazyload%22:false,%22prependRoot%22:true,%22postAsset%22:false,%22external_link%22:%7B%22enable%22:false,%22exclude%22:%5B%5D,%22nofollow%22:false%7D,%22descriptionLists%22:true%7D%7D.css">
  -->
   
 <link rel="stylesheet" href="/hexo-blog/css/style.css">
 
-<meta name="generator" content="Hexo 4.2.1"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container">
@@ -43,10 +43,6 @@
       <h1 id="logo-wrap">
         <a href="/hexo-blog/" id="logo">#一如既往、</a>
       </h1>
-      
-        <h2 id="subtitle-wrap">
-          <a href="/hexo-blog/" id="subtitle">不知道写的什么的博客~</a>
-        </h2>
       
     </div>
     <div id="header-inner" class="inner">
@@ -94,7 +90,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h2 id="一-安装-Flutter"><a href="#一-安装-Flutter" class="headerlink" title="一 安装 Flutter"></a>一 安装 Flutter</h2><ol>
-<li><p>获取 Flutter SDK<br><a href="https://flutter.dev/docs/development/tools/sdk/releases#windows" target="_blank" rel="noopener">官网下载</a><br><a href="https://github.com/flutter/flutter/releases" target="_blank" rel="noopener">GitHub 下载</a></p>
+<li><p>获取 Flutter SDK<br><a target="_blank" rel="noopener" href="https://flutter.dev/docs/development/tools/sdk/releases#windows">官网下载</a><br><a target="_blank" rel="noopener" href="https://github.com/flutter/flutter/releases">GitHub 下载</a></p>
 </li>
 <li><p>更新环境变量</p>
 </li>
@@ -109,7 +105,7 @@
 </li>
 <li>在“用户变量”下检查是否有名为”PUB_HOSTED_URL”和”FLUTTER_STORAGE_BASE_URL”的条目，如果没有，也添加它们。</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export PUB_HOSTED_URL&#x3D;https:&#x2F;&#x2F;pub.flutter-io.cn</span><br><span class="line">export FLUTTER_STORAGE_BASE_URL&#x3D;https:&#x2F;&#x2F;storage.flutter-io.cn</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export PUB_HOSTED_URL=https://pub.flutter-io.cn</span><br><span class="line">export FLUTTER_STORAGE_BASE_URL=https://storage.flutter-io.cn</span><br></pre></td></tr></table></figure>
 
 <h2 id="二-使用flutter-doctor-检测依赖是否完整"><a href="#二-使用flutter-doctor-检测依赖是否完整" class="headerlink" title="二 使用flutter doctor 检测依赖是否完整"></a>二 使用<code>flutter doctor</code> 检测依赖是否完整</h2><ul>
 <li>环境变量需要 JDK、git</li>
@@ -118,7 +114,7 @@
 <li>添加环境变量：ANDROID_HOME H:\devTool\AndroidSDK</li>
 </ul>
 <h3 id="Android-licenses-not-accepted"><a href="#Android-licenses-not-accepted" class="headerlink" title="Android licenses not accepted."></a>Android licenses not accepted.</h3><ul>
-<li>To resolve this, run: flutter doctor –android-licenses.<br>Accept? (y/N): y<br>All SDK package licenses accepted</li>
+<li>To resolve this, run: flutter doctor –android-licenses.<br>Accept? (y&#x2F;N): y<br>All SDK package licenses accepted</li>
 </ul>
 <h3 id="Flutter-plugin-not-installed"><a href="#Flutter-plugin-not-installed" class="headerlink" title="Flutter plugin not installed;"></a>Flutter plugin not installed;</h3><ul>
 <li>安装 Flutter 插件<ul>
@@ -136,28 +132,28 @@
 <li>选择 Config －－cpu －－ Intel－Virtualization Technology 将这个选项开启</li>
 <li>然后执行虚拟机 就没有问题了</li>
 </ul>
-<h2 id="三-编译器配置"><a href="#三-编译器配置" class="headerlink" title="三 编译器配置"></a>三 编译器配置</h2><p><a href="https://flutterchina.club/get-started/editor/" target="_blank" rel="noopener">Android Studio / VS Code</a></p>
+<h2 id="三-编译器配置"><a href="#三-编译器配置" class="headerlink" title="三 编译器配置"></a>三 编译器配置</h2><p><a target="_blank" rel="noopener" href="https://flutterchina.club/get-started/editor/">Android Studio &#x2F; VS Code</a></p>
 <h2 id="四-体验-flutter"><a href="#四-体验-flutter" class="headerlink" title="四 体验 flutter"></a>四 体验 flutter</h2><h3 id="vscode"><a href="#vscode" class="headerlink" title="vscode"></a>vscode</h3><ol>
-<li><p>运行<code>Flutter: New Project</code>，创建一个 flutter 项目，其中包含一个使用<a href="https://material.io/guidelines/" target="_blank" rel="noopener">Material 组件</a>的简单的演示应用程序<br><code>在项目目录中，您的应用程序的代码位于 lib/main.dart.</code></p>
+<li><p>运行<code>Flutter: New Project</code>，创建一个 flutter 项目，其中包含一个使用<a target="_blank" rel="noopener" href="https://material.io/guidelines/">Material 组件</a>的简单的演示应用程序<br><code>在项目目录中，您的应用程序的代码位于 lib/main.dart.</code></p>
 </li>
 <li><p>按 F5 键或调用 Debug&gt;Start Debugging，运行应用程序</p>
 </li>
 <li><p>修改<code>lib/main.dart</code>文件，保存看热重载效果</p>
 </li>
 </ol>
-<h4 id="Could-not-resolve-the-package-‘characters‘-in-‘package-characters-characters-dart‘"><a href="#Could-not-resolve-the-package-‘characters‘-in-‘package-characters-characters-dart‘" class="headerlink" title="Could not resolve the package ‘characters‘ in ‘package:characters/characters.dart‘."></a>Could not resolve the package ‘characters‘ in ‘package:characters/characters.dart‘.</h4><ul>
+<h4 id="Could-not-resolve-the-package-‘characters‘-in-‘package-characters-x2F-characters-dart‘"><a href="#Could-not-resolve-the-package-‘characters‘-in-‘package-characters-x2F-characters-dart‘" class="headerlink" title="Could not resolve the package ‘characters‘ in ‘package:characters&#x2F;characters.dart‘."></a>Could not resolve the package ‘characters‘ in ‘package:characters&#x2F;characters.dart‘.</h4><ul>
 <li><code>flutter clean</code></li>
 </ul>
 <h4 id="卡在-Running-Gradle-task-‘assembleDebug’"><a href="#卡在-Running-Gradle-task-‘assembleDebug’" class="headerlink" title="卡在 Running Gradle task ‘assembleDebug’."></a>卡在 Running Gradle task ‘assembleDebug’.</h4><ul>
-<li>修改项目中 android/build.gradle 文件</li>
-<li>修改 Flutter 的配置文件, 该文件在 Flutter 安装目录/packages/flutter_tools/gradle/flutter.gradle</li>
+<li>修改项目中 android&#x2F;build.gradle 文件</li>
+<li>修改 Flutter 的配置文件, 该文件在 Flutter 安装目录&#x2F;packages&#x2F;flutter_tools&#x2F;gradle&#x2F;flutter.gradle</li>
 </ul>
-<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">buildscript</span> &#123;</span><br><span class="line">    <span class="keyword">repositories</span> &#123;</span><br><span class="line">        <span class="comment">// maven &#123; url 'https://maven.aliyun.com/repository/public/' &#125;</span></span><br><span class="line">        maven &#123; url <span class="string">'https://maven.aliyun.com/repository/google'</span> &#125;</span><br><span class="line">        maven &#123; url <span class="string">'https://maven.aliyun.com/repository/public'</span> &#125;</span><br><span class="line">        maven &#123; url  <span class="string">'https://maven.aliyun.com/repository/gradle-plugin'</span> &#125;</span><br><span class="line">        <span class="comment">// google()</span></span><br><span class="line">        <span class="comment">// jcenter()</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">dependencies</span> &#123;</span><br><span class="line">        <span class="keyword">classpath</span> <span class="string">'com.android.tools.build:gradle:3.5.0'</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">buildscript</span> &#123;</span><br><span class="line">    <span class="keyword">repositories</span> &#123;</span><br><span class="line">        <span class="comment">// maven &#123; url &#x27;https://maven.aliyun.com/repository/public/&#x27; &#125;</span></span><br><span class="line">        maven &#123; url <span class="string">&#x27;https://maven.aliyun.com/repository/google&#x27;</span> &#125;</span><br><span class="line">        maven &#123; url <span class="string">&#x27;https://maven.aliyun.com/repository/public&#x27;</span> &#125;</span><br><span class="line">        maven &#123; url  <span class="string">&#x27;https://maven.aliyun.com/repository/gradle-plugin&#x27;</span> &#125;</span><br><span class="line">        <span class="comment">// google()</span></span><br><span class="line">        <span class="comment">// jcenter()</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">dependencies</span> &#123;</span><br><span class="line">        <span class="keyword">classpath</span> <span class="string">&#x27;com.android.tools.build:gradle:3.5.0&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/11/16/collections/Flutter/Flutter%20%E5%AE%89%E8%A3%85/" data-id="cla7jq466002dawoi5toccukn" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/11/16/collections/Flutter/Flutter%20%E5%AE%89%E8%A3%85/" data-id="clc0ovm9p000rdhor7hwyab7k" class="article-share-link">分享</a>
       
       
     </footer>

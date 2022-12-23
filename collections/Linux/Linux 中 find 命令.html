@@ -15,7 +15,7 @@
 <meta property="og:description" content="Linux 中 find 命令的 35 个实际例子 在当前目录中使用名称查找文件 12find . -name fileName# 输出找到的文件路径  在指定目录下查找文件 1find &#x2F;targetPath -name fileName  查找文件时忽略大小写 1find . -iname fileName  使用名称查找目录 1find &#x2F; -type d -name fileDirName">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-07-09T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-11-08T01:40:50.248Z">
+<meta property="article:modified_time" content="2022-12-23T15:50:05.996Z">
 <meta property="article:author" content="ewqazxc">
 <meta name="twitter:card" content="summary">
   
@@ -26,12 +26,12 @@
     <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
   
   <!-- 
-<link rel="stylesheet" href="/hexo-blog/%7B%22title%22:%22#%E4%B8%80%E5%A6%82%E6%97%A2%E5%BE%80%E3%80%81%22,%22subtitle%22:%22%E4%B8%8D%E7%9F%A5%E9%81%93%E5%86%99%E7%9A%84%E4%BB%80%E4%B9%88%E7%9A%84%E5%8D%9A%E5%AE%A2~%22,%22description%22:%22description%22,%22author%22:%22ewqazxc%22,%22language%22:%22zh-CN%22,%22timezone%22:%22Asia/Shanghai%22,%22url%22:%22https:/ewqazxc.github.io/hexo-blog%22,%22root%22:%22/hexo-blog/%22,%22permalink%22:%22:year/:month/:day/:title/%22,%22permalink_defaults%22:null,%22pretty_urls%22:%7B%22trailing_index%22:true,%22trailing_html%22:true%7D,%22source_dir%22:%22source%22,%22public_dir%22:%22public%22,%22tag_dir%22:%22tags%22,%22archive_dir%22:%22archives%22,%22category_dir%22:%22categories%22,%22code_dir%22:%22downloads/code%22,%22i18n_dir%22:%22:lang%22,%22skip_render%22:null,%22new_post_name%22:%22:title.md%22,%22default_layout%22:%22post%22,%22titlecase%22:false,%22external_link%22:%7B%22enable%22:true,%22field%22:%22site%22,%22exclude%22:%22%22%7D,%22filename_case%22:0,%22render_drafts%22:false,%22post_asset_folder%22:false,%22relative_link%22:false,%22future%22:true,%22highlight%22:%7B%22enable%22:true,%22auto_detect%22:false,%22line_number%22:true,%22tab_replace%22:%22%22,%22wrap%22:true,%22hljs%22:false,%22first_line_number%22:%22always1%22%7D,%22default_category%22:%22uncategorized%22,%22category_map%22:null,%22tag_map%22:null,%22date_format%22:%22YYYY-MM-DD%22,%22time_format%22:%22HH:mm:ss%22,%22use_date_for_updated%22:false,%22per_page%22:10,%22pagination_dir%22:%22page%22,%22theme%22:%22landscape%22,%22server%22:%7B%22port%22:4000,%22log%22:false,%22compress%22:false,%22header%22:true,%22cache%22:false%7D,%22deploy%22:%7B%22type%22:%22%22%7D,%22ignore%22:null,%22meta_generator%22:true,%22keywords%22:null,%22index_generator%22:%7B%22per_page%22:10,%22order_by%22:%22-date%22,%22path%22:%22%22%7D,%22include%22:null,%22exclude%22:null,%22archive_generator%22:%7B%22per_page%22:10,%22yearly%22:true,%22monthly%22:true,%22daily%22:false%7D,%22category_generator%22:%7B%22per_page%22:10%7D,%22tag_generator%22:%7B%22per_page%22:10%7D,%22marked%22:%7B%22gfm%22:true,%22pedantic%22:false,%22breaks%22:true,%22smartLists%22:true,%22smartypants%22:true,%22modifyAnchors%22:%22%22,%22autolink%22:true,%22sanitizeUrl%22:false,%22headerIds%22:true%7D%7D.css">
+<link rel="stylesheet" href="/hexo-blog/%7B%22title%22:%22#%E4%B8%80%E5%A6%82%E6%97%A2%E5%BE%80%E3%80%81%22,%22subtitle%22:%22%E4%B8%8D%E7%9F%A5%E9%81%93%E5%86%99%E7%9A%84%E4%BB%80%E4%B9%88%E7%9A%84%E5%8D%9A%E5%AE%A2~%22,%22description%22:%22description%22,%22author%22:%22ewqazxc%22,%22language%22:%22zh-CN%22,%22timezone%22:%22Asia/Shanghai%22,%22url%22:%22https:/ewqazxc.github.io/hexo-blog%22,%22root%22:%22/hexo-blog/%22,%22permalink%22:%22:year/:month/:day/:title/%22,%22permalink_defaults%22:null,%22pretty_urls%22:%7B%22trailing_index%22:true,%22trailing_html%22:true%7D,%22source_dir%22:%22source%22,%22public_dir%22:%22public%22,%22tag_dir%22:%22tags%22,%22archive_dir%22:%22archives%22,%22category_dir%22:%22categories%22,%22code_dir%22:%22downloads/code%22,%22i18n_dir%22:%22:lang%22,%22skip_render%22:null,%22new_post_name%22:%22:title.md%22,%22default_layout%22:%22post%22,%22titlecase%22:false,%22external_link%22:%7B%22enable%22:true,%22field%22:%22site%22,%22exclude%22:%22%22%7D,%22filename_case%22:0,%22render_drafts%22:false,%22post_asset_folder%22:false,%22relative_link%22:false,%22future%22:true,%22highlight%22:%7B%22enable%22:true,%22auto_detect%22:false,%22line_number%22:true,%22tab_replace%22:%22%22,%22wrap%22:true,%22exclude_languages%22:%5B%5D,%22language_attr%22:false,%22hljs%22:false,%22first_line_number%22:%22always1%22%7D,%22prismjs%22:%7B%22enable%22:false,%22preprocess%22:true,%22line_number%22:true,%22tab_replace%22:%22%22%7D,%22default_category%22:%22uncategorized%22,%22category_map%22:null,%22tag_map%22:null,%22date_format%22:%22YYYY-MM-DD%22,%22time_format%22:%22HH:mm:ss%22,%22updated_option%22:%22mtime%22,%22per_page%22:10,%22pagination_dir%22:%22page%22,%22theme%22:%22landscape%22,%22server%22:%7B%22port%22:4000,%22log%22:false,%22compress%22:false,%22header%22:true,%22cache%22:false%7D,%22deploy%22:%7B%22type%22:%22%22%7D,%22ignore%22:null,%22meta_generator%22:true,%22keywords%22:null,%22index_generator%22:%7B%22per_page%22:10,%22order_by%22:%22-date%22,%22path%22:%22%22%7D,%22use_date_for_updated%22:false,%22include%22:null,%22exclude%22:null,%22archive_generator%22:%7B%22per_page%22:10,%22yearly%22:true,%22monthly%22:true,%22daily%22:false%7D,%22category_generator%22:%7B%22per_page%22:10%7D,%22tag_generator%22:%7B%22per_page%22:10%7D,%22marked%22:%7B%22gfm%22:true,%22pedantic%22:false,%22breaks%22:true,%22smartLists%22:true,%22smartypants%22:true,%22modifyAnchors%22:0,%22autolink%22:true,%22mangle%22:true,%22sanitizeUrl%22:false,%22dompurify%22:false,%22headerIds%22:true,%22anchorAlias%22:false,%22lazyload%22:false,%22prependRoot%22:true,%22postAsset%22:false,%22external_link%22:%7B%22enable%22:false,%22exclude%22:%5B%5D,%22nofollow%22:false%7D,%22descriptionLists%22:true%7D%7D.css">
  -->
   
 <link rel="stylesheet" href="/hexo-blog/css/style.css">
 
-<meta name="generator" content="Hexo 4.2.1"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container">
@@ -43,10 +43,6 @@
       <h1 id="logo-wrap">
         <a href="/hexo-blog/" id="logo">#一如既往、</a>
       </h1>
-      
-        <h2 id="subtitle-wrap">
-          <a href="/hexo-blog/" id="subtitle">不知道写的什么的博客~</a>
-        </h2>
       
     </div>
     <div id="header-inner" class="inner">
@@ -110,7 +106,7 @@
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find . -<span class="built_in">type</span> f -name fileName.ext</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>查找目录中所有指定后缀的文件</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find . -<span class="built_in">type</span> f -name <span class="string">"*.ext"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find . -<span class="built_in">type</span> f -name <span class="string">&quot;*.ext&quot;</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>查找具有 777 权限的文件</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find . -<span class="built_in">type</span> f -perm 0777 -<span class="built_in">print</span></span><br></pre></td></tr></table></figure></li>
@@ -160,12 +156,12 @@
 <li>查找权限为 777 且 chmod 为 644 的文件</li>
 </ol>
 <p>找到所有777权限文件和使用chmod命令设置权限644</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find / -<span class="built_in">type</span> f -perm 0777 -<span class="built_in">print</span> -<span class="built_in">exec</span> chmod 644</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find / -<span class="built_in">type</span> f -perm 0777 -<span class="built_in">print</span> -<span class="built_in">exec</span> <span class="built_in">chmod</span> 644</span><br></pre></td></tr></table></figure>
 
 <ol start="16">
 <li>查找权限为 777 且 chmod 为 755 的目录<br>找到所有777权限目录和使用chmod命令设置权限755</li>
 </ol>
-<h1 id="find-type-d-perm-777-print-exec-chmod-755"><a href="#find-type-d-perm-777-print-exec-chmod-755" class="headerlink" title="find / -type d -perm 777 -print -exec chmod 755 {} ;"></a>find / -type d -perm 777 -print -exec chmod 755 {} ;</h1><ol start="17">
+<h1 id="find-x2F-type-d-perm-777-print-exec-chmod-755"><a href="#find-x2F-type-d-perm-777-print-exec-chmod-755" class="headerlink" title="find &#x2F; -type d -perm 777 -print -exec chmod 755 {} ;"></a>find &#x2F; -type d -perm 777 -print -exec chmod 755 {} ;</h1><ol start="17">
 <li>查找和删除单个文件<br>查找名为的单个文件rumenz.txt并将其删除。</li>
 </ol>
 <h1 id="find-type-f-name-“rumenz-txt”-exec-rm-f"><a href="#find-type-f-name-“rumenz-txt”-exec-rm-f" class="headerlink" title="find . -type f -name “rumenz.txt” -exec rm -f {} ;"></a>find . -type f -name “rumenz.txt” -exec rm -f {} ;</h1><ol start="18">
@@ -175,59 +171,59 @@
 <h1 id="find-type-f-name-“-mp3”-exec-rm-f"><a href="#find-type-f-name-“-mp3”-exec-rm-f" class="headerlink" title="find . -type f -name “*.mp3” -exec rm -f {} ;"></a>find . -type f -name “*.mp3” -exec rm -f {} ;</h1><ol start="19">
 <li>查找所有空文件<br>查找某个路径下的所有空文件。</li>
 </ol>
-<h1 id="find-tmp-type-f-empty"><a href="#find-tmp-type-f-empty" class="headerlink" title="find /tmp -type f -empty"></a>find /tmp -type f -empty</h1><ol start="20">
+<h1 id="find-x2F-tmp-type-f-empty"><a href="#find-x2F-tmp-type-f-empty" class="headerlink" title="find &#x2F;tmp -type f -empty"></a>find &#x2F;tmp -type f -empty</h1><ol start="20">
 <li>查找所有空目录<br>将某个路径下的所有空目录归档。</li>
 </ol>
-<h1 id="find-tmp-type-d-empty"><a href="#find-tmp-type-d-empty" class="headerlink" title="find /tmp -type d -empty"></a>find /tmp -type d -empty</h1><ol start="21">
+<h1 id="find-x2F-tmp-type-d-empty"><a href="#find-x2F-tmp-type-d-empty" class="headerlink" title="find &#x2F;tmp -type d -empty"></a>find &#x2F;tmp -type d -empty</h1><ol start="21">
 <li>归档所有隐藏文件<br>要查找所有隐藏文件，请使用以下命令。</li>
 </ol>
-<h1 id="find-tmp-type-f-name-“-”"><a href="#find-tmp-type-f-name-“-”" class="headerlink" title="find /tmp -type f -name “.*”"></a>find /tmp -type f -name “.*”</h1><ol start="22">
-<li>根据用户查找单个文件<br>查找所有或单个文件rumenz.txt在下面/所有者 root 的根目录。</li>
+<h1 id="find-x2F-tmp-type-f-name-“-”"><a href="#find-x2F-tmp-type-f-name-“-”" class="headerlink" title="find &#x2F;tmp -type f -name “.*”"></a>find &#x2F;tmp -type f -name “.*”</h1><ol start="22">
+<li>根据用户查找单个文件<br>查找所有或单个文件rumenz.txt在下面&#x2F;所有者 root 的根目录。</li>
 </ol>
-<h1 id="find-user-root-name-rumenz-txt"><a href="#find-user-root-name-rumenz-txt" class="headerlink" title="find / -user root -name rumenz.txt"></a>find / -user root -name rumenz.txt</h1><ol start="23">
-<li>根据用户查找所有文件<br>查找属于用户的所有文件rumenz在下面/home目录。</li>
+<h1 id="find-x2F-user-root-name-rumenz-txt"><a href="#find-x2F-user-root-name-rumenz-txt" class="headerlink" title="find &#x2F; -user root -name rumenz.txt"></a>find &#x2F; -user root -name rumenz.txt</h1><ol start="23">
+<li>根据用户查找所有文件<br>查找属于用户的所有文件rumenz在下面&#x2F;home目录。</li>
 </ol>
-<h1 id="find-home-user-rumenz"><a href="#find-home-user-rumenz" class="headerlink" title="find /home -user rumenz"></a>find /home -user rumenz</h1><ol start="24">
-<li>根据组查找所有文件<br>查找属于该组的所有文件Developer在下面/home目录。</li>
+<h1 id="find-x2F-home-user-rumenz"><a href="#find-x2F-home-user-rumenz" class="headerlink" title="find &#x2F;home -user rumenz"></a>find &#x2F;home -user rumenz</h1><ol start="24">
+<li>根据组查找所有文件<br>查找属于该组的所有文件Developer在下面&#x2F;home目录。</li>
 </ol>
-<h1 id="find-home-group-developer"><a href="#find-home-group-developer" class="headerlink" title="find /home -group developer"></a>find /home -group developer</h1><ol start="25">
-<li>查找用户的特定文件<br>查找所有.txt用户文件rumenz在下面/home目录。</li>
+<h1 id="find-x2F-home-group-developer"><a href="#find-x2F-home-group-developer" class="headerlink" title="find &#x2F;home -group developer"></a>find &#x2F;home -group developer</h1><ol start="25">
+<li>查找用户的特定文件<br>查找所有.txt用户文件rumenz在下面&#x2F;home目录。</li>
 </ol>
-<h1 id="find-home-user-rumenz-iname-“-txt”"><a href="#find-home-user-rumenz-iname-“-txt”" class="headerlink" title="find /home -user rumenz -iname “*.txt”"></a>find /home -user rumenz -iname “*.txt”</h1><ol start="26">
+<h1 id="find-x2F-home-user-rumenz-iname-“-txt”"><a href="#find-x2F-home-user-rumenz-iname-“-txt”" class="headerlink" title="find &#x2F;home -user rumenz -iname “*.txt”"></a>find &#x2F;home -user rumenz -iname “*.txt”</h1><ol start="26">
 <li>查找最近 50 天修改过的文件<br>查找所有被修改的文件50几天回来。</li>
 </ol>
-<h1 id="find-mtime-50"><a href="#find-mtime-50" class="headerlink" title="find / -mtime 50"></a>find / -mtime 50</h1><ol start="27">
+<h1 id="find-x2F-mtime-50"><a href="#find-x2F-mtime-50" class="headerlink" title="find &#x2F; -mtime 50"></a>find &#x2F; -mtime 50</h1><ol start="27">
 <li>查找最近 50 天访问过的文件<br>查找所有被访问的文件50几天回来。</li>
 </ol>
-<h1 id="find-atime-50"><a href="#find-atime-50" class="headerlink" title="find / -atime 50"></a>find / -atime 50</h1><ol start="28">
+<h1 id="find-x2F-atime-50"><a href="#find-x2F-atime-50" class="headerlink" title="find &#x2F; -atime 50"></a>find &#x2F; -atime 50</h1><ol start="28">
 <li>查找最近 50-100 天修改过的文件<br>查找所有修改超过的文件50几天前，不到100天。</li>
 </ol>
-<h1 id="find-mtime-50-–mtime-100"><a href="#find-mtime-50-–mtime-100" class="headerlink" title="find / -mtime +50 –mtime -100"></a>find / -mtime +50 –mtime -100</h1><ol start="29">
+<h1 id="find-x2F-mtime-50-–mtime-100"><a href="#find-x2F-mtime-50-–mtime-100" class="headerlink" title="find &#x2F; -mtime +50 –mtime -100"></a>find &#x2F; -mtime +50 –mtime -100</h1><ol start="29">
 <li>查找过去 1 小时内更改过的文件<br>查找上次更改的所有文件1 hour</li>
 </ol>
-<h1 id="find-cmin-60"><a href="#find-cmin-60" class="headerlink" title="find / -cmin -60"></a>find / -cmin -60</h1><ol start="30">
+<h1 id="find-x2F-cmin-60"><a href="#find-x2F-cmin-60" class="headerlink" title="find &#x2F; -cmin -60"></a>find &#x2F; -cmin -60</h1><ol start="30">
 <li>查找最近 1 小时内修改过的文件<br>查找上次修改的所有文件1 hour</li>
 </ol>
-<h1 id="find-mmin-60"><a href="#find-mmin-60" class="headerlink" title="find / -mmin -60"></a>find / -mmin -60</h1><ol start="31">
+<h1 id="find-x2F-mmin-60"><a href="#find-x2F-mmin-60" class="headerlink" title="find &#x2F; -mmin -60"></a>find &#x2F; -mmin -60</h1><ol start="31">
 <li>查找过去 1 小时内访问过的文件<br>查找上次访问的所有文件1 hour</li>
 </ol>
-<h1 id="find-amin-60"><a href="#find-amin-60" class="headerlink" title="find / -amin -60"></a>find / -amin -60</h1><ol start="32">
+<h1 id="find-x2F-amin-60"><a href="#find-x2F-amin-60" class="headerlink" title="find &#x2F; -amin -60"></a>find &#x2F; -amin -60</h1><ol start="32">
 <li>找到 50MB 的文件<br>查找所有50MB文件，使用。</li>
 </ol>
-<h1 id="find-size-50M"><a href="#find-size-50M" class="headerlink" title="find / -size 50M"></a>find / -size 50M</h1><ol start="33">
+<h1 id="find-x2F-size-50M"><a href="#find-x2F-size-50M" class="headerlink" title="find &#x2F; -size 50M"></a>find &#x2F; -size 50M</h1><ol start="33">
 <li>查找 50MB – 100MB 之间的大小<br>查找所有大于50MB并且小于100MB</li>
 </ol>
-<h1 id="find-size-50M-size-100M"><a href="#find-size-50M-size-100M" class="headerlink" title="find / -size +50M -size -100M"></a>find / -size +50M -size -100M</h1><ol start="34">
+<h1 id="find-x2F-size-50M-size-100M"><a href="#find-x2F-size-50M-size-100M" class="headerlink" title="find &#x2F; -size +50M -size -100M"></a>find &#x2F; -size +50M -size -100M</h1><ol start="34">
 <li>查找和删除 100MB 文件<br>查找所有100MB文件并使用一个命令删除它们。</li>
 </ol>
-<h1 id="find-type-f-size-100M-exec-rm-f"><a href="#find-type-f-size-100M-exec-rm-f" class="headerlink" title="find / -type f -size +100M -exec rm -f {} ;"></a>find / -type f -size +100M -exec rm -f {} ;</h1><ol start="35">
+<h1 id="find-x2F-type-f-size-100M-exec-rm-f"><a href="#find-x2F-type-f-size-100M-exec-rm-f" class="headerlink" title="find &#x2F; -type f -size +100M -exec rm -f {} ;"></a>find &#x2F; -type f -size +100M -exec rm -f {} ;</h1><ol start="35">
 <li>查找特定文件并删除<br>找到所有.mp3文件超过10MB并使用一个命令删除它们。</li>
 </ol>
-<h1 id="find-type-f-name-mp3-size-10M-exec-rm"><a href="#find-type-f-name-mp3-size-10M-exec-rm" class="headerlink" title="find / -type f -name *.mp3 -size +10M -exec rm {} ;"></a>find / -type f -name *.mp3 -size +10M -exec rm {} ;</h1>
+<h1 id="find-x2F-type-f-name-mp3-size-10M-exec-rm"><a href="#find-x2F-type-f-name-mp3-size-10M-exec-rm" class="headerlink" title="find &#x2F; -type f -name *.mp3 -size +10M -exec rm {} ;"></a>find &#x2F; -type f -name *.mp3 -size +10M -exec rm {} ;</h1>
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/collections/Linux/Linux%20%E4%B8%AD%20find%20%E5%91%BD%E4%BB%A4.html" data-id="cla7jq456001bawoi7t6e0b36" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/collections/Linux/Linux%20%E4%B8%AD%20find%20%E5%91%BD%E4%BB%A4.html" data-id="clc0ovman002kdhorapl1hb9s" class="article-share-link">分享</a>
       
       
     </footer>

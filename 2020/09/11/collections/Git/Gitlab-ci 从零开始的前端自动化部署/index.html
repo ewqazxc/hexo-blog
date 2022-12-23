@@ -7,23 +7,23 @@
   
   <title>Gitlab-ci 从零开始的前端自动化部署 | #一如既往、</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="查看原文一 概念介绍1.1 gitlab-ci &amp;&amp; 自动化部署工具的运行机制以gitlab-ci 为例：  通过在项目根目录下配置.gitlab-ci.yml 文件，可以控制ci流程的不同阶段，例如install&#x2F;检查&#x2F;编译&#x2F;部署服务器.gitlab 平台会扫描.gitlab-ci.yml 文件，并根据此处理ci 流程 ci 流程在每次团队成员push&#x2F;merge 后触发。每当你">
+  <meta name="description" content="查看原文一 概念介绍1.1 gitlab-ci &amp;&amp; 自动化部署工具的运行机制以gitlab-ci 为例：  通过在项目根目录下配置.gitlab-ci.yml 文件，可以控制ci流程的不同阶段，例如install&#x2F;检查&#x2F;编译&#x2F;部署服务器.gitlab 平台会扫描.gitlab-ci.yml 文件，并根据此处理ci 流程 ci 流程在每次团队成员pus">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Gitlab-ci 从零开始的前端自动化部署">
 <meta property="og:url" content="https://ewqazxc.github.io/hexo-blog/2020/09/11/collections/Git/Gitlab-ci%20%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E5%89%8D%E7%AB%AF%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/index.html">
 <meta property="og:site_name" content="#一如既往、">
-<meta property="og:description" content="查看原文一 概念介绍1.1 gitlab-ci &amp;&amp; 自动化部署工具的运行机制以gitlab-ci 为例：  通过在项目根目录下配置.gitlab-ci.yml 文件，可以控制ci流程的不同阶段，例如install&#x2F;检查&#x2F;编译&#x2F;部署服务器.gitlab 平台会扫描.gitlab-ci.yml 文件，并根据此处理ci 流程 ci 流程在每次团队成员push&#x2F;merge 后触发。每当你">
+<meta property="og:description" content="查看原文一 概念介绍1.1 gitlab-ci &amp;&amp; 自动化部署工具的运行机制以gitlab-ci 为例：  通过在项目根目录下配置.gitlab-ci.yml 文件，可以控制ci流程的不同阶段，例如install&#x2F;检查&#x2F;编译&#x2F;部署服务器.gitlab 平台会扫描.gitlab-ci.yml 文件，并根据此处理ci 流程 ci 流程在每次团队成员pus">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://ewqazxc.github.io/hexo-blog/imgs/Git/executor.png">
-<meta property="og:image" content="https://ewqazxc.github.io/hexo-blog/imgs/Git/stages.jpg">
-<meta property="og:image" content="https://ewqazxc.github.io/hexo-blog/imgs/Git/runner%E4%B8%AD%E7%9A%84tags.jpg">
-<meta property="og:image" content="https://ewqazxc.github.io/hexo-blog/imgs/Git/%E6%B3%A8%E5%86%8Crunner.jpg">
-<meta property="og:image" content="https://ewqazxc.github.io/hexo-blog/imgs/Git/SpecificRunners.jpg">
+<meta property="og:image" content="https://ewqazxc.github.io/hexo-blog/hexo-blog/imgs/Git/executor.png">
+<meta property="og:image" content="https://ewqazxc.github.io/hexo-blog/hexo-blog/imgs/Git/stages.jpg">
+<meta property="og:image" content="https://ewqazxc.github.io/hexo-blog/hexo-blog/imgs/Git/runner%E4%B8%AD%E7%9A%84tags.jpg">
+<meta property="og:image" content="https://ewqazxc.github.io/hexo-blog/hexo-blog/imgs/Git/%E6%B3%A8%E5%86%8Crunner.jpg">
+<meta property="og:image" content="https://ewqazxc.github.io/hexo-blog/hexo-blog/imgs/Git/SpecificRunners.jpg">
 <meta property="article:published_time" content="2020-09-11T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-11-08T01:40:50.240Z">
+<meta property="article:modified_time" content="2022-12-23T15:50:05.989Z">
 <meta property="article:author" content="ewqazxc">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://ewqazxc.github.io/hexo-blog/imgs/Git/executor.png">
+<meta name="twitter:image" content="https://ewqazxc.github.io/hexo-blog/hexo-blog/imgs/Git/executor.png">
   
   
     <link rel="icon" href="/favicon.png">
@@ -32,12 +32,12 @@
     <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
   
   <!-- 
-<link rel="stylesheet" href="/hexo-blog/%7B%22title%22:%22#%E4%B8%80%E5%A6%82%E6%97%A2%E5%BE%80%E3%80%81%22,%22subtitle%22:%22%E4%B8%8D%E7%9F%A5%E9%81%93%E5%86%99%E7%9A%84%E4%BB%80%E4%B9%88%E7%9A%84%E5%8D%9A%E5%AE%A2~%22,%22description%22:%22description%22,%22author%22:%22ewqazxc%22,%22language%22:%22zh-CN%22,%22timezone%22:%22Asia/Shanghai%22,%22url%22:%22https:/ewqazxc.github.io/hexo-blog%22,%22root%22:%22/hexo-blog/%22,%22permalink%22:%22:year/:month/:day/:title/%22,%22permalink_defaults%22:null,%22pretty_urls%22:%7B%22trailing_index%22:true,%22trailing_html%22:true%7D,%22source_dir%22:%22source%22,%22public_dir%22:%22public%22,%22tag_dir%22:%22tags%22,%22archive_dir%22:%22archives%22,%22category_dir%22:%22categories%22,%22code_dir%22:%22downloads/code%22,%22i18n_dir%22:%22:lang%22,%22skip_render%22:null,%22new_post_name%22:%22:title.md%22,%22default_layout%22:%22post%22,%22titlecase%22:false,%22external_link%22:%7B%22enable%22:true,%22field%22:%22site%22,%22exclude%22:%22%22%7D,%22filename_case%22:0,%22render_drafts%22:false,%22post_asset_folder%22:false,%22relative_link%22:false,%22future%22:true,%22highlight%22:%7B%22enable%22:true,%22auto_detect%22:false,%22line_number%22:true,%22tab_replace%22:%22%22,%22wrap%22:true,%22hljs%22:false,%22first_line_number%22:%22always1%22%7D,%22default_category%22:%22uncategorized%22,%22category_map%22:null,%22tag_map%22:null,%22date_format%22:%22YYYY-MM-DD%22,%22time_format%22:%22HH:mm:ss%22,%22use_date_for_updated%22:false,%22per_page%22:10,%22pagination_dir%22:%22page%22,%22theme%22:%22landscape%22,%22server%22:%7B%22port%22:4000,%22log%22:false,%22compress%22:false,%22header%22:true,%22cache%22:false%7D,%22deploy%22:%7B%22type%22:%22%22%7D,%22ignore%22:null,%22meta_generator%22:true,%22keywords%22:null,%22index_generator%22:%7B%22per_page%22:10,%22order_by%22:%22-date%22,%22path%22:%22%22%7D,%22include%22:null,%22exclude%22:null,%22archive_generator%22:%7B%22per_page%22:10,%22yearly%22:true,%22monthly%22:true,%22daily%22:false%7D,%22category_generator%22:%7B%22per_page%22:10%7D,%22tag_generator%22:%7B%22per_page%22:10%7D,%22marked%22:%7B%22gfm%22:true,%22pedantic%22:false,%22breaks%22:true,%22smartLists%22:true,%22smartypants%22:true,%22modifyAnchors%22:%22%22,%22autolink%22:true,%22sanitizeUrl%22:false,%22headerIds%22:true%7D%7D.css">
+<link rel="stylesheet" href="/hexo-blog/%7B%22title%22:%22#%E4%B8%80%E5%A6%82%E6%97%A2%E5%BE%80%E3%80%81%22,%22subtitle%22:%22%E4%B8%8D%E7%9F%A5%E9%81%93%E5%86%99%E7%9A%84%E4%BB%80%E4%B9%88%E7%9A%84%E5%8D%9A%E5%AE%A2~%22,%22description%22:%22description%22,%22author%22:%22ewqazxc%22,%22language%22:%22zh-CN%22,%22timezone%22:%22Asia/Shanghai%22,%22url%22:%22https:/ewqazxc.github.io/hexo-blog%22,%22root%22:%22/hexo-blog/%22,%22permalink%22:%22:year/:month/:day/:title/%22,%22permalink_defaults%22:null,%22pretty_urls%22:%7B%22trailing_index%22:true,%22trailing_html%22:true%7D,%22source_dir%22:%22source%22,%22public_dir%22:%22public%22,%22tag_dir%22:%22tags%22,%22archive_dir%22:%22archives%22,%22category_dir%22:%22categories%22,%22code_dir%22:%22downloads/code%22,%22i18n_dir%22:%22:lang%22,%22skip_render%22:null,%22new_post_name%22:%22:title.md%22,%22default_layout%22:%22post%22,%22titlecase%22:false,%22external_link%22:%7B%22enable%22:true,%22field%22:%22site%22,%22exclude%22:%22%22%7D,%22filename_case%22:0,%22render_drafts%22:false,%22post_asset_folder%22:false,%22relative_link%22:false,%22future%22:true,%22highlight%22:%7B%22enable%22:true,%22auto_detect%22:false,%22line_number%22:true,%22tab_replace%22:%22%22,%22wrap%22:true,%22exclude_languages%22:%5B%5D,%22language_attr%22:false,%22hljs%22:false,%22first_line_number%22:%22always1%22%7D,%22prismjs%22:%7B%22enable%22:false,%22preprocess%22:true,%22line_number%22:true,%22tab_replace%22:%22%22%7D,%22default_category%22:%22uncategorized%22,%22category_map%22:null,%22tag_map%22:null,%22date_format%22:%22YYYY-MM-DD%22,%22time_format%22:%22HH:mm:ss%22,%22updated_option%22:%22mtime%22,%22per_page%22:10,%22pagination_dir%22:%22page%22,%22theme%22:%22landscape%22,%22server%22:%7B%22port%22:4000,%22log%22:false,%22compress%22:false,%22header%22:true,%22cache%22:false%7D,%22deploy%22:%7B%22type%22:%22%22%7D,%22ignore%22:null,%22meta_generator%22:true,%22keywords%22:null,%22index_generator%22:%7B%22per_page%22:10,%22order_by%22:%22-date%22,%22path%22:%22%22%7D,%22use_date_for_updated%22:false,%22include%22:null,%22exclude%22:null,%22archive_generator%22:%7B%22per_page%22:10,%22yearly%22:true,%22monthly%22:true,%22daily%22:false%7D,%22category_generator%22:%7B%22per_page%22:10%7D,%22tag_generator%22:%7B%22per_page%22:10%7D,%22marked%22:%7B%22gfm%22:true,%22pedantic%22:false,%22breaks%22:true,%22smartLists%22:true,%22smartypants%22:true,%22modifyAnchors%22:0,%22autolink%22:true,%22mangle%22:true,%22sanitizeUrl%22:false,%22dompurify%22:false,%22headerIds%22:true,%22anchorAlias%22:false,%22lazyload%22:false,%22prependRoot%22:true,%22postAsset%22:false,%22external_link%22:%7B%22enable%22:false,%22exclude%22:%5B%5D,%22nofollow%22:false%7D,%22descriptionLists%22:true%7D%7D.css">
  -->
   
 <link rel="stylesheet" href="/hexo-blog/css/style.css">
 
-<meta name="generator" content="Hexo 4.2.1"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container">
@@ -49,10 +49,6 @@
       <h1 id="logo-wrap">
         <a href="/hexo-blog/" id="logo">#一如既往、</a>
       </h1>
-      
-        <h2 id="subtitle-wrap">
-          <a href="/hexo-blog/" id="subtitle">不知道写的什么的博客~</a>
-        </h2>
       
     </div>
     <div id="header-inner" class="inner">
@@ -99,13 +95,13 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="查看原文"><a href="#查看原文" class="headerlink" title="查看原文"></a><a href="https://zhuanlan.zhihu.com/p/184936276" target="_blank" rel="noopener">查看原文</a></h2><h2 id="一-概念介绍"><a href="#一-概念介绍" class="headerlink" title="一 概念介绍"></a>一 概念介绍</h2><p>1.1 gitlab-ci &amp;&amp; 自动化部署工具的运行机制<br>以gitlab-ci 为例：</p>
+        <h2 id="查看原文"><a href="#查看原文" class="headerlink" title="查看原文"></a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/184936276">查看原文</a></h2><h2 id="一-概念介绍"><a href="#一-概念介绍" class="headerlink" title="一 概念介绍"></a>一 概念介绍</h2><p>1.1 gitlab-ci &amp;&amp; 自动化部署工具的运行机制<br>以gitlab-ci 为例：</p>
 <ol>
-<li>通过在项目根目录下配置.gitlab-ci.yml 文件，可以控制ci流程的不同阶段，例如install/检查/编译/部署服务器.gitlab 平台会扫描.gitlab-ci.yml 文件，并根据此处理ci 流程</li>
-<li>ci 流程在每次团队成员push/merge 后触发。每当你push/merge 一次，gitlab-ci 都会检查项目下有没有.gitlab-ci.yml 文件，如果有，它会执行你在里面编写的脚本，并完整地走一遍从install -&gt; eslint 检查 -&gt; 编译 -&gt; 部署服务器 的流程</li>
+<li>通过在项目根目录下配置.gitlab-ci.yml 文件，可以控制ci流程的不同阶段，例如install&#x2F;检查&#x2F;编译&#x2F;部署服务器.gitlab 平台会扫描.gitlab-ci.yml 文件，并根据此处理ci 流程</li>
+<li>ci 流程在每次团队成员push&#x2F;merge 后触发。每当你push&#x2F;merge 一次，gitlab-ci 都会检查项目下有没有.gitlab-ci.yml 文件，如果有，它会执行你在里面编写的脚本，并完整地走一遍从install -&gt; eslint 检查 -&gt; 编译 -&gt; 部署服务器 的流程</li>
 <li>gitlab-ci 提供了指定ci 运行平台的机制，它提供了一个叫gitlab-runner 的软件，只要在对应的平台（机器或者docker）上下载并运行这个命令行软件，并输入从gitlab 交互界面获取的token，就可以把当前机器和对应的gitlab-ci 流程绑定，也即：每次跑ci 都在这个平台上进行</li>
 <li>.gitlab-ci 的所有流程都是可视化的，每个流程节点的状态都可以在gitlab 的交互界面上看到，包括执行成功或失败。因为它的执行看上去就和多节管道一样，所以通常用”pipeLine” 来称呼它</li>
-<li>不同push/merge 所触发的CI 流程不会互相影响，也就是说，你的一次push 引发的CI 流程并不会因为接下来另一位同事的push 而阻断，它们是互不影响的。这一特点方便让测试同学根据不同版本进行测试</li>
+<li>不同push&#x2F;merge 所触发的CI 流程不会互相影响，也就是说，你的一次push 引发的CI 流程并不会因为接下来另一位同事的push 而阻断，它们是互不影响的。这一特点方便让测试同学根据不同版本进行测试</li>
 <li>pipeline 不仅能被动触发，也是可以手动触发的</li>
 </ol>
 <p>1.2 自动化部署给我们带来的好处</p>
@@ -141,16 +137,15 @@
 </ol>
 <ul>
 <li>shared runner：gitlab 平台提供的免费使用的runner 程序，它由Google 云平台提供支持，每个开发团队有十几个。对于公共开源项目是免费使用的，如果是私人项目则有每月2000分钟的CI 时间上限</li>
-<li>specific runner：自定义的，在自己选择的机器上运行的runner 程序，gitlab 给我们提供了一个叫<a href="https://docs.gitlab.com/runner/install/" target="_blank" rel="noopener">gitlab-runner</a> 的命令行软件，只要在对应机器上下载安装这个软件，并且运行gitlab-runner register 命令，然后输入从gitlab-ci 交互界面获取的token 进行注册，就可以在自己的机器上远程运行pipeline 程序</li>
+<li>specific runner：自定义的，在自己选择的机器上运行的runner 程序，gitlab 给我们提供了一个叫<a target="_blank" rel="noopener" href="https://docs.gitlab.com/runner/install/">gitlab-runner</a> 的命令行软件，只要在对应机器上下载安装这个软件，并且运行gitlab-runner register 命令，然后输入从gitlab-ci 交互界面获取的token 进行注册，就可以在自己的机器上远程运行pipeline 程序</li>
 <li>shared 和 specific 的区别<ol>
 <li>shared runner是所有项目都可以使用的，而specific runner 只能针对特定项目运行</li>
-<li>shared runner默认基于docker 运行，没有提起装配的执行pipeline 的环境，例如node 等。而specific runner 可以自由选择平台，可以是各种类型的机器，如Linux/Windows 等，并在上面装配必须的运行环境，当然也可以选择Docker/K8s 等</li>
-<li>私人项目使用shared runner 受运行时间的限制，而specific runner 的使用则是完全自由的</li>
+<li>shared runner默认基于docker 运行，没有提起装配的执行pipeline 的环境，例如node 等。而specific runner 可以自由选择平台，可以是各种类型的机器，如Linux&#x2F;Windows 等，并在上面装配必须的运行环境，当然也可以选择Docker&#x2F;K8s 等<br>3.私人项目使用shared runner 受运行时间的限制，而specific runner 的使用则是完全自由的</li>
 </ol>
 </li>
 </ul>
 <ol start="3">
-<li>executor：specific runner是在我们自己选择的平台上执行的，这个平台就是我们现在所说的”executor”，我们在特定机器上通过gitlab-runner 这个命令行软件注册runner 的时候，命令行就会提示我们输入相应的<a href="https://docs.gitlab.com/runner/executors/#selecting-the-executor" target="_blank" rel="noopener">平台类型</a>，可供选择的平台一共有如下几种，<br><img src="/hexo-blog/imgs/Git/executor.png" alt="平台类型"></li>
+<li>executor：specific runner是在我们自己选择的平台上执行的，这个平台就是我们现在所说的”executor”，我们在特定机器上通过gitlab-runner 这个命令行软件注册runner 的时候，命令行就会提示我们输入相应的<a target="_blank" rel="noopener" href="https://docs.gitlab.com/runner/executors/#selecting-the-executor">平台类型</a>，可供选择的平台一共有如下几种，<br>  <img src="/hexo-blog/hexo-blog/imgs/Git/executor.png" alt="平台类型"></li>
 </ol>
 <p>2.2 YML 文件的基本语法规则</p>
 <p>CI 流程的运行控制，决定于项目根目录下编写的配置文件——.gitlab-ci.yml，正因为如此，我们需要掌握YML 的基本语法规则。</p>
@@ -164,14 +159,14 @@
 </ul>
 <p>在基本结构上，YML 和JSON 也类似</p>
 <ul>
-<li>JSON/YML 都是由对象，数组，以及对象和数组的嵌套结构组成的</li>
+<li>JSON&#x2F;YML 都是由对象，数组，以及对象和数组的嵌套结构组成的</li>
 </ul>
 <p><strong>YML 中数组的写法</strong></p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">colors</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">red</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">blue</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">yellow</span></span><br><span class="line"><span class="comment"># = &#123; "colors": ["red", "blue", "yellow"]&#125;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">colors</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">red</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">blue</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">yellow</span></span><br><span class="line"><span class="comment"># = &#123; &quot;colors&quot;: [&quot;red&quot;, &quot;blue&quot;, &quot;yellow&quot;]&#125;</span></span><br></pre></td></tr></table></figure>
 <p><strong>YML 中对象的写法</strong></p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">people:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">zhangsan</span></span><br><span class="line">  <span class="attr">age:</span> <span class="number">14</span></span><br><span class="line"><span class="comment"># &#123; "people": &#123; "name": "zhangsan", "age": 14 &#125;&#125;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">people:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">zhangsan</span></span><br><span class="line">  <span class="attr">age:</span> <span class="number">14</span></span><br><span class="line"><span class="comment"># &#123; &quot;people&quot;: &#123; &quot;name&quot;: &quot;zhangsan&quot;, &quot;age&quot;: 14 &#125;&#125;</span></span><br></pre></td></tr></table></figure>
 <p><strong>数组和对象之间形成的嵌套结构</strong></p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">a:</span></span><br><span class="line">  <span class="attr">b:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">d</span></span><br><span class="line">  <span class="attr">c:</span> <span class="string">e</span></span><br><span class="line"><span class="comment"># &#123; "a": &#123; "b": ["d"], "c": "e" &#125;&#125;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">a:</span></span><br><span class="line">  <span class="attr">b:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">d</span></span><br><span class="line">  <span class="attr">c:</span> <span class="string">e</span></span><br><span class="line"><span class="comment"># &#123; &quot;a&quot;: &#123; &quot;b&quot;: [&quot;d&quot;], &quot;c&quot;: &quot;e&quot; &#125;&#125;</span></span><br></pre></td></tr></table></figure>
 <p><strong>从JSON到YML之间的过度学习的注意要点</strong></p>
 <ul>
 <li>不需要”{}”去区分层级边界，而是使用缩进</li>
@@ -184,10 +179,10 @@
 <p><strong>stages &amp; stage</strong></p>
 <ul>
 <li>stages 定义在YML 文件的最外层，它的值是一个数组，用于定义一个pipeline 不同的流程节点<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">stages:</span> <span class="comment"># 分段</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">install</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">eslint</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">build</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">deploy</span></span><br></pre></td></tr></table></figure>
-则在Gitlab交互界面中能够看到如下展示：<br><img src="/hexo-blog/imgs/Git/stages.jpg" alt="stages"></li>
+则在Gitlab交互界面中能够看到如下展示：<br><img src="/hexo-blog/hexo-blog/imgs/Git/stages.jpg" alt="stages"></li>
 </ul>
 <p>上面提到过：job 是pipeline 的任务节点，它构成了pipeline 的基本单元</p>
-<p>而stage/script/tags 这三个关键字，都是作为job 的紫属性来使用的，如下所示，install 就是我们定义的一个job</p>
+<p>而stage&#x2F;script&#x2F;tags 这三个关键字，都是作为job 的紫属性来使用的，如下所示，install 就是我们定义的一个job</p>
 <figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">install:</span></span><br><span class="line">  <span class="attr">tags:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">sss</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">install</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">npm</span> <span class="string">install</span></span><br></pre></td></tr></table></figure>
 
 <p><strong>stage</strong> 是一个字符串，且是stages 数组的一个子项，表示的是当前的pipeline 节点</p>
@@ -205,11 +200,11 @@
 <p>这个tags 关键字是很重要的，因为gitlab 的runner 会通过tags 去判断能否执行当前这个job</p>
 <p>例如我们在gitlab 的面板中能看到当前激活的runner 的信息</p>
 <figure class="highlight md"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Gitlab 项目首页 -&gt; setting -&gt; CI/CD -&gt; Runners</span><br></pre></td></tr></table></figure>
-<p><img src="/hexo-blog/imgs/Git/runner%E4%B8%AD%E7%9A%84tags.jpg" alt="Runner 中的tags"></p>
+<p><img src="/hexo-blog/hexo-blog/imgs/Git/runner%E4%B8%AD%E7%9A%84tags.jpg" alt="Runner 中的tags"></p>
 <p>上面的这个sss 就是当前Runner 的tags，这意味着：这个runner 只会执行tag 为sss 的job。如果一个job 没有tag 或者tag 不是sss，那么及时这个runner 是激活且空闲的，也不会去执行</p>
 <h2 id="三-gitlab-ci-实战"><a href="#三-gitlab-ci-实战" class="headerlink" title="三 gitlab-ci 实战"></a>三 gitlab-ci 实战</h2><p>3.1 编写一个gitlab-ci 的”Helllo world”</p>
 <ol>
-<li>在平台上下载并安装Gitlab-runner 命令行 <a href="https://docs.gitlab.com/runner/install/" target="_blank" rel="noopener">https://docs.gitlab.com/runner/install/</a></li>
+<li>在平台上下载并安装Gitlab-runner 命令行 <a target="_blank" rel="noopener" href="https://docs.gitlab.com/runner/install/">https://docs.gitlab.com/runner/install/</a></li>
 </ol>
 <ul>
 <li><p>Win10</p>
@@ -220,14 +215,14 @@
 </li>
 <li><p>Mac</p>
 <ol>
-<li>下载工具<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo curl --output /usr/<span class="built_in">local</span>/bin/gitlab-runner https://gitlab-runner-downloads.s3.amazonaws.com/latest/binaries/gitlab-runner-darwin-amd64</span><br><span class="line">sudo chmod +x /usr/<span class="built_in">local</span>/bin/gitlab-runner</span><br></pre></td></tr></table></figure></li>
+<li>下载工具<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo curl --output /usr/local/bin/gitlab-runner https://gitlab-runner-downloads.s3.amazonaws.com/latest/binaries/gitlab-runner-darwin-amd64</span><br><span class="line">sudo <span class="built_in">chmod</span> +x /usr/local/bin/gitlab-runner</span><br></pre></td></tr></table></figure></li>
 <li>初始化gitlab-runner<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gitlab-runner install</span><br><span class="line">gitlab-runner start</span><br><span class="line"><span class="comment"># 输出Runtime platform 则成功</span></span><br></pre></td></tr></table></figure></li>
-<li>注册runner <a href="https://link.zhihu.com/?target=https%3A//docs.gitlab.com/runner/register/index.html">参考资料</a></li>
+<li>注册runner <a href="https://link.zhihu.com/?target=https://docs.gitlab.com/runner/register/index.html">参考资料</a></li>
 </ol>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gitlab-runner register</span><br></pre></td></tr></table></figure>
-<p>然后写入相应的token，url和tag等相关信息就注册完毕了<br><img src="/hexo-blog/imgs/Git/%E6%B3%A8%E5%86%8Crunner.jpg" alt="注册runner"><br>上面要求输入的Runner 绑定的token 和url，获取方式如下：</p>
+<p>然后写入相应的token，url和tag等相关信息就注册完毕了<br><img src="/hexo-blog/hexo-blog/imgs/Git/%E6%B3%A8%E5%86%8Crunner.jpg" alt="注册runner"><br>上面要求输入的Runner 绑定的token 和url，获取方式如下：</p>
 <figure class="highlight md"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Gitlab 项目首页 -&gt; setting -&gt; CI/CD -&gt; Runners -&gt; Specific Runners</span><br></pre></td></tr></table></figure>
-<p>新版的直接找Runners 也有<br><img src="/hexo-blog/imgs/Git/SpecificRunners.jpg" alt="Specific Runners"></p>
+<p>新版的直接找Runners 也有<br><img src="/hexo-blog/hexo-blog/imgs/Git/SpecificRunners.jpg" alt="Specific Runners"></p>
 <ol start="4">
 <li>激活Runner</li>
 </ol>
@@ -260,13 +255,13 @@
 </li>
 </ul>
 <ol start="7">
-<li>编写.gitlab-ci.yml 配置文件<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">stages:</span> <span class="comment"># 分段</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">install</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">eslint</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">build</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">deploy</span></span><br><span class="line"></span><br><span class="line"><span class="attr">cache:</span> <span class="comment"># 缓存</span></span><br><span class="line">  <span class="attr">paths:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">node_modules</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">build</span></span><br><span class="line"><span class="attr">install-job:</span></span><br><span class="line">  <span class="attr">tags:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">sss</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">install</span></span><br><span class="line">  <span class="attr">script:</span> <span class="string">npm</span> <span class="string">install</span></span><br><span class="line"></span><br><span class="line"><span class="attr">eslint-job:</span></span><br><span class="line">  <span class="attr">tags:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">sss</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">eslint</span></span><br><span class="line">  <span class="attr">script:</span> </span><br><span class="line">    <span class="bullet">-</span> <span class="string">npm</span> <span class="string">run</span> <span class="string">eslint</span></span><br><span class="line"></span><br><span class="line"><span class="attr">build-job:</span></span><br><span class="line">  <span class="attr">tags:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">sss</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">build</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">npm</span> <span class="string">run</span> <span class="string">build</span></span><br><span class="line"></span><br><span class="line"><span class="attr">deploy-job:</span></span><br><span class="line">  <span class="attr">tags:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">sss</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">deploy</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">sshpass</span> <span class="string">-p</span> <span class="string">$PASSWORD</span> <span class="string">scp</span> <span class="string">-r</span> <span class="string">./build</span> <span class="string">$CUSTOM_UNSERNAME@$CUSTOM_IP:/var/www/html</span></span><br></pre></td></tr></table></figure></li>
-</ol>
+<li><p>编写.gitlab-ci.yml 配置文件</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">stages:</span> <span class="comment"># 分段</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">install</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">eslint</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">build</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">deploy</span></span><br><span class="line"></span><br><span class="line"><span class="attr">cache:</span> <span class="comment"># 缓存</span></span><br><span class="line">  <span class="attr">paths:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">node_modules</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">build</span></span><br><span class="line"><span class="attr">install-job:</span></span><br><span class="line">  <span class="attr">tags:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">sss</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">install</span></span><br><span class="line">  <span class="attr">script:</span> <span class="string">npm</span> <span class="string">install</span></span><br><span class="line"></span><br><span class="line"><span class="attr">eslint-job:</span></span><br><span class="line">  <span class="attr">tags:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">sss</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">eslint</span></span><br><span class="line">  <span class="attr">script:</span> </span><br><span class="line">    <span class="bullet">-</span> <span class="string">npm</span> <span class="string">run</span> <span class="string">eslint</span></span><br><span class="line"></span><br><span class="line"><span class="attr">build-job:</span></span><br><span class="line">  <span class="attr">tags:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">sss</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">build</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">npm</span> <span class="string">run</span> <span class="string">build</span></span><br><span class="line"></span><br><span class="line"><span class="attr">deploy-job:</span></span><br><span class="line">  <span class="attr">tags:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">sss</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">deploy</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">sshpass</span> <span class="string">-p</span> <span class="string">$PASSWORD</span> <span class="string">scp</span> <span class="string">-r</span> <span class="string">./build</span> <span class="string">$CUSTOM_UNSERNAME@$CUSTOM_IP:/var/www/html</span></span><br></pre></td></tr></table></figure>
 <p><strong>package.json</strong></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  ...</span><br><span class="line">  "script": &#123;</span><br><span class="line">    "start": "... start",</span><br><span class="line">    "biuld": "... build",</span><br><span class="line">    "eslint": "eslint ./src"</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ol start="8">
-<li>提交项目代码</li>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  ...</span><br><span class="line">  <span class="attr">&quot;script&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;start&quot;</span><span class="punctuation">:</span> <span class="string">&quot;... start&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;biuld&quot;</span><span class="punctuation">:</span> <span class="string">&quot;... build&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;eslint&quot;</span><span class="punctuation">:</span> <span class="string">&quot;eslint ./src&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>提交项目代码</p>
+</li>
 </ol>
 <p>commit 然后push，在gitlab 面板中查看runner 运行情况，完成后回到页面查看效果</p>
 </li>
@@ -275,7 +270,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/09/11/collections/Git/Gitlab-ci%20%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E5%89%8D%E7%AB%AF%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/" data-id="cla7jq46u003eawoi0o9859ya" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/09/11/collections/Git/Gitlab-ci%20%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E5%89%8D%E7%AB%AF%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/" data-id="clc0ovm9w000zdhorfflk9ujj" class="article-share-link">分享</a>
       
       
     </footer>
