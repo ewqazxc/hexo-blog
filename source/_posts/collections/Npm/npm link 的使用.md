@@ -1,7 +1,7 @@
 ---
 title: npm link 的使用
 date: 2022-04-10 15:30
-# categories: npm
+categories: npm
 ---
 
 ## 使用 npm link 后，编译失败
