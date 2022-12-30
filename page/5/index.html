@@ -67,6 +67,261 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-collections/JavaScript/写一个通用的事件侦听器函数" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo-blog/2020/08/22/collections/JavaScript/%E5%86%99%E4%B8%80%E4%B8%AA%E9%80%9A%E7%94%A8%E7%9A%84%E4%BA%8B%E4%BB%B6%E4%BE%A6%E5%90%AC%E5%99%A8%E5%87%BD%E6%95%B0/" class="article-date">
+  <time datetime="2020-08-22T16:00:00.000Z" itemprop="datePublished">2020-08-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/hexo-blog/2020/08/22/collections/JavaScript/%E5%86%99%E4%B8%80%E4%B8%AA%E9%80%9A%E7%94%A8%E7%9A%84%E4%BA%8B%E4%BB%B6%E4%BE%A6%E5%90%AC%E5%99%A8%E5%87%BD%E6%95%B0/">写一个通用的事件侦听器函数</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="通用的事件侦听器函数"><a href="#通用的事件侦听器函数" class="headerlink" title="通用的事件侦听器函数"></a>通用的事件侦听器函数</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">EventUtils</span> = &#123;</span><br><span class="line">  <span class="comment">// 视能力分别使用dom0|dom2|IE 方式，来绑定事件</span></span><br><span class="line">  <span class="comment">// 添加事件</span></span><br><span class="line">  <span class="attr">addEvent</span>: <span class="keyword">function</span>(<span class="params">element, type, handler</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>(element.<span class="property">addEventListener</span>)&#123;</span><br><span class="line">      element.<span class="title function_">addEventListener</span>(type, handler, <span class="literal">false</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(element.<span class="property">attachEvent</span>)&#123;</span><br><span class="line">      element.<span class="title function_">attachEvent</span>(<span class="string">&quot;on&quot;</span> + type, handler);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      element[<span class="string">&quot;on&quot;</span>+type] = handler;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 移除事件</span></span><br><span class="line">  <span class="attr">removeEvent</span>: <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>(element.<span class="property">removeEventListener</span>)&#123;</span><br><span class="line">      element.<span class="title function_">removeEventListener</span>(type, handler, <span class="literal">false</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(element.<span class="property">detachEvent</span>)&#123;</span><br><span class="line">      element.<span class="title function_">detachEvent</span>(<span class="string">&quot;on&quot;</span> + type, handler);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      element[<span class="string">&quot;on&quot;</span> + type] = <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 获取事件目标</span></span><br><span class="line">  <span class="attr">getTarget</span>: <span class="keyword">function</span>(<span class="params">event</span>)&#123;</span><br><span class="line">    <span class="keyword">return</span> event.<span class="property">target</span> || event.<span class="property">srcElement</span>;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 获取event 对象的引用，渠道时间按的所有信息，确保随时能使用 event</span></span><br><span class="line">  <span class="attr">getEvent</span>: <span class="keyword">function</span>(<span class="params">event</span>)&#123;</span><br><span class="line">    <span class="keyword">return</span> event || <span class="variable language_">window</span>.<span class="property">event</span>;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 阻止事件（主要是冒泡，因为IE 不支持事件捕获）</span></span><br><span class="line">  <span class="attr">stopPropagation</span>: <span class="keyword">function</span>(<span class="params">event</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>(event.<span class="property">stopPropagation</span>)&#123;</span><br><span class="line">      event.<span class="title function_">stopPropagation</span>();</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      event.<span class="property">cancelBubble</span> = <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 取消事件的默认行为</span></span><br><span class="line">  <span class="attr">preventDefault</span>: <span class="keyword">function</span>(<span class="params">event</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>(event.<span class="property">preventDefault</span>)&#123;</span><br><span class="line">      event.<span class="title function_">preventDefault</span>();</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      event.<span class="property">returnValue</span> = <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/22/collections/JavaScript/%E5%86%99%E4%B8%80%E4%B8%AA%E9%80%9A%E7%94%A8%E7%9A%84%E4%BA%8B%E4%BB%B6%E4%BE%A6%E5%90%AC%E5%99%A8%E5%87%BD%E6%95%B0/" data-id="clcanlujc0023bfoj1q5pho8b" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-collections/Internet/github.io无法访问" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo-blog/2020/08/19/collections/Internet/github.io%E6%97%A0%E6%B3%95%E8%AE%BF%E9%97%AE/" class="article-date">
+  <time datetime="2020-08-19T16:00:00.000Z" itemprop="datePublished">2020-08-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/hexo-blog/2020/08/19/collections/Internet/github.io%E6%97%A0%E6%B3%95%E8%AE%BF%E9%97%AE/">github.io 无法访问</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="DNS解析错误的解决方法"><a href="#DNS解析错误的解决方法" class="headerlink" title="DNS解析错误的解决方法"></a>DNS解析错误的解决方法</h2><p>最近,电脑无法打开githu.io 页面，手机却可以正常访问。ping 了下github.io，发现DNS 解析到了127.0.0.1 这明显不正常。。。</p>
+<ol>
+<li><p>检查是否DNS 解析问题，<code>ping github.io</code></p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ping</span> github.io</span><br><span class="line"></span><br><span class="line">正在 <span class="built_in">Ping</span> github.io [<span class="number">127</span>.<span class="number">0</span>.<span class="number">0</span>.<span class="number">1</span>] 具有 <span class="number">32</span> 字节的数据:</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用114 解析获取正确的ip 地址</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">nslookup github.io <span class="number">114</span>.<span class="number">114</span>.<span class="number">114</span>.<span class="number">114</span></span><br><span class="line"></span><br><span class="line">服务器:  public1.<span class="number">114</span>dns.com</span><br><span class="line"><span class="function">Address:  114.114.114.114</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">非权威应答:</span></span><br><span class="line"><span class="function">名称:    <span class="title">github.io</span></span></span><br><span class="line"><span class="function"><span class="title">Addresses</span>:  185.199.110.153</span></span><br><span class="line"><span class="function">          185.199.111.153</span></span><br><span class="line"><span class="function">          185.199.108.153</span></span><br><span class="line"><span class="function">          185.199.109.153</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改host 文件，将github.io 指向上一步获取到的 Addresses</p>
+</li>
+</ol>
+<p>host 文件所在目录：C:\Windows\System32\drivers\etc\hosts</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">185.199.110.153 ewqazxc.github.io</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>ipconfig &#x2F;flushdns 更新下DNS 配置，再打开网页即可</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/19/collections/Internet/github.io%E6%97%A0%E6%B3%95%E8%AE%BF%E9%97%AE/" data-id="clcanluj0001cbfoj1dqz92q5" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-collections/JavaScript/JavaScript深入理解之对象创建" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo-blog/2020/08/17/collections/JavaScript/JavaScript%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E4%B9%8B%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA/" class="article-date">
+  <time datetime="2020-08-17T16:00:00.000Z" itemprop="datePublished">2020-08-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/hexo-blog/2020/08/17/collections/JavaScript/JavaScript%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E4%B9%8B%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA/">JavaScript深入理解之对象创建</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在JavaScript中虽然Object构造函数或对象字面量都可以用来创建单个对象，但是这些方法都有一个明显的缺点:使用同一个接口创建很多对象，活产数大量的重复代码。为了解决这些问题，人们提出了很多对象创建的解决办法，下面是对JavaScript 对象创建的一些理解和总结。</p>
+<h2 id="1-工厂模式"><a href="#1-工厂模式" class="headerlink" title="1 工厂模式"></a>1 工厂模式</h2><p>  工厂模式是软件工厂领域一种广为人知的设计模式，这种模式抽离了创建对象的具体过程。考虑到在ECMAScript 中无法创建类，开发人员发明以一种函数，用函数来封装特定接口创建对象的细节。如下面的例子所示：<br>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">createPerson</span>(<span class="params">name,age,job</span>)&#123;</span><br><span class="line">  <span class="keyword">var</span> o = <span class="keyword">new</span> <span class="title class_">Object</span>();</span><br><span class="line">  o.<span class="property">name</span> = name;</span><br><span class="line">  o.<span class="property">age</span> = age;</span><br><span class="line">  o.<span class="property">job</span> = job;</span><br><span class="line">  o.<span class="property">sayName</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="title function_">alert</span>(<span class="variable language_">this</span>.<span class="property">name</span>);</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="keyword">return</span> o;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> person1 = <span class="title function_">createPerson</span>(<span class="string">&#x27;Tom&#x27;</span>,<span class="number">9</span>,<span class="string">&#x27;cat&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> person2 = <span class="title function_">createPerson</span>(<span class="string">&#x27;Jerry&#x27;</span>,<span class="number">8</span>,<span class="string">&#x27;mouse&#x27;</span>);</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>优点 解决了创建多个相似对象时，代码复用问题</li>
+<li>缺点 使用工程模式创建的对象，没有解决对象识别的问题（对象的类型不明确）  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1. 工厂模式：主要工作原理是用函数来封装创建对象的细节，从而通过调用函数来达到复用的目的。但是它有一个很大的问题就是创建出来的对象无法和某个类型联系起来，只是简单的封装了复用代码，没有建立起对象和类型间的关系</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="2-构造函数模式"><a href="#2-构造函数模式" class="headerlink" title="2 构造函数模式"></a>2 构造函数模式</h2><p>  ECMAScript 中的构造函数可用来创建特定类型的对象。像Object 和Array 这样的原生构造函数，在运行时自动出现在执行环境中。此外我们也可以创建自定义的构造函数，从而定义对象类型的属性和方法。如下例子：<br>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">createPerson</span>(<span class="params">name,age,job</span>)&#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">name</span> = name;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">age</span> = age;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">job</span> = job;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">sayName</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="title function_">alert</span>(<span class="variable language_">this</span>.<span class="property">name</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="variable language_">this</span>; <span class="comment">// 使用new 时不写返回 也会默认返回this 对象</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> person1 = <span class="keyword">new</span> <span class="title function_">createPerson</span>(<span class="string">&#x27;Tom&#x27;</span>,<span class="number">9</span>,<span class="string">&#x27;cat&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> person2 = <span class="keyword">new</span> <span class="title function_">createPerson</span>(<span class="string">&#x27;Jerry&#x27;</span>,<span class="number">8</span>,<span class="string">&#x27;mouse&#x27;</span>);</span><br></pre></td></tr></table></figure><br>  当我们使用构造函数实例化一个对象的时候，对象中会包含一个_proto_ 属性指向构造函数原型对象，而原型对象中则包含一个constructor 属性指向构造函数。因此在实例对象中，我们可以通过原型链来访问到constructor 属性，从而判断对象的类型。</p>
+<ul>
+<li><p>优点 解决了工厂模式中对象类型无法识别的问题，并且创建自定义的构造函数意味着将来可以将它的实例标识为一种特定的类型</p>
+</li>
+<li><p>缺点 在Js 中函数是对象，在使用构造函数创建对象是，每个方法都会在实例对象中重写创建一遍。拿上面的例子来说，就意味着每创建一个对象，都会创建一个sayName 函数的实例，但它们其实做的都是相同的事，因此造成了内存的浪费</p>
+</li>
+</ul>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2. 构造函数模式：Js 中每一个函数都可以作为构造函数，只要一个函数是通过new 来调用的，那么我们就可以把它称为构造函数。执行构造函数首先会创建一个对象，然后将对象的原型指向构造函数的prototype 属性，然后将执行上下文中的this 指向这个对象，最后再执行整个函数，如果返回值不是对象，则返回新建的对象。因为this 的值指向了新建的对象，所以我们可以使用this 给对象赋值，</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-原型模式"><a href="#3-原型模式" class="headerlink" title="3 原型模式"></a>3 原型模式</h2><p>  我们创建的每一个函数都有一个prototype 属性，这个属性指向函数的原型对象，这个对象的用途是包含可以由特定类型的所有实例共享的属性和方法。我们通过使用原型对象可以让所有的对象实例共享它所包含的属性和方法，因此也解决了代码的复用问题。如下例子：<br>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span>(<span class="params"></span>)&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="title class_">Person</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">name</span> = <span class="string">&#x27;Tom&#x27;</span>;</span><br><span class="line"><span class="title class_">Person</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">age</span> = <span class="number">9</span>;</span><br><span class="line"><span class="title class_">Person</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">sayName</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">  <span class="title function_">alert</span>(<span class="variable language_">this</span>.<span class="property">name</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p1 = <span class="keyword">new</span> <span class="title class_">Person</span>();</span><br><span class="line">p1.<span class="title function_">sayName</span>(); <span class="comment">// Tom</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p2 = <span class="keyword">new</span> <span class="title class_">Person</span>();</span><br><span class="line">p2.<span class="title function_">sayName</span>(); <span class="comment">// Tom</span></span><br><span class="line"></span><br><span class="line">p1.<span class="property">sayName</span> === p2.<span class="property">sayName</span>; <span class="comment">// true</span></span><br></pre></td></tr></table></figure><br>  与构造函数不同的是，原型对象上的属性和方法是所有实例所共享的。也就是说，p1 和p2 访问的都是同一组属性和同一个sayName() 函数</p>
+<ul>
+<li>优点 解决了构造函数模式中多次创建相同函数对象的问题，所有实例可以共享同一组属性和函数</li>
+<li>缺点 <ol>
+<li>省略了构造函数模式传递初始化参数的过程，所有实例在默认情况下都会取得默认的属性值，造成不便</li>
+<li>因为所有实例都是共享一组属性，对于包含基本知识的属性来说没有问题，但是对于包含引用类型的值来说，所有的实例都是对同一个引用类型进行操作，那么属性的操作就不是独立的，最后导致读写的混乱。我们创建的实例一般都是要有属于自己的全部属性的，因此单独使用原型模式的情况是很少存在的</li>
+</ol>
+</li>
+</ul>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">3. 原型模式：因为每一个函数都有一个prototype 属性，这个属性是一个对象，它包含了通过构造函数创建的所有实例都能共享的属性和方法。因此我们可以使用原型对象来添加公用属性和方法，从而实现代码的复用。</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-组合使用构造函数和原型模式"><a href="#4-组合使用构造函数和原型模式" class="headerlink" title="4 组合使用构造函数和原型模式"></a>4 组合使用构造函数和原型模式</h2><p>  创建自定义类型的最常见方式，就是组合使用构造函数模式和原型模式。构造函数模式用于定义实例属性，而原型模式用于定义方法和共享的属性。这种模式的好处就是，每个实例都会有自己的一份实例属性副本，但同时又共享着对方法的引用，最大限度地节省了内存，而且这种混合模式还支持向构造函数传递参数，可以说是集两种模式之长<br>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span>(<span class="params">name,age,job</span>)&#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">name</span> = name;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">age</span> = age;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">obj</span> = obj;</span><br><span class="line">&#125;</span><br><span class="line"><span class="title class_">Person</span>.<span class="property"><span class="keyword">prototype</span></span> = &#123;</span><br><span class="line">  <span class="attr">constructor</span>: <span class="title class_">Person</span>,</span><br><span class="line">  <span class="attr">sayName</span>: <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">name</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> tom = <span class="keyword">new</span> <span class="title class_">Person</span>(<span class="string">&#x27;Tom&#x27;</span>,<span class="number">9</span>,<span class="string">&#x27;cat&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> jerry = <span class="keyword">new</span> <span class="title class_">Person</span>(<span class="string">&#x27;Jerry&#x27;</span>,<span class="number">8</span>,<span class="string">&#x27;mouse&#x27;</span>);</span><br><span class="line"></span><br><span class="line">tom.<span class="property">name</span>; <span class="comment">// Tom</span></span><br><span class="line">jerry.<span class="property">name</span>; <span class="comment">// Jerry</span></span><br><span class="line">tom.<span class="property">sayName</span> === jerry.<span class="property">sayName</span>; <span class="comment">// true</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><p>优点 采用了构造函数模式和原型模式的优点，这种混合模式是目前使用最广泛，认同度最高的一种创建自定义类型的方法</p>
+</li>
+<li><p>缺点 由于使用了两种模式，对于代码的封装性来说不是很好</p>
+</li>
+</ul>
+<h2 id="5-动态原型模式"><a href="#5-动态原型模式" class="headerlink" title="5 动态原型模式"></a>5 动态原型模式</h2><p>  由于上面的混合模式存在封装性的问题，动态原型模式就是解决这个问题的一个方案。这个方法把所有信息都封装到了构造函数当中，而在构造函数中通过判断只初始化一次原型</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span>(<span class="params">name,age,job</span>)&#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">name</span> = name;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">age</span> = age;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">job</span> = job;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span>(<span class="keyword">typeof</span> <span class="variable language_">this</span>.<span class="property">sayName</span> !== <span class="string">&#x27;function&#x27;</span>)&#123;</span><br><span class="line">    <span class="title class_">Person</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">sayName</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;My name is &#x27;</span> + <span class="variable language_">this</span>.<span class="property">name</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> tom = <span class="keyword">new</span> <span class="title class_">Person</span>(<span class="string">&#x27;Tom&#x27;</span>,<span class="number">9</span>,<span class="string">&#x27;cat&#x27;</span>);</span><br><span class="line">tom.<span class="title function_">sayName</span>(); <span class="comment">// My name is Tom</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="6-寄生构造函数模式"><a href="#6-寄生构造函数模式" class="headerlink" title="6 寄生构造函数模式"></a>6 寄生构造函数模式</h2><p>  如果在前面几种模式不适用的情况下，可以使用寄生构造函数模式。这种模式的基本思想就是创建一个函数，该函数的作用仅仅是封装创建对象的代码，然后返回新创建的对象</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span>(<span class="params">name,age,job</span>)&#123;</span><br><span class="line">  <span class="keyword">var</span> o = <span class="keyword">new</span> <span class="title class_">Object</span>();</span><br><span class="line">  o.<span class="property">name</span> = name;</span><br><span class="line">  o.<span class="property">age</span> = age;</span><br><span class="line">  o.<span class="property">job</span> = job;</span><br><span class="line">  o.<span class="property">sayName</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">name</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> p1 = <span class="keyword">new</span> <span class="title class_">Person</span>(<span class="string">&#x27;Tom&#x27;</span>,<span class="number">9</span>,<span class="string">&#x27;cat&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<p>  可以看出这个模式和工厂模式基本上一样，只不过我们是采用new 操作符最后来创建对象</p>
+<p>  在构造函数不返回值的情况下，会默认返回新创建的对象，而通过在末尾添加的return 语句，可以重写调用构造函数时返回的值</p>
+<ul>
+<li><p>优点 基于一个已有的类型，在实例化时对实例化的对象进行扩展，既不用修改原来的构造函数，也达到了扩展对象的目的</p>
+</li>
+<li><p>缺点 和工厂模式一样，不能依赖instanceof 操作符来确定对象的类型</p>
+</li>
+</ul>
+<h2 id="7-稳妥构造函数模式"><a href="#7-稳妥构造函数模式" class="headerlink" title="7 稳妥构造函数模式"></a>7 稳妥构造函数模式</h2><p>  Douglas Crockford 发明了JavaScript 中的稳妥对象这个概念。</p>
+<p>  所谓稳妥对象，指的就是，没有公共属性，而且其方法也不实用this 的对象</p>
+<p>  稳妥对象最适合在一些安全的环境中（这些环境会禁用this 和 new），或者在防止数据被其他应用程序改动时使用</p>
+<p>  稳妥构造函数遵循与寄生构造函数类似的模式，但有两点不同</p>
+<ol>
+<li>新创建的对象的实例方法不引用this</li>
+<li>不使用 new 操作符调用构造函数</li>
+</ol>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span>(<span class="params">name,age,job</span>)&#123;</span><br><span class="line">  <span class="keyword">var</span> o = <span class="keyword">new</span> <span class="title class_">Object</span>();</span><br><span class="line"></span><br><span class="line">  o.<span class="property">sayName</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>( name );</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> o;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p1 = <span class="title class_">Person</span>(<span class="string">&#x27;Tom&#x27;</span>,<span class="number">9</span>,<span class="string">&#x27;cat&#x27;</span>);</span><br><span class="line">p1.<span class="title function_">sayName</span>(); <span class="comment">// Tom</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>优点 除了暴露的方法（sayName）外，没有别的办法可以访问数据成员，这就是稳妥构造函数提供的安全性</li>
+<li>缺点 和寄生构造函数一样，没有办法使用instanceof 判断对象的类型</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/17/collections/JavaScript/JavaScript%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E4%B9%8B%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA/" data-id="clcanluj3001ibfoj355abfzy" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-collections/Cli/nodeCli命令行工具" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo-blog/2020/08/14/collections/Cli/nodeCli%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7/" class="article-date">
+  <time datetime="2020-08-14T16:00:00.000Z" itemprop="datePublished">2020-08-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/hexo-blog/2020/08/14/collections/Cli/nodeCli%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7/">简单开发一个完整的命令行工具</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h2><ol>
+<li><p>创建文件夹并生成<code>package.json</code></p>
+  <figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> nodeCli</span><br><span class="line"><span class="built_in">cd</span> nodeCli</span><br><span class="line">npm init -y</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装相关依赖</p>
+  <figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install commander git-clone shelljs</span><br></pre></td></tr></table></figure></li>
+</ol>
+<ul>
+<li>commander 开发命令工具包</li>
+<li>git-clone 克隆远程仓库</li>
+<li>shelljs 调用系统命令</li>
+</ul>
+<ol start="3">
+<li>编写简单命令测试</li>
+</ol>
+<ul>
+<li>新建index.js   <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env node</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;hello&#x27;</span>);</span><br></pre></td></tr></table></figure></li>
+<li>Package.json 添加命令  <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">&quot;bin&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;mycli&quot;</span><span class="punctuation">:</span> <span class="string">&quot;./index.js&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br></pre></td></tr></table></figure></li>
+<li>npm link 使<code>index.js</code>全局调用</li>
+<li>命令行运行 <code>mycli</code> ，输出<code>hello</code></li>
+</ul>
+<h2 id="模拟项目创建、运行、预览的命令"><a href="#模拟项目创建、运行、预览的命令" class="headerlink" title="模拟项目创建、运行、预览的命令"></a>模拟项目创建、运行、预览的命令</h2>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env node</span></span><br><span class="line"><span class="keyword">const</span> program = <span class="built_in">require</span>(<span class="string">&#x27;commander&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> shell = <span class="built_in">require</span>(<span class="string">&#x27;shelljs&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> download = <span class="built_in">require</span>(<span class="string">&#x27;git-clone&#x27;</span>);</span><br><span class="line"></span><br><span class="line">program.<span class="title function_">version</span>(<span class="string">&#x27;1.0.0&#x27;</span>);</span><br><span class="line">program</span><br><span class="line">  .<span class="title function_">command</span>(<span class="string">&#x27;new &lt;name&gt;&#x27;</span>)</span><br><span class="line">  .<span class="title function_">description</span>(<span class="string">&#x27;创建项目&#x27;</span>)</span><br><span class="line">  .<span class="title function_">action</span>(<span class="function"><span class="params">name</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`创建项目<span class="subst">$&#123;name&#125;</span>成功`</span>);</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">program</span><br><span class="line">  .<span class="title function_">command</span>(<span class="string">&#x27;run&#x27;</span>)</span><br><span class="line">  .<span class="title function_">description</span>(<span class="string">&#x27;运行项目&#x27;</span>)</span><br><span class="line">  .<span class="title function_">action</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;成功运行项目&#x27;</span>)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">program</span><br><span class="line">  .<span class="title function_">command</span>(<span class="string">&#x27;start&#x27;</span>)</span><br><span class="line">  .<span class="title function_">description</span>(<span class="string">&#x27;预览项目&#x27;</span>)</span><br><span class="line">  .<span class="title function_">action</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;预览项目...&#x27;</span>)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">program.<span class="title function_">parse</span>(process.<span class="property">argv</span>);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>  命令运行结果如下：<br>  <img src="/hexo-blog/hexo-blog/imgs/Cli/mycliTest.png" alt="命令运行测试"></p>
+<h2 id="完善项目创建、运行、预览的命令"><a href="#完善项目创建、运行、预览的命令" class="headerlink" title="完善项目创建、运行、预览的命令"></a>完善项目创建、运行、预览的命令</h2>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env node</span></span><br><span class="line"><span class="keyword">const</span> program = <span class="built_in">require</span>(<span class="string">&#x27;commander&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> shell = <span class="built_in">require</span>(<span class="string">&#x27;shelljs&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> download = <span class="built_in">require</span>(<span class="string">&#x27;git-clone&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> open = <span class="built_in">require</span>(<span class="string">&#x27;open&#x27;</span>); <span class="comment">// 打开预览地址</span></span><br><span class="line"><span class="keyword">const</span> &#123; spawn &#125; = <span class="built_in">require</span>(<span class="string">&#x27;child_process&#x27;</span>);</span><br><span class="line"></span><br><span class="line">program.<span class="title function_">version</span>(<span class="string">&#x27;1.0.0&#x27;</span>);</span><br><span class="line">program</span><br><span class="line">  .<span class="title function_">command</span>(<span class="string">&#x27;new &lt;name&gt;&#x27;</span>)</span><br><span class="line">  .<span class="title function_">description</span>(<span class="string">&#x27;创建项目&#x27;</span>)</span><br><span class="line">  .<span class="title function_">action</span>(<span class="function"><span class="params">name</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> giturl = <span class="string">&#x27;https://github.com/vuejs/vue-next-webpack-preview.git&#x27;</span>;</span><br><span class="line">    <span class="title function_">download</span>(giturl, <span class="string">`./<span class="subst">$&#123;name&#125;</span>`</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">      shell.<span class="title function_">rm</span>(<span class="string">&#x27;-rf&#x27;</span>, <span class="string">`<span class="subst">$&#123;name&#125;</span>/.git`</span>);</span><br><span class="line">      shell.<span class="title function_">cd</span>(name);</span><br><span class="line">      shell.<span class="title function_">exec</span>(<span class="string">&#x27;npm install&#x27;</span>);</span><br><span class="line"></span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`</span></span><br><span class="line"><span class="string">        创建项目<span class="subst">$&#123;name&#125;</span>成功</span></span><br><span class="line"><span class="string">        cd <span class="subst">$&#123;name&#125;</span> 进入项目</span></span><br><span class="line"><span class="string">        mycli run 启动项目</span></span><br><span class="line"><span class="string">        mycli start 预览项目</span></span><br><span class="line"><span class="string">      `</span>);</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">program</span><br><span class="line">  .<span class="title function_">command</span>(<span class="string">&#x27;run&#x27;</span>)</span><br><span class="line">  .<span class="title function_">description</span>(<span class="string">&#x27;运行项目&#x27;</span>)</span><br><span class="line">  .<span class="title function_">action</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// shell.exec(&#x27;npm run dev&#x27;)</span></span><br><span class="line">    <span class="comment">// let cp = spawn(&#x27;npm&#x27;, [&#x27;run&#x27;, &#x27;dev&#x27;]); // Error: spawn npm ENOENT</span></span><br><span class="line">    <span class="keyword">let</span> cp = <span class="title function_">spawn</span>(<span class="string">&#x27;npm.cmd&#x27;</span>, [<span class="string">&#x27;run&#x27;</span>, <span class="string">&#x27;dev&#x27;</span>]);</span><br><span class="line">    cp.<span class="property">stdout</span>.<span class="title function_">pipe</span>(process.<span class="property">stdout</span>);</span><br><span class="line">    cp.<span class="property">stdout</span>.<span class="title function_">pipe</span>(process.<span class="property">stderr</span>);</span><br><span class="line">    cp.<span class="title function_">on</span>(<span class="string">&#x27;close&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;成功运行项目&#x27;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">program</span><br><span class="line">  .<span class="title function_">command</span>(<span class="string">&#x27;start&#x27;</span>)</span><br><span class="line">  .<span class="title function_">description</span>(<span class="string">&#x27;预览项目&#x27;</span>)</span><br><span class="line">  .<span class="title function_">action</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="title function_">open</span>(<span class="string">&#x27;http://localhost:8080/&#x27;</span>)</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;预览项目...&#x27;</span>)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">program.<span class="title function_">parse</span>(process.<span class="property">argv</span>);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>mycli new test | 建立test 项目</li>
+<li>mycli run | 启动test 项目</li>
+<li>mycli start | 打开项目预览</li>
+</ul>
+<h2 id="备注"><a href="#备注" class="headerlink" title="备注"></a>备注</h2><ul>
+<li>Windows 下<code>spawn(&#39;npm&#39;, [&#39;run&#39;, &#39;dev&#39;])</code>命令报错，将<code>npm</code>改为<code>npm.cmd</code></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/14/collections/Cli/nodeCli%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7/" data-id="clcanluj1001ebfojezdo9e8c" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-collections/File/基于NodeJs大文件分片上传" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/hexo-blog/2020/08/10/collections/File/%E5%9F%BA%E4%BA%8ENodeJs%E5%A4%A7%E6%96%87%E4%BB%B6%E5%88%86%E7%89%87%E4%B8%8A%E4%BC%A0/" class="article-date">
@@ -121,7 +376,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/10/collections/File/%E5%9F%BA%E4%BA%8ENodeJs%E5%A4%A7%E6%96%87%E4%BB%B6%E5%88%86%E7%89%87%E4%B8%8A%E4%BC%A0/" data-id="clc0ovm9o000pdhorat0f5kuh" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/10/collections/File/%E5%9F%BA%E4%BA%8ENodeJs%E5%A4%A7%E6%96%87%E4%BB%B6%E5%88%86%E7%89%87%E4%B8%8A%E4%BC%A0/" data-id="clcanluig000nbfojeepchigi" class="article-share-link">分享</a>
       
       
     </footer>
@@ -189,7 +444,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/10/collections/JavaScript/%E5%8F%AF%E8%BF%AD%E4%BB%A3%E5%AF%B9%E8%B1%A1/" data-id="clc0ovmaf0023dhor4gtsf0zg" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/10/collections/JavaScript/%E5%8F%AF%E8%BF%AD%E4%BB%A3%E5%AF%B9%E8%B1%A1/" data-id="clcanluje0027bfojfjd159vv" class="article-share-link">分享</a>
       
       
     </footer>
@@ -296,7 +551,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/09/collections/JavaScript/for%20of%20%E5%92%8Cfor%20await%20of/" data-id="clc0ovma9001rdhor7gdqbca5" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/09/collections/JavaScript/for%20of%20%E5%92%8Cfor%20await%20of/" data-id="clcanluj8001vbfojhpf0enm4" class="article-share-link">分享</a>
       
       
     </footer>
@@ -340,7 +595,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/08/collections/JavaScript/JavaScript%E7%9A%84%E4%B8%B4%E6%97%B6%E5%8C%85%E8%A3%85%E5%AF%B9%E8%B1%A1/" data-id="clc0ovma7001jdhor6jr44b4x" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/08/collections/JavaScript/JavaScript%E7%9A%84%E4%B8%B4%E6%97%B6%E5%8C%85%E8%A3%85%E5%AF%B9%E8%B1%A1/" data-id="clcanluj5001nbfojairj6cxm" class="article-share-link">分享</a>
       
       
     </footer>
@@ -418,7 +673,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/08/collections/JavaScript/Symbol%E7%9A%84for()%E5%92%8CkeyFor()/" data-id="clc0ovma8001ndhor77em3kus" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/08/collections/JavaScript/Symbol%E7%9A%84for()%E5%92%8CkeyFor()/" data-id="clcanluj6001rbfojggf30lby" class="article-share-link">分享</a>
       
       
     </footer>
@@ -527,339 +782,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/04/collections/JavaScript/symbol/" data-id="clc0ovmab001xdhorhmsvdx2t" class="article-share-link">分享</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-collections/JavaScript/defineProperty" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/hexo-blog/2020/08/03/collections/JavaScript/defineProperty/" class="article-date">
-  <time datetime="2020-08-03T16:00:00.000Z" itemprop="datePublished">2020-08-04</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/hexo-blog/2020/08/03/collections/JavaScript/defineProperty/">defineProperty</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Object-defineProperty"><a href="#Object-defineProperty" class="headerlink" title="Object.defineProperty()"></a>Object.defineProperty()</h2><p>  <code>Object.defineProperty（）</code>方法会直接在一个对象上定义一个新属性，或者修改一个对象的现有属性，并返回此对象</p>
-<blockquote>
-<p>备注：应当直接在<code>object</code>构造器对象上调用此方法，而不是在任意一个<code>Object</code>类型的实例上调用</p>
-</blockquote>
-<h3 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a>Demo</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">const obj = &#123;&#125;;</span><br><span class="line">Object.defineProperty(obj,&#x27;prop&#x27;,&#123;</span><br><span class="line">  value: 66,</span><br><span class="line">  writable: false</span><br><span class="line">&#125;);</span><br><span class="line">obj.prop = 77; // 由于writable为false 严格模式下会报错</span><br><span class="line">console。log(obj.prop); // 66 </span><br></pre></td></tr></table></figure>
-
-<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><p>  <code>Object.defineProperty(obj, prop, descriptor)</code></p>
-<h3 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h3><ul>
-<li>obj<br>要定义属性的对象</li>
-<li>prop<br>要定义或修改属性的名称或<code>Symbol</code></li>
-<li>descriptor<br>要定义或修改的属性描述符</li>
-</ul>
-<h3 id="返回值"><a href="#返回值" class="headerlink" title="返回值"></a>返回值</h3><p>  被传递给函数的对象 obj</p>
-<h3 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h3><p>  该方法允许精准地添加或修改对象的属性。通过赋值操作添加的普通属性是可枚举的，在枚举对象属性时会被枚举到（<code>for...in</code> 或 <code>Object.keys</code> 方法 ），可以改变这些属性的值，也可以删除这些属性。允许修改默认的额外选项。默认情况下，添加的属性时不可修改的</p>
-<p>  对象里目前存在的属性描述符有两种主要形式：数据描述符和存取描述符。数据描述符是一个具有值的属性，该值是可写的，也可以是不可写的。存取描述符是由<code>getter函数</code>和<code>setter函数</code>所描述的属性。一个描述符只能是其中之一，不能同时是两者</p>
-<p>  这两种<code>描述符</code>都是对象，它们共享以下可选键值<br>    * configurable 默认为 false<br>      当且仅当该属性的<code>configurable</code>键值为<code>true</code>时，该属性的描述符才能够被改变，同时该属性也能从对应的对象上被删除<br>    * enumerable 默认为 false<br>      当且仅当改属性的<code>enumerable</code>键值为<code>true</code>时，该属性才会出现在对象的枚举属性中</p>
-<p>  数据描述符可选键<br>    * value 默认为 undefined<br>      该属性对应的值。可以是任何有效的JavaScript值<br>    * writable ，默认为 false<br>      当且仅当该属性的<code>writable</code>键值为<code>true</code>时，属性的值，也就是上面的<code>value</code>，才能被赋值运算符改变</p>
-<p>  存取描述符可选键<br>    * get 默认为 undefined<br>      属性的<code>·getter函数</code>，如果没有getter，则为undefined。<br>      当访问该属性时，会调用此函数，执行时不传入任何参数，但是会传入<code>this</code>对象（由于继承关系，这里的this并不一定是定义该属性的对象）<br>      该函数的返回值会被用作属性的值<br>    * set 默认为 undefined<br>      属性的<code>setter函数</code>，如果没有setter，则为undefined<br>      当属性被修改时，会调用此函数<br>      该方法会接受一个参数（也就是被赋予的新值），会传入赋值时的this对象</p>
-<p>  如果一个描述符不具有 value、writable、get 和 set 中的任意一个键，那么它将被认为是一个数据描述符。如果一个描述符同时拥有 value 或 writable 和 get 或 set 键，则会产生一个异常。</p>
-<p>  这些选项不一定是自身的属性，也要考虑继承来的属性。为了确认保留这些默认值，在设置之前，可能要冻结<code>Object.prototype</code>，明确指定所有的选项，或者通过<code>Object.create(null)</code>将<code>_proto_</code>属性指向<code>null</code></p>
-  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">// 使用 _proto_</span><br><span class="line">var obj = &#123;&#125;;</span><br><span class="line">var desc = Object.create(null); // 没有继承属性</span><br><span class="line">desc.value = &#x27;static&#x27;;</span><br><span class="line">Object.defineProperty(obj,&#x27;key&#x27;,desc);</span><br><span class="line"></span><br><span class="line">// 显式</span><br><span class="line">Object.defineProperty(obj,&#x27;key&#x27;,&#123;</span><br><span class="line">  enumerable: false,</span><br><span class="line">  configurable: false,</span><br><span class="line">  weritable: false,</span><br><span class="line">  value: &#x27;static&#x27;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">// 循环使用同一对象</span><br><span class="line">function withValue(value)&#123;</span><br><span class="line">  var d = withValue.d || (</span><br><span class="line">    withValue.d = &#123;</span><br><span class="line">      enumerable: false,</span><br><span class="line">      writable: false,</span><br><span class="line">      configurable: false,</span><br><span class="line">      value: null</span><br><span class="line">    &#125;</span><br><span class="line">  );</span><br><span class="line">  d.value = value;</span><br><span class="line">  return d;</span><br><span class="line">&#125;</span><br><span class="line">Object.defineProperty(obj,&#x27;key&#x27;,withValue(&#x27;static&#x27;));</span><br><span class="line"></span><br><span class="line">// 如果 freeze 可用, 防止后续代码添加或删除对象原型的属性</span><br><span class="line">// （value, get, set, enumerable, writable, configurable）</span><br><span class="line">(Object.freeze||Object)(Object.prototype); // 不能添加 修改 删除</span><br></pre></td></tr></table></figure>
-
-
-<hr>
-<p>属性描述符？<br>Symbol类型的特殊性？<br>定义key为Symbol ？</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/03/collections/JavaScript/defineProperty/" data-id="clc0ovma9001pdhor1jhcghnx" class="article-share-link">分享</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-collections/JavaScript/hasOwnProperty" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/hexo-blog/2020/08/02/collections/JavaScript/hasOwnProperty/" class="article-date">
-  <time datetime="2020-08-02T16:00:00.000Z" itemprop="datePublished">2020-08-03</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/hexo-blog/2020/08/02/collections/JavaScript/hasOwnProperty/">hasOwnProperty 和 getOwnPropertyDescriptor</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="一、-Object-prototype-hasOwnProperty"><a href="#一、-Object-prototype-hasOwnProperty" class="headerlink" title="一、 Object.prototype.hasOwnProperty()"></a>一、 Object.prototype.hasOwnProperty()</h2><p><code>hasOwnProperty()</code>方法会返回一个布尔值，指示对象自身属性中是否具有指定的属性（也就是，是否有指定的键）</p>
-<h3 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a>Demo</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">const object1 = &#123;&#125;;</span><br><span class="line">object1.property1 = 42;</span><br><span class="line"></span><br><span class="line">console.log(object1.hasOwnProperty(&#x27;property1&#x27;)); // true</span><br><span class="line">console.log(object1.hasOwnProperty(&#x27;toString&#x27;)); // false</span><br><span class="line">console.log(object1.hasOwnProperty(&#x27;hasOwnProperty&#x27;)); // false</span><br></pre></td></tr></table></figure>
-
-<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><p>  <code>obj.hasOwnProperty(prop)</code></p>
-<h3 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h3><p>  prop 要检测的属性的字符串形式标识的名称，或者Symbol</p>
-<h3 id="返回值"><a href="#返回值" class="headerlink" title="返回值"></a>返回值</h3><p>  用来判断某个对象是否含有指定的属性的布尔值</p>
-<h3 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h3><p>  所有继承了<code>Object</code>的对象都会继承到<code>hasOwnproperty</code>方法。<br>  这个方法可以用来检测一个对象是否含有特定的自身属性；<br>  和<code>in</code>运算符不同，该方法会忽略掉那些从原型链上继承到的属性 <code>&#39;toString&#39; in obj // true</code></p>
-<h3 id="备注"><a href="#备注" class="headerlink" title="备注"></a>备注</h3><p>  及时属性的值是<code>null</code>或<code>undefined</code>，只要属性存在，<code>hasOwnProperty</code>依旧会返回true<br>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">o = new Object();</span><br><span class="line">o.propOne = null;</span><br><span class="line">o.hasOwnProperty(&#x27;propOne&#x27;); // true</span><br><span class="line">o.propTwo = undefined;</span><br><span class="line">o.hasOwnproperty(&#x27;propTwo&#x27;); // true</span><br></pre></td></tr></table></figure></p>
-<h3 id="自身属性与继承属性"><a href="#自身属性与继承属性" class="headerlink" title="自身属性与继承属性"></a>自身属性与继承属性</h3>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">const o = new Object();</span><br><span class="line">o.prop = &#x27;exosts&#x27;;</span><br><span class="line">o.hasOwnProperty(&#x27;prop&#x27;); // true</span><br><span class="line">o.hasOwnProperty(&#x27;hasOwnProperty&#x27;); // false</span><br><span class="line">o.hasOwnProperty(&#x27;toString&#x27;); // false</span><br><span class="line">&#x27;hasOwnproperty&#x27; in o; // false</span><br><span class="line">&#x27;hasOwnProperty&#x27; in o; // true</span><br><span class="line">&#x27;toString&#x27; in o; // true</span><br></pre></td></tr></table></figure>
-<h3 id="遍历一个对象的所有自身属性"><a href="#遍历一个对象的所有自身属性" class="headerlink" title="遍历一个对象的所有自身属性"></a>遍历一个对象的所有自身属性</h3><p>  <code>for...in</code>循环只会遍历可枚举的属性，所以不应该基于这个循环中没有不可枚举的属性而得出<code>hasOwnProperty</code>是严格限制于可枚举项目的（如同 Object.getOwnPropertyNames()）<br>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var buz = &#123; fog: &#x27;stack&#x27;&#125;;</span><br><span class="line">for(var name in buz)&#123;</span><br><span class="line">  if(buz.hasOwnProperty(name))&#123;</span><br><span class="line">    console.log(&#x27;this is fog (&#x27;+name+&#x27;)for sure Value:&#x27;+ buz[name]);</span><br><span class="line">  &#125;else&#123;</span><br><span class="line">    console.log(name); // protptype 继承的一些属性</span><br><span class="line">    // MDN中表示 toString 也会被输出，实际测试中，只在通过 Object.prototype 赋值的属性会显示 Object.prototype.showMe=&quot;ok&quot;; </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h3 id="使用hasOwnProperty作为属性"><a href="#使用hasOwnProperty作为属性" class="headerlink" title="使用hasOwnProperty作为属性"></a>使用hasOwnProperty作为属性</h3><p>  JavaScript并没有保护<code>hasOwnProperty</code>这个属性名，因此，当某个对象可能自有一个占用该属性名的属性时，可以通过外部的<code>hasOwnProperty</code>获得正确的结果<br>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var foo = &#123;</span><br><span class="line">  hasOwnProperty: function() &#123;</span><br><span class="line">    return false;</span><br><span class="line">  &#125;,</span><br><span class="line">  bar: &#x27;hehe&#x27;</span><br><span class="line">&#125;;</span><br><span class="line">foo.hasOwnProperty(&#x27;bar&#x27;); // 始终返回 false</span><br><span class="line"></span><br><span class="line">// 1 直接使用原型链上真正的 hasOWnProperty 方法</span><br><span class="line">(&#123;&#125;).hasOwnProperty.call(foo,&#x27;bar&#x27;); // true</span><br><span class="line">// 2 也可以使用 Object 原型上的 hasOwnProperty 属性</span><br><span class="line">Object.prototype.hasOwnProperty.call(foo,&#x27;bar&#x27;); // true</span><br></pre></td></tr></table></figure></p>
-<h2 id="二、-Object-getOwnPropertyDescriptor"><a href="#二、-Object-getOwnPropertyDescriptor" class="headerlink" title="二、 Object.getOwnPropertyDescriptor()"></a>二、 Object.getOwnPropertyDescriptor()</h2><p>  <code>Object.getOwnPropertyDescriptor()</code>方法返回指定对象上一个自由属性对应的属性描述符。（自由属性指的是直接赋予该对象的属性，不需要从原型链上进行查找的属性）</p>
-<h3 id="Demo-1"><a href="#Demo-1" class="headerlink" title="Demo"></a>Demo</h3>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">const obj = &#123;</span><br><span class="line">  property:66</span><br><span class="line">&#125;;</span><br><span class="line">const descriptor = Object.getOwnPropertyDescriptor(obj,&#x27;property&#x27;);</span><br><span class="line">console.log(descriptor.configurable); // true</span><br><span class="line">console.log(descriptor.value); // 66</span><br></pre></td></tr></table></figure>
-
-<h3 id="语法-1"><a href="#语法-1" class="headerlink" title="语法"></a>语法</h3><p>  Object.getOwnPropertyDescriptor(obj,prop)</p>
-<h3 id="参数-1"><a href="#参数-1" class="headerlink" title="参数"></a>参数</h3><ul>
-<li>obj<br>需要查找的目标对象</li>
-<li>prop<br>目标对象内属性名称</li>
-</ul>
-<h3 id="返回值-1"><a href="#返回值-1" class="headerlink" title="返回值"></a>返回值</h3><p>  如果指定的属性存在于对象上，则返回其属性描述符对象（property descriptor）,否则返回 <code>undefined</code></p>
-<h3 id="描述-1"><a href="#描述-1" class="headerlink" title="描述"></a>描述</h3><p>  该方法允许对一个属性的描述进行检索<br>  在JavaScript中，属性又一个字符串类型的“名字”（name）和一个“属性描述符”（property descriptor）对象构成（Object.defineProperty）</p>
-<pre><code>一个属性描述符是一个记录，由下面属性当中的某些组成的：
-* value
-  该属性的值（仅针对数据属性描述符有效）
-* writable
-  当且仅当属性的值可以被改变时为true（仅针对数据属性描述符有效）
-* get 
-  获取该属性的访问器函数（getter），无则为 undefined
-* set 
-  获取该属性的设置器函数（setter），无则为 undefined
-* configurable
-  当且仅当指定对象的属性描述可以被改变或者属性可被删除时，为true
-* enumerable
-  当且仅当指定对象的属性可以被枚举时，为true
-</code></pre>
-<h2 id="React-中用来判断ref-和-key是否存在"><a href="#React-中用来判断ref-和-key是否存在" class="headerlink" title="React 中用来判断ref 和 key是否存在"></a>React 中用来判断ref 和 key是否存在</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">function hasValidRef(config) &#123;</span><br><span class="line">  if (__DEV__) &#123;</span><br><span class="line">    if (hasOwnProperty.call(config, &#x27;ref&#x27;)) &#123;</span><br><span class="line">      const getter = Object.getOwnPropertyDescriptor(config, &#x27;ref&#x27;).get;</span><br><span class="line">      if (getter &amp;&amp; getter.isReactWarning) &#123;</span><br><span class="line">        return false;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  return config.ref !== undefined;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function hasValidKey(config) &#123;</span><br><span class="line">  if (__DEV__) &#123;</span><br><span class="line">    if (hasOwnProperty.call(config, &#x27;key&#x27;)) &#123;</span><br><span class="line">      const getter = Object.getOwnPropertyDescriptor(config, &#x27;key&#x27;).get;</span><br><span class="line">      if (getter &amp;&amp; getter.isReactWarning) &#123;</span><br><span class="line">        return false;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  return config.key !== undefined;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>isReactWarning?<br>Object.defineProperty?<br>Object.getOwnPropertyNames?</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/02/collections/JavaScript/hasOwnProperty/" data-id="clc0ovmaa001tdhor330pcbnt" class="article-share-link">分享</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-collections/markdown" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/hexo-blog/2020/07/28/collections/markdown/" class="article-date">
-  <time datetime="2020-07-28T15:20:20.000Z" itemprop="datePublished">2020-07-28</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/hexo-blog/2020/07/28/collections/markdown/">MarkDown语法</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="MarkDown-语法"><a href="#MarkDown-语法" class="headerlink" title="MarkDown 语法"></a>MarkDown 语法</h1><h2 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 一级标题 `&lt;h1/&gt;`</span><br><span class="line">## 二级标题 `&lt;h2/&gt;</span><br><span class="line">...</span><br><span class="line">###### 六级标题 `&lt;h6/&gt;&#x27;</span><br></pre></td></tr></table></figure>
-<hr>
-<h1 id="一级标题-lt-h1-gt"><a href="#一级标题-lt-h1-gt" class="headerlink" title="一级标题 &lt;h1/&gt;"></a>一级标题 <code>&lt;h1/&gt;</code></h1><h2 id="二级标题-lt-h2-gt"><a href="#二级标题-lt-h2-gt" class="headerlink" title="二级标题 &lt;h2/&gt;"></a>二级标题 <code>&lt;h2/&gt;</code></h2><h6 id="六级标题-lt-h6-gt"><a href="#六级标题-lt-h6-gt" class="headerlink" title="六级标题 &lt;h6/&gt;"></a>六级标题 <code>&lt;h6/&gt;</code></h6><hr>
-<h2 id="强调"><a href="#强调" class="headerlink" title="强调"></a>强调</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">*看这里看这里！！！`&lt;em&gt;`斜体*</span><br><span class="line">_看这里看这里！！！`&lt;u&gt;`斜体+下划线_</span><br><span class="line">**看这里看这里！！！`&lt;strong&gt;`加粗**</span><br><span class="line">__看这里看这里！！！`&lt;stong&gt;`加粗+下划线__</span><br></pre></td></tr></table></figure>
-<hr>
-<h2 id="看这里看这里！！！-lt-em-gt-斜体看这里看这里！！！-lt-u-gt-斜体-下划线看这里看这里！！！-lt-strong-gt-加粗看这里看这里！！！-lt-stong-gt-加粗-下划线"><a href="#看这里看这里！！！-lt-em-gt-斜体看这里看这里！！！-lt-u-gt-斜体-下划线看这里看这里！！！-lt-strong-gt-加粗看这里看这里！！！-lt-stong-gt-加粗-下划线" class="headerlink" title="看这里看这里！！！&lt;em&gt;斜体看这里看这里！！！&lt;u&gt;斜体+下划线看这里看这里！！！&lt;strong&gt;加粗看这里看这里！！！&lt;stong&gt;加粗+下划线"></a><em>看这里看这里！！！<code>&lt;em&gt;</code>斜体</em><br><em>看这里看这里！！！<code>&lt;u&gt;</code>斜体+下划线</em><br><strong>看这里看这里！！！<code>&lt;strong&gt;</code>加粗</strong><br><strong>看这里看这里！！！<code>&lt;stong&gt;</code>加粗+下划线</strong></h2><h2 id="换行"><a href="#换行" class="headerlink" title="换行"></a>换行</h2><p>后面有四个空格<br>后面没有空格，直接回车<br>然后。。。好像没差</p>
-<h2 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h2><h3 id="1-无序列表"><a href="#1-无序列表" class="headerlink" title="1 无序列表"></a>1 无序列表</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">* 项目一 无序列表 `* + 空格键`</span><br><span class="line">* 项目二</span><br><span class="line">  * 项目二的子项目一 无序列表 `TAB + * + 空格键`</span><br><span class="line">  * 项目二的子项目二</span><br></pre></td></tr></table></figure>
-<hr>
-<ul>
-<li>项目一 无序列表 <code>* + 空格键</code></li>
-<li>项目二<ul>
-<li>项目二的子项目一 无序列表 <code>TAB + * + 空格键</code></li>
-<li>项目二的子项目二</li>
-</ul>
-</li>
-</ul>
-<hr>
-<h3 id="2-有序列表"><a href="#2-有序列表" class="headerlink" title="2 有序列表"></a>2 有序列表</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1. 项目一 有序列表 `数字 + . + 空格键`</span><br><span class="line">2. 项目二 </span><br><span class="line">3. 项目三</span><br><span class="line">    1. 项目三的子项目一 有序列表 `TAB + 数字 + . + 空格键`</span><br><span class="line">    2. 项目三的子项目二</span><br></pre></td></tr></table></figure>
-<hr>
-<ol>
-<li>项目一 有序列表 <code>数字 + . + 空格键</code></li>
-<li>项目二 </li>
-<li>项目三<ol>
-<li>项目三的子项目一 有序列表 <code>TAB + 数字 + . + 空格键</code></li>
-<li>项目三的子项目二</li>
-</ol>
-</li>
-</ol>
-<hr>
-<h3 id="3-任务列表"><a href="#3-任务列表" class="headerlink" title="3 任务列表"></a>3 任务列表</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- [ ] 任务一 未做任务 `- + 空格 + [ ]`</span><br><span class="line">- [x] 任务二 已做任务 `- + 空格 + [x]`</span><br></pre></td></tr></table></figure>
-<hr>
-<ul>
-<li><input disabled="" type="checkbox"> 任务一 未做 </li>
-<li><input checked="" disabled="" type="checkbox"> 任务二 已做</li>
-</ul>
-<hr>
-<h2 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">![GitHub set up](http://zh.mweb.im/asset/img/set-up-git.gif)</span><br><span class="line">格式: ![Alt Text](url)</span><br></pre></td></tr></table></figure>
-<hr>
-<h2 id=""><a href="#" class="headerlink" title=""></a><img src="http://zh.mweb.im/asset/img/set-up-git.gif" alt="GitHub set up"></h2><hr>
-<h2 id="-1"><a href="#-1" class="headerlink" title=""></a><img src="/hexo-blog/hexo-blog/imgs/img.png" alt="狗头"></h2><h3 id="大小-x2F-title"><a href="#大小-x2F-title" class="headerlink" title="大小&#x2F;title"></a>大小&#x2F;title</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">![GitHub set up](http://zh.mweb.im/asset/img/set-up-git.gif &quot;title&quot;)</span><br><span class="line">&lt;img src=&quot;http://zh.mweb.im/asset/img/set-up-git.gif&quot; width=&quot;140px&quot;&gt;</span><br></pre></td></tr></table></figure>
-<hr>
-<h2 id="-2"><a href="#-2" class="headerlink" title=""></a><img src="http://zh.mweb.im/asset/img/set-up-git.gif" alt="GitHub set up" title="title"><br><img src="http://zh.mweb.im/asset/img/set-up-git.gif" width="140px"></h2><h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">email &lt;example@example.com&gt;</span><br><span class="line">[GitHub](http://github.com)</span><br><span class="line">自动生成链接&lt;http://www.github.com/&gt;</span><br></pre></td></tr></table></figure>
-<hr>
-<h2 id="email-101-120-x61-109-112-x6c-101-64-x65-120-x61-x6d-x70-108-x65-x2e-x63-111-x6d-GitHub自动生成链接http-www-github-com"><a href="#email-101-120-x61-109-112-x6c-101-64-x65-120-x61-x6d-x70-108-x65-x2e-x63-111-x6d-GitHub自动生成链接http-www-github-com" class="headerlink" title="email &#101;&#120;&#x61;&#109;&#112;&#x6c;&#101;&#64;&#x65;&#120;&#x61;&#x6d;&#x70;&#108;&#x65;&#x2e;&#x63;&#111;&#x6d;GitHub自动生成链接http://www.github.com/"></a>email <a href="mailto:&#101;&#120;&#x61;&#109;&#112;&#x6c;&#101;&#64;&#x65;&#120;&#x61;&#x6d;&#x70;&#108;&#x65;&#x2e;&#x63;&#111;&#x6d;">&#101;&#120;&#x61;&#109;&#112;&#x6c;&#101;&#64;&#x65;&#120;&#x61;&#x6d;&#x70;&#108;&#x65;&#x2e;&#x63;&#111;&#x6d;</a><br><a target="_blank" rel="noopener" href="http://github.com/">GitHub</a><br>自动生成链接<a target="_blank" rel="noopener" href="http://www.github.com/">http://www.github.com/</a></h2><h2 id="区块引用"><a href="#区块引用" class="headerlink" title="区块引用"></a>区块引用</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">某某某说：</span><br><span class="line">&gt; 第一行引用</span><br><span class="line">&gt; 第二行引用文字</span><br></pre></td></tr></table></figure>
-<h2 id="这里的引用是居中放大的字体"><a href="#这里的引用是居中放大的字体" class="headerlink" title="这里的引用是居中放大的字体"></a>这里的引用是居中放大的字体</h2><h2 id="某某某说：-gt-第一行引用-gt-第二行引用文字"><a href="#某某某说：-gt-第一行引用-gt-第二行引用文字" class="headerlink" title="某某某说：&gt; 第一行引用&gt; 第二行引用文字"></a>某某某说：<br>&gt; 第一行引用<br>&gt; 第二行引用文字</h2><h2 id="行内代码"><a href="#行内代码" class="headerlink" title="行内代码"></a>行内代码</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">使用反引号包裹`like me` `code`</span><br><span class="line">反引号`中的``反引号`也会展示出来</span><br></pre></td></tr></table></figure>
-<hr>
-<h2 id="使用反引号包裹like-me-code反引号中的-反引号也会展示出来"><a href="#使用反引号包裹like-me-code反引号中的-反引号也会展示出来" class="headerlink" title="使用反引号包裹like me code反引号中的``反引号也会展示出来"></a>使用反引号包裹<code>like me</code> <code>code</code><br>反引号<code>中的``反引号</code>也会展示出来</h2><h2 id="多行或者一段代码"><a href="#多行或者一段代码" class="headerlink" title="多行或者一段代码"></a>多行或者一段代码</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// `x3 js</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">hello</span>(<span class="params"></span>)&#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;hello&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// `x3</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="顺序图或流程图"><a href="#顺序图或流程图" class="headerlink" title="顺序图或流程图"></a>顺序图或流程图</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">`x3 sequence</span><br><span class="line">张三-&gt;李四: 嘿，小四儿, 写博客了没?</span><br><span class="line">Note right of 李四: 李四愣了一下，说：</span><br><span class="line">李四--&gt;张三: 忙得吐血，哪有时间写。</span><br><span class="line">`x3</span><br><span class="line"></span><br><span class="line">`x3 flow</span><br><span class="line">st=&gt;start: 开始</span><br><span class="line">e=&gt;end: 结束</span><br><span class="line">op=&gt;operation: 我的操作</span><br><span class="line">cond=&gt;condition: 确认？</span><br><span class="line"></span><br><span class="line">st-&gt;op-&gt;cond</span><br><span class="line">cond(yes)-&gt;e</span><br><span class="line">cond(no)-&gt;op</span><br><span class="line">`x3</span><br></pre></td></tr></table></figure>
-<hr>
-<h2 id="-3"><a href="#-3" class="headerlink" title=""></a><img src="/hexo-blog/hexo-blog/imgs/flowchart.png" alt="markdown效果"></h2><h2 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">第一格表头 | 第二格表头</span><br><span class="line">--------- | -------------</span><br><span class="line">内容单元格 第一列第一格 | 内容单元格第二列第一格</span><br><span class="line">内容单元格 第一列第二格 多加文字 | 内容单元格第二列第二格</span><br></pre></td></tr></table></figure>
-<table>
-<thead>
-<tr>
-<th>第一格表头</th>
-<th>第二格表头</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>内容单元格 第一列第一格</td>
-<td>内容单元格第二列第一格</td>
-</tr>
-<tr>
-<td>内容单元格 第一列第二格 多加文字</td>
-<td>内容单元格第二列第二格</td>
-</tr>
-</tbody></table>
-<h2 id="删除线"><a href="#删除线" class="headerlink" title="删除线"></a>删除线</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~~~这是一些被删除的文字~~~</span><br></pre></td></tr></table></figure>
-<pre><code class="这是一些被删除的文字~~~">
-### 分隔线
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">***</span><br><span class="line">******</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
-
-***
-******
----
-</code></pre>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/07/28/collections/markdown/" data-id="clc0ovm990003dhor6a4ff6on" class="article-share-link">分享</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-hexo/init" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/hexo-blog/2020/07/26/hexo/init/" class="article-date">
-  <time datetime="2020-07-26T03:28:26.000Z" itemprop="datePublished">2020-07-26</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/hexo-blog/categories/hexo/">hexo</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/hexo-blog/2020/07/26/hexo/init/">Hexo博客搭建记录</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="–Hexo博客搭建，并使用GitHub-Pages发布"><a href="#–Hexo博客搭建，并使用GitHub-Pages发布" class="headerlink" title="–Hexo博客搭建，并使用GitHub Pages发布"></a>–Hexo博客搭建，并使用GitHub Pages发布</h1><h2 id="1-安装hexo"><a href="#1-安装hexo" class="headerlink" title="1.安装hexo"></a>1.安装hexo</h2><pre><code>&gt; npm install hexo -g
-</code></pre>
-<h2 id="2-创建项目文件"><a href="#2-创建项目文件" class="headerlink" title="2.创建项目文件"></a>2.创建项目文件</h2><h3 id="使用以下hexo命令，生成所需文件"><a href="#使用以下hexo命令，生成所需文件" class="headerlink" title="使用以下hexo命令，生成所需文件"></a>使用以下hexo命令，生成所需文件</h3><pre><code>&gt; hexo init &lt;floder&gt;
-&gt; cd &lt;floder&gt;
-&gt; npm install
-</code></pre>
-<h3 id="生成文件目录结构如下："><a href="#生成文件目录结构如下：" class="headerlink" title="生成文件目录结构如下："></a>生成文件目录结构如下：</h3><pre><code>.
-├── _config.yml
-├── package.json
-├── scaffolds
-├── source
-|   ├── _drafts
-|   └── _posts
-└── themes
-</code></pre>
-<h2 id="3-配置"><a href="#3-配置" class="headerlink" title="3.配置"></a>3.配置</h2><p>  <code>_config.yml</code> 中修改大部分的配置。</p>
-<h2 id="4-创建文章"><a href="#4-创建文章" class="headerlink" title="4.创建文章"></a>4.创建文章</h2><pre><code>&gt; hexo new [layout] &lt;title&gt;
-</code></pre>
-<p>  新建文章，如果没有指定<code>layout</code>，默认使用<code>——config.yml</code>中的<code>default_layout</code>,如果标题包含空格，需要使用引号括起来</p>
-<pre><code>&gt; hexo new &#39;带有 空格 的标题&#39;
-</code></pre>
-<p>  默认情况下，Hexo 会使用文章的标题来决定文章文件的路径。对于独立页面来说，Hexo 会创建一个以标题为名字的目录，并在目录中放置一个 <code>index.md</code> 文件。你可以使用 <code>--path</code> 参数来覆盖上述行为、自行决定文件的目录：</p>
-<pre><code>&gt; hexo new page --path about/me &quot;About me&quot;
-</code></pre>
-<p>  以上命令会创建一个 source&#x2F;about&#x2F;me.md 文件，同时 Front Matter 中的 title 为 “About me”<br>  注意！title 是必须指定的！如果你这么做并不能达到你的目的：</p>
-<pre><code>&gt; hexo new page --path about/me
-</code></pre>
-<p>  此时 Hexo 会创建 <code>source/_posts/about/me.md</code>，同时 <code>me.md</code> 的 Front Matter 中的 title 为 “page”。这是因为在上述命令中，hexo-cli 将 page 视为指定文章的标题、并采用默认的 layout。</p>
-<h2 id="5-生成静态文件"><a href="#5-生成静态文件" class="headerlink" title="5.生成静态文件"></a>5.生成静态文件</h2><pre><code>&gt; hexo generate
-&gt; hexo g  // 简写
-&gt; npm build  // script脚本定义
-</code></pre>
-<h2 id="6-使用-github-page发布"><a href="#6-使用-github-page发布" class="headerlink" title="6.使用 github page发布"></a>6.使用 github page发布</h2><ol>
-<li>新建一个 repository。如果你希望你的站点能通过 &lt;你的 GitHub 用户名&gt;.github.io 域名访问，你的 repository 应该直接命名为 &lt;你的 GitHub 用户名&gt;.github.io。</li>
-<li>将你的 Hexo 站点文件夹推送到 repository 中。默认情况下不应该 public 目录将不会被推送到 repository 中，你应该检查 .gitignore 文件中是否包含 public 一行，如果没有请加上。</li>
-<li>将 <a target="_blank" rel="noopener" href="https://github.com/marketplace/travis-ci">Travis CI</a> 添加到你的 <a target="_blank" rel="noopener" href="https://github.com/settings/profile">GitHub</a>  账户中。</li>
-<li>前往 GitHub 的 <a target="_blank" rel="noopener" href="https://github.com/settings/installations">Applications settings</a>，配置 Travis CI 权限，使其能够访问你的 repository。</li>
-<li>你应该会被重定向到 Travis CI 的页面。如果没有，请 <a target="_blank" rel="noopener" href="https://travis-ci.com/">手动前往</a>。</li>
-<li>在浏览器新建一个标签页，前往 <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/github-pages">GitHub 新建 Personal Access Token</a>，只勾选 repo 的权限并生成一个新的 Token。Token 生成后请复制并保存好。</li>
-<li>回到 Travis CI，前往你的 repository 的设置页面，在 <strong>Environment Variables</strong> 下新建一个环境变量，<strong>Name</strong> 为 <code>GH_TOKEN</code>，<strong>Value</strong> 为刚才你在 GitHub 生成的 <code>Token</code>。确保 <strong>DISPLAY VALUE IN BUILD LOG</strong> 保持 不被勾选 避免你的 Token 泄漏。点击 Add 保存。</li>
-<li>在你的 Hexo 站点文件夹中新建一个 <code>.travis.yml</code> 文件：  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">sudo: false</span><br><span class="line">language: node_js</span><br><span class="line">node_js:</span><br><span class="line">  - 10 # use nodejs v10 LTS</span><br><span class="line">cache: npm</span><br><span class="line">branches:</span><br><span class="line">  only:</span><br><span class="line">    - master # build master branch only</span><br><span class="line">script:</span><br><span class="line">  - hexo generate # generate static files</span><br><span class="line">deploy:</span><br><span class="line">  provider: pages</span><br><span class="line">  skip-cleanup: true</span><br><span class="line">  github-token: $GH_TOKEN</span><br><span class="line">  keep-history: true</span><br><span class="line">  on:</span><br><span class="line">    branch: master</span><br><span class="line">  local-dir: public</span><br></pre></td></tr></table></figure></li>
-<li>将 <code>.travis.yml</code> 推送到 repository 中。Travis CI 应该会自动开始运行，并将生成的文件推送到同一 repository 下的 <code>gh-pages</code> 分支下</li>
-<li>在 GitHub 中前往你的 repository 的设置页面，修改 GitHub Pages 的部署分支为 gh-pages。<br>  <code>当仓库名为&lt;你的 GitHub 用户名&gt;.github.io 时，只能使用master分支</code></li>
-<li>前往 https:&#x2F;&#x2F;&lt;你的 GitHub 用户名&gt;.github.io 查看你的站点是否可以访问。这可能需要一些时间。</li>
-</ol>
-<p>  <img src="http://zh.mweb.im/asset/img/set-up-git.gif" alt="GitHub set up"></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/07/26/hexo/init/" data-id="clc0ovm9b0005dhor7x4y6wg1" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/04/collections/JavaScript/symbol/" data-id="clcanlujb0021bfoj9jdnakah" class="article-share-link">分享</a>
       
       
     </footer>
@@ -873,7 +796,7 @@
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/hexo-blog/page/4/">&lt;&lt; 上一页</a><a class="page-number" href="/hexo-blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/hexo-blog/page/3/">3</a><a class="page-number" href="/hexo-blog/page/4/">4</a><span class="page-number current">5</span>
+    <a class="extend prev" rel="prev" href="/hexo-blog/page/4/">&lt;&lt; 上一页</a><a class="page-number" href="/hexo-blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/hexo-blog/page/3/">3</a><a class="page-number" href="/hexo-blog/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/hexo-blog/page/6/">6</a><a class="extend next" rel="next" href="/hexo-blog/page/6/">下一页 &gt;&gt;</a>
   </nav>
 
 </section>
@@ -884,7 +807,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/hexo-blog/categories/hexo/">hexo</a></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/hexo-blog/categories/gitlab/">gitlab</a></li><li class="category-list-item"><a class="category-list-link" href="/hexo-blog/categories/hexo/">hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/hexo-blog/categories/npm/">npm</a></li><li class="category-list-item"><a class="category-list-link" href="/hexo-blog/categories/windows/">windows</a></li></ul>
     </div>
   </div>
 
@@ -899,7 +822,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2021/07/">七月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2021/06/">六月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2021/05/">五月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2021/04/">四月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/12/">十二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/11/">十一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/10/">十月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/09/">九月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/07/">七月 2020</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2022/12/">十二月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2022/04/">四月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2021/07/">七月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2021/06/">六月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2021/05/">五月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2021/04/">四月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/12/">十二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/11/">十一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/10/">十月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/09/">九月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/07/">七月 2020</a></li></ul>
     </div>
   </div>
 
@@ -912,23 +835,23 @@
       <ul>
         
           <li>
+            <a href="/hexo-blog/2022/12/27/collections/Git/%E9%87%8D%E7%BD%AE%E8%87%AA%E5%BB%BAgitlab%E7%AE%A1%E7%90%86%E5%91%98%E8%B4%A6%E6%88%B7%E5%AF%86%E7%A0%81/">重置自建gitlab管理员账户密码</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2022/12/27/collections/Windows/windows%E5%BF%AB%E9%80%9F%E5%88%A0%E9%99%A4%E7%A2%8E%E7%89%87%E6%96%87%E4%BB%B6/">windows快速删除碎片文件</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2022/12/27/collections/Npm/%E5%9C%A8%E9%A1%B9%E7%9B%AE%E4%B8%AD%E6%8C%87%E5%AE%9Anpm%E6%BA%90/">在项目中指定npm源</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2022/04/10/collections/Npm/npm%20link%20%E7%9A%84%E4%BD%BF%E7%94%A8/">npm link 的使用</a>
+          </li>
+        
+          <li>
             <a href="/hexo-blog/2021/06/30/collections/Git/Git%20%E9%BB%98%E8%AE%A4%E5%88%86%E6%94%AF%E4%BF%AE%E6%94%B9/">Git 默认分支修改</a>
-          </li>
-        
-          <li>
-            <a href="/hexo-blog/2021/06/24/collections/Electron/Electron%20%E6%89%98%E7%9B%98%E9%97%AA%E7%83%81/">Electron 托盘闪烁</a>
-          </li>
-        
-          <li>
-            <a href="/hexo-blog/2021/06/23/collections/Electron/Electron%20%E6%9C%80%E5%B0%8F%E5%8C%96%E5%88%B0%E6%89%98%E7%9B%98/">Electron 最小化到托盘</a>
-          </li>
-        
-          <li>
-            <a href="/hexo-blog/2021/06/22/collections/Electron/Electron%20%E9%99%90%E5%88%B6%E5%8F%AA%E5%90%AF%E5%8A%A8%E4%B8%80%E4%B8%AA%E5%BA%94%E7%94%A8/">Electron 限制只启动一个应用</a>
-          </li>
-        
-          <li>
-            <a href="/hexo-blog/2021/06/20/collections/Koa/Koa%20%E6%90%AD%E5%BB%BAhttps%20%E7%8E%AF%E5%A2%83/">Koa 本地搭建 HTTPS 环境</a>
           </li>
         
       </ul>

@@ -67,6 +67,216 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-collections/Git/重置自建gitlab管理员账户密码" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo-blog/2022/12/27/collections/Git/%E9%87%8D%E7%BD%AE%E8%87%AA%E5%BB%BAgitlab%E7%AE%A1%E7%90%86%E5%91%98%E8%B4%A6%E6%88%B7%E5%AF%86%E7%A0%81/" class="article-date">
+  <time datetime="2022-12-27T05:40:00.000Z" itemprop="datePublished">2022-12-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/hexo-blog/categories/gitlab/">gitlab</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/hexo-blog/2022/12/27/collections/Git/%E9%87%8D%E7%BD%AE%E8%87%AA%E5%BB%BAgitlab%E7%AE%A1%E7%90%86%E5%91%98%E8%B4%A6%E6%88%B7%E5%AF%86%E7%A0%81/">重置自建gitlab管理员账户密码</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="重置密码"><a href="#重置密码" class="headerlink" title="重置密码"></a>重置密码</h2><ol>
+<li>重置 root 密码前，需先使用 root 用户登录到 gitlab 所在服务器，使用以下命令启动 Ruby on Rails 控制台</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gitlab-rails console -e production</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>等待控制台加载完毕，可使用邮件或用户名查找账号</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">user = User.where(id: 1).first</span><br><span class="line">user = User.find_by(email: &quot;admin@example.com&quot;)</span><br><span class="line">user = User.find_by(username: &quot;root&quot;)</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>通过命令修改密码</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">user.password = &#x27;new password&#x27;</span><br><span class="line">user.password_confirmation = &#x27;new password&#x27;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>确认两个密码一致后,保存更改</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">user.save</span><br></pre></td></tr></table></figure>
+
+<h2 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h2><p>使用新的密码登录 gitlab 页面</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2022/12/27/collections/Git/%E9%87%8D%E7%BD%AE%E8%87%AA%E5%BB%BAgitlab%E7%AE%A1%E7%90%86%E5%91%98%E8%B4%A6%E6%88%B7%E5%AF%86%E7%A0%81/" data-id="clcanluiw0017bfoj9wkk8mot" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-collections/Windows/windows快速删除碎片文件" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo-blog/2022/12/27/collections/Windows/windows%E5%BF%AB%E9%80%9F%E5%88%A0%E9%99%A4%E7%A2%8E%E7%89%87%E6%96%87%E4%BB%B6/" class="article-date">
+  <time datetime="2022-12-27T05:30:00.000Z" itemprop="datePublished">2022-12-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/hexo-blog/categories/windows/">windows</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/hexo-blog/2022/12/27/collections/Windows/windows%E5%BF%AB%E9%80%9F%E5%88%A0%E9%99%A4%E7%A2%8E%E7%89%87%E6%96%87%E4%BB%B6/">windows快速删除碎片文件</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>windows 正常删除大量碎片文件时，效率低下，可通过 cmd 命令快速完成删除</p>
+</blockquote>
+<ol>
+<li>打开 cmd 命令窗口</li>
+<li>使用命令删除指定文件夹</li>
+</ol>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">rmdir</span> 磁盘:\文件夹名称\ /s /q</span><br><span class="line"><span class="comment">@REM /s 表示删除该目录，及其下所有文件和目录</span></span><br><span class="line"><span class="comment">@REM /q 表示安静模式，删除时不需要确认</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2022/12/27/collections/Windows/windows%E5%BF%AB%E9%80%9F%E5%88%A0%E9%99%A4%E7%A2%8E%E7%89%87%E6%96%87%E4%BB%B6/" data-id="clcanluju0036bfojfq6c1duc" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-collections/Npm/在项目中指定npm源" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo-blog/2022/12/27/collections/Npm/%E5%9C%A8%E9%A1%B9%E7%9B%AE%E4%B8%AD%E6%8C%87%E5%AE%9Anpm%E6%BA%90/" class="article-date">
+  <time datetime="2022-12-27T05:00:00.000Z" itemprop="datePublished">2022-12-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/hexo-blog/categories/npm/">npm</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/hexo-blog/2022/12/27/collections/Npm/%E5%9C%A8%E9%A1%B9%E7%9B%AE%E4%B8%AD%E6%8C%87%E5%AE%9Anpm%E6%BA%90/">在项目中指定npm源</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="npmrc-文件配置"><a href="#npmrc-文件配置" class="headerlink" title=".npmrc 文件配置"></a>.npmrc 文件配置</h2><ol>
+<li>项目根目录下创建<code>.npmrc</code>文件</li>
+<li>编辑文件，输入<code>registry=&quot;目标源地址&quot;</code></li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">registry=&quot;https://registry.npmmirror.com/&quot;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>通过命令<code>npm config ls</code>查看当前项目的源地址</li>
+</ol>
+<h2 id="package-json-文件配置"><a href="#package-json-文件配置" class="headerlink" title="package.json 文件配置"></a>package.json 文件配置</h2><p>在 package.json 文件中，添加 publishConfig 属性，可以指定 npm 源发布仓库</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&quot;publishConfig&quot;: &#123;</span><br><span class="line">  &quot;registry&quot;: &quot;http://xxxxx/&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2022/12/27/collections/Npm/%E5%9C%A8%E9%A1%B9%E7%9B%AE%E4%B8%AD%E6%8C%87%E5%AE%9Anpm%E6%BA%90/" data-id="clcanlujn002rbfoj4lvg19tc" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-collections/Npm/npm link 的使用" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo-blog/2022/04/10/collections/Npm/npm%20link%20%E7%9A%84%E4%BD%BF%E7%94%A8/" class="article-date">
+  <time datetime="2022-04-10T07:30:00.000Z" itemprop="datePublished">2022-04-10</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/hexo-blog/categories/npm/">npm</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/hexo-blog/2022/04/10/collections/Npm/npm%20link%20%E7%9A%84%E4%BD%BF%E7%94%A8/">npm link 的使用</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="使用-npm-link-后，编译失败"><a href="#使用-npm-link-后，编译失败" class="headerlink" title="使用 npm link 后，编译失败"></a>使用 npm link 后，编译失败</h2><blockquote>
+<p>webpack 中。默认传给 loader 的是模块的绝对路径，需要修改这个配置<a target="_blank" rel="noopener" href="https://webpack.js.org/configuration/resolve/#resolvesymlinks">webpack 官方文档</a></p>
+</blockquote>
+<ul>
+<li><p>在 umi 项目中的配置</p>
+<figure class="highlight js"><figcaption><span>config.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="title function_">chainWebpack</span>(<span class="params">config</span>) &#123;</span><br><span class="line">    config.<span class="property">resolve</span>.<span class="title function_">symlinks</span>(<span class="literal">false</span>);</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// or (env dev)</span></span><br><span class="line">  <span class="attr">cssModulesExcludes</span>: [xxx],</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>webpack.config.js</p>
+<figure class="highlight js"><figcaption><span>webpack.config.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="comment">//...</span></span><br><span class="line">  <span class="attr">resolve</span>: &#123;</span><br><span class="line">    <span class="attr">symlinks</span>: <span class="literal">true</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2022/04/10/collections/Npm/npm%20link%20%E7%9A%84%E4%BD%BF%E7%94%A8/" data-id="clcanlujm002pbfoj3xu1abur" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-collections/Git/Git 默认分支修改" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/hexo-blog/2021/06/30/collections/Git/Git%20%E9%BB%98%E8%AE%A4%E5%88%86%E6%94%AF%E4%BF%AE%E6%94%B9/" class="article-date">
@@ -97,7 +307,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2021/06/30/collections/Git/Git%20%E9%BB%98%E8%AE%A4%E5%88%86%E6%94%AF%E4%BF%AE%E6%94%B9/" data-id="clc0ovm9v000xdhorcifbb2xl" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2021/06/30/collections/Git/Git%20%E9%BB%98%E8%AE%A4%E5%88%86%E6%94%AF%E4%BF%AE%E6%94%B9/" data-id="clcanluin000vbfojbbv8c7r8" class="article-share-link">分享</a>
       
       
     </footer>
@@ -136,7 +346,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2021/06/24/collections/Electron/Electron%20%E6%89%98%E7%9B%98%E9%97%AA%E7%83%81/" data-id="clc0ovm9j000gdhorft460xhi" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2021/06/24/collections/Electron/Electron%20%E6%89%98%E7%9B%98%E9%97%AA%E7%83%81/" data-id="clcanlui9000ebfoj00gac2so" class="article-share-link">分享</a>
       
       
     </footer>
@@ -177,7 +387,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2021/06/23/collections/Electron/Electron%20%E6%9C%80%E5%B0%8F%E5%8C%96%E5%88%B0%E6%89%98%E7%9B%98/" data-id="clc0ovm9k000idhor3fab63ye" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2021/06/23/collections/Electron/Electron%20%E6%9C%80%E5%B0%8F%E5%8C%96%E5%88%B0%E6%89%98%E7%9B%98/" data-id="clcanluib000gbfoj38p95dkd" class="article-share-link">分享</a>
       
       
     </footer>
@@ -215,7 +425,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2021/06/22/collections/Electron/Electron%20%E9%99%90%E5%88%B6%E5%8F%AA%E5%90%AF%E5%8A%A8%E4%B8%80%E4%B8%AA%E5%BA%94%E7%94%A8/" data-id="clc0ovm9m000ldhor6ie2a290" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2021/06/22/collections/Electron/Electron%20%E9%99%90%E5%88%B6%E5%8F%AA%E5%90%AF%E5%8A%A8%E4%B8%80%E4%B8%AA%E5%BA%94%E7%94%A8/" data-id="clcanluid000ibfoj7ygmft3j" class="article-share-link">分享</a>
       
       
     </footer>
@@ -278,7 +488,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2021/06/20/collections/Koa/Koa%20%E6%90%AD%E5%BB%BAhttps%20%E7%8E%AF%E5%A2%83/" data-id="clc0ovmaj002bdhor5j2phqr2" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2021/06/20/collections/Koa/Koa%20%E6%90%AD%E5%BB%BAhttps%20%E7%8E%AF%E5%A2%83/" data-id="clcanluji002fbfoj6bw4eo4w" class="article-share-link">分享</a>
       
       
     </footer>
@@ -316,270 +526,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2021/06/19/collections/Electron/Electron%20%E4%BB%BB%E5%8A%A1%E6%A0%8F%E8%8F%9C%E5%8D%95/" data-id="clc0ovm9h000edhor2m5n5lmc" class="article-share-link">分享</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-collections/Electron/Electron 项目搭建" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/hexo-blog/2021/06/18/collections/Electron/Electron%20%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/" class="article-date">
-  <time datetime="2021-06-18T12:56:00.000Z" itemprop="datePublished">2021-06-18</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/hexo-blog/2021/06/18/collections/Electron/Electron%20%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/">Electron 项目搭建</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h2><p>创建工程目录</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> my-electron-app &amp;&amp; <span class="built_in">cd</span> my-electron-app</span><br><span class="line">npm init</span><br></pre></td></tr></table></figure>
-
-<p>安装 electron</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev electron</span><br></pre></td></tr></table></figure>
-
-<p>添加启动脚本</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;scripts&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;start&quot;</span><span class="punctuation">:</span> <span class="string">&quot;electron .&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="运行主进程"><a href="#运行主进程" class="headerlink" title="运行主进程"></a>运行主进程</h2><p>任何 Electron 应用程序的入口都是 main 文件。 这个文件控制了主进程，它运行在一个完整的 Node.js 环境中，负责控制您应用的生命周期，显示原生界面，执行特殊操作并管理渲染器进程<br>执行期间，Electron 将依据应用中 package.json 配置下 main 字段中配置的值查找此文件，您应该已在应用脚手架步骤中配置。<br>要初始化这个 main 文件，需要在您项目的根目录下创建一个名为 main.js 的空文件。</p>
-<blockquote>
-<p>注意：如果您此时再次运行 start 命令，您的应用将不再抛出任何错误！ 然而，它不会做任何事因为我们还没有在 main.js 中添加任何代码。</p>
-</blockquote>
-<h2 id="创建页面"><a href="#创建页面" class="headerlink" title="创建页面"></a>创建页面</h2><figure class="highlight html"><figcaption><span>index.html</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;Content-Security-Policy&quot;</span> <span class="attr">content</span>=<span class="string">&quot;default-src &#x27;self&#x27;; script-src &#x27;self&#x27;&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;X-Content-Security-Policy&quot;</span> <span class="attr">content</span>=<span class="string">&quot;default-src &#x27;self&#x27;; script-src &#x27;self&#x27;&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Hello World!<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello World!<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    We are using Node.js <span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">&quot;node-version&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span>,</span><br><span class="line">    Chromium <span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">&quot;chrome-version&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span>,</span><br><span class="line">    and Electron <span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">&quot;electron-version&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span>.</span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="在窗口中打开页面"><a href="#在窗口中打开页面" class="headerlink" title="在窗口中打开页面"></a>在窗口中打开页面</h2><ol>
-<li>引入electron 模块</li>
-</ol>
-<ul>
-<li>app 控制应用程序的事件生命周期</li>
-<li>BrowserWindow 创建和管理应用程序的窗口<figure class="highlight js"><figcaption><span>main.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; app, <span class="title class_">BrowserWindow</span> &#125; = <span class="built_in">require</span>(<span class="string">&#x27;electron&#x27;</span>)</span><br></pre></td></tr></table></figure></li>
-</ul>
-<ol start="2">
-<li>添加createWindow() 方法 将index.html 加载到窗口实例中<figure class="highlight js"><figcaption><span>main.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">createWindow</span> () &#123;</span><br><span class="line">  <span class="keyword">const</span> win = <span class="keyword">new</span> <span class="title class_">BrowserWindow</span>(&#123;</span><br><span class="line">    <span class="attr">width</span>: <span class="number">800</span>,</span><br><span class="line">    <span class="attr">height</span>: <span class="number">600</span></span><br><span class="line">  &#125;)</span><br><span class="line">  win.<span class="title function_">loadFile</span>(<span class="string">&#x27;index.html&#x27;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li>调用createWindow() 打开新窗口<figure class="highlight js"><figcaption><span>main.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">app.<span class="title function_">whenReady</span>().<span class="title function_">then</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="title function_">createWindow</span>()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>在 Electron 中，只有在 app 模块的 ready 事件被激发后才能创建浏览器窗口。 您可以通过使用 app.whenReady() API来监听此事件。 在whenReady()成功后调用createWindow()。</p>
-</blockquote>
-</li>
-</ol>
-<h2 id="管理窗口的生命周期"><a href="#管理窗口的生命周期" class="headerlink" title="管理窗口的生命周期"></a>管理窗口的生命周期</h2><ul>
-<li>关闭所有窗口时 退出应用<figure class="highlight js"><figcaption><span>main.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">app.<span class="title function_">on</span>(<span class="string">&#x27;window-all-closed&#x27;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (process.<span class="property">platform</span> !== <span class="string">&#x27;darwin&#x27;</span>) app.<span class="title function_">quit</span>()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
-<li>如果没有窗口打开则打开一个新窗口<figure class="highlight js"><figcaption><span>main.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">app.<span class="title function_">whenReady</span>().<span class="title function_">then</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="title function_">createWindow</span>()</span><br><span class="line"></span><br><span class="line">  app.<span class="title function_">on</span>(<span class="string">&#x27;activate&#x27;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="title class_">BrowserWindow</span>.<span class="title function_">getAllWindows</span>().<span class="property">length</span> === <span class="number">0</span>) <span class="title function_">createWindow</span>()</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="通过预加载脚本从渲染器访问Node-js"><a href="#通过预加载脚本从渲染器访问Node-js" class="headerlink" title="通过预加载脚本从渲染器访问Node.js"></a>通过预加载脚本从渲染器访问Node.js</h2><figure class="highlight js"><figcaption><span>preload.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">window</span>.<span class="title function_">addEventListener</span>(<span class="string">&#x27;DOMContentLoaded&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">replaceText</span> = (<span class="params">selector, text</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> element = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(selector)</span><br><span class="line">    <span class="keyword">if</span> (element) element.<span class="property">innerText</span> = text</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">const</span> dependency <span class="keyword">of</span> [<span class="string">&#x27;chrome&#x27;</span>, <span class="string">&#x27;node&#x27;</span>, <span class="string">&#x27;electron&#x27;</span>]) &#123;</span><br><span class="line">    <span class="title function_">replaceText</span>(<span class="string">`<span class="subst">$&#123;dependency&#125;</span>-version`</span>, process.<span class="property">versions</span>[dependency])</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<figure class="highlight js"><figcaption><span>main.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在文件头部引入 Node.js 中的 path 模块</span></span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 修改现有的 createWindow() 函数</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">createWindow</span> () &#123;</span><br><span class="line">  <span class="keyword">const</span> win = <span class="keyword">new</span> <span class="title class_">BrowserWindow</span>(&#123;</span><br><span class="line">    <span class="attr">width</span>: <span class="number">800</span>,</span><br><span class="line">    <span class="attr">height</span>: <span class="number">600</span>,</span><br><span class="line">    <span class="attr">webPreferences</span>: &#123;</span><br><span class="line">      <span class="attr">preload</span>: path.<span class="title function_">join</span>(__dirname, <span class="string">&#x27;preload.js&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  win.<span class="title function_">loadFile</span>(<span class="string">&#x27;index.html&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>__dirname 字符串指向当前正在执行脚本的路径 (本例中，你的项目的根文件夹)。</li>
-<li>path.join API 将多个路径段联结在一起，创建一个跨平台的组合路径字符串。</li>
-</ul>
-<h2 id="为页面添加脚本"><a href="#为页面添加脚本" class="headerlink" title="为页面添加脚本"></a>为页面添加脚本</h2><figure class="highlight html"><figcaption><span>index.html</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;./renderer.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="打包发布"><a href="#打包发布" class="headerlink" title="打包发布"></a>打包发布</h2><ol>
-<li><p>将 Electron Forge 添加到您应用的开发依赖中，并使用其”import”命令设置 Forge 的脚手架：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev @electron-forge/cli</span><br><span class="line">npx electron-forge import</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用Forge 的make 命令来创建可发布的应用</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run make</span><br></pre></td></tr></table></figure></li>
-</ol>
-<h2 id=""><a href="#" class="headerlink" title=""></a></h2>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2021/06/18/collections/Electron/Electron%20%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/" data-id="clc0ovm9n000ndhorgtk6eozt" class="article-share-link">分享</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-collections/Windows/Xcopy使用详解" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/hexo-blog/2021/05/09/collections/Windows/Xcopy%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/" class="article-date">
-  <time datetime="2021-05-09T15:31:00.000Z" itemprop="datePublished">2021-05-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/hexo-blog/2021/05/09/collections/Windows/Xcopy%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/">Xcopy使用详解</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="什么是-xcopy"><a href="#什么是-xcopy" class="headerlink" title="什么是 xcopy"></a>什么是 xcopy</h2><p>XCOPY 是 COPY 的扩展，可以把指定的目录连文件和目录结构一并拷贝，但不能拷贝系统文件；使用时源盘符、源目标路径名、源文件名至少指定一个；选用&#x2F;S 时对源目录下及其子目录下的所有文件进行 COPY。除非指定&#x2F;E 参数，否则&#x2F;S 不会拷贝空目录，若不指定&#x2F;S 参数，则 XCOPY 只拷贝源目录本身的文件，而不涉及其下的子目录；选用&#x2F;V 参数时，对拷贝的扇区都进行较验，但速度会降低。</p>
-<h2 id="xcopy-用法"><a href="#xcopy-用法" class="headerlink" title="xcopy 用法"></a>xcopy 用法</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">C:\&gt;xcopy /?</span><br><span class="line">复制文件和目录树。</span><br><span class="line"></span><br><span class="line">XCOPY source [destination] [/A | /M] [/D[:date]] [/P] [/S [/E]] [/V] [/W]</span><br><span class="line">                           [/C] [/I] [/Q] [/F] [/L] [/G] [/H] [/R] [/T] [/U]</span><br><span class="line">                           [/K] [/N] [/O] [/X] [/Y] [/-Y] [/Z]</span><br><span class="line">                           [/EXCLUDE:file1[+file2][+file3]...]</span><br><span class="line"></span><br><span class="line">  source       指定要复制的文件。</span><br><span class="line">  destination  指定新文件的位置和/或名称。</span><br><span class="line">  /A           只复制有存档属性集的文件，</span><br><span class="line">               但不改变属性。</span><br><span class="line">  /M           只复制有存档属性集的文件，</span><br><span class="line">               并关闭存档属性。</span><br><span class="line">  /D:m-d-y     复制在指定日期或指定日期以后更改的文件。</span><br><span class="line">               如果没有提供日期，只复制那些源时间</span><br><span class="line">               比目标时间新的文件。</span><br><span class="line">  /EXCLUDE:file1[+file2][+file3]...</span><br><span class="line">               指定含有字符串的文件列表。每一个字符串</span><br><span class="line">               必须在文件的单独行中。如果有任何</span><br><span class="line">               字符串与要被复制的文件的绝对路径</span><br><span class="line">               相符，那个文件将不会得到复制。</span><br><span class="line">               例如，指定如 \obj\ 或 .obj 的字符串会排除</span><br><span class="line">               目录 obj 下面的所有文件或带有</span><br><span class="line">               .obj 扩展名的文件。</span><br><span class="line">  /P           创建每个目标文件前提示。</span><br><span class="line">  /S           复制目录和子目录，除了空的。</span><br><span class="line">  /E           复制目录和子目录，包括空的。</span><br><span class="line">               与 /S /E 相同。可以用来修改 /T。</span><br><span class="line">  /V           验证每个新文件。</span><br><span class="line">  /W           提示您在复制前按键。</span><br><span class="line">  /C           即使有错误，也继续复制。</span><br><span class="line">  /I           如果目标不存在，又在复制一个以上的文件，</span><br><span class="line">               则假定目标一定是一个目录。</span><br><span class="line">  /Q           复制时不显示文件名。</span><br><span class="line">  /F           复制时显示完整的源和目标文件名。</span><br><span class="line">  /L           显示要复制的文件。</span><br><span class="line">  /G           允许将没有经过加密的文件复制到</span><br><span class="line">               不支持加密的目标。</span><br><span class="line">  /H           也复制隐藏和系统文件。</span><br><span class="line">  /R           覆盖只读文件。</span><br><span class="line">  /T           创建目录结构，但不复制文件。</span><br><span class="line">               不包括空目录或子目录。/T /E 包括</span><br><span class="line">               空目录和子目录。</span><br><span class="line">  /U           只复制已经存在于目标中的文件。</span><br><span class="line">  /K           复制属性。一般的 Xcopy 会重置只读属性。</span><br><span class="line">  /N           用生成的短名复制。</span><br><span class="line">  /O           复制文件所有权和 ACL 信息。</span><br><span class="line">  /X           复制文件审核设置(隐含 /O)。</span><br><span class="line">  /Y           复制文件审核设置(隐含 /O)。</span><br><span class="line">               现存目标文件。</span><br><span class="line">  /-Y          导致提示以确认改写一个</span><br><span class="line">               现存目标文件。</span><br><span class="line">  /Z            用重新启动模式复制网络文件。</span><br></pre></td></tr></table></figure>
-
-<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><ul>
-<li><p>D盘下所有文件和子目录(包括空的目录) 复制到 E盘</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash"> /S           复制目录和子目录，除了空的。</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"> /E           复制目录和子目录，包括空的。</span></span><br><span class="line">xcopy d: e: /s /e</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>D盘下所有文件和子目录(包括空的目录、系统文件、隐藏文件) 复制到E盘</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash"> /S           复制目录和子目录，除了空的。</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"> /E           复制目录和子目录，包括空的。</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">/H           也复制隐藏和系统文件。</span></span><br><span class="line">xcopy d: e: /s /e /h</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>指定文件下所有文件和目录 复制到另一个文件夹下</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash"> /E           复制目录和子目录，包括空的。</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"> /I           如果目标不存在，又在复制一个以上的文件，则假定目标一定是一个目录。</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"> /Y           复制文件审核设置(隐含 /O)。</span></span><br><span class="line"></span><br><span class="line">xcopy H:\devpm\wms-view\dist H:\devTool\nginx-1.16.1\html\wms-view\dist /E /I /y</span><br></pre></td></tr></table></figure></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2021/05/09/collections/Windows/Xcopy%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/" data-id="clc0ovmap002tdhore9783wmg" class="article-share-link">分享</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-collections/Git/git log 使用及格式化参数" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/hexo-blog/2021/04/07/collections/Git/git%20log%20%E4%BD%BF%E7%94%A8%E5%8F%8A%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%8F%82%E6%95%B0/" class="article-date">
-  <time datetime="2021-04-07T15:23:00.000Z" itemprop="datePublished">2021-04-07</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/hexo-blog/2021/04/07/collections/Git/git%20log%20%E4%BD%BF%E7%94%A8%E5%8F%8A%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%8F%82%E6%95%B0/">git log 使用及格式化参数</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="1-参数说明"><a href="#1-参数说明" class="headerlink" title="1. 参数说明"></a>1. 参数说明</h2><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">-p	按补丁格式显示每个更新之间的差异</span><br><span class="line">--pretty 内容格式化</span><br><span class="line">--date 日期格式化</span><br><span class="line">--stat	显示每次更新的文件修改统计信息</span><br><span class="line">--shortstat	只显示 --stat 中最后的行数修改添加移除统计</span><br><span class="line">--name-only	仅显示已修改的文件清单</span><br><span class="line">--name-status	显示新增、修改、删除的文件清单</span><br><span class="line">--abbrev-commit	仅显示 SHA<span class="number">-1</span> 的前<span class="number">9</span>个字符，而非所有的 <span class="number">40</span> 个字符</span><br><span class="line">--relative-date	使用较短的相对时间显示（比如，“<span class="number">2</span> days ago”）</span><br><span class="line">--graph	显示 ASCII 图形表示的分支合并历史</span><br><span class="line">--since/after 显示提交比指定日期更新</span><br><span class="line">--until/before 显示早于特定日期的提交</span><br><span class="line">	&gt;git log --since=<span class="number">2.</span>weeks</span><br><span class="line">	&gt;git log --after=<span class="string">&quot;2020-01-01&quot;</span></span><br><span class="line">	&gt;git log --since ==<span class="number">2019</span><span class="number">-12</span><span class="number">-01</span> --until=<span class="number">2020</span><span class="number">-01</span><span class="number">-01</span></span><br><span class="line">--author 作者</span><br><span class="line">--committer 提交者</span><br><span class="line">--grep 筛选关键字</span><br><span class="line">--grep-reflog 正则筛选</span><br><span class="line">	&gt;git log --grep=<span class="string">&quot;xxx&quot;</span> -i  </span><br><span class="line">	-i 忽略大小写</span><br><span class="line">	-E 扩展正则表达式</span><br><span class="line">	-F 将限制模式视为固定的字符串</span><br><span class="line">	-P 将限制模式视为与Perl兼容的正则表达式</span><br><span class="line"></span><br><span class="line"><span class="number">-20</span> 最近二十次提交记录，无则表示导出所有记录到log.txt</span><br></pre></td></tr></table></figure>
-
-<h3 id="1-1-pretty格式说明"><a href="#1-1-pretty格式说明" class="headerlink" title="1.1 pretty格式说明"></a>1.1 pretty格式说明</h3><p>默认格式，固定格式，输出不友好，时间的格式也不符合我们的阅读习惯<br><code>使用 &gt; git log</code></p>
-<h4 id="1-1-1-简单格式"><a href="#1-1-1-简单格式" class="headerlink" title="1.1.1 简单格式"></a>1.1.1 简单格式</h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git log --pretty=oneline 一行格式（SHA<span class="number">-1</span>+提交信息）</span><br><span class="line">git log --pretty=short 短格式（SHA<span class="number">-1</span>+作者+日期+提交信息）</span><br><span class="line">git log --pretty=full 长格式（SHA<span class="number">-1</span>+作者+提交者+提交日期+提交信息）</span><br><span class="line">git log --pretty=fuller 长格式（SHA<span class="number">-1</span>+作者+作者提交日期+提交者+提交者提交日期+提交信息）</span><br></pre></td></tr></table></figure>
-
-<h4 id="1-1-2-格式化格式参数"><a href="#1-1-2-格式化格式参数" class="headerlink" title="1.1.2 格式化格式参数"></a>1.1.2 格式化格式参数</h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">%H	提交对象（commit）的完整哈希字串</span><br><span class="line">%h	提交对象的简短哈希字串</span><br><span class="line">%T	树对象（tree）的完整哈希字串</span><br><span class="line">%t	树对象的简短哈希字串</span><br><span class="line">%P	父对象（parent）的完整哈希字串</span><br><span class="line">%p	父对象的简短哈希字串</span><br><span class="line">%an	作者（author）的名字</span><br><span class="line">%ae	作者的电子邮件地址</span><br><span class="line">%ad	作者修订日期（可以用 -date= 选项定制格式）</span><br><span class="line">%ar	作者修订日期，按多久以前的方式显示</span><br><span class="line">%cn	提交者(committer)的名字</span><br><span class="line">%ce	提交者的电子邮件地址</span><br><span class="line">%cd	提交日期</span><br><span class="line">%cr	提交日期，按多久以前的方式显示</span><br><span class="line">%s	提交说明</span><br></pre></td></tr></table></figure>
-
-<h3 id="1-2-date格式说明"><a href="#1-2-date格式说明" class="headerlink" title="1.2 date格式说明"></a>1.2 date格式说明</h3><h4 id="1-2-1-小写格式："><a href="#1-2-1-小写格式：" class="headerlink" title="1.2.1 小写格式："></a>1.2.1 小写格式：</h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">- %a 星期（缩写）：Sat</span><br><span class="line">- %b 月份（缩写）：Apri</span><br><span class="line">- %c 格式化输出日期时间 月/日/年 时<span class="punctuation">:</span>分<span class="punctuation">:</span>秒：<span class="number">04</span>/<span class="number">25</span>/<span class="number">20</span> <span class="number">18</span><span class="punctuation">:</span><span class="number">21</span><span class="punctuation">:</span><span class="number">01</span></span><br><span class="line">- %d 日期：<span class="number">25</span></span><br><span class="line">- %j 一年的第几天：<span class="number">116</span></span><br><span class="line">- %m 月份数字：<span class="number">04</span></span><br><span class="line">- %p 上下午：AM/PM</span><br><span class="line">- %w 星期几（<span class="number">0</span><span class="number">-6</span>）：<span class="number">6</span></span><br><span class="line">- %x 格式化输出短日期：<span class="number">04</span>/<span class="number">25</span>/<span class="number">20</span></span><br><span class="line">- %y 年份：<span class="number">20</span></span><br><span class="line">- %z 时区：+<span class="number">0800</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="1-2-2大写格式："><a href="#1-2-2大写格式：" class="headerlink" title="1.2.2大写格式："></a>1.2.2大写格式：</h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">- %A 星期（全写）：Saturday</span><br><span class="line">- %B 月份（全写）：April</span><br><span class="line">- %H <span class="number">24</span>小时制：<span class="number">18</span></span><br><span class="line">- %I <span class="number">12</span>小时制：<span class="number">06</span></span><br><span class="line">- %M 分钟：<span class="number">21</span></span><br><span class="line">- %S 秒：<span class="number">01</span></span><br><span class="line">- %U 一年的第几周（星期日作为每周的第一天）：<span class="number">16</span></span><br><span class="line">- %W 一年的第几周（星期一作为每周的第一天）：<span class="number">16</span></span><br><span class="line">- %X 格式化输出短时间：<span class="number">18</span><span class="punctuation">:</span><span class="number">21</span><span class="punctuation">:</span><span class="number">01</span></span><br><span class="line">- %Y 年份：<span class="number">2020</span></span><br><span class="line">- %Z 时区：+<span class="number">0800</span></span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2021/04/07/collections/Git/git%20log%20%E4%BD%BF%E7%94%A8%E5%8F%8A%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%8F%82%E6%95%B0/" data-id="clc0ovm9y0013dhor867451oz" class="article-share-link">分享</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-collections/JavaScript/ECMAScript2021的几个新特性" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/hexo-blog/2020/12/12/collections/JavaScript/ECMAScript2021%E7%9A%84%E5%87%A0%E4%B8%AA%E6%96%B0%E7%89%B9%E6%80%A7/" class="article-date">
-  <time datetime="2020-12-12T16:00:00.000Z" itemprop="datePublished">2020-12-13</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/hexo-blog/2020/12/12/collections/JavaScript/ECMAScript2021%E7%9A%84%E5%87%A0%E4%B8%AA%E6%96%B0%E7%89%B9%E6%80%A7/">ECMAScript2021的几个新特性</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="1-String-prototype-replaceAll"><a href="#1-String-prototype-replaceAll" class="headerlink" title="1. String.prototype.replaceAll"></a>1. String.prototype.replaceAll</h2><p><a target="_blank" rel="noopener" href="https://github.com/tc39/proposal-string-replaceall">String.prototype.replaceAll</a></p>
-<p>先来回顾下<code>String.prototype.replace</code> 的用法：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> str = <span class="string">&#x27;Hello World! Hello World!&#x27;</span>;</span><br><span class="line"><span class="keyword">const</span> newStr = str.<span class="title function_">replace</span>(<span class="string">&#x27;World&#x27;</span>,<span class="string">&#x27;XiaoMing&#x27;</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(newStr);<span class="comment">// Hello XiaoMing! Hello World!</span></span><br></pre></td></tr></table></figure>
-<p>这种写法，只有第一个匹配的会被替换，想要做到全部替换就需要使用正则表达式</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> str = <span class="string">&#x27;Hello World! Hello World!&#x27;</span>;</span><br><span class="line"><span class="keyword">const</span> newStr = str.<span class="title function_">replace</span>(<span class="regexp">/World/g</span>,<span class="string">&#x27;XiaoMing&#x27;</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(newStr);<span class="comment">// Hello XiaoMing! Hello XiaoMing!</span></span><br></pre></td></tr></table></figure>
-<p>不过，在使用正则的时候，如果需求是匹配<code>+</code>等符号时，还需要进行转义，如：<code>/\+/g</code><br>也许你会想到另一种方案：使用<code>split + join</code> 的方式<br>但这样做也是有性能开销的，加上这种操作十分常见，于是就诞生了<code>String.prototype.replaceAll</code> 这个API，简化这个操作</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> str = <span class="string">&#x27;Hello World! Hello World!&#x27;</span>;</span><br><span class="line"><span class="keyword">const</span> newStr = str.<span class="title function_">replaceAll</span>(<span class="string">&#x27;World&#x27;</span>,<span class="string">&#x27;XiaoMing&#x27;</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(newStr);<span class="comment">// Hello XiaoMing! Hello XiaoMing!</span></span><br></pre></td></tr></table></figure>
-<p><code>String.prototype.replace(searchValue, replaceValue)</code></p>
-<ul>
-<li>注意：当searchValue 是非全局正则表达式时，replaceAll 会引发异常，如果searchValue 是全局正则表达式时，replaceAll 与replace 行为是一致的</li>
-</ul>
-<h2 id="2-Promise-any"><a href="#2-Promise-any" class="headerlink" title="2. Promise.any"></a>2. Promise.any</h2><p><a target="_blank" rel="noopener" href="https://github.com/tc39/proposal-promise-any">Promise.any</a></p>
-<ul>
-<li><p>Promise.all (ES2015)只有当传入的每个Promise 实例的状态都变成fulfilled 时，才返回fulfilled，只要有一个被reject，返回的状态就变成rejected</p>
-</li>
-<li><p>Promise.race (ES2015)当传入的Promise 实例中有一个率先改变状态，那么就返回该状态，也就是返回最先改变的Promise 实例的返回值</p>
-</li>
-<li><p>Promise.allSettled (ES2020)只有等到所有传入的Promise 实例都返回结果，不管是fulfilled 还是rejected，整个实例才会结束</p>
-</li>
-<li><p>Promise.any (ES2021)当其中任何一个Promise 完成(fulfilled)时，就返回那个已经有完成值的Promise。如果所有的Promise 都变成rejected ，那么返回一个拒绝的Promise</p>
-</li>
-<li><p>Promise.any() 跟Promise.race() 方法很像，有一个不同点是，any不会因为某个Promise 变成rejected 而结束</p>
-</li>
-</ul>
-<h2 id="3-WeakRefs"><a href="#3-WeakRefs" class="headerlink" title="3. WeakRefs"></a>3. WeakRefs</h2><p><a target="_blank" rel="noopener" href="https://github.com/tc39/proposal-weakrefs">WeakRefs</a></p>
-<ul>
-<li>注意：要尽量避免使用WeakRef 和FinalizationRegistry ，垃圾回收机制依赖于JavaScript 引擎的实现，不同的引擎或是不同的版本的引擎可能会有所不同</li>
-</ul>
-<p>这个提案主要包括两个主要的新功能：</p>
-<ul>
-<li>使用 WeakRef 类创建对象的弱引用</li>
-<li>使用 FinalizationRegistry 类对对象在进行垃圾回收后，运行用户定义的终结器</li>
-</ul>
-<p>他们可以分开始用也可以一起使用，<br>WeakRef 实例不会阻止GC 回收，但是GC 会在两次EventLoop 之间回收WeakRef 实例。GC 回收后的WeakRef 实例的deref() 方法将会返回undefined</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> ref = <span class="keyword">new</span> <span class="title class_">WeakRef</span>(obj);</span><br><span class="line"><span class="keyword">let</span> isLive = ref.<span class="title function_">deref</span>(); <span class="comment">// 如果obj 被回收了，那么isLive 就是undefined</span></span><br></pre></td></tr></table></figure>
-<p>FinalizationRegistry 注册Callback，某个对象被GC 回收后调用。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> registry = <span class="keyword">new</span> <span class="title class_">FinalizationRegistry</span>(<span class="function"><span class="params">heldValue</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">//...</span></span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 通过register 注册任何你想要清理回调的对象，传入该对象和所含的值</span></span><br><span class="line">registry.<span class="title function_">register</span>(theObj, <span class="string">&#x27;some value&#x27;</span>);</span><br></pre></td></tr></table></figure>
-<p><a target="_blank" rel="noopener" href="https://github.com/tc39/proposal-weakrefs/blob/master/reference.md">更多的细节</a></p>
-<h2 id="4-Logical-Assignment-Operators-逻辑赋值操作符"><a href="#4-Logical-Assignment-Operators-逻辑赋值操作符" class="headerlink" title="4. Logical Assignment Operators 逻辑赋值操作符"></a>4. Logical Assignment Operators 逻辑赋值操作符</h2><p><a target="_blank" rel="noopener" href="https://github.com/tc39/proposal-logical-assignment">Logical Assignment Operators 逻辑赋值操作符</a></p>
-<p>看下ES2020 新增的空值合并操作符 ??<br>当左操作数为undefined 或 null 时，该操作符会将右侧操作数赋值给左侧变量</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> name = <span class="literal">null</span> ?? <span class="string">&#x27;value&#x27;</span>;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(name); <span class="comment">// value</span></span><br></pre></td></tr></table></figure>
-<p>有了逻辑赋值运算符，可以改写成：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> name ??= <span class="string">&#x27;value&#x27;</span>;</span><br><span class="line"></span><br><span class="line">a ||= b; <span class="comment">// == a || (a = b)</span></span><br><span class="line">a &amp;&amp;= b; <span class="comment">// == a &amp;&amp; (a = b)</span></span><br><span class="line">a ??= b; <span class="comment">// == a ?? (a = b)</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="5-Numeric-separators-数字分隔符"><a href="#5-Numeric-separators-数字分隔符" class="headerlink" title="5. Numeric  separators 数字分隔符"></a>5. Numeric  separators 数字分隔符</h2><p><a target="_blank" rel="noopener" href="https://github.com/tc39/proposal-numeric-separator">Numeric separators 数字分隔符</a></p>
-<p>数字的可读性随着数字变长而变差，数字分隔符会让长数字更加清晰易读</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> x = <span class="number">1000000000000</span>;</span><br><span class="line"><span class="keyword">const</span> y = <span class="number">1_000_000_000_000</span>;</span><br><span class="line"><span class="keyword">const</span>.<span class="title function_">log</span>(x === y); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
-<p>在二进制、十六进制、BigInt 等中都可以使用</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/12/12/collections/JavaScript/ECMAScript2021%E7%9A%84%E5%87%A0%E4%B8%AA%E6%96%B0%E7%89%B9%E6%80%A7/" data-id="clc0ovma5001ddhor56dzbwdw" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2021/06/19/collections/Electron/Electron%20%E4%BB%BB%E5%8A%A1%E6%A0%8F%E8%8F%9C%E5%8D%95/" data-id="clcanlui7000cbfojbpvr30k6" class="article-share-link">分享</a>
       
       
     </footer>
@@ -593,7 +540,7 @@
 
   <nav id="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/hexo-blog/page/2/">2</a><a class="page-number" href="/hexo-blog/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/hexo-blog/page/5/">5</a><a class="extend next" rel="next" href="/hexo-blog/page/2/">下一页 &gt;&gt;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/hexo-blog/page/2/">2</a><a class="page-number" href="/hexo-blog/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/hexo-blog/page/6/">6</a><a class="extend next" rel="next" href="/hexo-blog/page/2/">下一页 &gt;&gt;</a>
   </nav>
 
 </section>
@@ -604,7 +551,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/hexo-blog/categories/hexo/">hexo</a></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/hexo-blog/categories/gitlab/">gitlab</a></li><li class="category-list-item"><a class="category-list-link" href="/hexo-blog/categories/hexo/">hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/hexo-blog/categories/npm/">npm</a></li><li class="category-list-item"><a class="category-list-link" href="/hexo-blog/categories/windows/">windows</a></li></ul>
     </div>
   </div>
 
@@ -619,7 +566,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2021/07/">七月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2021/06/">六月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2021/05/">五月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2021/04/">四月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/12/">十二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/11/">十一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/10/">十月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/09/">九月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/07/">七月 2020</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2022/12/">十二月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2022/04/">四月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2021/07/">七月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2021/06/">六月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2021/05/">五月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2021/04/">四月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/12/">十二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/11/">十一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/10/">十月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/09/">九月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/07/">七月 2020</a></li></ul>
     </div>
   </div>
 
@@ -632,23 +579,23 @@
       <ul>
         
           <li>
+            <a href="/hexo-blog/2022/12/27/collections/Git/%E9%87%8D%E7%BD%AE%E8%87%AA%E5%BB%BAgitlab%E7%AE%A1%E7%90%86%E5%91%98%E8%B4%A6%E6%88%B7%E5%AF%86%E7%A0%81/">重置自建gitlab管理员账户密码</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2022/12/27/collections/Windows/windows%E5%BF%AB%E9%80%9F%E5%88%A0%E9%99%A4%E7%A2%8E%E7%89%87%E6%96%87%E4%BB%B6/">windows快速删除碎片文件</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2022/12/27/collections/Npm/%E5%9C%A8%E9%A1%B9%E7%9B%AE%E4%B8%AD%E6%8C%87%E5%AE%9Anpm%E6%BA%90/">在项目中指定npm源</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2022/04/10/collections/Npm/npm%20link%20%E7%9A%84%E4%BD%BF%E7%94%A8/">npm link 的使用</a>
+          </li>
+        
+          <li>
             <a href="/hexo-blog/2021/06/30/collections/Git/Git%20%E9%BB%98%E8%AE%A4%E5%88%86%E6%94%AF%E4%BF%AE%E6%94%B9/">Git 默认分支修改</a>
-          </li>
-        
-          <li>
-            <a href="/hexo-blog/2021/06/24/collections/Electron/Electron%20%E6%89%98%E7%9B%98%E9%97%AA%E7%83%81/">Electron 托盘闪烁</a>
-          </li>
-        
-          <li>
-            <a href="/hexo-blog/2021/06/23/collections/Electron/Electron%20%E6%9C%80%E5%B0%8F%E5%8C%96%E5%88%B0%E6%89%98%E7%9B%98/">Electron 最小化到托盘</a>
-          </li>
-        
-          <li>
-            <a href="/hexo-blog/2021/06/22/collections/Electron/Electron%20%E9%99%90%E5%88%B6%E5%8F%AA%E5%90%AF%E5%8A%A8%E4%B8%80%E4%B8%AA%E5%BA%94%E7%94%A8/">Electron 限制只启动一个应用</a>
-          </li>
-        
-          <li>
-            <a href="/hexo-blog/2021/06/20/collections/Koa/Koa%20%E6%90%AD%E5%BB%BAhttps%20%E7%8E%AF%E5%A2%83/">Koa 本地搭建 HTTPS 环境</a>
           </li>
         
       </ul>

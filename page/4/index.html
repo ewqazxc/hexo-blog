@@ -67,6 +67,375 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-collections/Articles/2020前端技术未来三年前瞻性思考" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo-blog/2020/09/10/collections/Articles/2020%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF%E6%9C%AA%E6%9D%A5%E4%B8%89%E5%B9%B4%E5%89%8D%E7%9E%BB%E6%80%A7%E6%80%9D%E8%80%83/" class="article-date">
+  <time datetime="2020-09-10T14:55:00.000Z" itemprop="datePublished">2020-09-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/hexo-blog/2020/09/10/collections/Articles/2020%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF%E6%9C%AA%E6%9D%A5%E4%B8%89%E5%B9%B4%E5%89%8D%E7%9E%BB%E6%80%A7%E6%80%9D%E8%80%83/">2020 前端技术未来三年前瞻性思考</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>作者：云谦 <a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/wYbj9d3bVExfu3owx7sJuQ">查看原文</a></p>
+<p>习惯从业务场景、用户体验、研发速度、维护成本四个维度来看框架等前端技术，大部分的技术点都能找到合适的位置，解决的问题是如何<code>快速上线和维护满足业务的好用的产品</code>。</p>
+<h2 id="业务场景"><a href="#业务场景" class="headerlink" title="业务场景"></a>业务场景</h2><blockquote>
+<p>从框架的角度看业务需要</p>
+</blockquote>
+<ul>
+<li>框架负责：<ol>
+<li>对接后端框架</li>
+<li>对接输出环节，包括支付宝容器，PC 和mobile 浏览器，组件研发等</li>
+<li>对接第三方服务，包括统计，鉴权等</li>
+</ol>
+</li>
+<li>未来三年：<ol>
+<li>更多的业务有移动办公需求，小程序会继续加量</li>
+<li>更多复杂场景的出现，包括重型应用，应用集群等，WebAssembbly,微前端，Module Fedration 等技术会在此发挥作用</li>
+<li>标准应用中NoCode&#x2F;LowCode 的占比逐渐增大，开发者逐渐习惯这种研发方式，包括云凤蝶或更垂直的NoCode 平台，imgcook 等</li>
+<li>需要对接的业务场景越来越多，框架层需要做取舍、收敛和适时的减法</li>
+</ol>
+</li>
+</ul>
+<h2 id="用户体验"><a href="#用户体验" class="headerlink" title="用户体验"></a>用户体验</h2><blockquote>
+<p>什么是默认好用？以及如何做到默认好用？</p>
+</blockquote>
+<ul>
+<li><p>更好的用户体验，前端+设计师负责：</p>
+<ol>
+<li>前端尺寸要小，这样页面载入更快</li>
+<li>合理的Code Splitting、Bundle Splitting 和按需加载策略，这样重要内容载入更快</li>
+<li>UI好看，交互流畅且好用</li>
+<li>合理的缓存和预加载策略，这样页面切换更快</li>
+</ol>
+<p><em>之前觉得5G 来了尺寸肯定不是问题，直到我看到需要下载60M js 资源的页面，内网环境打开页面都要8s+。现在的图形库、UI库根本不把尺寸当回事。</em></p>
+</li>
+<li><p>未来三年，如果我们希望有更好的用户体验：</p>
+<ol>
+<li>图形库、UI库得自己做瘦身&#x2F;按需加载&#x2F;正确的tree-shaking&#x2F;设计合理的按需编译</li>
+<li>更多框架层内置的性能优化方案</li>
+<li>框架接管请求层，不止是发请求，基于路由，提供缓存和预加载策略</li>
+<li>混合研发如果成为主流，需要解决沙箱满的问题，参考<a target="_blank" rel="noopener" href="https://m.statscrop.com/www/techui.in">tech ui 首页</a>，换module federation 或者坐等浏览器实现标准的沙箱环境</li>
+</ol>
+</li>
+</ul>
+<h2 id="研发速度"><a href="#研发速度" class="headerlink" title="研发速度"></a>研发速度</h2><blockquote>
+<p>如何快速完成研发，并完成交付上线</p>
+</blockquote>
+<ul>
+<li><p>各方配合，不止是框架：</p>
+<ol>
+<li>工具提速、框架瘦身、TS 定义等</li>
+<li>组件封装，包含 antd&#x2F;antv&#x2F;tech-ui</li>
+<li>数据准备，包含oneapi</li>
+<li>交付流畅性，包含DEMO 中心，MOCK 平台，联调最佳实践等</li>
+<li>辅助工具</li>
+</ol>
+</li>
+<li><p>未来三年</p>
+<ol>
+<li>编译速度肯定会大幅度提升，路肯定不止一条；重CPU 部分会基于Rust&#x2F;Go 实现，但不是整体，整体方案的终态我更倾向npm pre-built cdn+ bundless 的组合；这不止是框架&#x2F;工具等事，ui 库和工具库也许合理规划和配置，不然一个项目用5个图形库+10个依赖antd 等库，10000+的文件要编译，快不起来的</li>
+<li>更多垂直领域高级别的封装，继承款姐&#x2F;UI&#x2F;数据&#x2F;数据流，快速产出中台应用，形态可能是平台，也可能是ProCode；封装等级越高，开发越快，但定制越难，需权衡</li>
+<li>命令行在很多场景下不够用，借助辅助工具可进一步提效；形态有编辑器插件、Chrome 插件和In-Context Editing</li>
+</ol>
+</li>
+</ul>
+<h2 id="维护成本"><a href="#维护成本" class="headerlink" title="维护成本"></a>维护成本</h2><blockquote>
+<p>产品不仅要开发，还要维护，何况款姐和依赖库还在不断升级</p>
+</blockquote>
+<ul>
+<li>成本问题：<ol>
+<li>新人的上手成本</li>
+<li>开发人员迭代的接手成本</li>
+<li>技术栈升级成本</li>
+</ol>
+</li>
+<li>未来三年，对于框架而言：<ol>
+<li>降低技术栈升级成本。这需要框架有更好的顶层设计，更好的抽象，抹平底层技术栈，解决3-5年后依赖的技术栈变更后迁移成本最小化的问题；功能方面权衡一方集成&#x2F;二方提供&#x2F;三方引入，设计上适度组合，适度eject</li>
+<li>写一样的代码。持续打磨最佳实践，方案唯一化，一不是绝对的一，而是特定场景下的一；框架支持多端适配，未来是PC+小程序，长远看，多套写法应该走向统一</li>
+</ol>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/09/10/collections/Articles/2020%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF%E6%9C%AA%E6%9D%A5%E4%B8%89%E5%B9%B4%E5%89%8D%E7%9E%BB%E6%80%A7%E6%80%9D%E8%80%83/" data-id="clcanlui20007bfoj134z2c5v" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-collections/Git/Git Commit 规范参考" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo-blog/2020/09/09/collections/Git/Git%20Commit%20%E8%A7%84%E8%8C%83%E5%8F%82%E8%80%83/" class="article-date">
+  <time datetime="2020-09-09T16:00:00.000Z" itemprop="datePublished">2020-09-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/hexo-blog/2020/09/09/collections/Git/Git%20Commit%20%E8%A7%84%E8%8C%83%E5%8F%82%E8%80%83/">Git Commit 规范参考</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="规范-Commit-的好处"><a href="#规范-Commit-的好处" class="headerlink" title="规范 Commit 的好处"></a>规范 Commit 的好处</h2><ol>
+<li>提供更明确的历史信息，方便判断提交目的和浏览</li>
+<li>可以过滤某些不必要的提交，方便快速查找信息</li>
+<li>自动化生产Changelog</li>
+<li>向同事、公众与其它利益关系人传达变化的性质</li>
+<li>基于提交的类型，自动决定语义化的版本变更</li>
+</ol>
+<ul>
+<li>每一个提交尽量保证其目的单一性</li>
+</ul>
+<h2 id="Commit-格式"><a href="#Commit-格式" class="headerlink" title="Commit 格式"></a>Commit 格式</h2><h3 id="网上常用格式参考"><a href="#网上常用格式参考" class="headerlink" title="网上常用格式参考"></a>网上常用格式参考</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/facebook/react/commits/master">react-commit</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/vuejs/vue/commits/dev">vuejs-commit</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/angular/angular/commits/master">angular-commit</a></li>
+</ol>
+<h3 id="Angular-规范"><a href="#Angular-规范" class="headerlink" title="Angular 规范"></a><a target="_blank" rel="noopener" href="https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#commits">Angular 规范</a></h3><p>每个commit message 包含一个 <code>header</code>,<code>body</code> 和<code>footer</code>。<br><code>header</code> 有一个特殊的格式，包含<code>type</code>，<code>scope</code> 和<code>subject</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="built_in">type</span>&gt;(&lt;scope&gt;): &lt;subject&gt;</span><br><span class="line">&lt;BLANK LINE&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;BLANK LINE&gt;</span><br><span class="line">&lt;footer&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>Type 用于说明commit 的类型：</p>
+<ul>
+<li>feat  新的功能</li>
+<li>fix  修复bug</li>
+<li>docs  只是文档的更改</li>
+<li>style 不影响代码含义的更改（例如空格、格式化）</li>
+<li>refactor  既不是修复bug 也不是添加新功能的代码更改</li>
+<li>perf  提高性能的代码更改</li>
+<li>test  添加或修正测试</li>
+<li>chore  对构建或者辅助工具的更改，例如生成文档</li>
+</ul>
+</li>
+<li><p>Scope 用于说明commit 影响的范围，当影响的范围有多个时候，可以使用<code>*</code></p>
+</li>
+<li><p>Subject 用于对commit 变化的间接描述：</p>
+<ul>
+<li>使用祈使句，一般以动词原形开始，例如使用change 而不是changed 或者changes</li>
+<li>第一个字母小写</li>
+<li>结尾不加句号（.）</li>
+</ul>
+</li>
+<li><p>Body 用于对commit 详细描述，使用祈使句，一般以动词原形开始，包含这次行为的动机以及与之前行为的对比</p>
+</li>
+<li><p>Footer 有以下两种情况</p>
+<ol>
+<li>不兼容的变动：<br>所有不兼容的变动都必须在footer 区域进行说明，以<code>BREAKING CHANGE:</code>开头，后面是对变动的描述，变动的理由和迁移注释<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">BREAKING CHANGE: isolate scope bindings definition has changed and</span><br><span class="line">the inject option <span class="keyword">for</span> the directive controller injection was removed.</span><br><span class="line"></span><br><span class="line">To migrate the code follow the example below:</span><br><span class="line"></span><br><span class="line">Before:</span><br><span class="line"></span><br><span class="line">scope: &#123;</span><br><span class="line">  myAttr: <span class="string">&#x27;attribute&#x27;</span>,</span><br><span class="line">  myBind: <span class="string">&#x27;bind&#x27;</span>,</span><br><span class="line">  myExpression: <span class="string">&#x27;expression&#x27;</span>,</span><br><span class="line">  myEval: <span class="string">&#x27;evaluate&#x27;</span>,</span><br><span class="line">  myAccessor: <span class="string">&#x27;accessor&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">After:</span><br><span class="line"></span><br><span class="line">scope: &#123;</span><br><span class="line">  myAttr: <span class="string">&#x27;@&#x27;</span>,</span><br><span class="line">  myBind: <span class="string">&#x27;@&#x27;</span>,</span><br><span class="line">  myExpression: <span class="string">&#x27;&amp;&#x27;</span>,</span><br><span class="line">  // myEval - usually not useful, but <span class="keyword">in</span> cases <span class="built_in">where</span> the expression is assignable, you can use <span class="string">&#x27;=&#x27;</span></span><br><span class="line">  myAccessor: <span class="string">&#x27;=&#x27;</span> // <span class="keyword">in</span> directive<span class="string">&#x27;s template change myAccessor() to myAccessor</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">The removed `inject` wasn&#x27;</span>t generaly useful <span class="keyword">for</span> directives so there should be no code using it.</span><br></pre></td></tr></table></figure></li>
+<li>关闭issue 针对某个issue的提交<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 关闭单个</span></span><br><span class="line">Close <span class="comment">#234</span></span><br><span class="line"><span class="comment"># 关闭多个</span></span><br><span class="line">Close <span class="comment">#123,#456,#789</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<ul>
+<li>Revert 如果commit 用于撤销之前的commit，则以<code>revert:</code>开头，后面是撤销这个commit 的header。在body 里写<code>This reverts commit &lt;hash&gt;</code><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">revert: feat(pencil): add <span class="string">&#x27;graphiteWidth&#x27;</span> option</span><br><span class="line"></span><br><span class="line">This reverts commit 667ecc1654a317a13331b17617d973392f415f02.</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h2 id="Commit-相关的工具"><a href="#Commit-相关的工具" class="headerlink" title="Commit 相关的工具"></a>Commit 相关的工具</h2><h3 id="填写提示工具-commitizen"><a href="#填写提示工具-commitizen" class="headerlink" title="填写提示工具 commitizen"></a>填写提示工具 <a target="_blank" rel="noopener" href="https://github.com/commitizen/cz-cli">commitizen</a></h3><p>这是个用来给commit 一个引导的作用，根据提示完善commit</p>
+<h3 id="格式校验工具-commitlint"><a href="#格式校验工具-commitlint" class="headerlink" title="格式校验工具 commitlint"></a>格式校验工具 <a target="_blank" rel="noopener" href="https://github.com/marionebl/commitlint">commitlint</a></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yarn add @commitlint/&#123;config-conventional,cli&#125; --dev</span><br><span class="line"><span class="comment"># Configure commitlint to use angular config</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;module.exports = &#123;extends: [&#x27;@commitlint/config-conventional&#x27;]&#125;&quot;</span> &gt; commitlint.config.js</span><br></pre></td></tr></table></figure>
+<p>示例使用的是 <code>config-coventional</code>规范，安装后还需要使用<code>commitmsg hook</code>,husky</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add husky</span><br></pre></td></tr></table></figure>
+<p>然后配置package.json</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;husky&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;hooks&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;pre-commit&quot;</span><span class="punctuation">:</span> <span class="string">&quot;npm test&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;commit-msg&quot;</span><span class="punctuation">:</span> <span class="string">&quot;commitlint -E HUSKY_GIT_PARAMS&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="生成Changelog-工具-Conventional-Changelog"><a href="#生成Changelog-工具-Conventional-Changelog" class="headerlink" title="生成Changelog 工具 Conventional Changelog"></a>生成Changelog 工具 <a target="_blank" rel="noopener" href="https://github.com/conventional-changelog">Conventional Changelog</a></h3><p>使用的工具是 Conventional Changelog，推荐使用 standard-version。commit 符合 Conventional Commits Specification 中描述的格式，就可以用程序自动生成 Changelog。</p>
+<p>安装</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add standard-version --dev</span><br></pre></td></tr></table></figure>
+<p>然后配置package.json配置执行的脚本。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;scripts&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;release&quot;</span><span class="punctuation">:</span> <span class="string">&quot;standard-version&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>执行该脚本命令，产生的结果：生成文件 CHANGELOG、自动修改库的版本号、产生一个 commit,<br>每一次执行，不会覆盖之前的 CHANGELOG，只会在 CHANGELOG 的顶部添加新的内容。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/09/09/collections/Git/Git%20Commit%20%E8%A7%84%E8%8C%83%E5%8F%82%E8%80%83/" data-id="clcanluil000tbfoj4u7k7797" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-collections/Git/commitizen工具的使用" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo-blog/2020/09/09/collections/Git/commitizen%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BD%BF%E7%94%A8/" class="article-date">
+  <time datetime="2020-09-09T16:00:00.000Z" itemprop="datePublished">2020-09-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/hexo-blog/2020/09/09/collections/Git/commitizen%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BD%BF%E7%94%A8/">commitizen 工具的使用</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="填写提示工具-commitizen"><a href="#填写提示工具-commitizen" class="headerlink" title="填写提示工具 commitizen"></a>填写提示工具 <a target="_blank" rel="noopener" href="https://github.com/commitizen/cz-cli">commitizen</a></h2><p>这个工具将给git commit 提供一个引导的功能，便于开发者根据提示完善commit 信息</p>
+<ol>
+<li>安装commitizen<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install commitizen -g</span><br></pre></td></tr></table></figure></li>
+<li>在项目中进行初始化<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">commitizen init cz-conventional-changelog --save-dev --save-exact</span><br><span class="line"><span class="comment"># 或者使用yarn 命令</span></span><br><span class="line">yarn commitizen init cz-conventional-changelog --save-dev --save-exact</span><br></pre></td></tr></table></figure></li>
+<li>利用<code>git cz</code>代替平时使用的<code>git commit</code>，即可根据提示一步步完善提交信息</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/09/09/collections/Git/commitizen%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BD%BF%E7%94%A8/" data-id="clcanluiq000zbfoj1hsr77ip" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-collections/JavaScript/JavaScript深入理解之继承" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo-blog/2020/08/31/collections/JavaScript/JavaScript%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E4%B9%8B%E7%BB%A7%E6%89%BF/" class="article-date">
+  <time datetime="2020-08-31T16:00:00.000Z" itemprop="datePublished">2020-09-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/hexo-blog/2020/08/31/collections/JavaScript/JavaScript%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E4%B9%8B%E7%BB%A7%E6%89%BF/">JavaScript深入理解之继承</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>——Js 继承的6种方式</p>
+<p>首先，提供一个父类</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span>(<span class="params">name</span>)&#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">name</span> = name;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">sum</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">name</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="title class_">Person</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">age</span> = <span class="number">10</span>; <span class="comment">// 原型属性</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="1-通过原型链继承"><a href="#1-通过原型链继承" class="headerlink" title="1 通过原型链继承"></a>1 通过原型链继承</h2><ul>
+<li>重点：将实例的原型指向父类的实例，就是利用原型让一个引用类型继承另一个引用类型的属性和方法</li>
+<li>特点：<ol>
+<li>实例可继承的属性有：实例的构造函数的属性，父类构造函数的属性，父类原型的属性</li>
+<li>新实例不会继承父类实例的属性</li>
+</ol>
+</li>
+<li>缺点：<ol>
+<li>新实例无法向父类构造函数传参</li>
+<li>继承单一</li>
+<li>所有新实例都会共享父类实例的属性，原型上的属性时共享的，一个实例修改了原型属性，另一个实例的原型属性也会被修改  <figure class="highlight js"><figcaption><span>原型链继承</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Per</span>(<span class="params"></span>)&#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">name</span> = <span class="string">&#x27;per&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="title class_">Per</span>.<span class="property"><span class="keyword">prototype</span></span> = <span class="keyword">new</span> <span class="title class_">Person</span>();</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="title class_">Per1</span> = <span class="keyword">new</span> <span class="title class_">Per</span>();</span><br><span class="line">per1.<span class="property">age</span>; <span class="comment">// 10</span></span><br><span class="line">per1 <span class="keyword">instanceof</span> <span class="title class_">Person</span>; <span class="comment">// true</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+</ul>
+<h2 id="2-借用构造函数继承"><a href="#2-借用构造函数继承" class="headerlink" title="2 借用构造函数继承"></a>2 借用构造函数继承</h2><ul>
+<li>重点：用call()和apply()将父类构造函数引入子类函数，在子类函数中做了父类函数的自执行（复制）</li>
+<li>特点：<ol>
+<li>只继承父类构造函数的属性，没有继承父类原型的属性</li>
+<li>解决了原型链继承的三个缺点</li>
+<li>可以继承多个构造函数属性，执行多个父类</li>
+<li>在子实例中可向父实例传参</li>
+</ol>
+</li>
+<li>缺点：<ol>
+<li>只能继承父类构造函数的属性</li>
+<li>无法实现构造函数的复用，每次都会重新调用</li>
+<li>每个新实例都有父类构造函数的副本，臃肿</li>
+</ol>
+</li>
+</ul>
+  <figure class="highlight js"><figcaption><span>借用构造函数继承</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Con</span>(<span class="params"></span>)&#123;</span><br><span class="line">  <span class="title class_">Person</span>.<span class="title function_">call</span>(<span class="variable language_">this</span>,<span class="string">&#x27;children&#x27;</span>);</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">age</span> = <span class="number">12</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> con1 = <span class="keyword">new</span> <span class="title class_">Con</span>();</span><br><span class="line">con1.<span class="property">name</span>; <span class="comment">// children</span></span><br><span class="line">con1.<span class="property">age</span>; <span class="comment">// 12</span></span><br><span class="line">con1 <span class="keyword">instanceof</span> <span class="title class_">Person</span>; <span class="comment">// false</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="3-组合继承（原型链-构造函数）"><a href="#3-组合继承（原型链-构造函数）" class="headerlink" title="3 组合继承（原型链+构造函数）"></a>3 组合继承（原型链+构造函数）</h2><ul>
+<li>重点：结合了两种模式的优点、传参和复用</li>
+<li>特点：<ol>
+<li>可以继承父类原型上的属性，可以传参，可复用</li>
+<li>每个新实例引入的构造函数属性是私有的</li>
+</ol>
+</li>
+<li>缺点：调用了两次父类构造函数（耗内存），子类的构造函数会代替原型上的那个父类构造函数</li>
+</ul>
+  <figure class="highlight js"><figcaption><span>组合继承</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Sub</span>(<span class="params">name</span>)&#123;</span><br><span class="line">  <span class="title class_">Person</span>.<span class="title function_">call</span>(<span class="variable language_">this</span>,name); <span class="comment">// 借用构造函数模式</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="title class_">Sub</span>.<span class="property"><span class="keyword">prototype</span></span> = <span class="keyword">new</span> <span class="title class_">Person</span>(); <span class="comment">// 原型链继承</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> sub1 = <span class="keyword">new</span> <span class="title class_">Sub</span>(<span class="string">&#x27;sub&#x27;</span>);</span><br><span class="line">sub.<span class="property">name</span>; <span class="comment">// sub</span></span><br><span class="line">sub.<span class="property">age</span>; <span class="comment">// 10</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="4-原型式继承"><a href="#4-原型式继承" class="headerlink" title="4 原型式继承"></a>4 原型式继承</h2><ul>
+<li>重点：用一个函数包装一个对象，然后返回这个函数的调用，这个函数就变成了可以随意添加属性的实例或对象。object.create()就是这个原理</li>
+<li>特点： 类似赋值一个对象，用函数来包装</li>
+<li>缺点：<ol>
+<li>所有实例都会继承原型上的属性</li>
+<li>无法实现复用（新实例属性都是后面添加的）</li>
+</ol>
+</li>
+</ul>
+  <figure class="highlight js"><figcaption><span>原型式继承</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">content</span>(<span class="params">obj</span>)&#123;</span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">F</span>(<span class="params"></span>)&#123;&#125;;</span><br><span class="line">  F.<span class="property"><span class="keyword">prototype</span></span> = obj; <span class="comment">// 继承传入的参数</span></span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title function_">F</span>(); <span class="comment">// 返回函数对象</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> sup = <span class="keyword">new</span> <span class="title class_">Person</span>();</span><br><span class="line"><span class="keyword">let</span> sup1 = <span class="title function_">content</span>(sup);</span><br><span class="line">sup1.<span class="property">age</span>; <span class="comment">// 10</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="5-寄生式继承"><a href="#5-寄生式继承" class="headerlink" title="5 寄生式继承"></a>5 寄生式继承</h2><ul>
+<li>重点：就是给原型式继承外面套了个壳子</li>
+<li>优点：没有创建自定义类型，因为只是套了个壳子返回对象，这个函数顺理成章就成了创建的新对象</li>
+<li>缺点：没用到原型，无法复用</li>
+</ul>
+  <figure class="highlight js"><figcaption><span>寄生式继承</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">content</span>(<span class="params">obj</span>)&#123;</span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">F</span>(<span class="params"></span>)&#123;&#125;;</span><br><span class="line">  F.<span class="property"><span class="keyword">prototype</span></span> = obj;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title function_">F</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> sup = <span class="keyword">new</span> <span class="title class_">Person</span>();</span><br><span class="line"><span class="comment">// 套壳</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">subObj</span>(<span class="params">obj</span>)&#123;</span><br><span class="line">  <span class="keyword">let</span> sub = <span class="title function_">content</span>(obj);</span><br><span class="line">  sub.<span class="property">name</span> = <span class="string">&#x27;subObj&#x27;</span>;</span><br><span class="line">  <span class="keyword">return</span> sub;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> sub2 = <span class="title function_">subObj</span>(sup);</span><br><span class="line"><span class="keyword">typeof</span> subObj; <span class="comment">// function</span></span><br><span class="line"><span class="keyword">typeof</span> sup2; <span class="comment">// object</span></span><br><span class="line">sup2.<span class="property">name</span>; <span class="comment">// subObj</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="6-寄生组合式继承"><a href="#6-寄生组合式继承" class="headerlink" title="6 寄生组合式继承"></a>6 寄生组合式继承</h2><ul>
+<li>寄生：在函数内返回对象然后调用</li>
+<li>组合：<ol>
+<li>函数的原型等于另一个实例</li>
+<li>在函数中用apply 或者call 引入另一个构造函数，可传参</li>
+</ol>
+</li>
+<li>重点：修复了组合继承的问题</li>
+</ul>
+  <figure class="highlight js"><figcaption><span>寄生组合式继承</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 寄生</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">content</span>(<span class="params">obj</span>)&#123;</span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">F</span>(<span class="params"></span>)&#123;&#125;;</span><br><span class="line">  F.<span class="property"><span class="keyword">prototype</span></span> = obj;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title function_">F</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> con = <span class="title function_">content</span>(<span class="title class_">Person</span>.<span class="property"><span class="keyword">prototype</span></span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 组合</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Sub</span>(<span class="params"></span>)&#123;</span><br><span class="line">  <span class="title class_">Person</span>.<span class="title function_">call</span>(<span class="variable language_">this</span>);</span><br><span class="line">&#125; <span class="comment">// 解决组合式两次调用的问题</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 重点</span></span><br><span class="line"><span class="title class_">Sub</span>.<span class="property"><span class="keyword">prototype</span></span> = con; <span class="comment">// 继承con 实例</span></span><br><span class="line">con.<span class="property">constructor</span> = <span class="title class_">Sub</span>; <span class="comment">// 修复实例</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> sub1 = <span class="keyword">new</span> <span class="title class_">Sub</span>();</span><br><span class="line">sub1.<span class="property">age</span>; <span class="comment">// 10</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/31/collections/JavaScript/JavaScript%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E4%B9%8B%E7%BB%A7%E6%89%BF/" data-id="clcanluj4001kbfoj2eychvc3" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-collections/JavaScript/手写实现Promise" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/hexo-blog/2020/08/26/collections/JavaScript/%E6%89%8B%E5%86%99%E5%AE%9E%E7%8E%B0Promise/" class="article-date">
@@ -114,7 +483,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/26/collections/JavaScript/%E6%89%8B%E5%86%99%E5%AE%9E%E7%8E%B0Promise/" data-id="clc0ovmah0027dhorgklqfttf" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/26/collections/JavaScript/%E6%89%8B%E5%86%99%E5%AE%9E%E7%8E%B0Promise/" data-id="clcanlujg002bbfoj9e6m74fv" class="article-share-link">分享</a>
       
       
     </footer>
@@ -171,7 +540,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/25/collections/JavaScript/js%E6%A8%A1%E6%8B%9Fnew%E6%93%8D%E4%BD%9C%E7%AC%A6%E7%9A%84%E5%AE%9E%E7%8E%B0/" data-id="clc0ovmab001vdhorcnr5h0cb" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/25/collections/JavaScript/js%E6%A8%A1%E6%8B%9Fnew%E6%93%8D%E4%BD%9C%E7%AC%A6%E7%9A%84%E5%AE%9E%E7%8E%B0/" data-id="clcanlujb001zbfoj9zdv4v6z" class="article-share-link">分享</a>
       
       
     </footer>
@@ -221,7 +590,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/25/collections/JavaScript/%E5%87%BD%E6%95%B0%E6%9F%AF%E9%87%8C%E5%8C%96%E7%9A%84%E5%AE%9E%E7%8E%B0/" data-id="clc0ovmae0021dhor2d9mg1sk" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/25/collections/JavaScript/%E5%87%BD%E6%95%B0%E6%9F%AF%E9%87%8C%E5%8C%96%E7%9A%84%E5%AE%9E%E7%8E%B0/" data-id="clcanlujd0025bfoj8t519gzr" class="article-share-link">分享</a>
       
       
     </footer>
@@ -291,7 +660,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/24/collections/JavaScript/%E6%89%8B%E5%86%99call%E3%80%81apply%E5%8F%8Abind%E5%87%BD%E6%95%B0/" data-id="clc0ovmag0025dhorag6q4izj" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/24/collections/JavaScript/%E6%89%8B%E5%86%99call%E3%80%81apply%E5%8F%8Abind%E5%87%BD%E6%95%B0/" data-id="clcanlujf0029bfojfmhn8ss2" class="article-share-link">分享</a>
       
       
     </footer>
@@ -346,7 +715,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/23/collections/JavaScript/Js%E7%9A%84%E6%B7%B1%E6%B5%85%E6%8B%B7%E8%B4%9D/" data-id="clc0ovma7001ldhor7fm0cgrz" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/23/collections/JavaScript/Js%E7%9A%84%E6%B7%B1%E6%B5%85%E6%8B%B7%E8%B4%9D/" data-id="clcanluj6001pbfoj9dmo5icl" class="article-share-link">分享</a>
       
       
     </footer>
@@ -400,262 +769,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/23/collections/JavaScript/%E6%89%8B%E5%8A%A8%E5%AE%9E%E7%8E%B0%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%80%E4%BA%9B%E6%96%B9%E6%B3%95/" data-id="clc0ovmai0029dhorcgfwdidp" class="article-share-link">分享</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-collections/JavaScript/写一个通用的事件侦听器函数" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/hexo-blog/2020/08/22/collections/JavaScript/%E5%86%99%E4%B8%80%E4%B8%AA%E9%80%9A%E7%94%A8%E7%9A%84%E4%BA%8B%E4%BB%B6%E4%BE%A6%E5%90%AC%E5%99%A8%E5%87%BD%E6%95%B0/" class="article-date">
-  <time datetime="2020-08-22T16:00:00.000Z" itemprop="datePublished">2020-08-23</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/hexo-blog/2020/08/22/collections/JavaScript/%E5%86%99%E4%B8%80%E4%B8%AA%E9%80%9A%E7%94%A8%E7%9A%84%E4%BA%8B%E4%BB%B6%E4%BE%A6%E5%90%AC%E5%99%A8%E5%87%BD%E6%95%B0/">写一个通用的事件侦听器函数</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="通用的事件侦听器函数"><a href="#通用的事件侦听器函数" class="headerlink" title="通用的事件侦听器函数"></a>通用的事件侦听器函数</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">EventUtils</span> = &#123;</span><br><span class="line">  <span class="comment">// 视能力分别使用dom0|dom2|IE 方式，来绑定事件</span></span><br><span class="line">  <span class="comment">// 添加事件</span></span><br><span class="line">  <span class="attr">addEvent</span>: <span class="keyword">function</span>(<span class="params">element, type, handler</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>(element.<span class="property">addEventListener</span>)&#123;</span><br><span class="line">      element.<span class="title function_">addEventListener</span>(type, handler, <span class="literal">false</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(element.<span class="property">attachEvent</span>)&#123;</span><br><span class="line">      element.<span class="title function_">attachEvent</span>(<span class="string">&quot;on&quot;</span> + type, handler);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      element[<span class="string">&quot;on&quot;</span>+type] = handler;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 移除事件</span></span><br><span class="line">  <span class="attr">removeEvent</span>: <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>(element.<span class="property">removeEventListener</span>)&#123;</span><br><span class="line">      element.<span class="title function_">removeEventListener</span>(type, handler, <span class="literal">false</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(element.<span class="property">detachEvent</span>)&#123;</span><br><span class="line">      element.<span class="title function_">detachEvent</span>(<span class="string">&quot;on&quot;</span> + type, handler);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      element[<span class="string">&quot;on&quot;</span> + type] = <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 获取事件目标</span></span><br><span class="line">  <span class="attr">getTarget</span>: <span class="keyword">function</span>(<span class="params">event</span>)&#123;</span><br><span class="line">    <span class="keyword">return</span> event.<span class="property">target</span> || event.<span class="property">srcElement</span>;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 获取event 对象的引用，渠道时间按的所有信息，确保随时能使用 event</span></span><br><span class="line">  <span class="attr">getEvent</span>: <span class="keyword">function</span>(<span class="params">event</span>)&#123;</span><br><span class="line">    <span class="keyword">return</span> event || <span class="variable language_">window</span>.<span class="property">event</span>;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 阻止事件（主要是冒泡，因为IE 不支持事件捕获）</span></span><br><span class="line">  <span class="attr">stopPropagation</span>: <span class="keyword">function</span>(<span class="params">event</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>(event.<span class="property">stopPropagation</span>)&#123;</span><br><span class="line">      event.<span class="title function_">stopPropagation</span>();</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      event.<span class="property">cancelBubble</span> = <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 取消事件的默认行为</span></span><br><span class="line">  <span class="attr">preventDefault</span>: <span class="keyword">function</span>(<span class="params">event</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>(event.<span class="property">preventDefault</span>)&#123;</span><br><span class="line">      event.<span class="title function_">preventDefault</span>();</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      event.<span class="property">returnValue</span> = <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/22/collections/JavaScript/%E5%86%99%E4%B8%80%E4%B8%AA%E9%80%9A%E7%94%A8%E7%9A%84%E4%BA%8B%E4%BB%B6%E4%BE%A6%E5%90%AC%E5%99%A8%E5%87%BD%E6%95%B0/" data-id="clc0ovmad001zdhorh4yx9ns6" class="article-share-link">分享</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-collections/Internet/github.io无法访问" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/hexo-blog/2020/08/19/collections/Internet/github.io%E6%97%A0%E6%B3%95%E8%AE%BF%E9%97%AE/" class="article-date">
-  <time datetime="2020-08-19T16:00:00.000Z" itemprop="datePublished">2020-08-20</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/hexo-blog/2020/08/19/collections/Internet/github.io%E6%97%A0%E6%B3%95%E8%AE%BF%E9%97%AE/">github.io 无法访问</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="DNS解析错误的解决方法"><a href="#DNS解析错误的解决方法" class="headerlink" title="DNS解析错误的解决方法"></a>DNS解析错误的解决方法</h2><p>最近,电脑无法打开githu.io 页面，手机却可以正常访问。ping 了下github.io，发现DNS 解析到了127.0.0.1 这明显不正常。。。</p>
-<ol>
-<li><p>检查是否DNS 解析问题，<code>ping github.io</code></p>
-<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ping</span> github.io</span><br><span class="line"></span><br><span class="line">正在 <span class="built_in">Ping</span> github.io [<span class="number">127</span>.<span class="number">0</span>.<span class="number">0</span>.<span class="number">1</span>] 具有 <span class="number">32</span> 字节的数据:</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用114 解析获取正确的ip 地址</p>
-<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">nslookup github.io <span class="number">114</span>.<span class="number">114</span>.<span class="number">114</span>.<span class="number">114</span></span><br><span class="line"></span><br><span class="line">服务器:  public1.<span class="number">114</span>dns.com</span><br><span class="line"><span class="function">Address:  114.114.114.114</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">非权威应答:</span></span><br><span class="line"><span class="function">名称:    <span class="title">github.io</span></span></span><br><span class="line"><span class="function"><span class="title">Addresses</span>:  185.199.110.153</span></span><br><span class="line"><span class="function">          185.199.111.153</span></span><br><span class="line"><span class="function">          185.199.108.153</span></span><br><span class="line"><span class="function">          185.199.109.153</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>修改host 文件，将github.io 指向上一步获取到的 Addresses</p>
-</li>
-</ol>
-<p>host 文件所在目录：C:\Windows\System32\drivers\etc\hosts</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">185.199.110.153 ewqazxc.github.io</span><br></pre></td></tr></table></figure>
-
-<ol start="4">
-<li>ipconfig &#x2F;flushdns 更新下DNS 配置，再打开网页即可</li>
-</ol>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/19/collections/Internet/github.io%E6%97%A0%E6%B3%95%E8%AE%BF%E9%97%AE/" data-id="clc0ovma3001bdhor82d587ix" class="article-share-link">分享</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-collections/JavaScript/JavaScript深入理解之对象创建" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/hexo-blog/2020/08/17/collections/JavaScript/JavaScript%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E4%B9%8B%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA/" class="article-date">
-  <time datetime="2020-08-17T16:00:00.000Z" itemprop="datePublished">2020-08-18</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/hexo-blog/2020/08/17/collections/JavaScript/JavaScript%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E4%B9%8B%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA/">JavaScript深入理解之对象创建</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>在JavaScript中虽然Object构造函数或对象字面量都可以用来创建单个对象，但是这些方法都有一个明显的缺点:使用同一个接口创建很多对象，活产数大量的重复代码。为了解决这些问题，人们提出了很多对象创建的解决办法，下面是对JavaScript 对象创建的一些理解和总结。</p>
-<h2 id="1-工厂模式"><a href="#1-工厂模式" class="headerlink" title="1 工厂模式"></a>1 工厂模式</h2><p>  工厂模式是软件工厂领域一种广为人知的设计模式，这种模式抽离了创建对象的具体过程。考虑到在ECMAScript 中无法创建类，开发人员发明以一种函数，用函数来封装特定接口创建对象的细节。如下面的例子所示：<br>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">createPerson</span>(<span class="params">name,age,job</span>)&#123;</span><br><span class="line">  <span class="keyword">var</span> o = <span class="keyword">new</span> <span class="title class_">Object</span>();</span><br><span class="line">  o.<span class="property">name</span> = name;</span><br><span class="line">  o.<span class="property">age</span> = age;</span><br><span class="line">  o.<span class="property">job</span> = job;</span><br><span class="line">  o.<span class="property">sayName</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="title function_">alert</span>(<span class="variable language_">this</span>.<span class="property">name</span>);</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="keyword">return</span> o;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> person1 = <span class="title function_">createPerson</span>(<span class="string">&#x27;Tom&#x27;</span>,<span class="number">9</span>,<span class="string">&#x27;cat&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> person2 = <span class="title function_">createPerson</span>(<span class="string">&#x27;Jerry&#x27;</span>,<span class="number">8</span>,<span class="string">&#x27;mouse&#x27;</span>);</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>优点 解决了创建多个相似对象时，代码复用问题</li>
-<li>缺点 使用工程模式创建的对象，没有解决对象识别的问题（对象的类型不明确）  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1. 工厂模式：主要工作原理是用函数来封装创建对象的细节，从而通过调用函数来达到复用的目的。但是它有一个很大的问题就是创建出来的对象无法和某个类型联系起来，只是简单的封装了复用代码，没有建立起对象和类型间的关系</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="2-构造函数模式"><a href="#2-构造函数模式" class="headerlink" title="2 构造函数模式"></a>2 构造函数模式</h2><p>  ECMAScript 中的构造函数可用来创建特定类型的对象。像Object 和Array 这样的原生构造函数，在运行时自动出现在执行环境中。此外我们也可以创建自定义的构造函数，从而定义对象类型的属性和方法。如下例子：<br>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">createPerson</span>(<span class="params">name,age,job</span>)&#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">name</span> = name;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">age</span> = age;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">job</span> = job;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">sayName</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="title function_">alert</span>(<span class="variable language_">this</span>.<span class="property">name</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="variable language_">this</span>; <span class="comment">// 使用new 时不写返回 也会默认返回this 对象</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> person1 = <span class="keyword">new</span> <span class="title function_">createPerson</span>(<span class="string">&#x27;Tom&#x27;</span>,<span class="number">9</span>,<span class="string">&#x27;cat&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> person2 = <span class="keyword">new</span> <span class="title function_">createPerson</span>(<span class="string">&#x27;Jerry&#x27;</span>,<span class="number">8</span>,<span class="string">&#x27;mouse&#x27;</span>);</span><br></pre></td></tr></table></figure><br>  当我们使用构造函数实例化一个对象的时候，对象中会包含一个_proto_ 属性指向构造函数原型对象，而原型对象中则包含一个constructor 属性指向构造函数。因此在实例对象中，我们可以通过原型链来访问到constructor 属性，从而判断对象的类型。</p>
-<ul>
-<li><p>优点 解决了工厂模式中对象类型无法识别的问题，并且创建自定义的构造函数意味着将来可以将它的实例标识为一种特定的类型</p>
-</li>
-<li><p>缺点 在Js 中函数是对象，在使用构造函数创建对象是，每个方法都会在实例对象中重写创建一遍。拿上面的例子来说，就意味着每创建一个对象，都会创建一个sayName 函数的实例，但它们其实做的都是相同的事，因此造成了内存的浪费</p>
-</li>
-</ul>
-  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2. 构造函数模式：Js 中每一个函数都可以作为构造函数，只要一个函数是通过new 来调用的，那么我们就可以把它称为构造函数。执行构造函数首先会创建一个对象，然后将对象的原型指向构造函数的prototype 属性，然后将执行上下文中的this 指向这个对象，最后再执行整个函数，如果返回值不是对象，则返回新建的对象。因为this 的值指向了新建的对象，所以我们可以使用this 给对象赋值，</span><br></pre></td></tr></table></figure>
-
-<h2 id="3-原型模式"><a href="#3-原型模式" class="headerlink" title="3 原型模式"></a>3 原型模式</h2><p>  我们创建的每一个函数都有一个prototype 属性，这个属性指向函数的原型对象，这个对象的用途是包含可以由特定类型的所有实例共享的属性和方法。我们通过使用原型对象可以让所有的对象实例共享它所包含的属性和方法，因此也解决了代码的复用问题。如下例子：<br>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span>(<span class="params"></span>)&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="title class_">Person</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">name</span> = <span class="string">&#x27;Tom&#x27;</span>;</span><br><span class="line"><span class="title class_">Person</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">age</span> = <span class="number">9</span>;</span><br><span class="line"><span class="title class_">Person</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">sayName</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">  <span class="title function_">alert</span>(<span class="variable language_">this</span>.<span class="property">name</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p1 = <span class="keyword">new</span> <span class="title class_">Person</span>();</span><br><span class="line">p1.<span class="title function_">sayName</span>(); <span class="comment">// Tom</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p2 = <span class="keyword">new</span> <span class="title class_">Person</span>();</span><br><span class="line">p2.<span class="title function_">sayName</span>(); <span class="comment">// Tom</span></span><br><span class="line"></span><br><span class="line">p1.<span class="property">sayName</span> === p2.<span class="property">sayName</span>; <span class="comment">// true</span></span><br></pre></td></tr></table></figure><br>  与构造函数不同的是，原型对象上的属性和方法是所有实例所共享的。也就是说，p1 和p2 访问的都是同一组属性和同一个sayName() 函数</p>
-<ul>
-<li>优点 解决了构造函数模式中多次创建相同函数对象的问题，所有实例可以共享同一组属性和函数</li>
-<li>缺点 <ol>
-<li>省略了构造函数模式传递初始化参数的过程，所有实例在默认情况下都会取得默认的属性值，造成不便</li>
-<li>因为所有实例都是共享一组属性，对于包含基本知识的属性来说没有问题，但是对于包含引用类型的值来说，所有的实例都是对同一个引用类型进行操作，那么属性的操作就不是独立的，最后导致读写的混乱。我们创建的实例一般都是要有属于自己的全部属性的，因此单独使用原型模式的情况是很少存在的</li>
-</ol>
-</li>
-</ul>
-  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">3. 原型模式：因为每一个函数都有一个prototype 属性，这个属性是一个对象，它包含了通过构造函数创建的所有实例都能共享的属性和方法。因此我们可以使用原型对象来添加公用属性和方法，从而实现代码的复用。</span><br></pre></td></tr></table></figure>
-
-<h2 id="4-组合使用构造函数和原型模式"><a href="#4-组合使用构造函数和原型模式" class="headerlink" title="4 组合使用构造函数和原型模式"></a>4 组合使用构造函数和原型模式</h2><p>  创建自定义类型的最常见方式，就是组合使用构造函数模式和原型模式。构造函数模式用于定义实例属性，而原型模式用于定义方法和共享的属性。这种模式的好处就是，每个实例都会有自己的一份实例属性副本，但同时又共享着对方法的引用，最大限度地节省了内存，而且这种混合模式还支持向构造函数传递参数，可以说是集两种模式之长<br>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span>(<span class="params">name,age,job</span>)&#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">name</span> = name;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">age</span> = age;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">obj</span> = obj;</span><br><span class="line">&#125;</span><br><span class="line"><span class="title class_">Person</span>.<span class="property"><span class="keyword">prototype</span></span> = &#123;</span><br><span class="line">  <span class="attr">constructor</span>: <span class="title class_">Person</span>,</span><br><span class="line">  <span class="attr">sayName</span>: <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">name</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> tom = <span class="keyword">new</span> <span class="title class_">Person</span>(<span class="string">&#x27;Tom&#x27;</span>,<span class="number">9</span>,<span class="string">&#x27;cat&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> jerry = <span class="keyword">new</span> <span class="title class_">Person</span>(<span class="string">&#x27;Jerry&#x27;</span>,<span class="number">8</span>,<span class="string">&#x27;mouse&#x27;</span>);</span><br><span class="line"></span><br><span class="line">tom.<span class="property">name</span>; <span class="comment">// Tom</span></span><br><span class="line">jerry.<span class="property">name</span>; <span class="comment">// Jerry</span></span><br><span class="line">tom.<span class="property">sayName</span> === jerry.<span class="property">sayName</span>; <span class="comment">// true</span></span><br></pre></td></tr></table></figure></p>
-<ul>
-<li><p>优点 采用了构造函数模式和原型模式的优点，这种混合模式是目前使用最广泛，认同度最高的一种创建自定义类型的方法</p>
-</li>
-<li><p>缺点 由于使用了两种模式，对于代码的封装性来说不是很好</p>
-</li>
-</ul>
-<h2 id="5-动态原型模式"><a href="#5-动态原型模式" class="headerlink" title="5 动态原型模式"></a>5 动态原型模式</h2><p>  由于上面的混合模式存在封装性的问题，动态原型模式就是解决这个问题的一个方案。这个方法把所有信息都封装到了构造函数当中，而在构造函数中通过判断只初始化一次原型</p>
-  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span>(<span class="params">name,age,job</span>)&#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">name</span> = name;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">age</span> = age;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">job</span> = job;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span>(<span class="keyword">typeof</span> <span class="variable language_">this</span>.<span class="property">sayName</span> !== <span class="string">&#x27;function&#x27;</span>)&#123;</span><br><span class="line">    <span class="title class_">Person</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">sayName</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;My name is &#x27;</span> + <span class="variable language_">this</span>.<span class="property">name</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> tom = <span class="keyword">new</span> <span class="title class_">Person</span>(<span class="string">&#x27;Tom&#x27;</span>,<span class="number">9</span>,<span class="string">&#x27;cat&#x27;</span>);</span><br><span class="line">tom.<span class="title function_">sayName</span>(); <span class="comment">// My name is Tom</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="6-寄生构造函数模式"><a href="#6-寄生构造函数模式" class="headerlink" title="6 寄生构造函数模式"></a>6 寄生构造函数模式</h2><p>  如果在前面几种模式不适用的情况下，可以使用寄生构造函数模式。这种模式的基本思想就是创建一个函数，该函数的作用仅仅是封装创建对象的代码，然后返回新创建的对象</p>
-  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span>(<span class="params">name,age,job</span>)&#123;</span><br><span class="line">  <span class="keyword">var</span> o = <span class="keyword">new</span> <span class="title class_">Object</span>();</span><br><span class="line">  o.<span class="property">name</span> = name;</span><br><span class="line">  o.<span class="property">age</span> = age;</span><br><span class="line">  o.<span class="property">job</span> = job;</span><br><span class="line">  o.<span class="property">sayName</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">name</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> p1 = <span class="keyword">new</span> <span class="title class_">Person</span>(<span class="string">&#x27;Tom&#x27;</span>,<span class="number">9</span>,<span class="string">&#x27;cat&#x27;</span>);</span><br></pre></td></tr></table></figure>
-<p>  可以看出这个模式和工厂模式基本上一样，只不过我们是采用new 操作符最后来创建对象</p>
-<p>  在构造函数不返回值的情况下，会默认返回新创建的对象，而通过在末尾添加的return 语句，可以重写调用构造函数时返回的值</p>
-<ul>
-<li><p>优点 基于一个已有的类型，在实例化时对实例化的对象进行扩展，既不用修改原来的构造函数，也达到了扩展对象的目的</p>
-</li>
-<li><p>缺点 和工厂模式一样，不能依赖instanceof 操作符来确定对象的类型</p>
-</li>
-</ul>
-<h2 id="7-稳妥构造函数模式"><a href="#7-稳妥构造函数模式" class="headerlink" title="7 稳妥构造函数模式"></a>7 稳妥构造函数模式</h2><p>  Douglas Crockford 发明了JavaScript 中的稳妥对象这个概念。</p>
-<p>  所谓稳妥对象，指的就是，没有公共属性，而且其方法也不实用this 的对象</p>
-<p>  稳妥对象最适合在一些安全的环境中（这些环境会禁用this 和 new），或者在防止数据被其他应用程序改动时使用</p>
-<p>  稳妥构造函数遵循与寄生构造函数类似的模式，但有两点不同</p>
-<ol>
-<li>新创建的对象的实例方法不引用this</li>
-<li>不使用 new 操作符调用构造函数</li>
-</ol>
-  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span>(<span class="params">name,age,job</span>)&#123;</span><br><span class="line">  <span class="keyword">var</span> o = <span class="keyword">new</span> <span class="title class_">Object</span>();</span><br><span class="line"></span><br><span class="line">  o.<span class="property">sayName</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>( name );</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> o;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p1 = <span class="title class_">Person</span>(<span class="string">&#x27;Tom&#x27;</span>,<span class="number">9</span>,<span class="string">&#x27;cat&#x27;</span>);</span><br><span class="line">p1.<span class="title function_">sayName</span>(); <span class="comment">// Tom</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>优点 除了暴露的方法（sayName）外，没有别的办法可以访问数据成员，这就是稳妥构造函数提供的安全性</li>
-<li>缺点 和寄生构造函数一样，没有办法使用instanceof 判断对象的类型</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/17/collections/JavaScript/JavaScript%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E4%B9%8B%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA/" data-id="clc0ovma5001fdhorhz1dfhym" class="article-share-link">分享</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-collections/Cli/nodeCli命令行工具" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/hexo-blog/2020/08/14/collections/Cli/nodeCli%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7/" class="article-date">
-  <time datetime="2020-08-14T16:00:00.000Z" itemprop="datePublished">2020-08-15</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/hexo-blog/2020/08/14/collections/Cli/nodeCli%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7/">简单开发一个完整的命令行工具</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h2><ol>
-<li><p>创建文件夹并生成<code>package.json</code></p>
-  <figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> nodeCli</span><br><span class="line"><span class="built_in">cd</span> nodeCli</span><br><span class="line">npm init -y</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>安装相关依赖</p>
-  <figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install commander git-clone shelljs</span><br></pre></td></tr></table></figure></li>
-</ol>
-<ul>
-<li>commander 开发命令工具包</li>
-<li>git-clone 克隆远程仓库</li>
-<li>shelljs 调用系统命令</li>
-</ul>
-<ol start="3">
-<li>编写简单命令测试</li>
-</ol>
-<ul>
-<li>新建index.js   <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env node</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;hello&#x27;</span>);</span><br></pre></td></tr></table></figure></li>
-<li>Package.json 添加命令  <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">&quot;bin&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;mycli&quot;</span><span class="punctuation">:</span> <span class="string">&quot;./index.js&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br></pre></td></tr></table></figure></li>
-<li>npm link 使<code>index.js</code>全局调用</li>
-<li>命令行运行 <code>mycli</code> ，输出<code>hello</code></li>
-</ul>
-<h2 id="模拟项目创建、运行、预览的命令"><a href="#模拟项目创建、运行、预览的命令" class="headerlink" title="模拟项目创建、运行、预览的命令"></a>模拟项目创建、运行、预览的命令</h2>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env node</span></span><br><span class="line"><span class="keyword">const</span> program = <span class="built_in">require</span>(<span class="string">&#x27;commander&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> shell = <span class="built_in">require</span>(<span class="string">&#x27;shelljs&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> download = <span class="built_in">require</span>(<span class="string">&#x27;git-clone&#x27;</span>);</span><br><span class="line"></span><br><span class="line">program.<span class="title function_">version</span>(<span class="string">&#x27;1.0.0&#x27;</span>);</span><br><span class="line">program</span><br><span class="line">  .<span class="title function_">command</span>(<span class="string">&#x27;new &lt;name&gt;&#x27;</span>)</span><br><span class="line">  .<span class="title function_">description</span>(<span class="string">&#x27;创建项目&#x27;</span>)</span><br><span class="line">  .<span class="title function_">action</span>(<span class="function"><span class="params">name</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`创建项目<span class="subst">$&#123;name&#125;</span>成功`</span>);</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">program</span><br><span class="line">  .<span class="title function_">command</span>(<span class="string">&#x27;run&#x27;</span>)</span><br><span class="line">  .<span class="title function_">description</span>(<span class="string">&#x27;运行项目&#x27;</span>)</span><br><span class="line">  .<span class="title function_">action</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;成功运行项目&#x27;</span>)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">program</span><br><span class="line">  .<span class="title function_">command</span>(<span class="string">&#x27;start&#x27;</span>)</span><br><span class="line">  .<span class="title function_">description</span>(<span class="string">&#x27;预览项目&#x27;</span>)</span><br><span class="line">  .<span class="title function_">action</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;预览项目...&#x27;</span>)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">program.<span class="title function_">parse</span>(process.<span class="property">argv</span>);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>  命令运行结果如下：<br>  <img src="/hexo-blog/hexo-blog/imgs/Cli/mycliTest.png" alt="命令运行测试"></p>
-<h2 id="完善项目创建、运行、预览的命令"><a href="#完善项目创建、运行、预览的命令" class="headerlink" title="完善项目创建、运行、预览的命令"></a>完善项目创建、运行、预览的命令</h2>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env node</span></span><br><span class="line"><span class="keyword">const</span> program = <span class="built_in">require</span>(<span class="string">&#x27;commander&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> shell = <span class="built_in">require</span>(<span class="string">&#x27;shelljs&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> download = <span class="built_in">require</span>(<span class="string">&#x27;git-clone&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> open = <span class="built_in">require</span>(<span class="string">&#x27;open&#x27;</span>); <span class="comment">// 打开预览地址</span></span><br><span class="line"><span class="keyword">const</span> &#123; spawn &#125; = <span class="built_in">require</span>(<span class="string">&#x27;child_process&#x27;</span>);</span><br><span class="line"></span><br><span class="line">program.<span class="title function_">version</span>(<span class="string">&#x27;1.0.0&#x27;</span>);</span><br><span class="line">program</span><br><span class="line">  .<span class="title function_">command</span>(<span class="string">&#x27;new &lt;name&gt;&#x27;</span>)</span><br><span class="line">  .<span class="title function_">description</span>(<span class="string">&#x27;创建项目&#x27;</span>)</span><br><span class="line">  .<span class="title function_">action</span>(<span class="function"><span class="params">name</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> giturl = <span class="string">&#x27;https://github.com/vuejs/vue-next-webpack-preview.git&#x27;</span>;</span><br><span class="line">    <span class="title function_">download</span>(giturl, <span class="string">`./<span class="subst">$&#123;name&#125;</span>`</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">      shell.<span class="title function_">rm</span>(<span class="string">&#x27;-rf&#x27;</span>, <span class="string">`<span class="subst">$&#123;name&#125;</span>/.git`</span>);</span><br><span class="line">      shell.<span class="title function_">cd</span>(name);</span><br><span class="line">      shell.<span class="title function_">exec</span>(<span class="string">&#x27;npm install&#x27;</span>);</span><br><span class="line"></span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`</span></span><br><span class="line"><span class="string">        创建项目<span class="subst">$&#123;name&#125;</span>成功</span></span><br><span class="line"><span class="string">        cd <span class="subst">$&#123;name&#125;</span> 进入项目</span></span><br><span class="line"><span class="string">        mycli run 启动项目</span></span><br><span class="line"><span class="string">        mycli start 预览项目</span></span><br><span class="line"><span class="string">      `</span>);</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">program</span><br><span class="line">  .<span class="title function_">command</span>(<span class="string">&#x27;run&#x27;</span>)</span><br><span class="line">  .<span class="title function_">description</span>(<span class="string">&#x27;运行项目&#x27;</span>)</span><br><span class="line">  .<span class="title function_">action</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// shell.exec(&#x27;npm run dev&#x27;)</span></span><br><span class="line">    <span class="comment">// let cp = spawn(&#x27;npm&#x27;, [&#x27;run&#x27;, &#x27;dev&#x27;]); // Error: spawn npm ENOENT</span></span><br><span class="line">    <span class="keyword">let</span> cp = <span class="title function_">spawn</span>(<span class="string">&#x27;npm.cmd&#x27;</span>, [<span class="string">&#x27;run&#x27;</span>, <span class="string">&#x27;dev&#x27;</span>]);</span><br><span class="line">    cp.<span class="property">stdout</span>.<span class="title function_">pipe</span>(process.<span class="property">stdout</span>);</span><br><span class="line">    cp.<span class="property">stdout</span>.<span class="title function_">pipe</span>(process.<span class="property">stderr</span>);</span><br><span class="line">    cp.<span class="title function_">on</span>(<span class="string">&#x27;close&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;成功运行项目&#x27;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">program</span><br><span class="line">  .<span class="title function_">command</span>(<span class="string">&#x27;start&#x27;</span>)</span><br><span class="line">  .<span class="title function_">description</span>(<span class="string">&#x27;预览项目&#x27;</span>)</span><br><span class="line">  .<span class="title function_">action</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="title function_">open</span>(<span class="string">&#x27;http://localhost:8080/&#x27;</span>)</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;预览项目...&#x27;</span>)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">program.<span class="title function_">parse</span>(process.<span class="property">argv</span>);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>mycli new test | 建立test 项目</li>
-<li>mycli run | 启动test 项目</li>
-<li>mycli start | 打开项目预览</li>
-</ul>
-<h2 id="备注"><a href="#备注" class="headerlink" title="备注"></a>备注</h2><ul>
-<li>Windows 下<code>spawn(&#39;npm&#39;, [&#39;run&#39;, &#39;dev&#39;])</code>命令报错，将<code>npm</code>改为<code>npm.cmd</code></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/14/collections/Cli/nodeCli%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7/" data-id="clc0ovm9f000cdhor1bha9499" class="article-share-link">分享</a>
+      <a data-url="https://ewqazxc.github.io/hexo-blog/2020/08/23/collections/JavaScript/%E6%89%8B%E5%8A%A8%E5%AE%9E%E7%8E%B0%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%80%E4%BA%9B%E6%96%B9%E6%B3%95/" data-id="clcanlujh002dbfoj8l85algl" class="article-share-link">分享</a>
       
       
     </footer>
@@ -669,7 +783,7 @@
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/hexo-blog/page/3/">&lt;&lt; 上一页</a><a class="page-number" href="/hexo-blog/">1</a><a class="page-number" href="/hexo-blog/page/2/">2</a><a class="page-number" href="/hexo-blog/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/hexo-blog/page/5/">5</a><a class="extend next" rel="next" href="/hexo-blog/page/5/">下一页 &gt;&gt;</a>
+    <a class="extend prev" rel="prev" href="/hexo-blog/page/3/">&lt;&lt; 上一页</a><a class="page-number" href="/hexo-blog/">1</a><a class="page-number" href="/hexo-blog/page/2/">2</a><a class="page-number" href="/hexo-blog/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/hexo-blog/page/5/">5</a><a class="page-number" href="/hexo-blog/page/6/">6</a><a class="extend next" rel="next" href="/hexo-blog/page/5/">下一页 &gt;&gt;</a>
   </nav>
 
 </section>
@@ -680,7 +794,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/hexo-blog/categories/hexo/">hexo</a></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/hexo-blog/categories/gitlab/">gitlab</a></li><li class="category-list-item"><a class="category-list-link" href="/hexo-blog/categories/hexo/">hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/hexo-blog/categories/npm/">npm</a></li><li class="category-list-item"><a class="category-list-link" href="/hexo-blog/categories/windows/">windows</a></li></ul>
     </div>
   </div>
 
@@ -695,7 +809,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2021/07/">七月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2021/06/">六月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2021/05/">五月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2021/04/">四月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/12/">十二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/11/">十一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/10/">十月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/09/">九月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/07/">七月 2020</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2022/12/">十二月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2022/04/">四月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2021/07/">七月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2021/06/">六月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2021/05/">五月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2021/04/">四月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/12/">十二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/11/">十一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/10/">十月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/09/">九月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo-blog/archives/2020/07/">七月 2020</a></li></ul>
     </div>
   </div>
 
@@ -708,23 +822,23 @@
       <ul>
         
           <li>
+            <a href="/hexo-blog/2022/12/27/collections/Git/%E9%87%8D%E7%BD%AE%E8%87%AA%E5%BB%BAgitlab%E7%AE%A1%E7%90%86%E5%91%98%E8%B4%A6%E6%88%B7%E5%AF%86%E7%A0%81/">重置自建gitlab管理员账户密码</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2022/12/27/collections/Windows/windows%E5%BF%AB%E9%80%9F%E5%88%A0%E9%99%A4%E7%A2%8E%E7%89%87%E6%96%87%E4%BB%B6/">windows快速删除碎片文件</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2022/12/27/collections/Npm/%E5%9C%A8%E9%A1%B9%E7%9B%AE%E4%B8%AD%E6%8C%87%E5%AE%9Anpm%E6%BA%90/">在项目中指定npm源</a>
+          </li>
+        
+          <li>
+            <a href="/hexo-blog/2022/04/10/collections/Npm/npm%20link%20%E7%9A%84%E4%BD%BF%E7%94%A8/">npm link 的使用</a>
+          </li>
+        
+          <li>
             <a href="/hexo-blog/2021/06/30/collections/Git/Git%20%E9%BB%98%E8%AE%A4%E5%88%86%E6%94%AF%E4%BF%AE%E6%94%B9/">Git 默认分支修改</a>
-          </li>
-        
-          <li>
-            <a href="/hexo-blog/2021/06/24/collections/Electron/Electron%20%E6%89%98%E7%9B%98%E9%97%AA%E7%83%81/">Electron 托盘闪烁</a>
-          </li>
-        
-          <li>
-            <a href="/hexo-blog/2021/06/23/collections/Electron/Electron%20%E6%9C%80%E5%B0%8F%E5%8C%96%E5%88%B0%E6%89%98%E7%9B%98/">Electron 最小化到托盘</a>
-          </li>
-        
-          <li>
-            <a href="/hexo-blog/2021/06/22/collections/Electron/Electron%20%E9%99%90%E5%88%B6%E5%8F%AA%E5%90%AF%E5%8A%A8%E4%B8%80%E4%B8%AA%E5%BA%94%E7%94%A8/">Electron 限制只启动一个应用</a>
-          </li>
-        
-          <li>
-            <a href="/hexo-blog/2021/06/20/collections/Koa/Koa%20%E6%90%AD%E5%BB%BAhttps%20%E7%8E%AF%E5%A2%83/">Koa 本地搭建 HTTPS 环境</a>
           </li>
         
       </ul>
